@@ -1,0 +1,38 @@
+@page
+@model MonevAtr.Pages.KelompokDokumen.EditModel
+
+@{
+    ViewData["Title"] = "Ubah Kelompok Dokumen";
+}
+
+<h1>Ubah Kelompok Dokumen</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="KelompokDokumen.Kode" />
+            <div class="form-group">
+                <label asp-for="KelompokDokumen.Nama" class="control-label"></label>
+                <input asp-for="KelompokDokumen.Nama" class="form-control" />
+                <span asp-validation-for="KelompokDokumen.Nama" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KelompokDokumen.KodeJenisAtr" class="control-label"></label>
+                <select asp-for="KelompokDokumen.KodeJenisAtr" class="form-control" asp-items="ViewBag.KodeJenisAtr"></select>
+                <span asp-validation-for="KelompokDokumen.KodeJenisAtr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Simpan" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Kembali ke Daftar Kelompok Dokumen</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

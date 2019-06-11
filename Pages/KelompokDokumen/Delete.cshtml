@@ -1,0 +1,39 @@
+@page
+@model MonevAtr.Pages.KelompokDokumen.DeleteModel
+
+@{
+    ViewData["Title"] = "Hapus Kelompok Dokumen";
+}
+
+<h1>Hapus Kelompok Dokumen</h1>
+
+<h3>Hapus data ini?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KelompokDokumen.Kode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KelompokDokumen.Kode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KelompokDokumen.Nama)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KelompokDokumen.Nama)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KelompokDokumen.JenisAtr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KelompokDokumen.JenisAtr.Nama)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="KelompokDokumen.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" /> |
+        <a asp-page="./Index">Kembali ke Daftar Kelompok Dokumen</a>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+@page
+@model MonevAtr.Pages.JenisAtr.DeleteModel
+
+@{
+    ViewData["Title"] = "Hapus Jenis ATR";
+}
+
+<h1>Hapus Jenis ATR</h1>
+
+<h3>Hapus data ini?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JenisAtr.Kode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JenisAtr.Kode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JenisAtr.Nama)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JenisAtr.Nama)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="JenisAtr.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" /> |
+        <a asp-page="./Index">Kembali ke Daftar Jenis ATR</a>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+@page
+@model MonevAtr.Pages.JenisAtr.EditModel
+
+@{
+    ViewData["Title"] = "Ubah Jenis ATR";
+}
+
+<h1>Ubah Jenis ATR</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="JenisAtr.Kode" />
+            <div class="form-group">
+                <label asp-for="JenisAtr.Nama" class="control-label"></label>
+                <input asp-for="JenisAtr.Nama" class="form-control" />
+                <span asp-validation-for="JenisAtr.Nama" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Simpan" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Kembali ke Daftar Jenis ATR</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

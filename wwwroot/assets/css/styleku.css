@@ -1,0 +1,27 @@
+.title{
+	margin: 0 0 5px 0;
+}
+
+h1.title{
+	font-size: 1.7em;
+}
+
+h2.title{
+	font-size: 1.3em;
+	font-weight: 600;
+}
+
+h3.title{
+	font-size: 1em;
+	font-weight: 500;
+}
+
+.form-control {
+	margin: 0 10px 0 0;
+	float: left;
+}
+
+.custom-control {
+	margin: 0 10px 0 0;
+	float: left;
+}

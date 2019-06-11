@@ -1,0 +1,39 @@
+@page
+@model MonevAtr.Pages.ProgressAtr.DeleteModel
+
+@{
+    ViewData["Title"] = "Hapus Progress ATR";
+}
+
+<h1>Hapus Progress ATR</h1>
+
+<h3>Hapus data ini?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgressAtr.Kode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProgressAtr.Kode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgressAtr.Nama)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProgressAtr.Nama)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgressAtr.JenisAtr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProgressAtr.JenisAtr.Nama)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="ProgressAtr.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" /> |
+        <a asp-page="./Index">Kembali ke Daftar Progress ATR</a>
+    </form>
+</div>

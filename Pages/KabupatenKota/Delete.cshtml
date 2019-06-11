@@ -1,0 +1,39 @@
+@page
+@model MonevAtr.Pages.KabupatenKota.DeleteModel
+
+@{
+    ViewData["Title"] = "Hapus Kabupaten/Kota";
+}
+
+<h1>Hapus Kabupaten/Kota</h1>
+
+<h3>Hapus data ini?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KabupatenKota.Kode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KabupatenKota.Kode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KabupatenKota.Nama)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KabupatenKota.Nama)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KabupatenKota.Provinsi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KabupatenKota.Provinsi.Nama)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="KabupatenKota.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" /> |
+        <a asp-page="./Index">Kembali ke Daftar Kabupaten/Kota</a>
+    </form>
+</div>

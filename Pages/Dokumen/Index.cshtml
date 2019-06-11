@@ -1,0 +1,47 @@
+@page
+@model MonevAtr.Pages.Dokumen.IndexModel
+
+@{
+    ViewData["Title"] = "Daftar Dokumen";
+}
+
+<h1>Daftar Dokumen</h1>
+
+<p>
+    <a asp-page="Create">Tambah Dokumen</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].Kode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].Nama)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].KelompokDokumen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Dokumen) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KelompokDokumen.Kode)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Kode">Ubah</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Kode">Hapus</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
