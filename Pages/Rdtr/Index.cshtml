@@ -1,0 +1,107 @@
+@page
+@model MonevAtr.Pages.Rdtr.IndexModel
+
+@{
+    ViewData["Title"] = "Pencarian RDTR";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row row-cards text">
+    <div class="col-12">
+    <div class="card">
+        <div class="card-header"><h3 class="card-title"> Pencarian RDTR </h3></div>
+        <div class="card-body">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Atr.Provinsi" class="form-label"></label>
+                <select id="provinsi" asp-for="Atr.Provinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Atr.KabupatenKota" class="form-label"></label>
+                <select id="kabupaten-kota" asp-for="Atr.KabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label">Nama RRTR/RDTR</label>
+                <input asp-for="Atr.Nama" class="form-control" />
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+            <label class="form-label">Nomor RRTR/RDTR </label>
+                <input asp-for="Atr.Nomor" class="form-control" />
+            </div>
+        </div>
+
+            <div class="col-md-12" id="Tahun" >
+            <div class="form-group">
+            <label class="form-label">Tahun</label>
+            <select id="tahun" class="form-control" onchange="eventTahun()">
+                <option>-- Pilih Tahun  --</option>
+                <option>All </option>
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+            </select>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="form-group">
+            <label class="form-label">Progress</label>
+            <div>
+@foreach (var item in Model.ProgressAtr) {
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="example-inline-checkbox0" value="@Html.DisplayFor(modelItem => item.Kode)" checked="">
+                    <span class="custom-control-label">@Html.DisplayFor(modelItem => item.Kode) -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                </label>
+}
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="card-footer text-center">
+        <a href="rdtr-table2.html" class="btn btn-primary"><i class="fe fe-search"></i> Cari</a>
+        <!-- <a href="rdtr-input.html" class="btn btn-success"><i class="fe fe-plus"></i> Tambah</a> -->
+        <button type="submit" class="btn btn-warning"><i class="fe fe-refresh-ccw"></i> Reset</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#provinsi').change( function () {
+                var url='@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")';
+
+                $.getJSON('@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")', 
+                    { kodeProvinsi: $('#provinsi').val()}, function(data){
+                    var items='';
+                    $('#kabupaten-kota').empty();
+                    $.each(data, function(i, kabupatenKota){
+                        items+='<option value="' + kabupatenKota.value + '">' + kabupatenKota.text + '</option>';
+                    });
+                    $('#kabupaten-kota').html(items); 
+                });
+            });
+        });
+    </script>
+}
+
