@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
@@ -12,15 +9,13 @@ namespace MonevAtr.Pages.Provinsi
 {
     public class EditModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public EditModel(MonevAtr.Models.MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.Provinsi Provinsi { get; set; }
+        public Models.Provinsi Provinsi { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -70,5 +65,7 @@ namespace MonevAtr.Pages.Provinsi
         {
             return _context.Provinsi.Any(e => e.Kode == id);
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

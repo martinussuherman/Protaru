@@ -1,30 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Provinsi
 {
     public class CreateModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public CreateModel(MonevAtr.Models.MonevAtrDbContext context)
+        public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
         }
+
+        [BindProperty]
+        public Models.Provinsi Provinsi { get; set; }
 
         public IActionResult OnGet()
         {
             return Page();
         }
-
-        [BindProperty]
-        public MonevAtr.Models.Provinsi Provinsi { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -38,5 +32,7 @@ namespace MonevAtr.Pages.Provinsi
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }
