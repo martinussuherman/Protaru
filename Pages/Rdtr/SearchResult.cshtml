@@ -1,0 +1,84 @@
+@page
+@model MonevAtr.Pages.Rdtr.SearchResultModel
+
+@{
+    ViewData["Title"] = "Monitoring & Evaluasi RDTR";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row-cards">
+    <div class="col-12 card">
+        <div class="card-header">
+            <h3 class="card-title">Monitoring & Evaluasi RDTR</h3>
+            <div class="ml-auto">
+                <a asp-page="./Create" class="btn btn-success"><i class="fe fe-plus"></i> Tambah</a>
+                <a asp-page="./Index" class="btn btn-warning"><i class="fe fe-arrow-left"></i> Kembali</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table">
+                <thead style="background-color: #eee;">
+                    <tr>
+                        <th class="text-center text-dark font-weight-bold">No</th>
+                        <th class="text-dark font-weight-bold">Action</th>
+                        <th class="text-dark font-weight-bold">Provinsi</th>
+                        <th class="text-dark font-weight-bold">Kabupaten/Kota</th>
+                        <th class="text-dark font-weight-bold">Nama</th>
+                        <th class="text-dark font-weight-bold">Nomor</th>
+                        <th class="text-dark font-weight-bold">Jenis</th>
+                        <th class="text-dark font-weight-bold">Tahun</th>
+                    </tr>
+                </thead>
+                <tbody>
+@{
+int index = 1;
+}
+@foreach (var item in Model.HasilPencarian) {
+                    <tr>
+                        <td>@index</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
+                            <span>>@Html.HiddenFor(modelItem => item.Kode)</span>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Provinsi.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
+                        <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                    </tr>
+    index++;
+}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- <div class="d-none"> -->
+    <div>
+        <h4>Debug:</h4>
+        Nomor: @Html.DisplayFor(model => model.AtrSearch.Nomor)
+        <hr />
+        Nama: @Html.DisplayFor(model => model.AtrSearch.Nama)
+        <hr />
+        Tahun: @Html.DisplayFor(model => model.AtrSearch.Tahun)
+        <hr />
+        Kode Provinsi: @Html.DisplayFor(model => model.AtrSearch.KodeProvinsi)
+        <hr />
+        Kode Kab/Kota: @Html.DisplayFor(model => model.AtrSearch.KodeKabupatenKota)
+        <hr />
+        Kode Progress: @Html.DisplayFor(model => model.AtrSearch.KodeProgressAtr.Count)
+
+@foreach (var item in Model.AtrSearch.KodeProgressAtr) {
+        <hr />
+        @Html.DisplayFor(modelItem => item)
+}
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

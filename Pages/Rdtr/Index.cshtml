@@ -8,79 +8,51 @@
 <div class="page-header">
     <h1 class="page-title"></h1>
 </div>
-<div class="row row-cards text">
-    <div class="col-12">
-    <div class="card">
-        <div class="card-header"><h3 class="card-title"> Pencarian RDTR </h3></div>
-        <div class="card-body">
-        <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label asp-for="Atr.Provinsi" class="form-label"></label>
-                <select id="provinsi" asp-for="Atr.Provinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+<div class="row row-cards text col-12 card">
+    <div class="card-header">
+        <h3 class="card-title"> Pencarian RDTR </h3>
+    </div>
+    <form asp-page="./SearchResult">
+        <div class="card-body row">
+            <div class="col-md-12 form-group">
+                <label asp-for="AtrSearch.KodeProvinsi" class="form-label"></label>
+                <select id="provinsi" asp-for="AtrSearch.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label asp-for="Atr.KabupatenKota" class="form-label"></label>
-                <select id="kabupaten-kota" asp-for="Atr.KabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+            <div class="col-md-12 form-group">
+                <label asp-for="AtrSearch.KodeKabupatenKota" class="form-label"></label>
+                <select id="kabupaten-kota" asp-for="AtrSearch.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
             </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="form-group">
+            <div class="col-md-12 form-group">
                 <label class="form-label">Nama RRTR/RDTR</label>
-                <input asp-for="Atr.Nama" class="form-control" />
+                <input asp-for="AtrSearch.Nama" class="form-control" />
             </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="form-group">
-            <label class="form-label">Nomor RRTR/RDTR </label>
-                <input asp-for="Atr.Nomor" class="form-control" />
+            <div class="col-md-12 form-group">
+                <label class="form-label">Nomor RRTR/RDTR </label>
+                <input asp-for="AtrSearch.Nomor" class="form-control" />
             </div>
-        </div>
-
-            <div class="col-md-12" id="Tahun" >
-            <div class="form-group">
-            <label class="form-label">Tahun</label>
-            <select id="tahun" class="form-control" onchange="eventTahun()">
-                <option>-- Pilih Tahun  --</option>
-                <option>All </option>
-                <option>2013</option>
-                <option>2014</option>
-                <option>2015</option>
-                <option>2016</option>
-                <option>2017</option>
-                <option>2018</option>
-                <option>2019</option>
-            </select>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Tahun</label>
+                <select asp-for="AtrSearch.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
             </div>
-        </div>
-
-
-        <div class="col-md-12">
-            <div class="form-group">
-            <label class="form-label">Progress</label>
-            <div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Progress</label>
+@{
+int index = 1;
+}
 @foreach (var item in Model.ProgressAtr) {
                 <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="example-inline-checkbox0" value="@Html.DisplayFor(modelItem => item.Kode)" checked="">
-                    <span class="custom-control-label">@Html.DisplayFor(modelItem => item.Kode) -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                    <input type="checkbox" name="AtrSearch.KodeProgressAtr" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                    <span class="custom-control-label">@index -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
                 </label>
+    index++;
 }
             </div>
-            </div>
-        </div>
-        </div>
         </div>
         <div class="card-footer text-center">
-        <a href="rdtr-table2.html" class="btn btn-primary"><i class="fe fe-search"></i> Cari</a>
-        <!-- <a href="rdtr-input.html" class="btn btn-success"><i class="fe fe-plus"></i> Tambah</a> -->
-        <button type="submit" class="btn btn-warning"><i class="fe fe-refresh-ccw"></i> Reset</button>
+            <button type="submit" class="btn btn-primary"><i class="fe fe-search"></i> Cari</button>
+            <a asp-page="./Index" class="btn btn-primary"><i class="fe fe-refresh-ccw"></i> Reset</a>
         </div>
-    </div>
-    </div>
+    </form>
 </div>
 
 @section Scripts {
