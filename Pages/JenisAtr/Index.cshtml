@@ -7,9 +7,6 @@
 
 <h1>Daftar Jenis ATR</h1>
 
-<p>
-    <a asp-page="Create">Tambah Jenis ATR</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -19,7 +16,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.JenisAtr[0].Nama)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -30,10 +26,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nama)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Kode">Ubah</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Kode">Hapus</a>
             </td>
         </tr>
 }
