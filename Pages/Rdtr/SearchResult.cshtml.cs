@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using LinqKit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +12,6 @@ namespace MonevAtr.Pages.Rdtr
 {
     public class SearchResultModel : PageModel
     {
-        private readonly MonevAtrDbContext _context;
-
         public SearchResultModel(MonevAtrDbContext context)
         {
             _context = context;
@@ -21,57 +22,90 @@ namespace MonevAtr.Pages.Rdtr
 
         public List<Models.Atr> HasilPencarian { get; set; } = new List<Models.Atr>();
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            IQueryable<Models.Atr> query = (from atr in _context.Atr where atr.KodeJenisAtr == 1 select atr);
+            IQueryable<Models.Atr> query = (from atr in _context.Atr where atr.KodeJenisAtr == (int) JenisAtrEnum.RdtrPerda select atr);
 
-            if (this.AtrSearch.KodeProvinsi != 0 && this.AtrSearch.KodeKabupatenKota == 0)
-            {
-                query = query.Where(q => q.KodeProvinsi == this.AtrSearch.KodeProvinsi);
-            }
+            query = QueryAtrByProvinsi(query);
+            query = QueryAtrByKabupatenKota(query);
+            query = QueryAtrByTahun(query);
+            query = QueryAtrByNama(query);
+            query = QueryAtrByNomor(query);
+            query = QueryAtrByProgress(query);
 
-            if (this.AtrSearch.KodeKabupatenKota != 0)
-            {
-                query = query.Where(q => q.KodeKabupatenKota == this.AtrSearch.KodeKabupatenKota);
-            }
-
-            if (this.AtrSearch.Tahun != 0)
-            {
-                query = query.Where(q => q.Tahun == this.AtrSearch.Tahun);
-            }
-
-            if (!string.IsNullOrEmpty(this.AtrSearch.Nama))
-            {
-                string pattern = this.AtrSearch.Nama + "%";
-                query = query.Where(q => EF.Functions.Like(q.Nama, pattern));
-            }
-
-            if (!string.IsNullOrEmpty(this.AtrSearch.Nomor))
-            {
-                string pattern = this.AtrSearch.Nomor + "%";
-                query = query.Where(q => EF.Functions.Like(q.Nomor, pattern));
-            }
-
-            this.HasilPencarian = query.ToList();
-
-            // var query = from r in db.requests 
-            // select new ProductReqNoDate
-            //                    {
-            //                        departmant= r.departmant,
-            //                        reqNo = r.reqNo ,
-            //                        reqDate = r.reqDate ,
-            //                        prdctName= stringCutter((from p in db.products 
-            //                       where p.reqNo == r.reqNo select p.prdctName).FirstOrDefault())
-            //                    }
-            // if (!string.IsNullOrEmpty(firstDate) && !string.IsNullOrEmpty(lastDate))
-            // {
-            //         DateTime dtfirstDate = Convert.ToDateTime(firstDate);
-            //         DateTime dtlastDate = Convert.ToDateTime(lastDate);
-            //         return query.Where(r=> r.reqDate <= dtlastDate && r.reqDate >= dtfirstDate)
-            //                     .ToList();
-            //  }            
-            // return RedirectToPage("./Index");
+            this.HasilPencarian = await query
+                .Include(a => a.Provinsi)
+                .Include(a => a.KabupatenKota)
+                .Include(a => a.KabupatenKota.Provinsi)
+                .Include(a => a.JenisAtr)
+                .ToListAsync();
             return Page();
         }
+
+        private IQueryable<Models.Atr> QueryAtrByProvinsi(IQueryable<Models.Atr> query)
+        {
+            if (this.AtrSearch.KodeProvinsi == 0 || this.AtrSearch.KodeKabupatenKota != 0)
+            {
+                return query;
+            }
+
+            return query.Where(q => q.KodeProvinsi == this.AtrSearch.KodeProvinsi);
+        }
+
+        private IQueryable<Models.Atr> QueryAtrByKabupatenKota(IQueryable<Models.Atr> query)
+        {
+            if (this.AtrSearch.KodeKabupatenKota == 0)
+            {
+                return query;
+            }
+
+            return query.Where(q => q.KodeKabupatenKota == this.AtrSearch.KodeKabupatenKota);
+        }
+
+        private IQueryable<Models.Atr> QueryAtrByTahun(IQueryable<Models.Atr> query)
+        {
+            if (this.AtrSearch.Tahun == 0)
+            {
+                return query;
+            }
+
+            return query.Where(q => q.Tahun == this.AtrSearch.Tahun);
+        }
+
+        private IQueryable<Models.Atr> QueryAtrByNama(IQueryable<Models.Atr> query)
+        {
+            if (String.IsNullOrEmpty(this.AtrSearch.Nama))
+            {
+                return query;
+            }
+
+            string pattern = this.AtrSearch.Nama + "%";
+            return query.Where(q => EF.Functions.Like(q.Nama, pattern));
+        }
+
+        private IQueryable<Models.Atr> QueryAtrByNomor(IQueryable<Models.Atr> query)
+        {
+            if (String.IsNullOrEmpty(this.AtrSearch.Nomor))
+            {
+                return query;
+            }
+
+            string pattern = this.AtrSearch.Nomor + "%";
+            return query.Where(q => EF.Functions.Like(q.Nomor, pattern));
+        }
+
+        private IQueryable<Models.Atr> QueryAtrByProgress(IQueryable<Models.Atr> query)
+        {
+            var predicate = PredicateBuilder.New<Models.Atr>();
+
+            foreach (int kodeProgress in this.AtrSearch.KodeProgressAtr)
+            {
+                predicate = predicate.Or(p => p.KodeProgressAtr == kodeProgress);
+            }
+
+            return query.Where(predicate);
+        }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

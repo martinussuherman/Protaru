@@ -24,6 +24,10 @@
                     <select id="kabupaten-kota" asp-for="Atr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
                 </div>
                 <div class="col-md-12 form-group">
+                    <label asp-for="Atr.KodeProgressAtr" class="control-label"></label>
+                    <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressAtr"></select>
+                </div>
+                <div class="col-md-12 form-group">
                     <label class="form-label">Nama RRTR/RDTR</label>
                     <input asp-for="Atr.Nama" class="form-control">
                 </div>
@@ -40,13 +44,10 @@
                     <input asp-for="Atr.Luas" class="form-control">
                 </div>
                 <div class="col-sm-6 col-md-6 form-group">
-                    <label asp-for="Atr.Tahun" ></label>
+                    <label asp-for="Atr.Tahun"></label>
                     <input asp-for="Atr.Tahun" class="form-control">
                 </div>
             </div>
-
-            <input type="hidden" asp-for="Atr.KodeJenisAtr" value="1" />
-            <input type="hidden" asp-for="Atr.KodeProgressAtr" value="0" />
 
             <div class="card-footer text-center">
                 <button type="submit" class="btn btn-primary"><i class="fe fe-save"></i> Simpan</button>

@@ -1,0 +1,162 @@
+@page
+@model MonevAtr.Pages.Rdtr.EditModel
+
+@{
+    ViewData["Title"] = "Detail RDTR";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row row-cards text">
+    <div class="col-12 card">
+        <div class="card-body">
+            <h1 class="title">@Html.DisplayFor(model => model.Atr.DisplayNamaProvinsiKabupatenKota)</h1>
+            <h2 class="title">@Html.DisplayFor(model => model.Atr.Nama)</h2>
+            <h3 class="title">Nomor: @Html.DisplayFor(model => model.Atr.Nomor)</h3>
+        </div>
+        <hr>
+
+        <!-- <form asp-page="./EditResult" method="post"> -->
+        <form method="post">
+            <div class="card-body row">
+                <div class="col-md-12 form-group table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table">
+                        <thead style="background-color: #eee;">
+                            <tr>
+                                <th class="text-center text-dark font-weight-bold" colspan="6"> Keterangan </th>
+                            </tr> 
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="width: 150px;">AOI</th>
+                                <td style="width: 10px;">:</td>
+                                <td style="width: 30%;">@Html.DisplayFor(model => model.Atr.Aoi)</td>
+
+                                <th style="width: 150px;">Luas (Ha)</th>
+                                <td style="width: 10px;">:</td>
+                                <td style="width: 30%;">@Html.DisplayFor(model => model.Atr.Luas)</td>
+                            </tr>
+
+                            <tr>
+                                <th>Tahun</th>
+                                <td>:</td>
+                                <td>@Html.DisplayFor(model => model.Atr.Tahun)</td>
+
+                                <th>Jenis</th>
+                                <td>:</td>
+                                <td>@Html.DisplayFor(model => model.Atr.JenisAtr.Nama)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <input type="hidden" asp-for="Atr.Kode" />
+                <input type="hidden" asp-for="Atr.Nama" />
+                <input type="hidden" asp-for="Atr.Nomor" />
+                <input type="hidden" asp-for="Atr.Tanggal" />
+                <input type="hidden" asp-for="Atr.Aoi" />
+                <input type="hidden" asp-for="Atr.Luas" />
+                <input type="hidden" asp-for="Atr.Tahun" />
+                <input type="hidden" asp-for="Atr.KodeJenisAtr" />
+                <input type="hidden" asp-for="Atr.KodeKabupatenKota" />
+                <input type="hidden" asp-for="Atr.KodeProvinsi" />
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.KodeProgressAtr" class="form-label"></label>
+                    <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressRdtr"></select>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.Permasalahan" class="form-label"></label>
+                    <textarea asp-for="Atr.Permasalahan" class ="form-control"></textarea>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.TindakLanjut" class="form-label"></label>
+                    <textarea asp-for="Atr.TindakLanjut" class ="form-control"></textarea>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.Keterangan" class="form-label"></label>
+                    <textarea asp-for="Atr.Keterangan" class ="form-control"></textarea>
+                </div>
+            </div>
+
+@{
+int index = 0;
+}
+
+@foreach (var item in Model.KelompokDokumenList) {
+
+            <hr>
+            <h3 class="card-title">&nbsp; @Html.DisplayFor(modelitem => item.Nomor). @Html.DisplayFor(modelitem => item.Nama)</h3>
+            <hr>
+
+            <div class="card-body row">
+
+    @foreach( var detailItem in item.Dokumen)
+    {
+                <div class="col-sm-6 col-md-3 pt-2">
+                    @Html.DisplayFor(modelitem => detailItem.Nama)
+                </div>
+                <input type="hidden" name="AtrDokumenList[@index].Kode" value="@Html.DisplayFor(modelitem => detailItem.DetailDokumen.Kode)"/>
+                <input type="hidden" name="AtrDokumenList[@index].KodeAtr" value="@Html.DisplayFor(modelitem => detailItem.DetailDokumen.KodeAtr)"/>
+                <input type="hidden" name="AtrDokumenList[@index].KodeDokumen" value="@Html.DisplayFor(modelitem => detailItem.Kode)"/>
+                <div class="col-sm-6 col-md-1 form-group">
+                    <select class="form-control" name="AtrDokumenList[@index].Status">
+                        <option value="0">Tidak</option>
+        @if(detailItem.DetailDokumen.StatusAda)
+        {
+                        <option value="1" selected="selected">Ada</option>
+        }
+        else
+        {
+                        <option value="1">Ada</option>
+        }
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-2 form-group">
+                    <input type="text" name="AtrDokumenList[@index].Nomor" value="@Html.DisplayFor(modelitem => detailItem.DetailDokumen.Nomor)" class="form-control" placeholder="Nomor" />
+                </div>
+                <div class="col-sm-6 col-md-2 form-group">
+                    <input type="date" name="AtrDokumenList[@index].Tanggal" value="@Html.DisplayFor(modelitem => detailItem.DetailDokumen.DisplayTanggal)" class="form-control" />
+                    <!-- <input type="text" name="AtrDokumenList[@index].Tanggal" value="@Html.DisplayFor(modelitem => detailItem.DetailDokumen.Tanggal)" class="form-control" data-mask="00/00/0000" data-mask-clearifnotmatch="true" placeholder="00/00/0000" autocomplete="off" maxlength="10"> -->
+                </div>
+                <div class="col-sm-6 col-md-2 form-group">
+                    <input type="text" name="AtrDokumenList[@index].Keterangan" value="@Html.DisplayFor(modelitem => detailItem.DetailDokumen.Keterangan)" class="form-control" />
+                </div>
+                <div class="col-md-2 form-group">
+                    <div class="custom-file">
+                        <input type="file" name="AtrDokumenList[@index].FilePath" class="custom-file-input" name="example-file-input-custom" />
+                        <label class="custom-file-label">Choose file</label>
+                    </div>
+                </div>
+        index++;
+    }
+
+            </div>
+}
+
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary"><i class="fe fe-save"></i> Simpan</button>
+                <a asp-page="./Index" class="btn btn-primary"><i class="fe fe-arrow-left"></i> Kembali</a>
+            </div>
+        </form>
+
+              <!-- 
+                  <hr>
+                <div class="card-footer text-center">
+                  <button type="" class="btn btn-primary"><span class="fe fe-save"></span> Save</button>
+                  <a href="./rdtr-table.html" class="btn btn-warning"><span class="fe fe-arrow-left"></span> Back</a>
+                </div>
+                </form>
+              </div> -->
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

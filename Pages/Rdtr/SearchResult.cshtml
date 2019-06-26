@@ -29,6 +29,7 @@
                         <th class="text-dark font-weight-bold">Nomor</th>
                         <th class="text-dark font-weight-bold">Jenis</th>
                         <th class="text-dark font-weight-bold">Tahun</th>
+                        <th class="text-dark font-weight-bold">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,42 +40,22 @@ int index = 1;
                     <tr>
                         <td>@index</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
+                            <a asp-page="./Edit" asp-route-id="@item.Kode" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
                             <span>>@Html.HiddenFor(modelItem => item.Kode)</span>
                         </td>
-                        <td>@Html.DisplayFor(modelItem => item.Provinsi.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
                         <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nama)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
                         <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
                         <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Keterangan)</td>
                     </tr>
     index++;
 }
-
                 </tbody>
             </table>
         </div>
-    </div>
-    <!-- <div class="d-none"> -->
-    <div>
-        <h4>Debug:</h4>
-        Nomor: @Html.DisplayFor(model => model.AtrSearch.Nomor)
-        <hr />
-        Nama: @Html.DisplayFor(model => model.AtrSearch.Nama)
-        <hr />
-        Tahun: @Html.DisplayFor(model => model.AtrSearch.Tahun)
-        <hr />
-        Kode Provinsi: @Html.DisplayFor(model => model.AtrSearch.KodeProvinsi)
-        <hr />
-        Kode Kab/Kota: @Html.DisplayFor(model => model.AtrSearch.KodeKabupatenKota)
-        <hr />
-        Kode Progress: @Html.DisplayFor(model => model.AtrSearch.KodeProgressAtr.Count)
-
-@foreach (var item in Model.AtrSearch.KodeProgressAtr) {
-        <hr />
-        @Html.DisplayFor(modelItem => item)
-}
     </div>
 </div>
 

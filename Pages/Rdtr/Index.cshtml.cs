@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,33 +22,33 @@ namespace MonevAtr.Pages.Rdtr
         {
             get
             {
-                return (from progressAtr in _context.ProgressAtr where progressAtr.KodeJenisAtr == 1 select progressAtr).ToList();
+                return (from progressAtr in _context.ProgressAtr where progressAtr.KodeJenisAtr == (int) JenisAtrEnum.RdtrPerda select progressAtr).ToList();
             }
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["Provinsi"] = _context.SelectListProvinsi;
+            ViewData["Provinsi"] = await _context.GetSelectListProvinsi();
             ViewData["KabupatenKota"] = _context.EmptySelectListKabupatenKota;
-            ViewData["Tahun"] = this.SelectListTahun;
+            ViewData["Tahun"] = GetSelectListTahun();
             return Page();
         }
 
-        private SelectList SelectListTahun
+        private SelectList GetSelectListTahun()
         {
-            get
+            List<short> list = (from atr in _context.Atr where atr.KodeJenisAtr == (int) JenisAtrEnum.RdtrPerda select atr.Tahun)
+                .Distinct()
+                .ToList();
+
+            List<Models.Tahun> listHasil = new List<Tahun>();
+            listHasil.Insert(0, new Tahun(0, "Pilih Tahun"));
+
+            foreach (short tahun in list)
             {
-                List<Models.Tahun> list = new List<Tahun>();
-                list.Insert(0, new Tahun(0, "Pilih Tahun"));
-                int tahunSekarang = DateTime.Today.Year;
-
-                for (int tahun = tahunSekarang; tahun >= tahunSekarang - 10; tahun--)
-                {
-                    list.Add(new Tahun(tahun));
-                }
-
-                return new SelectList(list, "Value", "Text");
+                listHasil.Add(new Tahun(tahun));
             }
+
+            return new SelectList(listHasil, "Value", "Text");
         }
 
         private readonly MonevAtrDbContext _context;

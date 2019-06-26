@@ -16,11 +16,11 @@ namespace MonevAtr.Pages.Rdtr
         [BindProperty]
         public Models.Atr Atr { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // ViewData["ProgressAtr"] = new SelectList(_context.ProgressAtr, "Kode", "Nama");
+            ViewData["ProgressAtr"] = await _context.GetSelectListProgressRdtr();
             ViewData["KabupatenKota"] = _context.EmptySelectListKabupatenKota;
-            ViewData["Provinsi"] = _context.SelectListProvinsi;
+            ViewData["Provinsi"] = await _context.GetSelectListProvinsi();
 
             return Page();
         }
@@ -37,18 +37,16 @@ namespace MonevAtr.Pages.Rdtr
                 this.Atr.KodeKabupatenKota = null;
             }
 
-            this.Atr.KodeProgressAtr = null;
+            this.Atr.KodeJenisAtr = (int) JenisAtrEnum.RdtrPerda;
 
             if (!ModelState.IsValid)
             {
-                return OnGet();
+                return await OnGetAsync();
             }
 
             _context.Atr.Attach(this.Atr);
             _context.Entry(this.Atr).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            // _context.Atr.Add(Atr);
-            // await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
