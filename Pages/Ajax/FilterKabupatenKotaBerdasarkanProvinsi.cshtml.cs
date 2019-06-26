@@ -12,20 +12,19 @@ namespace MonevAtr.Pages.Ajax
 {
     public class FilterKabupatenKotaBerdasarkanProvinsiModel : PageModel
     {
-        private readonly Models.MonevAtrDbContext _context;
-
-        public FilterKabupatenKotaBerdasarkanProvinsiModel(Models.MonevAtrDbContext context)
+        public FilterKabupatenKotaBerdasarkanProvinsiModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
-        public JsonResult OnGetAsync(int kodeProvinsi)
+        public async Task<JsonResult> OnGetAsync(int kodeProvinsi)
         {
-            List<Models.KabupatenKota> listKabupatenKota = (from kabupatenKota in _context.KabupatenKota
-                                                            where kabupatenKota.KodeProvinsi == kodeProvinsi
-                                                            select kabupatenKota).ToList();
+            List<Models.KabupatenKota> listKabupatenKota = await (from kabupatenKota in _context.KabupatenKota where kabupatenKota.KodeProvinsi == kodeProvinsi select kabupatenKota)
+                .ToListAsync();
             listKabupatenKota.Insert(0, new Models.KabupatenKota(0, "Pilih Kabupaten/Kota"));
             return new JsonResult(new SelectList(listKabupatenKota, "Kode", "Nama"));
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }
