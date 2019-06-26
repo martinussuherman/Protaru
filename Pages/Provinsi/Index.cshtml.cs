@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,8 @@ namespace MonevAtr.Pages.Provinsi
 
         public async Task OnGetAsync()
         {
-            Provinsi = await _context.Provinsi.ToListAsync();
+            this.Provinsi = await (from p in _context.Provinsi orderby p.Nama select p)
+                .ToListAsync();
         }
 
         private readonly MonevAtrDbContext _context;

@@ -1,31 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Dokumen
 {
     public class CreateModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public CreateModel(MonevAtr.Models.MonevAtrDbContext context)
+        public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Models.Dokumen Dokumen { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["KodeKelompokDokumen"] = _context.SelectListKelompokDokumen;
+            ViewData["KelompokDokumen"] = await _context.GetSelectListKelompokDokumen();
             return Page();
         }
-
-        [BindProperty]
-        public MonevAtr.Models.Dokumen Dokumen { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,10 +28,12 @@ namespace MonevAtr.Pages.Dokumen
                 return Page();
             }
 
-            _context.Dokumen.Add(Dokumen);
+            _context.Dokumen.Add(this.Dokumen);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

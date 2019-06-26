@@ -24,12 +24,14 @@ namespace MonevAtr.Pages.Provinsi
                 return NotFound();
             }
 
-            Provinsi = await _context.Provinsi.FirstOrDefaultAsync(m => m.Kode == id);
+            this.Provinsi = await _context.Provinsi
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (Provinsi == null)
+            if (this.Provinsi == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -40,7 +42,7 @@ namespace MonevAtr.Pages.Provinsi
                 return Page();
             }
 
-            _context.Attach(Provinsi).State = EntityState.Modified;
+            _context.Attach(this.Provinsi).State = EntityState.Modified;
 
             try
             {
@@ -48,7 +50,7 @@ namespace MonevAtr.Pages.Provinsi
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProvinsiExists(Provinsi.Kode))
+                if (!ProvinsiExists(this.Provinsi.Kode))
                 {
                     return NotFound();
                 }

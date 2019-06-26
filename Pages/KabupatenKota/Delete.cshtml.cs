@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,15 +8,13 @@ namespace MonevAtr.Pages.KabupatenKota
 {
     public class DeleteModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public DeleteModel(MonevAtr.Models.MonevAtrDbContext context)
+        public DeleteModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.KabupatenKota KabupatenKota { get; set; }
+        public Models.KabupatenKota KabupatenKota { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,10 +23,11 @@ namespace MonevAtr.Pages.KabupatenKota
                 return NotFound();
             }
 
-            KabupatenKota = await _context.KabupatenKota
-                .Include(k => k.Provinsi).FirstOrDefaultAsync(m => m.Kode == id);
+            this.KabupatenKota = await _context.KabupatenKota
+                .Include(k => k.Provinsi)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (KabupatenKota == null)
+            if (this.KabupatenKota == null)
             {
                 return NotFound();
             }
@@ -45,15 +41,17 @@ namespace MonevAtr.Pages.KabupatenKota
                 return NotFound();
             }
 
-            KabupatenKota = await _context.KabupatenKota.FindAsync(id);
+            this.KabupatenKota = await _context.KabupatenKota.FindAsync(id);
 
-            if (KabupatenKota != null)
+            if (this.KabupatenKota != null)
             {
-                _context.KabupatenKota.Remove(KabupatenKota);
+                _context.KabupatenKota.Remove(this.KabupatenKota);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

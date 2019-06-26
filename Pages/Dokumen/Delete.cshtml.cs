@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,15 +8,13 @@ namespace MonevAtr.Pages.Dokumen
 {
     public class DeleteModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public DeleteModel(MonevAtr.Models.MonevAtrDbContext context)
+        public DeleteModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.Dokumen Dokumen { get; set; }
+        public Models.Dokumen Dokumen { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,13 +23,15 @@ namespace MonevAtr.Pages.Dokumen
                 return NotFound();
             }
 
-            Dokumen = await _context.Dokumen
-                .Include(d => d.KelompokDokumen).FirstOrDefaultAsync(m => m.Kode == id);
+            this.Dokumen = await _context.Dokumen
+                .Include(d => d.KelompokDokumen)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (Dokumen == null)
+            if (this.Dokumen == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,15 +42,17 @@ namespace MonevAtr.Pages.Dokumen
                 return NotFound();
             }
 
-            Dokumen = await _context.Dokumen.FindAsync(id);
+            this.Dokumen = await _context.Dokumen.FindAsync(id);
 
-            if (Dokumen != null)
+            if (this.Dokumen != null)
             {
-                _context.Dokumen.Remove(Dokumen);
+                _context.Dokumen.Remove(this.Dokumen);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

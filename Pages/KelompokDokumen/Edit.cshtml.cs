@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
@@ -12,15 +9,13 @@ namespace MonevAtr.Pages.KelompokDokumen
 {
     public class EditModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public EditModel(MonevAtr.Models.MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.KelompokDokumen KelompokDokumen { get; set; }
+        public Models.KelompokDokumen KelompokDokumen { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,14 +24,16 @@ namespace MonevAtr.Pages.KelompokDokumen
                 return NotFound();
             }
 
-            KelompokDokumen = await _context.KelompokDokumen
-                .Include(k => k.JenisAtr).FirstOrDefaultAsync(m => m.Kode == id);
+            this.KelompokDokumen = await _context.KelompokDokumen
+                .Include(k => k.JenisAtr)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (KelompokDokumen == null)
+            if (this.KelompokDokumen == null)
             {
                 return NotFound();
             }
-            ViewData["KodeJenisAtr"] = new SelectList(_context.JenisAtr, "Kode", "Kode");
+
+            ViewData["JenisAtr"] = await _context.GetSelectListJenisAtr();
             return Page();
         }
 
@@ -47,7 +44,7 @@ namespace MonevAtr.Pages.KelompokDokumen
                 return Page();
             }
 
-            _context.Attach(KelompokDokumen).State = EntityState.Modified;
+            _context.Attach(this.KelompokDokumen).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +52,7 @@ namespace MonevAtr.Pages.KelompokDokumen
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!KelompokDokumenExists(KelompokDokumen.Kode))
+                if (!KelompokDokumenExists(this.KelompokDokumen.Kode))
                 {
                     return NotFound();
                 }
@@ -72,5 +69,7 @@ namespace MonevAtr.Pages.KelompokDokumen
         {
             return _context.KelompokDokumen.Any(e => e.Kode == id);
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

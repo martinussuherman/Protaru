@@ -1,31 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.KabupatenKota
 {
     public class CreateModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public CreateModel(MonevAtr.Models.MonevAtrDbContext context)
+        public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Models.KabupatenKota KabupatenKota { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["KodeProvinsi"] = _context.SelectListProvinsi;
+            ViewData["KodeProvinsi"] = await _context.GetSelectListProvinsi();
             return Page();
         }
-
-        [BindProperty]
-        public MonevAtr.Models.KabupatenKota KabupatenKota { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,10 +28,12 @@ namespace MonevAtr.Pages.KabupatenKota
                 return Page();
             }
 
-            _context.KabupatenKota.Add(KabupatenKota);
+            _context.KabupatenKota.Add(this.KabupatenKota);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

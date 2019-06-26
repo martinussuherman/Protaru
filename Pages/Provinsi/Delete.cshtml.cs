@@ -23,9 +23,10 @@ namespace MonevAtr.Pages.Provinsi
                 return NotFound();
             }
 
-            Provinsi = await _context.Provinsi.FirstOrDefaultAsync(m => m.Kode == id);
+            this.Provinsi = await _context.Provinsi
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (Provinsi == null)
+            if (this.Provinsi == null)
             {
                 return NotFound();
             }
@@ -39,11 +40,11 @@ namespace MonevAtr.Pages.Provinsi
                 return NotFound();
             }
 
-            Provinsi = await _context.Provinsi.FindAsync(id);
+            this.Provinsi = await _context.Provinsi.FindAsync(id);
 
-            if (Provinsi != null)
+            if (this.Provinsi != null)
             {
-                _context.Provinsi.Remove(Provinsi);
+                _context.Provinsi.Remove(this.Provinsi);
                 await _context.SaveChangesAsync();
             }
 

@@ -17,8 +17,13 @@
                 <span asp-validation-for="Dokumen.Nama" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Dokumen.Nomor" class="control-label"></label>
+                <input asp-for="Dokumen.Nomor" class="form-control" />
+                <span asp-validation-for="Dokumen.Nomor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Dokumen.KodeKelompokDokumen" class="control-label"></label>
-                <select asp-for="Dokumen.KodeKelompokDokumen" class ="form-control" asp-items="ViewBag.KodeKelompokDokumen"></select>
+                <select asp-for="Dokumen.KodeKelompokDokumen" class ="form-control" asp-items="ViewBag.KelompokDokumen"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Simpan" class="btn btn-primary" />

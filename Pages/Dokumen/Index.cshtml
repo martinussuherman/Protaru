@@ -20,7 +20,13 @@
                 @Html.DisplayNameFor(model => model.Dokumen[0].Nama)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].Nomor)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Dokumen[0].KelompokDokumen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].KelompokDokumen.JenisAtr)
             </th>
             <th></th>
         </tr>
@@ -35,7 +41,13 @@
                 @Html.DisplayFor(modelItem => item.Nama)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KelompokDokumen.Kode)
+                @Html.DisplayFor(modelItem => item.Nomor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KelompokDokumen.Nama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KelompokDokumen.JenisAtr.Nama)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Kode">Ubah</a> |

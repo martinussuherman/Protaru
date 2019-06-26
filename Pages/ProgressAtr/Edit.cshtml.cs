@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
@@ -12,15 +9,13 @@ namespace MonevAtr.Pages.ProgressAtr
 {
     public class EditModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public EditModel(MonevAtr.Models.MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.ProgressAtr ProgressAtr { get; set; }
+        public Models.ProgressAtr ProgressAtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +24,16 @@ namespace MonevAtr.Pages.ProgressAtr
                 return NotFound();
             }
 
-            ProgressAtr = await _context.ProgressAtr
-                .Include(p => p.JenisAtr).FirstOrDefaultAsync(m => m.Kode == id);
+            this.ProgressAtr = await _context.ProgressAtr
+                .Include(p => p.JenisAtr)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (ProgressAtr == null)
+            if (this.ProgressAtr == null)
             {
                 return NotFound();
             }
 
-            ViewData["KodeJenisAtr"] = _context.SelectListJenisAtr;
+            ViewData["JenisAtr"] = await _context.GetSelectListJenisAtr();
             return Page();
         }
 
@@ -48,7 +44,7 @@ namespace MonevAtr.Pages.ProgressAtr
                 return Page();
             }
 
-            _context.Attach(ProgressAtr).State = EntityState.Modified;
+            _context.Attach(this.ProgressAtr).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +52,7 @@ namespace MonevAtr.Pages.ProgressAtr
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProgressAtrExists(ProgressAtr.Kode))
+                if (!ProgressAtrExists(this.ProgressAtr.Kode))
                 {
                     return NotFound();
                 }
@@ -73,5 +69,7 @@ namespace MonevAtr.Pages.ProgressAtr
         {
             return _context.ProgressAtr.Any(e => e.Kode == id);
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

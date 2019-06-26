@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,15 +8,13 @@ namespace MonevAtr.Pages.ProgressAtr
 {
     public class DeleteModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public DeleteModel(MonevAtr.Models.MonevAtrDbContext context)
+        public DeleteModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.ProgressAtr ProgressAtr { get; set; }
+        public Models.ProgressAtr ProgressAtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,13 +23,15 @@ namespace MonevAtr.Pages.ProgressAtr
                 return NotFound();
             }
 
-            ProgressAtr = await _context.ProgressAtr
-                .Include(p => p.JenisAtr).FirstOrDefaultAsync(m => m.Kode == id);
+            this.ProgressAtr = await _context.ProgressAtr
+                .Include(p => p.JenisAtr)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (ProgressAtr == null)
+            if (this.ProgressAtr == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,15 +42,17 @@ namespace MonevAtr.Pages.ProgressAtr
                 return NotFound();
             }
 
-            ProgressAtr = await _context.ProgressAtr.FindAsync(id);
+            this.ProgressAtr = await _context.ProgressAtr.FindAsync(id);
 
-            if (ProgressAtr != null)
+            if (this.ProgressAtr != null)
             {
-                _context.ProgressAtr.Remove(ProgressAtr);
+                _context.ProgressAtr.Remove(this.ProgressAtr);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

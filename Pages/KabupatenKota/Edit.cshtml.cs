@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
@@ -12,15 +9,13 @@ namespace MonevAtr.Pages.KabupatenKota
 {
     public class EditModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public EditModel(MonevAtr.Models.MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.KabupatenKota KabupatenKota { get; set; }
+        public Models.KabupatenKota KabupatenKota { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +24,16 @@ namespace MonevAtr.Pages.KabupatenKota
                 return NotFound();
             }
 
-            KabupatenKota = await _context.KabupatenKota
-                .Include(k => k.Provinsi).FirstOrDefaultAsync(m => m.Kode == id);
+            this.KabupatenKota = await _context.KabupatenKota
+                .Include(k => k.Provinsi)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (KabupatenKota == null)
+            if (this.KabupatenKota == null)
             {
                 return NotFound();
             }
 
-            ViewData["KodeProvinsi"] = _context.SelectListProvinsi;
+            ViewData["KodeProvinsi"] = await _context.GetSelectListProvinsi();
             return Page();
         }
 
@@ -48,7 +44,7 @@ namespace MonevAtr.Pages.KabupatenKota
                 return Page();
             }
 
-            _context.Attach(KabupatenKota).State = EntityState.Modified;
+            _context.Attach(this.KabupatenKota).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +52,7 @@ namespace MonevAtr.Pages.KabupatenKota
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!KabupatenKotaExists(KabupatenKota.Kode))
+                if (!KabupatenKotaExists(this.KabupatenKota.Kode))
                 {
                     return NotFound();
                 }
@@ -73,5 +69,7 @@ namespace MonevAtr.Pages.KabupatenKota
         {
             return _context.KabupatenKota.Any(e => e.Kode == id);
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

@@ -1,31 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.ProgressAtr
 {
     public class CreateModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public CreateModel(MonevAtr.Models.MonevAtrDbContext context)
+        public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Models.ProgressAtr ProgressAtr { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["KodeJenisAtr"] = _context.SelectListJenisAtr;
+            ViewData["JenisAtr"] = await _context.GetSelectListJenisAtr();
             return Page();
         }
-
-        [BindProperty]
-        public MonevAtr.Models.ProgressAtr ProgressAtr { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,10 +28,12 @@ namespace MonevAtr.Pages.ProgressAtr
                 return Page();
             }
 
-            _context.ProgressAtr.Add(ProgressAtr);
+            _context.ProgressAtr.Add(this.ProgressAtr);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }
