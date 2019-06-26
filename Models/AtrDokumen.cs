@@ -23,7 +23,10 @@ namespace MonevAtr.Models
         [MaxLength(50)]
         public string Nomor { get; set; }
 
-        public DateTime Tanggal { get; set; }
+        public DateTime Tanggal { get; set; } = DateTime.MinValue;
+
+        [MaxLength(1000)]
+        public string Keterangan { get; set; }
 
         [MaxLength(255)]
         public string FilePath { get; set; }
@@ -33,5 +36,21 @@ namespace MonevAtr.Models
 
         [ForeignKey("KodeDokumen")]
         public Dokumen Dokumen { get; set; }
+
+        public string DisplayTanggal
+        {
+            get
+            {
+                return this.Tanggal.ToString("yyyy-MM-dd");
+            }
+        }
+
+        public bool StatusAda
+        {
+            get
+            {
+                return (!String.IsNullOrEmpty(this.Status) && this.Status == "1");
+            }
+        }
     }
 }

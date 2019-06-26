@@ -31,10 +31,22 @@ namespace MonevAtr.Models
 
         public short Tahun { get; set; }
 
+        [Display(Name = "Status Revisi")]
+        public byte? StatusRevisi { get; set; }
+
+        [MaxLength(1000, ErrorMessage = "Permasalahan maksimal 1000 karakter.")]
+        public string Permasalahan { get; set; } = String.Empty;
+
+        [Display(Name = "Tindak Lanjut"), MaxLength(1000, ErrorMessage = "Tindak lanjut maksimal 1000 karakter.")]
+        public string TindakLanjut { get; set; } = String.Empty;
+
+        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
+        public string Keterangan { get; set; } = String.Empty;
+
         [Display(Name = "Jenis ATR")]
         public int KodeJenisAtr { get; set; }
 
-        [Display(Name = "Progress")]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Progress ATR harus diisi."), Display(Name = "Progress")]
         public int? KodeProgressAtr { get; set; }
 
         [Display(Name = "Kabupaten/Kota")]
@@ -54,6 +66,44 @@ namespace MonevAtr.Models
 
         [ForeignKey("KodeProvinsi")]
         public Provinsi Provinsi { get; set; }
+
+        [NotMapped]
+        public string DisplayNamaProvinsi
+        {
+            get
+            {
+                if (this.Provinsi != null)
+                {
+                    return this.Provinsi.Nama;
+                }
+
+                if (this.KabupatenKota != null)
+                {
+                    return this.KabupatenKota.Provinsi.Nama;
+                }
+
+                return String.Empty;
+            }
+        }
+
+        [NotMapped]
+        public string DisplayNamaProvinsiKabupatenKota
+        {
+            get
+            {
+                if (this.Provinsi != null)
+                {
+                    return this.Provinsi.Nama;
+                }
+
+                if (this.KabupatenKota != null)
+                {
+                    return this.KabupatenKota.Provinsi.Nama + ", " + this.KabupatenKota.Nama;
+                }
+
+                return String.Empty;
+            }
+        }
 
         public ICollection<AtrDokumen> AtrDokumen { get; set; }
     }
