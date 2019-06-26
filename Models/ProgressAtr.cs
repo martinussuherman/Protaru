@@ -13,11 +13,20 @@ namespace MonevAtr.Models
             Atr = new HashSet<Atr>();
         }
 
+        public ProgressAtr(int kode, string nama) : this()
+        {
+            this.Kode = kode;
+            this.Nama = nama;
+        }
+
         [Key]
         public int Kode { get; set; }
 
         [Required(ErrorMessage = "Nama Progress ATR harus diisi."), MaxLength(50)]
         public string Nama { get; set; }
+
+        [Required(ErrorMessage = "Nomor Urut Progress ATR harus diisi."), Range(1, Int32.MaxValue, ErrorMessage = "Nomor Urut Progress ATR harus > 0.")]
+        public int Nomor { get; set; }
 
         [Range(1, Int32.MaxValue, ErrorMessage = "Jenis ATR harus diisi."), Display(Name = "Jenis ATR")]
         public int KodeJenisAtr { get; set; }

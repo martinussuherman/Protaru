@@ -13,7 +13,7 @@ namespace MonevAtr.Models
             Dokumen = new HashSet<Dokumen>();
         }
 
-        public KelompokDokumen(int kode, string nama)
+        public KelompokDokumen(int kode, string nama) : this()
         {
             this.Kode = kode;
             this.Nama = nama;
@@ -25,11 +25,28 @@ namespace MonevAtr.Models
         [Required(ErrorMessage = "Nama Kelompok Dokumen harus diisi."), MaxLength(50)]
         public string Nama { get; set; }
 
+        [Required(ErrorMessage = "Nomor Urut Kelompok Dokumen harus diisi."), Range(1, Int32.MaxValue, ErrorMessage = "Nomor Urut Kelompok Dokumen harus > 0.")]
+        public int Nomor { get; set; }
+
         [Range(1, Int32.MaxValue, ErrorMessage = "Jenis ATR harus diisi."), Display(Name = "Jenis ATR")]
         public int KodeJenisAtr { get; set; }
 
         [ForeignKey("KodeJenisAtr"), Display(Name = "Jenis ATR")]
         public JenisAtr JenisAtr { get; set; }
+
+        [NotMapped]
+        public string DisplayNamaJenisAtr
+        {
+            get
+            {
+                if (this.JenisAtr != null)
+                {
+                    return this.Nama + " - " + this.JenisAtr.Nama;
+                }
+
+                return this.Nama;
+            }
+        }
 
         public ICollection<Dokumen> Dokumen { get; set; }
     }

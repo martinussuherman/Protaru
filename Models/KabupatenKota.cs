@@ -13,7 +13,7 @@ namespace MonevAtr.Models
             Atr = new HashSet<Atr>();
         }
 
-        public KabupatenKota(int kode, string nama)
+        public KabupatenKota(int kode, string nama) : this()
         {
             this.Kode = kode;
             this.Nama = nama;

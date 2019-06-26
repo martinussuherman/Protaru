@@ -19,6 +19,9 @@ namespace MonevAtr.Models
         [Required(ErrorMessage = "Nama Dokumen harus diisi."), MaxLength(100)]
         public string Nama { get; set; }
 
+        [Required(ErrorMessage = "Nomor Urut Dokumen harus diisi."), Range(1, Int32.MaxValue, ErrorMessage = "Nomor Urut Dokumen harus > 0.")]
+        public int Nomor { get; set; }
+
         [Range(1, Int32.MaxValue, ErrorMessage = "Kelompok Dokumen harus diisi."), Display(Name = "Kelompok Dokumen")]
         public int KodeKelompokDokumen { get; set; }
 
@@ -26,5 +29,8 @@ namespace MonevAtr.Models
         public KelompokDokumen KelompokDokumen { get; set; }
 
         public ICollection<AtrDokumen> AtrDokumen { get; set; }
+
+        [NotMapped]
+        public AtrDokumen DetailDokumen { get; set; }
     }
 }

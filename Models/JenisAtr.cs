@@ -15,7 +15,7 @@ namespace MonevAtr.Models
             ProgressAtr = new HashSet<ProgressAtr>();
         }
 
-        public JenisAtr(int kode, string nama)
+        public JenisAtr(int kode, string nama) : this()
         {
             this.Kode = kode;
             this.Nama = nama;
