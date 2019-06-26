@@ -96,7 +96,7 @@ namespace MonevAtr.Pages.RtrwRegular
 
         private IQueryable<Models.Atr> QueryAtrByProgress(IQueryable<Models.Atr> query)
         {
-            var predicate = PredicateBuilder.New<Models.Atr>();
+            var predicate = PredicateBuilder.New<Models.Atr>(true);
 
             foreach (int kodeProgress in this.AtrSearch.KodeProgressAtr)
             {
