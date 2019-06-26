@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,15 +8,13 @@ namespace MonevAtr.Pages.JenisAtr
 {
     public class DeleteModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public DeleteModel(MonevAtr.Models.MonevAtrDbContext context)
+        public DeleteModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.JenisAtr JenisAtr { get; set; }
+        public Models.JenisAtr JenisAtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +23,10 @@ namespace MonevAtr.Pages.JenisAtr
                 return NotFound();
             }
 
-            JenisAtr = await _context.JenisAtr.FirstOrDefaultAsync(m => m.Kode == id);
+            this.JenisAtr = await _context.JenisAtr
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (JenisAtr == null)
+            if (this.JenisAtr == null)
             {
                 return NotFound();
             }
@@ -44,15 +40,17 @@ namespace MonevAtr.Pages.JenisAtr
                 return NotFound();
             }
 
-            JenisAtr = await _context.JenisAtr.FindAsync(id);
+            this.JenisAtr = await _context.JenisAtr.FindAsync(id);
 
-            if (JenisAtr != null)
+            if (this.JenisAtr != null)
             {
-                _context.JenisAtr.Remove(JenisAtr);
+                _context.JenisAtr.Remove(this.JenisAtr);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }

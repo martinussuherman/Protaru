@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
@@ -12,15 +9,13 @@ namespace MonevAtr.Pages.JenisAtr
 {
     public class EditModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
-
-        public EditModel(MonevAtr.Models.MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.JenisAtr JenisAtr { get; set; }
+        public Models.JenisAtr JenisAtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,12 +24,14 @@ namespace MonevAtr.Pages.JenisAtr
                 return NotFound();
             }
 
-            JenisAtr = await _context.JenisAtr.FirstOrDefaultAsync(m => m.Kode == id);
+            this.JenisAtr = await _context.JenisAtr
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (JenisAtr == null)
+            if (this.JenisAtr == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,7 +42,7 @@ namespace MonevAtr.Pages.JenisAtr
                 return Page();
             }
 
-            _context.Attach(JenisAtr).State = EntityState.Modified;
+            _context.Attach(this.JenisAtr).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +50,7 @@ namespace MonevAtr.Pages.JenisAtr
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JenisAtrExists(JenisAtr.Kode))
+                if (!JenisAtrExists(this.JenisAtr.Kode))
                 {
                     return NotFound();
                 }
@@ -70,5 +67,7 @@ namespace MonevAtr.Pages.JenisAtr
         {
             return _context.JenisAtr.Any(e => e.Kode == id);
         }
+
+        private readonly MonevAtrDbContext _context;
     }
 }
