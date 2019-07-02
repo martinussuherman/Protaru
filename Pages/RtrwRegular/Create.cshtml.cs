@@ -44,6 +44,8 @@ namespace MonevAtr.Pages.RtrwRegular
                 return await OnGetAsync();
             }
 
+            // status default = T5-1 
+            this.Atr.StatusRevisi = 1;
             _context.Atr.Attach(this.Atr);
             _context.Entry(this.Atr).State = EntityState.Added;
             await _context.SaveChangesAsync();

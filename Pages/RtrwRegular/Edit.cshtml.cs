@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,10 @@ namespace MonevAtr.Pages.RtrwRegular
 {
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context, IHostingEnvironment environment)
         {
             _context = context;
+            hostingEnvironment = environment;
         }
 
         [BindProperty]
@@ -43,21 +45,21 @@ namespace MonevAtr.Pages.RtrwRegular
 
             MergeAtrDokumenDenganKelompokDokumen(id);
             ViewData["Progress"] = await _context.GetSelectListProgressRtrwRegular();
-            ViewData["StatusRevisi"] = StatusRevisi.SelectListStatusRevisi;
+            ViewData["StatusRevisi"] = StatusRevisi.SelectListStatusRevisiRtrwRegular;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return await OnGetAsync(this.Atr.Kode);
-            }
+            // if (!ModelState.IsValid)
+            // {
+            //     return await OnGetAsync(this.Atr.Kode);
+            // }
 
-            if (!await SaveAtr())
-            {
-                return NotFound();
-            }
+            // FixUploadFiles(HttpContext);
+
+            dokumenList = await _context.Dokumen
+                .ToListAsync();
 
             foreach (Models.AtrDokumen dokumen in this.AtrDokumenList)
             {
@@ -65,6 +67,19 @@ namespace MonevAtr.Pages.RtrwRegular
                 {
                     return NotFound();
                 }
+            }
+
+            // for (int index = 0; index < this.AtrDokumenList.Count; index++)
+            // {
+            //     if (!await SaveAtrDokumen(index))
+            //     {
+            //         return NotFound();
+            //     }
+            // }
+
+            if (!await SaveAtr())
+            {
+                return NotFound();
             }
 
             return await OnGetAsync(this.Atr.Kode);
@@ -79,20 +94,25 @@ namespace MonevAtr.Pages.RtrwRegular
             {
                 foreach (Models.Dokumen dokumen in kelompokDokumen.Dokumen)
                 {
-                    Models.AtrDokumen joinedItem = atrDokumenList.Find(k => k.KodeDokumen == dokumen.Kode);
-
-                    if (joinedItem == null)
-                    {
-                        joinedItem = new AtrDokumen();
-                        joinedItem.KodeAtr = this.Atr.Kode;
-                        joinedItem.KodeDokumen = dokumen.Kode;
-                    }
-
-                    joinedItem.Atr = this.Atr;
-                    joinedItem.Dokumen = dokumen;
-                    dokumen.DetailDokumen = joinedItem;
+                    AdjustItemProperties(dokumen);
                 }
             }
+        }
+
+        private void AdjustItemProperties(Models.Dokumen dokumen)
+        {
+            Models.AtrDokumen joinedItem = atrDokumenList.Find(k => k.KodeDokumen == dokumen.Kode);
+
+            if (joinedItem == null)
+            {
+                joinedItem = new AtrDokumen();
+                joinedItem.KodeAtr = this.Atr.Kode;
+                joinedItem.KodeDokumen = dokumen.Kode;
+            }
+
+            joinedItem.Atr = this.Atr;
+            joinedItem.Dokumen = dokumen;
+            dokumen.DetailDokumen = joinedItem;
         }
 
         private async Task<bool> SaveAtr()
@@ -123,6 +143,13 @@ namespace MonevAtr.Pages.RtrwRegular
             if (!dokumen.StatusAda)
             {
                 return true;
+            }
+
+            Models.Dokumen tabelDokumen = dokumenList.Find(d => d.Kode == dokumen.KodeDokumen);
+
+            if (tabelDokumen.AmbilNomor == 1)
+            {
+                this.Atr.Nomor = dokumen.Nomor;
             }
 
             if (dokumen.Kode == 0)
@@ -165,6 +192,10 @@ namespace MonevAtr.Pages.RtrwRegular
 
         private List<Models.AtrDokumen> atrDokumenList;
 
+        private List<Models.Dokumen> dokumenList;
+
         private readonly MonevAtrDbContext _context;
+
+        private readonly IHostingEnvironment hostingEnvironment;
     }
 }

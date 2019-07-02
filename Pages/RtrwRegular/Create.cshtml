@@ -2,7 +2,7 @@
 @model MonevAtr.Pages.RtrwRegular.CreateModel
 
 @{
-    ViewData["Title"] = "Input RTRW Regular";
+    ViewData["Title"] = "Input RTRW T5-1";
 }
 
 <div class="page-header">
@@ -11,7 +11,7 @@
 <div class="row row-cards text">
     <div class="col-12 card">
         <div class="card-header">
-            <h3 class="card-title"> Input RTRW Regular </h3>
+            <h3 class="card-title"> Input RTRW T5-1 </h3>
         </div>
         <form method="post">
             <div class="card-body row">
@@ -32,10 +32,6 @@
                     <input asp-for="Atr.Nama" class="form-control">
                 </div>
                 <div class="col-md-12 form-group">
-                    <label class="form-label">Nomor RTRW</label>
-                    <input asp-for="Atr.Nomor" class="form-control">
-                </div>
-                <div class="col-md-12 form-group">
                     <label class="form-label">Area of Interest</label>
                     <input asp-for="Atr.Aoi" class="form-control">
                 </div>
@@ -47,6 +43,7 @@
                     <label asp-for="Atr.Tahun" ></label>
                     <input asp-for="Atr.Tahun" class="form-control">
                 </div>
+                <input type="hidden" asp-for="Atr.Nomor" />
             </div>
 
             <div class="card-footer text-center">
