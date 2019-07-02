@@ -1,0 +1,79 @@
+@page
+@model MonevAtr.Pages.RtrwRevisi.CreateModel
+
+@{
+    ViewData["Title"] = "Input RTRW T5-2";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row row-cards text">
+    <div class="col-12 card">
+        <div class="card-header">
+            <h3 class="card-title"> Input RTRW T5-2 </h3>
+        </div>
+        <form method="post">
+            <div class="card-body row">
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.Provinsi" class="form-label"></label>
+                    <select id="provinsi" asp-for="Atr.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+                </div>
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.KabupatenKota" class="form-label"></label>
+                    <select id="kabupaten-kota" asp-for="Atr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+                </div>
+                <div class="col-md-12 form-group">
+                    <label asp-for="Atr.KodeProgressAtr" class="control-label"></label>
+                    <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressAtr"></select>
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="form-label">Nama RTRW</label>
+                    <input asp-for="Atr.Nama" class="form-control">
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="form-label">Area of Interest</label>
+                    <input asp-for="Atr.Aoi" class="form-control">
+                </div>
+                <div class="col-sm-6 col-md-6 form-group">
+                    <label class="form-label">Luas (Ha)</label>
+                    <input asp-for="Atr.Luas" class="form-control">
+                </div>
+                <div class="col-sm-6 col-md-6 form-group">
+                    <label asp-for="Atr.Tahun" ></label>
+                    <input asp-for="Atr.Tahun" class="form-control">
+                </div>
+                <input type="hidden" asp-for="Atr.Nomor" />
+                <input type="hidden" asp-for="KodeReferensiAtr" />
+            </div>
+
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary"><i class="fe fe-save"></i> Simpan</button>
+                <a asp-page="./Index" class="btn btn-primary"><i class="fe fe-arrow-left"></i> Kembali</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#provinsi').change( function () {
+                var url='@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")';
+
+                $.getJSON('@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")', 
+                    { kodeProvinsi: $('#provinsi').val()}, function(data){
+                    var items='';
+                    $('#kabupaten-kota').empty();
+                    $.each(data, function(i, kabupatenKota){
+                        items+='<option value="' + kabupatenKota.value + '">' + kabupatenKota.text + '</option>';
+                    });
+                    $('#kabupaten-kota').html(items); 
+                });
+            });
+        });
+    </script>
+}
+

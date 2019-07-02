@@ -1,0 +1,64 @@
+@page
+@model MonevAtr.Pages.RtrwRevisi.CreateFilterModel
+
+@{
+    ViewData["Title"] = "Monitoring & Evaluasi RTRW T5-2";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row-cards">
+    <div class="col-12 card">
+        <div class="card-header">
+            <h3 class="card-title">Monitoring & Evaluasi RTRW T5-2</h3>
+            <div class="ml-auto">
+                <a asp-page="./Index" class="btn btn-warning"><i class="fe fe-arrow-left"></i> Kembali</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table">
+                <thead style="background-color: #eee;">
+                    <tr>
+                        <th class="text-center text-dark font-weight-bold">No</th>
+                        <th class="text-dark font-weight-bold">Action</th>
+                        <th class="text-dark font-weight-bold">Provinsi</th>
+                        <th class="text-dark font-weight-bold">Kabupaten/Kota</th>
+                        <th class="text-dark font-weight-bold">Nama</th>
+                        <th class="text-dark font-weight-bold">Nomor</th>
+                        <th class="text-dark font-weight-bold">Jenis</th>
+                        <th class="text-dark font-weight-bold">Tahun</th>
+                        <th class="text-dark font-weight-bold">Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+@{
+int index = 1;
+}
+@foreach (var item in Model.HasilPencarian) {
+                    <tr>
+                        <td>@index</td>
+                        <td class="text-center">
+                            <a asp-page="./Create" asp-route-id="@item.Kode" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Pilih</a>
+                            <span>>@Html.HiddenFor(modelItem => item.Kode)</span>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
+                        <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
+                        <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Keterangan)</td>
+                    </tr>
+    index++;
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
