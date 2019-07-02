@@ -81,7 +81,7 @@ namespace MonevAtr.Models
         {
             IList<ProgressAtr> list = await (from p in this.ProgressAtr where p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular orderby p.Nomor select p)
                 .ToListAsync();
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW Regular"));
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-1"));
             return new SelectList(list, "Kode", "Nama");
         }
 
@@ -89,7 +89,7 @@ namespace MonevAtr.Models
         {
             IList<ProgressAtr> list = await (from p in this.ProgressAtr where p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi orderby p.Nomor select p)
                 .ToListAsync();
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW Revisi"));
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-2"));
             return new SelectList(list, "Kode", "Nama");
         }
 

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonevAtr.Models
 {
@@ -28,7 +29,7 @@ namespace MonevAtr.Models
         [MaxLength(1000)]
         public string Keterangan { get; set; }
 
-        [MaxLength(255)]
+        [BindNever, MaxLength(255)]
         public string FilePath { get; set; }
 
         [ForeignKey("KodeAtr")]
@@ -37,19 +38,41 @@ namespace MonevAtr.Models
         [ForeignKey("KodeDokumen")]
         public Dokumen Dokumen { get; set; }
 
+        // [BindNever, NotMapped]
+        // public IFormFile UploadFile { get; set; }
+
+        [NotMapped]
+        public FormFileWrapper UploadFile { get; set; }
+
+        [NotMapped]
         public string DisplayTanggal
         {
             get
             {
+                if (this.Tanggal == DateTime.MinValue)
+                {
+                    return String.Empty;
+                }
+
                 return this.Tanggal.ToString("yyyy-MM-dd");
             }
         }
 
+        [NotMapped]
         public bool StatusAda
         {
             get
             {
                 return (!String.IsNullOrEmpty(this.Status) && this.Status == "1");
+            }
+        }
+
+        [NotMapped]
+        public bool FilePathAda
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(this.FilePath);
             }
         }
     }

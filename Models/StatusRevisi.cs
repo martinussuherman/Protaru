@@ -15,15 +15,28 @@ namespace MonevAtr.Models
 
         public string Nama { get; set; }
 
-        public static SelectList SelectListStatusRevisi
+        public static SelectList SelectListStatusRevisiRtrwRegular
         {
             get
             {
                 List<StatusRevisi> list = new List<StatusRevisi>();
-                list.Add(new StatusRevisi(0, "Pilih Status Revisi RTRW Regular"));
+                list.Add(new StatusRevisi(0, "Pilih Status RTRW T5-1"));
                 list.Add(new StatusRevisi(1, "T5-1"));
-                list.Add(new StatusRevisi(2, "Sedang PK"));
-                list.Add(new StatusRevisi(3, "Revisi"));
+                list.Add(new StatusRevisi(2, "T5-2"));
+
+                return new SelectList(list, "Kode", "Nama");
+            }
+        }
+
+        public static SelectList SelectListStatusRevisiRtrwRevisi
+        {
+            get
+            {
+                List<StatusRevisi> list = new List<StatusRevisi>();
+                list.Add(new StatusRevisi(0, "Pilih Status RTRW T5-2"));
+                list.Add(new StatusRevisi(4, "T5-2"));
+                list.Add(new StatusRevisi(5, "T5-3"));
+                list.Add(new StatusRevisi(6, "T5-4"));
 
                 return new SelectList(list, "Kode", "Nama");
             }
