@@ -1,4 +1,5 @@
 @page
+@using Microsoft.AspNetCore.Http;
 @model MonevAtr.Pages.Rdtr.EditResultModel
 
 @{
@@ -39,10 +40,6 @@
         </div>
         <h4>List Count: @Model.AtrDokumenList.Count</h4>
 
-@{
-int index = 0;
-}
-
         <table class="table">
             <thead>
                 <tr>
@@ -54,10 +51,15 @@ int index = 0;
                     <th>Nomor</th>
                     <th>Tanggal</th>
                     <th>Path</th>
+                    <th>FileName</th>
                 </tr>
             </thead>
             <tbody>
-@foreach (var item in Model.AtrDokumenList) {
+@for(int index=0; index < Model.AtrDokumenList.Count; index++)
+{
+    var item = Model.AtrDokumenList[index];
+    IFormFile file = Model.AtrDokumenList[index].UploadFile.File;
+
                 <tr>
                     <td>
                         @index
@@ -81,17 +83,12 @@ int index = 0;
                         @Html.DisplayFor(modelItem => item.DisplayTanggal)
                     </td>
                     <td>
-    @if( item.FilePath==null)
-    {
-                        <span>null</span>
-    }
-    else
-    {
-                        <span>not null</span>
-    }
+                        @Html.DisplayFor(modelItem => item.FilePath)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => file.FileName)
                     </td>
                 </tr>
-    index++;
 }
             </tbody>
         </table>
