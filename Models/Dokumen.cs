@@ -25,6 +25,12 @@ namespace MonevAtr.Models
         [Range(1, Int32.MaxValue, ErrorMessage = "Kelompok Dokumen harus diisi."), Display(Name = "Kelompok Dokumen")]
         public int KodeKelompokDokumen { get; set; }
 
+        [Display(Name = "Nomor ATR dari Nomor ini")]
+        public byte AmbilNomor { get; set; }
+
+        [Display(Name = "Jumlah Tindak Lanjut")]
+        public byte JumlahTindakLanjut { get; set; }
+
         [ForeignKey("KodeKelompokDokumen"), Display(Name = "Kelompok Dokumen")]
         public KelompokDokumen KelompokDokumen { get; set; }
 
