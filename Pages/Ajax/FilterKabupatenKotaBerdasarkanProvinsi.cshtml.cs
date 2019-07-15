@@ -19,8 +19,11 @@ namespace MonevAtr.Pages.Ajax
 
         public async Task<JsonResult> OnGetAsync(int kodeProvinsi)
         {
-            List<Models.KabupatenKota> listKabupatenKota = await (from kabupatenKota in _context.KabupatenKota where kabupatenKota.KodeProvinsi == kodeProvinsi select kabupatenKota)
+            List<Models.KabupatenKota> listKabupatenKota = await _context.KabupatenKota
+                .Where(k => k.KodeProvinsi == kodeProvinsi)
+                .OrderBy(k => k.Nama)
                 .ToListAsync();
+
             listKabupatenKota.Insert(0, new Models.KabupatenKota(0, "Pilih Kabupaten/Kota"));
             return new JsonResult(new SelectList(listKabupatenKota, "Kode", "Nama"));
         }
