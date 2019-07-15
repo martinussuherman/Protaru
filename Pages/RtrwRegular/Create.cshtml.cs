@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.RtrwRegular
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         public CreateModel(MonevAtrDbContext context)
@@ -38,17 +40,17 @@ namespace MonevAtr.Pages.RtrwRegular
             }
 
             this.Atr.KodeJenisAtr = (int) JenisAtrEnum.RtrwRegular;
+            this.Atr.Tahun = 0;
+            this.Atr.StatusRevisi = (byte) StatusRevisi.RegularT51.Kode;
 
             if (!ModelState.IsValid)
             {
                 return await OnGetAsync();
             }
 
-            // status default = T5-1 
-            this.Atr.StatusRevisi = 1;
             _context.Atr.Attach(this.Atr);
             _context.Entry(this.Atr).State = EntityState.Added;
-            await _context.SaveChangesAsync();
+            _ = await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
