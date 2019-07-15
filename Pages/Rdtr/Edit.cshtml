@@ -11,9 +11,9 @@
 <div class="row row-cards text">
     <div class="col-12 card">
         <div class="card-body">
-            <h1 class="title">@Html.DisplayFor(model => model.Atr.DisplayNamaProvinsiKabupatenKota)</h1>
-            <h2 class="title">@Html.DisplayFor(model => model.Atr.Nama)</h2>
-            <h3 class="title">Nomor: @Html.DisplayFor(model => model.Atr.Nomor)</h3>
+            <h1 class="title">@Model.Atr.DisplayNamaProvinsiKabupatenKota</h1>
+            <h2 class="title">@Model.Atr.Nama</h2>
+            <h3 class="title">Nomor: @Model.Atr.Nomor</h3>
         </div>
         <hr>
 
@@ -31,17 +31,17 @@
                             <tr>
                                 <th style="width: 150px;">AOI</th>
                                 <td style="width: 10px;">:</td>
-                                <td style="width: 30%;">@Html.DisplayFor(model => model.Atr.Aoi)</td>
+                                <td style="width: 30%;">@Model.Atr.Aoi</td>
 
                                 <th style="width: 150px;">Luas (Ha)</th>
                                 <td style="width: 10px;">:</td>
-                                <td style="width: 30%;">@Html.DisplayFor(model => model.Atr.Luas)</td>
+                                <td style="width: 30%;">@Model.Atr.Luas</td>
                             </tr>
 
                             <tr>
-                                <th>Tahun</th>
+                                <th>Tahun Penyusunan</th>
                                 <td>:</td>
-                                <td>@Html.DisplayFor(model => model.Atr.Tahun)</td>
+                                <td>@Html.DisplayFor(model => model.Atr.TahunPenyusunan)</td>
 
                                 <th></th>
                                 <td></td>
@@ -58,6 +58,7 @@
                 <input type="hidden" asp-for="Atr.Aoi" />
                 <input type="hidden" asp-for="Atr.Luas" />
                 <input type="hidden" asp-for="Atr.Tahun" />
+                <input type="hidden" asp-for="Atr.TahunPenyusunan" />
                 <input type="hidden" asp-for="Atr.KodeJenisAtr" />
                 <input type="hidden" asp-for="Atr.KodeKabupatenKota" />
                 <input type="hidden" asp-for="Atr.KodeProvinsi" />
@@ -156,7 +157,7 @@ int index = 0;
                 </div>
                 <div class="col-md-2 form-group">
                     <div class="custom-file">
-                        <input type="file" name="Atr.TL1FilePath" class="custom-file-input" name="example-file-input-custom" />
+                        <input type="file" name="Atr.TL1FilePath" class="custom-file-input" />
                         <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
@@ -171,7 +172,7 @@ int index = 0;
                 </div>
                 <div class="col-md-2 form-group">
                     <div class="custom-file">
-                        <input type="file" name="Atr.TL2FilePath" class="custom-file-input" name="example-file-input-custom" />
+                        <input type="file" name="Atr.TL2FilePath" class="custom-file-input" />
                         <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
@@ -186,7 +187,7 @@ int index = 0;
                 </div>
                 <div class="col-md-2 form-group">
                     <div class="custom-file">
-                        <input type="file" name="Atr.TL3FilePath" class="custom-file-input" name="example-file-input-custom" />
+                        <input type="file" name="Atr.TL3FilePath" class="custom-file-input" />
                         <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
@@ -201,7 +202,7 @@ int index = 0;
                 </div>
                 <div class="col-md-2 form-group">
                     <div class="custom-file">
-                        <input type="file" name="Atr.TL4FilePath" class="custom-file-input" name="example-file-input-custom" />
+                        <input type="file" name="Atr.TL4FilePath" class="custom-file-input" />
                         <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
@@ -216,7 +217,7 @@ int index = 0;
                 </div>
                 <div class="col-md-2 form-group">
                     <div class="custom-file">
-                        <input type="file" name="Atr.TL5FilePath" class="custom-file-input" name="example-file-input-custom" />
+                        <input type="file" name="Atr.TL5FilePath" class="custom-file-input" />
                         <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
@@ -253,6 +254,20 @@ int index = 0;
         </div>
         </div>
     </div>
+</div>
+
+<!-- Validation Result -->
+<div class="d-none">
+    <ul>
+@{
+    var errors = ViewData.ModelState.Where(n => n.Value.Errors.Count > 0).ToList();
+
+    foreach( var error in errors)
+    {
+        <li>@error.Key - @error.Value.Errors.Count</li>
+    }
+}
+    </ul>
 </div>
 
 @section Scripts {

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Rdtr
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         public CreateModel(MonevAtrDbContext context)
@@ -38,6 +40,7 @@ namespace MonevAtr.Pages.Rdtr
             }
 
             this.Atr.KodeJenisAtr = (int) JenisAtrEnum.RdtrPerda;
+            this.Atr.Tahun = 0;
 
             if (!ModelState.IsValid)
             {
