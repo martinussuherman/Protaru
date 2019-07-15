@@ -26,7 +26,8 @@ namespace MonevAtr.Pages.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.ProgressAtr)
-                .Include(a => a.Provinsi).ToListAsync();
+                .Include(a => a.Provinsi)
+                .ToListAsync();
         }
     }
 }

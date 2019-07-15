@@ -33,7 +33,8 @@ namespace MonevAtr.Pages.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.ProgressAtr)
-                .Include(a => a.Provinsi).FirstOrDefaultAsync(m => m.Kode == id);
+                .Include(a => a.Provinsi)
+                .FirstOrDefaultAsync(m => m.Kode == id);
 
             if (Atr == null)
             {
