@@ -18,8 +18,10 @@ namespace MonevAtr.Pages.KabupatenKota
 
         public async Task OnGetAsync()
         {
-            this.KabupatenKota = await (from k in _context.KabupatenKota orderby k.Provinsi.Nama, k.Nama select k)
+            this.KabupatenKota = await _context.KabupatenKota
                 .Include(k => k.Provinsi)
+                .OrderBy(k => k.Provinsi.Nama)
+                .ThenBy(k => k.Nama)
                 .ToListAsync();
         }
 

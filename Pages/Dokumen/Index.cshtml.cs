@@ -18,9 +18,12 @@ namespace MonevAtr.Pages.Dokumen
 
         public async Task OnGetAsync()
         {
-            this.Dokumen = await (from d in _context.Dokumen orderby d.KelompokDokumen.JenisAtr.Nama, d.KelompokDokumen.Nomor, d.Nomor select d)
+            this.Dokumen = await _context.Dokumen
                 .Include(d => d.KelompokDokumen)
                 .Include(d => d.KelompokDokumen.JenisAtr)
+                .OrderBy(d => d.KelompokDokumen.JenisAtr.Nama)
+                .ThenBy(d => d.KelompokDokumen.Nomor)
+                .ThenBy(d => d.Nomor)
                 .ToListAsync();
         }
 

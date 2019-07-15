@@ -18,8 +18,10 @@ namespace MonevAtr.Pages.ProgressAtr
 
         public async Task OnGetAsync()
         {
-            this.ProgressAtr = await (from p in _context.ProgressAtr orderby p.JenisAtr.Nama, p.Nomor select p)
+            this.ProgressAtr = await _context.ProgressAtr
                 .Include(p => p.JenisAtr)
+                .OrderBy(p => p.JenisAtr.Nama)
+                .ThenBy(p => p.Nomor)
                 .ToListAsync();
         }
 
