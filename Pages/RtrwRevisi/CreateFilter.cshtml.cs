@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +10,7 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.RtrwRevisi
 {
+    [Authorize]
     public class CreateFilterModel : PageModel
     {
         public CreateFilterModel(MonevAtrDbContext context)
@@ -24,14 +25,18 @@ namespace MonevAtr.Pages.RtrwRevisi
 
         public async Task<IActionResult> OnPost()
         {
-            IQueryable<Models.Atr> query = (from atr in _context.Atr where((atr.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular && atr.StatusRevisi >= 2) || atr.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi) && atr.SudahDirevisi == 0 select atr);
+            IQueryable<Models.Atr> query = _context.Atr
+                .Where(a => ((a.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular &&
+                            a.StatusRevisi >= 2) ||
+                        a.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi) &&
+                    a.SudahDirevisi == 0);
 
-            query = QueryAtrByProvinsi(query);
-            query = QueryAtrByKabupatenKota(query);
-            query = QueryAtrByTahun(query);
-            query = QueryAtrByNama(query);
-            query = QueryAtrByNomor(query);
-            query = QueryAtrByProgress(query);
+            query = filter.QueryAtrByProvinsi(query, this.AtrSearch);
+            query = filter.QueryAtrByKabupatenKota(query, this.AtrSearch);
+            query = filter.QueryAtrByTahun(query, this.AtrSearch);
+            query = filter.QueryAtrByNama(query, this.AtrSearch);
+            query = filter.QueryAtrByNomor(query, this.AtrSearch);
+            query = filter.QueryAtrByProgress(query, this.AtrSearch);
 
             this.HasilPencarian = await query
                 .Include(a => a.Provinsi)
@@ -42,69 +47,7 @@ namespace MonevAtr.Pages.RtrwRevisi
             return Page();
         }
 
-        private IQueryable<Models.Atr> QueryAtrByProvinsi(IQueryable<Models.Atr> query)
-        {
-            if (this.AtrSearch.KodeProvinsi == 0 || this.AtrSearch.KodeKabupatenKota != 0)
-            {
-                return query;
-            }
-
-            return query.Where(q => q.KodeProvinsi == this.AtrSearch.KodeProvinsi);
-        }
-
-        private IQueryable<Models.Atr> QueryAtrByKabupatenKota(IQueryable<Models.Atr> query)
-        {
-            if (this.AtrSearch.KodeKabupatenKota == 0)
-            {
-                return query;
-            }
-
-            return query.Where(q => q.KodeKabupatenKota == this.AtrSearch.KodeKabupatenKota);
-        }
-
-        private IQueryable<Models.Atr> QueryAtrByTahun(IQueryable<Models.Atr> query)
-        {
-            if (this.AtrSearch.Tahun == 0)
-            {
-                return query;
-            }
-
-            return query.Where(q => q.Tahun == this.AtrSearch.Tahun);
-        }
-
-        private IQueryable<Models.Atr> QueryAtrByNama(IQueryable<Models.Atr> query)
-        {
-            if (String.IsNullOrEmpty(this.AtrSearch.Nama))
-            {
-                return query;
-            }
-
-            string pattern = this.AtrSearch.Nama + "%";
-            return query.Where(q => EF.Functions.Like(q.Nama, pattern));
-        }
-
-        private IQueryable<Models.Atr> QueryAtrByNomor(IQueryable<Models.Atr> query)
-        {
-            if (String.IsNullOrEmpty(this.AtrSearch.Nomor))
-            {
-                return query;
-            }
-
-            string pattern = this.AtrSearch.Nomor + "%";
-            return query.Where(q => EF.Functions.Like(q.Nomor, pattern));
-        }
-
-        private IQueryable<Models.Atr> QueryAtrByProgress(IQueryable<Models.Atr> query)
-        {
-            var predicate = PredicateBuilder.New<Models.Atr>(true);
-
-            foreach (int kodeProgress in this.AtrSearch.KodeProgressAtr)
-            {
-                predicate = predicate.Or(p => p.KodeProgressAtr == kodeProgress);
-            }
-
-            return query.Where(predicate);
-        }
+        private readonly FilterUtilities filter = new FilterUtilities();
 
         private readonly MonevAtrDbContext _context;
     }

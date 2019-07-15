@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.RtrwRevisi
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         public EditModel(MonevAtrDbContext context, IHostingEnvironment environment)
@@ -28,9 +30,12 @@ namespace MonevAtr.Pages.RtrwRevisi
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            this.KelompokDokumenList = await (from k in _context.KelompokDokumen where k.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi orderby k.Nomor select k)
+            this.KelompokDokumenList = await _context.KelompokDokumen
                 .Include(k => k.Dokumen)
+                .Where(k => k.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi)
+                .OrderBy(k => k.Nomor)
                 .ToListAsync();
+
             this.KelompokDokumenList.ForEach(k => k.Dokumen = k.Dokumen
                 .OrderBy(d => d.Nomor)
                 .ToList());
@@ -87,7 +92,8 @@ namespace MonevAtr.Pages.RtrwRevisi
 
         private async void MergeAtrDokumenDenganKelompokDokumen(int? id)
         {
-            atrDokumenList = await (from d in _context.AtrDokumen where d.KodeAtr == id select d)
+            atrDokumenList = await _context.AtrDokumen
+                .Where(d => d.KodeAtr == id)
                 .ToListAsync();
 
             foreach (Models.KelompokDokumen kelompokDokumen in this.KelompokDokumenList)
@@ -105,9 +111,11 @@ namespace MonevAtr.Pages.RtrwRevisi
 
             if (joinedItem == null)
             {
-                joinedItem = new AtrDokumen();
-                joinedItem.KodeAtr = this.Atr.Kode;
-                joinedItem.KodeDokumen = dokumen.Kode;
+                joinedItem = new Models.AtrDokumen()
+                {
+                KodeAtr = this.Atr.Kode,
+                KodeDokumen = dokumen.Kode
+                };
             }
 
             joinedItem.Atr = this.Atr;
@@ -140,7 +148,7 @@ namespace MonevAtr.Pages.RtrwRevisi
 
         private async Task<bool> SaveAtrDokumen(AtrDokumen dokumen)
         {
-            if (!dokumen.StatusAda)
+            if (!dokumen.PerluSimpan)
             {
                 return true;
             }
@@ -150,6 +158,7 @@ namespace MonevAtr.Pages.RtrwRevisi
             if (tabelDokumen.AmbilNomor == 1)
             {
                 this.Atr.Nomor = dokumen.Nomor;
+                this.Atr.Tahun = (short) dokumen.Tanggal.Year;
             }
 
             if (dokumen.Kode == 0)

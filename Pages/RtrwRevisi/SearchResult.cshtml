@@ -24,24 +24,24 @@
                     <input type="hidden" name="AtrSearch.KodeProgressAtr" value="@item" />
 }
 
+                    <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a>
                     <button type="submit" class="btn btn-success"><i class="fe fe-plus"></i> Tambah</button>
                 </form>
                 <a asp-page="./Index" class="btn btn-warning"><i class="fe fe-arrow-left"></i> Kembali</a>
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table">
+            <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table search-result">
                 <thead style="background-color: #eee;">
                     <tr>
                         <th class="text-center text-dark font-weight-bold">No</th>
                         <th class="text-dark font-weight-bold">Action</th>
                         <th class="text-dark font-weight-bold">Provinsi</th>
                         <th class="text-dark font-weight-bold">Kabupaten/Kota</th>
-                        <th class="text-dark font-weight-bold">Nama</th>
-                        <th class="text-dark font-weight-bold">Nomor</th>
-                        <th class="text-dark font-weight-bold">Jenis</th>
-                        <th class="text-dark font-weight-bold">Tahun</th>
-                        <th class="text-dark font-weight-bold">Keterangan</th>
+                        <th class="text-dark font-weight-bold">Status</th>
+                        <th class="text-dark font-weight-bold">Nomor Perda</th>
+                        <th class="text-dark font-weight-bold">Tahun Perda</th>
+                        <th class="text-dark font-weight-bold">Progress</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,13 +55,12 @@ int index = 1;
                             <a asp-page="./Edit" asp-route-id="@item.Kode" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
                             <span>>@Html.HiddenFor(modelItem => item.Kode)</span>
                         </td>
-                        <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
-                        <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nama)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
-                        <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Keterangan)</td>
+                        <td>@item.DisplayNamaProvinsi</td>
+                        <td>@item.KabupatenKota.Nama</td>
+                        <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
+                        <td>@item.Nomor</td>
+                        <td>@item.Tahun</td>
+                        <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
                     </tr>
     index++;
 }

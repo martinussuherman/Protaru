@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.RtrwRevisi
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         public CreateModel(MonevAtrDbContext context)
@@ -30,8 +32,7 @@ namespace MonevAtr.Pages.RtrwRevisi
                 .Include(a => a.KabupatenKota.Provinsi)
                 .FirstOrDefaultAsync(m => m.Kode == this.KodeReferensiAtr);
 
-            this.Atr.Nomor = String.Empty;
-            this.Atr.KodeProgressAtr = 0;
+            // this.Atr.KodeProgressAtr = 0;
 
             ViewData["ProgressAtr"] = await _context.GetSelectListProgressRtrwRevisi();
             ViewData["KabupatenKota"] = await _context.GetSelectListKabupatenKota();
@@ -53,19 +54,24 @@ namespace MonevAtr.Pages.RtrwRevisi
             }
 
             this.Atr.KodeJenisAtr = (int) JenisAtrEnum.RtrwRevisi;
+            this.Atr.StatusRevisi = (byte) StatusRevisi.RevisiT52.Kode;
+            this.Atr.Tahun = 0;
 
             if (!ModelState.IsValid)
             {
                 return await OnGetAsync(this.KodeReferensiAtr);
             }
 
-            Models.Atr referensi = new Models.Atr() { Kode = this.KodeReferensiAtr, SudahDirevisi = 1 };
+            Models.Atr referensi = new Models.Atr()
+            {
+                Kode = this.KodeReferensiAtr,
+                SudahDirevisi = 1
+            };
+
             _context.Atr.Attach(referensi);
             _context.Entry(referensi).Property(r => r.SudahDirevisi).IsModified = true;
             await _context.SaveChangesAsync();
 
-            // status default = T5-2
-            this.Atr.StatusRevisi = 4;
             _context.Atr.Attach(this.Atr);
             _context.Entry(this.Atr).State = EntityState.Added;
             await _context.SaveChangesAsync();
