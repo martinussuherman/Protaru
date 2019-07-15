@@ -75,5 +75,16 @@ namespace MonevAtr.Models
                 return !String.IsNullOrEmpty(this.FilePath);
             }
         }
+
+        [NotMapped]
+        public bool PerluSimpan
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(this.Nomor) ||
+                    this.Tanggal != DateTime.MinValue ||
+                    this.FilePathAda;
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace MonevAtr.Models
         [Key]
         public int Kode { get; set; }
 
-        [Required, MaxLength(255)]
+        [MaxLength(255)]
         public string Nama { get; set; }
 
         [MaxLength(50)]
@@ -24,10 +24,13 @@ namespace MonevAtr.Models
 
         public DateTime? Tanggal { get; set; }
 
-        [Required]
+        [MaxLength(255)]
         public string Aoi { get; set; }
 
         public int Luas { get; set; }
+
+        [Display(Name = "Tahun Penyusunan")]
+        public short? TahunPenyusunan { get; set; }
 
         public short Tahun { get; set; }
 
@@ -93,14 +96,14 @@ namespace MonevAtr.Models
         {
             get
             {
-                if (this.Provinsi != null)
-                {
-                    return this.Provinsi.Nama;
-                }
-
                 if (this.KabupatenKota != null)
                 {
                     return this.KabupatenKota.Provinsi.Nama + ", " + this.KabupatenKota.Nama;
+                }
+
+                if (this.Provinsi != null)
+                {
+                    return this.Provinsi.Nama;
                 }
 
                 return String.Empty;
