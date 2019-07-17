@@ -25,19 +25,26 @@ namespace MonevAtr
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
+            _ = services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<Models.MonevAtrDbContext>(options =>
+            _ = services.AddDbContext<Models.MonevAtrDbContext>(options =>
             {
-                options.UseMySQL(Configuration.GetConnectionString("MonevAtr"));
+                _ = options.UseMySQL(Configuration.GetConnectionString("MonevAtr"));
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            _ = services.AddDistributedMemoryCache();
+
+            _ = services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,25 +52,27 @@ namespace MonevAtr
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                _ = app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                _ = app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                _ = app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
+            _ = app.UseHttpsRedirection();
+            _ = app.UseStaticFiles();
+            _ = app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "upload")),
                     RequestPath = new PathString("/upload")
             });
 
-            app.UseCookiePolicy();
-            app.UseMvc();
+            _ = app.UseSession();
+            _ = app.UseAuthentication();
+            _ = app.UseCookiePolicy();
+            _ = app.UseMvc();
         }
     }
 }
