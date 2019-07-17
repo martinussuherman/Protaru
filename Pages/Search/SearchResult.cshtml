@@ -1,0 +1,63 @@
+@page
+@model MonevAtr.Pages.Search.SearchResultModel
+
+@{
+    ViewData["Title"] = "Hasil Pencarian";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row-cards">
+    <div class="col-12 card">
+        <div class="card-header">
+            <h3 class="card-title">Hasil Pencarian</h3>
+            <div class="ml-auto">
+                <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a>
+                <a asp-page="./Create" class="btn btn-success"><i class="fe fe-plus"></i> Tambah</a> -->
+                <a asp-page="./Index" class="btn btn-warning"><i class="fe fe-arrow-left"></i> Kembali</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table search-result">
+                <thead style="background-color: #eee;">
+                    <tr>
+                        <th class="text-center text-dark font-weight-bold">No</th>
+                        <!-- <th class="text-dark font-weight-bold">Action</th> -->
+                        <th class="text-dark font-weight-bold">Provinsi</th>
+                        <th class="text-dark font-weight-bold">Kabupaten/Kota</th>
+                        <th class="text-dark font-weight-bold nama">Nama</th>
+                        <th class="text-dark font-weight-bold">Tahun Perda</th>
+                        <th class="text-dark font-weight-bold">Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+@{
+int index = 1;
+}
+@foreach (var item in Model.HasilPencarian) 
+{
+                    <tr>
+                        <td>@index</td>
+                        <!-- <td class="text-center">
+                            <a asp-page="./Edit" asp-route-id="@item.Kode" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
+                            <span>@Html.HiddenFor(modelItem => item.Kode)</span>
+                        </td> -->
+                        <td>@item.DisplayNamaProvinsi</td>
+                        <td>@item.KabupatenKota.Nama</td>
+                        <td class="nama">@item.Nama</td>
+                        <td>@item.Tahun</td>
+                        <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
+                    </tr>
+    index++;
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

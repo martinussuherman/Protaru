@@ -1,0 +1,96 @@
+@page
+@model MonevAtr.Pages.Search.IndexModel
+
+@{
+    ViewData["Title"] = "Pencarian";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row row-cards text col-12 card">
+    <div class="card-header">
+        <h3 class="card-title"> Pencarian </h3>
+    </div>
+    <form asp-page="./SearchResult">
+        <div class="card-body row">
+            <div class="col-md-12 form-group">
+                <label asp-for="AtrSearch.KodeProvinsi" class="form-label"></label>
+                <select id="provinsi" asp-for="AtrSearch.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+            </div>
+            <div class="col-md-12 form-group">
+                <label asp-for="AtrSearch.KodeKabupatenKota" class="form-label"></label>
+                <select id="kabupaten-kota" asp-for="AtrSearch.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Nama</label>
+                <input asp-for="AtrSearch.Nama" class="form-control" />
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Nomor Perda </label>
+                <input asp-for="AtrSearch.Nomor" class="form-control" />
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Tahun Perda</label>
+                <select asp-for="AtrSearch.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
+            </div>
+            <!-- <div class="col-md-12 form-group">
+                <label class="form-label">Dokumen</label>
+                <select asp-for="AtrSearch.KodeDokumen" class="form-control" asp-items="ViewBag.Dokumen"></select>
+            </div> -->
+            <div class="col-md-12 form-group">
+                <label class="form-label">Progress</label>
+@{
+int index = 1;
+}
+@foreach (var item in Model.ProgressAtr) {
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" name="AtrSearch.KodeProgressAtr" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                    <span class="custom-control-label">@index -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama) - @Html.DisplayFor(modelItem => item.JenisAtr.Nama)</span>
+                </label>
+    index++;
+}
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Dokumen</label>
+@{
+int dokumenIndex = 1;
+}
+@foreach (var item in Model.Dokumen) {
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" name="AtrSearch.KodeDokumenList" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                    <span class="custom-control-label">@dokumenIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama) - @Html.DisplayFor(modelItem => item.KelompokDokumen.JenisAtr.Nama)</span>
+                </label>
+    dokumenIndex++;
+}
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-primary"><i class="fe fe-search"></i> Cari</button>
+            <a asp-page="./Index" class="btn btn-primary"><i class="fe fe-refresh-ccw"></i> Reset</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#provinsi').change( function () {
+                var url='@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")';
+
+                $.getJSON('@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")', 
+                    { kodeProvinsi: $('#provinsi').val()}, function(data){
+                    var items='';
+                    $('#kabupaten-kota').empty();
+                    $.each(data, function(i, kabupatenKota){
+                        items+='<option value="' + kabupatenKota.value + '">' + kabupatenKota.text + '</option>';
+                    });
+                    $('#kabupaten-kota').html(items); 
+                });
+            });
+        });
+    </script>
+}
+
