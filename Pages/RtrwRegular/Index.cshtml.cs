@@ -24,6 +24,7 @@ namespace MonevAtr.Pages.RtrwRegular
             {
                 return _context.ProgressAtr
                     .Where(p => p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular)
+                    .OrderBy(p => p.Nomor)
                     .ToList();
             }
         }
@@ -32,28 +33,29 @@ namespace MonevAtr.Pages.RtrwRegular
         {
             ViewData["Provinsi"] = await _context.GetSelectListProvinsi();
             ViewData["KabupatenKota"] = _context.EmptySelectListKabupatenKota;
-            // ViewData["Tahun"] = GetSelectListTahun();
+            ViewData["Tahun"] = GetSelectListTahun();
             return Page();
         }
 
-        // private SelectList GetSelectListTahun()
-        // {
-        //     List<short> list = _context.Atr
-        //         .Where(a => a.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular)
-        //         .Select(a => a.Tahun)
-        //         .Distinct()
-        //         .ToList();
+        private SelectList GetSelectListTahun()
+        {
+            List<short> list = _context.Atr
+                .Where(a => a.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular)
+                .OrderBy(a => a.Tahun)
+                .Select(a => a.Tahun)
+                .Distinct()
+                .ToList();
 
-        //     List<Models.Tahun> listHasil = new List<Tahun>();
-        //     listHasil.Insert(0, new Tahun(0, "Pilih Tahun"));
+            List<Models.Tahun> listHasil = new List<Tahun>();
+            listHasil.Insert(0, new Tahun(0, "Pilih Tahun Perda"));
 
-        //     foreach (short tahun in list)
-        //     {
-        //         listHasil.Add(new Tahun(tahun));
-        //     }
+            foreach (short tahun in list)
+            {
+                listHasil.Add(new Tahun(tahun));
+            }
 
-        //     return new SelectList(listHasil, "Value", "Text");
-        // }
+            return new SelectList(listHasil, "Value", "Text");
+        }
 
         private readonly MonevAtrDbContext _context;
     }

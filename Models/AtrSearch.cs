@@ -25,5 +25,9 @@ namespace MonevAtr.Models
         public int KodeProvinsi { get; set; }
 
         public List<int> KodeProgressAtr { get; set; } = new List<int>();
+
+        public List<int> KodeDokumenList { get; set; } = new List<int>();
+
+        public int KodeDokumen { get; set; }
     }
 }

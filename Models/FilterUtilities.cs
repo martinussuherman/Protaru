@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 
@@ -73,6 +74,31 @@ namespace MonevAtr.Models
             }
 
             return query.Where(predicate);
+        }
+
+        public IQueryable<Atr> QueryAtrByDokumen(
+            IQueryable<Atr> query,
+            AtrSearch search)
+        {
+            return search.KodeDokumen == 0 ?
+                query :
+                query.Where(q => q.AtrDokumen.Any(a => a.KodeDokumen == search.KodeDokumen));
+        }
+
+        public IQueryable<Atr> QueryAtrByDokumenList(
+            IQueryable<Atr> query,
+            AtrSearch search)
+        {
+            ExpressionStarter<AtrDokumen> predicate = PredicateBuilder.New<AtrDokumen>(true);
+
+            foreach (int kodeDokumen in search.KodeDokumenList)
+            {
+                predicate = predicate.Or(p => p.KodeDokumen == kodeDokumen);
+            }
+
+            Expression<Func<AtrDokumen, bool>> castPredicate = predicate;
+
+            return query.Where(p => p.AtrDokumen.Any(a => castPredicate.Invoke(a)));
         }
     }
 }

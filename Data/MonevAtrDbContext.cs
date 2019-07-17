@@ -39,7 +39,9 @@ namespace MonevAtr.Models
         public async Task<SelectList> GetSelectListProvinsi()
         {
             IList<Provinsi> list = await this.Provinsi
+                .OrderBy(p => p.Nama)
                 .ToListAsync();
+
             list.Insert(0, new Provinsi(0, "Pilih Provinsi"));
             return new SelectList(list, "Kode", "Nama");
         }
@@ -47,7 +49,9 @@ namespace MonevAtr.Models
         public async Task<SelectList> GetSelectListKabupatenKota()
         {
             IList<KabupatenKota> list = await this.KabupatenKota
+                .OrderBy(k => k.Nama)
                 .ToListAsync();
+
             InsertPilihKabupatenKota(list);
             return new SelectList(list, "Kode", "Nama");
         }
@@ -64,31 +68,43 @@ namespace MonevAtr.Models
         {
             IList<KelompokDokumen> list = await this.KelompokDokumen
                 .Include(k => k.JenisAtr)
+                .OrderBy(k => k.KodeJenisAtr)
+                .ThenBy(k => k.Nomor)
                 .ToListAsync();
+
             list.Insert(0, new KelompokDokumen(0, "Pilih Kelompok Dokumen"));
             return new SelectList(list, "Kode", "DisplayNamaJenisAtr");
         }
 
         public async Task<SelectList> GetSelectListProgressRdtr()
         {
-            IList<ProgressAtr> list = await (from p in this.ProgressAtr where p.KodeJenisAtr == (int) JenisAtrEnum.RdtrPerda orderby p.Nomor select p)
+            IList<ProgressAtr> list = await this.ProgressAtr
+                .Where(p => p.KodeJenisAtr == (int) JenisAtrEnum.RdtrPerda)
+                .OrderBy(p => p.Nomor)
                 .ToListAsync();
+
             list.Insert(0, new ProgressAtr(0, "Pilih Progress RDTR"));
             return new SelectList(list, "Kode", "Nama");
         }
 
         public async Task<SelectList> GetSelectListProgressRtrwRegular()
         {
-            IList<ProgressAtr> list = await (from p in this.ProgressAtr where p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular orderby p.Nomor select p)
+            IList<ProgressAtr> list = await this.ProgressAtr
+                .Where(p => p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRegular)
+                .OrderBy(p => p.Nomor)
                 .ToListAsync();
+
             list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-1"));
             return new SelectList(list, "Kode", "Nama");
         }
 
         public async Task<SelectList> GetSelectListProgressRtrwRevisi()
         {
-            IList<ProgressAtr> list = await (from p in this.ProgressAtr where p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi orderby p.Nomor select p)
+            IList<ProgressAtr> list = await this.ProgressAtr
+                .Where(p => p.KodeJenisAtr == (int) JenisAtrEnum.RtrwRevisi)
+                .OrderBy(p => p.Nomor)
                 .ToListAsync();
+
             list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-2"));
             return new SelectList(list, "Kode", "Nama");
         }

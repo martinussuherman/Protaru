@@ -28,7 +28,7 @@ namespace MonevAtr.Pages.RtrwRevisi
 
             query = filter.QueryAtrByProvinsi(query, this.AtrSearch);
             query = filter.QueryAtrByKabupatenKota(query, this.AtrSearch);
-            // query = filter.QueryAtrByTahun(query, this.AtrSearch);
+            query = filter.QueryAtrByTahun(query, this.AtrSearch);
             query = filter.QueryAtrByNama(query, this.AtrSearch);
             query = filter.QueryAtrByNomor(query, this.AtrSearch);
             query = filter.QueryAtrByProgress(query, this.AtrSearch);
