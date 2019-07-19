@@ -14,12 +14,6 @@ namespace MonevAtr.Models
             KabupatenKota = new HashSet<KabupatenKota>();
         }
 
-        public Provinsi(int kode, string nama) : this()
-        {
-            this.Kode = kode;
-            this.Nama = nama;
-        }
-
         [Key]
         public int Kode { get; set; }
 

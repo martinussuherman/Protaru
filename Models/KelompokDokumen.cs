@@ -13,12 +13,6 @@ namespace MonevAtr.Models
             Dokumen = new HashSet<Dokumen>();
         }
 
-        public KelompokDokumen(int kode, string nama) : this()
-        {
-            this.Kode = kode;
-            this.Nama = nama;
-        }
-
         [Key]
         public int Kode { get; set; }
 

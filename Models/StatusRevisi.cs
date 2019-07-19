@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MonevAtr.Models
 {
@@ -78,37 +77,6 @@ namespace MonevAtr.Models
             return listRevisi
                 .Find(s => s.Kode == kode.Value)
                 .Nama;
-        }
-
-        public static SelectList SelectListStatusRevisiRtrwRegular
-        {
-            get
-            {
-                List<StatusRevisi> list = new List<StatusRevisi>
-                {
-                    new StatusRevisi(0, "Pilih Status RTRW T5-1"),
-                    regularT51,
-                    regularT52
-                };
-
-                return new SelectList(list, "Kode", "Nama");
-            }
-        }
-
-        public static SelectList SelectListStatusRevisiRtrwRevisi
-        {
-            get
-            {
-                List<StatusRevisi> list = new List<StatusRevisi>
-                {
-                    new StatusRevisi(0, "Pilih Status RTRW T5-2"),
-                    revisiT52,
-                    revisiT53,
-                    revisiT54
-                };
-
-                return new SelectList(list, "Kode", "Nama");
-            }
         }
 
         private static readonly StatusRevisi regularT51 = new StatusRevisi(1, "T5-1");
