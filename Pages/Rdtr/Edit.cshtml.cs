@@ -20,6 +20,7 @@ namespace MonevAtr.Pages.Rdtr
         {
             _context = context;
             hostingEnvironment = environment;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
@@ -54,7 +55,7 @@ namespace MonevAtr.Pages.Rdtr
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
             MergeAtrDokumenDenganKelompokDokumen(id);
-            ViewData["ProgressRdtr"] = await _context.GetSelectListProgressRdtr();
+            ViewData["ProgressRdtr"] = await selectListUtilities.ProgressRdtr();
             return Page();
         }
 
@@ -171,10 +172,10 @@ namespace MonevAtr.Pages.Rdtr
 
         private async Task<bool> SaveAtrDokumen(Models.AtrDokumen dokumen)
         {
-            if (!dokumen.PerluSimpan)
-            {
-                return true;
-            }
+            // if (!dokumen.PerluSimpan)
+            // {
+            //     return true;
+            // }
 
             Models.Dokumen tabelDokumen = dokumenList.Find(d => d.Kode == dokumen.KodeDokumen);
 
@@ -267,6 +268,8 @@ namespace MonevAtr.Pages.Rdtr
         private List<Models.AtrDokumen> atrDokumenList;
 
         private List<Models.Dokumen> dokumenList;
+
+        private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
 

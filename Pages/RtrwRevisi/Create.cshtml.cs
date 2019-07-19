@@ -14,6 +14,7 @@ namespace MonevAtr.Pages.RtrwRevisi
         public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
@@ -34,9 +35,9 @@ namespace MonevAtr.Pages.RtrwRevisi
 
             // this.Atr.KodeProgressAtr = 0;
 
-            ViewData["ProgressAtr"] = await _context.GetSelectListProgressRtrwRevisi();
-            ViewData["KabupatenKota"] = await _context.GetSelectListKabupatenKota();
-            ViewData["Provinsi"] = await _context.GetSelectListProvinsi();
+            ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrwRevisi();
+            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
+            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
 
             return Page();
         }
@@ -78,6 +79,8 @@ namespace MonevAtr.Pages.RtrwRevisi
 
             return RedirectToPage("./Index");
         }
+
+        private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
     }

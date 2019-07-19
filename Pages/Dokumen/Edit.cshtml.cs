@@ -12,6 +12,7 @@ namespace MonevAtr.Pages.Dokumen
         public EditModel(MonevAtrDbContext context)
         {
             _context = context;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
@@ -33,7 +34,7 @@ namespace MonevAtr.Pages.Dokumen
                 return NotFound();
             }
 
-            ViewData["KelompokDokumen"] = await _context.GetSelectListKelompokDokumen();
+            ViewData["KelompokDokumen"] = await selectListUtilities.KelompokDokumen();
             return Page();
         }
 
@@ -69,6 +70,8 @@ namespace MonevAtr.Pages.Dokumen
         {
             return _context.Dokumen.Any(e => e.Kode == id);
         }
+
+        private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
     }

@@ -10,6 +10,7 @@ namespace MonevAtr.Pages.Dokumen
         public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
@@ -17,7 +18,7 @@ namespace MonevAtr.Pages.Dokumen
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["KelompokDokumen"] = await _context.GetSelectListKelompokDokumen();
+            ViewData["KelompokDokumen"] = await selectListUtilities.KelompokDokumen();
             return Page();
         }
 
@@ -33,6 +34,8 @@ namespace MonevAtr.Pages.Dokumen
 
             return RedirectToPage("./Index");
         }
+
+        private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
     }

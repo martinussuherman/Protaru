@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Ajax
@@ -14,20 +10,16 @@ namespace MonevAtr.Pages.Ajax
     {
         public FilterKabupatenKotaBerdasarkanProvinsiModel(MonevAtrDbContext context)
         {
-            _context = context;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         public async Task<JsonResult> OnGetAsync(int kodeProvinsi)
         {
-            List<Models.KabupatenKota> listKabupatenKota = await _context.KabupatenKota
-                .Where(k => k.KodeProvinsi == kodeProvinsi)
-                .OrderBy(k => k.Nama)
-                .ToListAsync();
+            SelectList list = await selectListUtilities.KabupatenKota(kodeProvinsi);
 
-            listKabupatenKota.Insert(0, new Models.KabupatenKota(0, "Pilih Kabupaten/Kota"));
-            return new JsonResult(new SelectList(listKabupatenKota, "Kode", "Nama"));
+            return new JsonResult(list);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly SelectListUtilities selectListUtilities;
     }
 }

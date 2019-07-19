@@ -12,6 +12,7 @@ namespace MonevAtr.Pages.KabupatenKota
         public EditModel(MonevAtrDbContext context)
         {
             _context = context;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
@@ -33,7 +34,7 @@ namespace MonevAtr.Pages.KabupatenKota
                 return NotFound();
             }
 
-            ViewData["KodeProvinsi"] = await _context.GetSelectListProvinsi();
+            ViewData["KodeProvinsi"] = await selectListUtilities.Provinsi();
             return Page();
         }
 
@@ -69,6 +70,8 @@ namespace MonevAtr.Pages.KabupatenKota
         {
             return _context.KabupatenKota.Any(e => e.Kode == id);
         }
+
+        private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
     }

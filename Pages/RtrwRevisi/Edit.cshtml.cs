@@ -18,6 +18,7 @@ namespace MonevAtr.Pages.RtrwRevisi
         {
             _context = context;
             hostingEnvironment = environment;
+            selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
@@ -49,8 +50,8 @@ namespace MonevAtr.Pages.RtrwRevisi
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
             MergeAtrDokumenDenganKelompokDokumen(id);
-            ViewData["Progress"] = await _context.GetSelectListProgressRtrwRevisi();
-            ViewData["StatusRevisi"] = StatusRevisi.SelectListStatusRevisiRtrwRevisi;
+            ViewData["Progress"] = await selectListUtilities.ProgressRtrwRevisi();
+            ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrwRevisi;
             return Page();
         }
 
@@ -148,10 +149,10 @@ namespace MonevAtr.Pages.RtrwRevisi
 
         private async Task<bool> SaveAtrDokumen(AtrDokumen dokumen)
         {
-            if (!dokumen.PerluSimpan)
-            {
-                return true;
-            }
+            // if (!dokumen.PerluSimpan)
+            // {
+            //     return true;
+            // }
 
             Models.Dokumen tabelDokumen = dokumenList.Find(d => d.Kode == dokumen.KodeDokumen);
 
@@ -202,6 +203,8 @@ namespace MonevAtr.Pages.RtrwRevisi
         private List<Models.AtrDokumen> atrDokumenList;
 
         private List<Models.Dokumen> dokumenList;
+
+        private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
 
