@@ -15,9 +15,6 @@ namespace MonevAtr.Models
 
         public short Tahun { get; set; }
 
-        [Display(Name = "Jenis ATR")]
-        public int KodeJenisAtr { get; set; }
-
         [Display(Name = "Kabupaten/Kota")]
         public int KodeKabupatenKota { get; set; }
 
@@ -28,6 +25,18 @@ namespace MonevAtr.Models
 
         public List<int> KodeDokumenList { get; set; } = new List<int>();
 
+        public List<int> KodeJenisAtrList { get; set; } = new List<int>();
+
         public int KodeDokumen { get; set; }
+
+        public int TahunRekomendasiGubernur { get; set; }
+
+        public int TahunPermohonanPersetujuanSubstansi { get; set; }
+
+        public int TahunMasukLoket { get; set; }
+
+        public int TahunRapatLintasSektor { get; set; }
+
+        public int TahunPersetujuanSubstansi { get; set; }
     }
 }

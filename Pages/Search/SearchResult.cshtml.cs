@@ -25,19 +25,22 @@ namespace MonevAtr.Pages.Search
         {
             IQueryable<Models.Atr> query = _context.Atr;
 
+            query = filter.QueryAtrByJenisList(query, this.AtrSearch);
             query = filter.QueryAtrByProvinsi(query, this.AtrSearch);
             query = filter.QueryAtrByKabupatenKota(query, this.AtrSearch);
+            query = filter.QueryAtrByTahunRekomendasiGubernur(query, this.AtrSearch);
+            query = filter.QueryAtrByTahunPermohonanPersetujuanSubstansi(query, this.AtrSearch);
+            query = filter.QueryAtrByTahunMasukLoket(query, this.AtrSearch);
+            query = filter.QueryAtrByTahunRapatLintasSektor(query, this.AtrSearch);
+            query = filter.QueryAtrByTahunPersetujuanSubstansi(query, this.AtrSearch);
             query = filter.QueryAtrByTahun(query, this.AtrSearch);
-            query = filter.QueryAtrByNama(query, this.AtrSearch);
-            query = filter.QueryAtrByNomor(query, this.AtrSearch);
-            query = filter.QueryAtrByProgress(query, this.AtrSearch);
-            query = filter.QueryAtrByDokumenList(query, this.AtrSearch);
 
             this.HasilPencarian = await query
                 .Include(a => a.Provinsi)
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
+                .Include(a => a.JenisAtr)
                 .OrderBy(a => a.KabupatenKota.Provinsi.Nama)
                 .ThenBy(a => a.KabupatenKota.Nama)
                 .ThenBy(a => a.Provinsi.Nama)

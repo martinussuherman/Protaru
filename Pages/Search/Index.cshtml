@@ -2,7 +2,7 @@
 @model MonevAtr.Pages.Search.IndexModel
 
 @{
-    ViewData["Title"] = "Pencarian";
+    ViewData["Title"] = "Pencarian RTR";
 }
 
 <div class="page-header">
@@ -10,10 +10,24 @@
 </div>
 <div class="row row-cards text col-12 card">
     <div class="card-header">
-        <h3 class="card-title"> Pencarian </h3>
+        <h3 class="card-title"> Pencarian RTR</h3>
     </div>
     <form asp-page="./SearchResult">
         <div class="card-body row">
+            <div class="col-md-12 form-group">
+                <label class="form-label">Jenis RTR</label>
+@{
+int jenisIndex = 1;
+}
+@foreach (var item in Model.JenisAtr) {
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" name="AtrSearch.KodeJenisAtrList" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                    <span class="custom-control-label">@jenisIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                </label>
+    jenisIndex++;
+}
+            </div>
+
             <div class="col-md-12 form-group">
                 <label asp-for="AtrSearch.KodeProvinsi" class="form-label"></label>
                 <select id="provinsi" asp-for="AtrSearch.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
@@ -23,47 +37,34 @@
                 <select id="kabupaten-kota" asp-for="AtrSearch.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
             </div>
             <div class="col-md-12 form-group">
-                <label class="form-label">Nama</label>
-                <input asp-for="AtrSearch.Nama" class="form-control" />
+                <label class="form-label">Surat/BA Rekomendasi Gubernur</label>
+                <select asp-for="AtrSearch.TahunRekomendasiGubernur" class ="form-control" asp-items="ViewBag.TahunRekomendasiGubernur"></select>
             </div>
             <div class="col-md-12 form-group">
-                <label class="form-label">Nomor Perda </label>
-                <input asp-for="AtrSearch.Nomor" class="form-control" />
+                <label class="form-label">Surat Permohonan Persetujuan Subtansi Prov/Kab/Kota</label>
+                <select asp-for="AtrSearch.TahunPermohonanPersetujuanSubstansi" class ="form-control" asp-items="ViewBag.TahunPermohonanPersetujuanSubstansi"></select>
             </div>
             <div class="col-md-12 form-group">
-                <label class="form-label">Tahun Perda</label>
-                <select asp-for="AtrSearch.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
+                <label class="form-label">Tanggal Masuk Loket</label>
+                <select asp-for="AtrSearch.TahunMasukLoket" class ="form-control" asp-items="ViewBag.TahunMasukLoket"></select>
             </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Rapat Lintas Sektor</label>
+                <select asp-for="AtrSearch.TahunRapatLintasSektor" class ="form-control" asp-items="ViewBag.TahunRapatLintasSektor"></select>
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Persetujuan Substansi</label>
+                <select asp-for="AtrSearch.TahunPersetujuanSubstansi" class ="form-control" asp-items="ViewBag.TahunPersetujuanSubstansi"></select>
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="form-label">Ditetapkan Menjadi Peraturan Daerah</label>
+                <select asp-for="AtrSearch.Tahun" class ="form-control" asp-items="ViewBag.Tahun"></select>
+            </div>
+
             <!-- <div class="col-md-12 form-group">
                 <label class="form-label">Dokumen</label>
                 <select asp-for="AtrSearch.KodeDokumen" class="form-control" asp-items="ViewBag.Dokumen"></select>
             </div> -->
-            <div class="col-md-12 form-group">
-                <label class="form-label">Progress</label>
-@{
-int index = 1;
-}
-@foreach (var item in Model.ProgressAtr) {
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" name="AtrSearch.KodeProgressAtr" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
-                    <span class="custom-control-label">@index -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama) - @Html.DisplayFor(modelItem => item.JenisAtr.Nama)</span>
-                </label>
-    index++;
-}
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Dokumen</label>
-@{
-int dokumenIndex = 1;
-}
-@foreach (var item in Model.Dokumen) {
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" name="AtrSearch.KodeDokumenList" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
-                    <span class="custom-control-label">@dokumenIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama) - @Html.DisplayFor(modelItem => item.KelompokDokumen.JenisAtr.Nama)</span>
-                </label>
-    dokumenIndex++;
-}
-            </div>
         </div>
         <div class="card-footer text-center">
             <button type="submit" class="btn btn-primary"><i class="fe fe-search"></i> Cari</button>
