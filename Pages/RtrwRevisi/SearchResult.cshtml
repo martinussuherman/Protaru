@@ -55,11 +55,11 @@ int index = 1;
                             <a asp-page="./Edit" asp-route-id="@item.Kode" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
                             <span>>@Html.HiddenFor(modelItem => item.Kode)</span>
                         </td>
-                        <td>@item.DisplayNamaProvinsi</td>
-                        <td>@item.KabupatenKota.Nama</td>
+                        <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
+                        <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
                         <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
-                        <td>@item.Nomor</td>
-                        <td>@item.Tahun</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
                         <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
                     </tr>
     index++;
