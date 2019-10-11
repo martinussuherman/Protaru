@@ -1,0 +1,36 @@
+@page
+@model IndexModel
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Pencarian RTR KSN T5-2";
+    ViewData["PageTitle"] = "RTR KSN";
+}
+
+<form method="get" asp-page="./SearchResult">
+    <div class="card-body">
+        <div class="col-md-12 form-group">
+            <label class="form-label">Pulau</label>
+            <select asp-for="Rtr.Kawasan" class ="form-control" asp-items="ViewBag.Kawasan"></select>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nama RRTR/RDTR</label>
+            <input asp-for="Rtr.Nama" class="form-control" />
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nomor Perpres</label>
+            <input asp-for="Rtr.Nomor" class="form-control" />
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Tahun Perpres</label>
+            <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
+        </div>
+
+        @await Html.PartialAsync("_ProgressSearchPartial", Model.ProgressAtr)
+    </div>
+
+    <div class="card-footer text-center">
+        <button type="submit" class="btn btn-primary">Cari</button>
+        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>

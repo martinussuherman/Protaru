@@ -1,0 +1,93 @@
+@page "{handler?}"
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model SearchResultModel
+
+@{
+    ViewData["Title"] = "Monitoring & Evaluasi RTR Pulau/Kep T5-2";
+    ViewData["PageTitle"] = "RTR Pulau/Kepulauan";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card">
+                <div class="card-header">
+                    <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
+                    <div class="ml-auto float-sm-right">
+
+                        <form method="get" asp-page="./CreateFilter" class="d-inline">
+                            <input type="hidden" asp-for="Rtr.Pulau" />
+                            <input type="hidden" asp-for="Rtr.Nama" />
+                            <input type="hidden" asp-for="Rtr.Nomor" />
+                            <input type="hidden" asp-for="Rtr.Tahun" />
+
+@foreach (var item in Model.Rtr.ProgressList) 
+{
+                            <input type="hidden" name="Rtr.ProgressList" value="@item" />
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+                    <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a> -->
+                            <button type="submit" class="btn btn-success">Tambah</button>
+}
+                        </form>
+
+                        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+                    </div>
+                </div>
+
+	            <div class="card-body">
+	                <div class="table-responsive">
+	                    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+	                        <thead>
+	                            <tr class="text-light font-weight-bold text-center bg-info">
+                                    <th>No</th>
+                                    <th>Action</th>
+                                    <th>Pulau</th>
+                                    <th>Status</th>
+                                    <th>Nomor Perpres</th>
+                                    <th>Tahun Perpres</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+@{
+int index = Model.Hasil.StartItemIndex;
+}
+@foreach (var item in Model.Hasil)
+{
+                                <tr>
+                                    <td>@index</td>
+                                    @await Html.PartialAsync("_DokumenEditOrViewLink", item)
+                                    <td>@Html.DisplayFor(modelItem => item.Pulau.Nama)</td>
+                                    <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
+                                </tr>
+    index++;
+}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @await Html.PartialAsync("_PagingPartial", Model.Hasil)
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

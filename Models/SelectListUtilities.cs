@@ -24,13 +24,13 @@ namespace MonevAtr.Models
             }
         }
 
-        public SelectList StatusRevisiRtrwRegular
+        public SelectList StatusRevisiRtrRegular
         {
             get
             {
                 List<StatusRevisi> list = new List<StatusRevisi>
                 {
-                    new StatusRevisi(0, "Pilih Status RTRW T5-1"),
+                    new StatusRevisi(0, "Pilih Status RTR T5-0/T5-1"),
                     StatusRevisi.RegularT51,
                     StatusRevisi.RegularT52
                 };
@@ -39,13 +39,13 @@ namespace MonevAtr.Models
             }
         }
 
-        public SelectList StatusRevisiRtrwRevisi
+        public SelectList StatusRevisiRtrRevisi
         {
             get
             {
                 List<StatusRevisi> list = new List<StatusRevisi>
                 {
-                    new StatusRevisi(0, "Pilih Status RTRW T5-2"),
+                    new StatusRevisi(0, "Pilih Status RTR T5-2"),
                     StatusRevisi.RevisiT52,
                     StatusRevisi.RevisiT53,
                     StatusRevisi.RevisiT54
@@ -58,6 +58,7 @@ namespace MonevAtr.Models
         public async Task<SelectList> Provinsi()
         {
             IList<Provinsi> list = await _context.Provinsi
+                .Where(p => p.Kode > 0)
                 .OrderBy(p => p.Nama)
                 .ToListAsync();
 
@@ -79,6 +80,40 @@ namespace MonevAtr.Models
                 .ToListAsync();
 
             InsertPilihKabupatenKota(list);
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> Pulau()
+        {
+            IList<Pulau> list = await _context.Pulau
+                .Where(p => p.Kode > 0)
+                .OrderBy(p => p.Nama)
+                .ToListAsync();
+
+            Pulau pilih = new Pulau
+            {
+                Kode = 0,
+                Nama = "Pilih Pulau"
+            };
+
+            list.Insert(0, pilih);
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> Kawasan()
+        {
+            IList<Kawasan> list = await _context.Kawasan
+                .Where(p => p.Kode > 0)
+                .OrderBy(p => p.Nama)
+                .ToListAsync();
+
+            Kawasan pilih = new Kawasan
+            {
+                Kode = 0,
+                Nama = "Pilih Kawasan"
+            };
+
+            list.Insert(0, pilih);
             return new SelectList(list, "Kode", "Nama");
         }
 
@@ -142,19 +177,68 @@ namespace MonevAtr.Models
             return Tahun(list, "Pilih Tahun Persetujuan Substansi");
         }
 
-        public async Task<SelectList> TahunPerdaRdtr()
+        public async Task<SelectList> TahunRapatLintasSektorDanPersetujuanSubstansi()
         {
-            return await TahunPerda((int) JenisAtrEnum.RdtrPerda);
+            List<int> list = await _context.AtrDokumen
+                .Where(
+                    a => a.KodeDokumen == 30 ||
+                    a.KodeDokumen == 64 ||
+                    a.KodeDokumen == 100 ||
+                    a.KodeDokumen == 31 ||
+                    a.KodeDokumen == 65 ||
+                    a.KodeDokumen == 101)
+                .OrderBy(a => a.Tanggal.Year)
+                .Select(a => a.Tanggal.Year)
+                .Distinct()
+                .ToListAsync();
+
+            list.Remove(list.Find(q => q == 1));
+            return Tahun(list, "Pilih Tahun");
         }
 
-        public async Task<SelectList> TahunPerdaRtrwRegular()
+        public async Task<SelectList> TahunPerdaRdtrT51()
         {
-            return await TahunPerda((int) JenisAtrEnum.RtrwRegular);
+            return await TahunPerda((int) JenisRtrEnum.RdtrT51);
         }
 
-        public async Task<SelectList> TahunPerdaRtrwRevisi()
+        public async Task<SelectList> TahunPerdaRdtrT52()
         {
-            return await TahunPerda((int) JenisAtrEnum.RtrwRevisi);
+            return await TahunPerda((int) JenisRtrEnum.RdtrT52);
+        }
+
+        public async Task<SelectList> TahunPerdaRtrwT50()
+        {
+            return await TahunPerda((int) JenisRtrEnum.RtrwT50);
+        }
+
+        public async Task<SelectList> TahunPerdaRtrwT51()
+        {
+            return await TahunPerda((int) JenisRtrEnum.RtrwT51);
+        }
+
+        public async Task<SelectList> TahunPerdaRtrwT52()
+        {
+            return await TahunPerda((int) JenisRtrEnum.RtrwT52);
+        }
+
+        public async Task<SelectList> TahunPerpresRtrPulauT51()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrPulauT51);
+        }
+
+        public async Task<SelectList> TahunPerpresRtrPulauT52()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrPulauT52);
+        }
+
+        public async Task<SelectList> TahunPerpresRtrKsnT51()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrKsnT51);
+        }
+
+        public async Task<SelectList> TahunPerpresRtrKsnT52()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrKsnT52);
         }
 
         public async Task<SelectList> TahunPerdaRtr()
@@ -217,37 +301,102 @@ namespace MonevAtr.Models
             return new SelectList(list, "Kode", "Nama");
         }
 
-        public async Task<SelectList> ProgressRdtr()
+        public async Task<SelectList> ProgressRdtrT51()
         {
             IList<ProgressAtr> list = await ProgressRtr(
-                (int) JenisAtrEnum.RdtrPerda);
+                JenisRtrEnum.RdtrT51);
 
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RDTR"));
+            SelectList selectList = new SelectList(list, "Kode", "Nama");
+            List<SelectListItem> listItems = new List<SelectListItem>
+            {
+                new SelectListItem("Pilih Progress RDTR T5-1", String.Empty)
+            };
+
+            foreach (SelectListItem item in selectList)
+            {
+                listItems.Add(item);
+            }
+
+            return new SelectList(listItems, "Value", "Text");
+            // return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRdtrT52()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RdtrT52);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RDTR T5-2"));
             return new SelectList(list, "Kode", "Nama");
         }
 
-        public async Task<SelectList> ProgressRtrwRegular()
+        public async Task<SelectList> ProgressRtrwT50()
         {
             IList<ProgressAtr> list = await ProgressRtr(
-                (int) JenisAtrEnum.RtrwRegular);
+                JenisRtrEnum.RtrwT50);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-0"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrwT51()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrwT51);
 
             list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-1"));
             return new SelectList(list, "Kode", "Nama");
         }
 
-        public async Task<SelectList> ProgressRtrwRevisi()
+        public async Task<SelectList> ProgressRtrwT52()
         {
             IList<ProgressAtr> list = await ProgressRtr(
-                (int) JenisAtrEnum.RtrwRevisi);
+                JenisRtrEnum.RtrwT52);
 
             list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-2"));
             return new SelectList(list, "Kode", "Nama");
         }
 
-        private async Task<IList<ProgressAtr>> ProgressRtr(int jenisRtr)
+        public async Task<SelectList> ProgressRtrPulauT51()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrPulauT51);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR Pulau/Kepulauan T5-1"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrPulauT52()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrPulauT52);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR Pulau/Kepulauan T5-2"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrKsnT51()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrKsnT51);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KSN T5-1"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrKsnT52()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrKsnT52);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KSN T5-2"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        private async Task<IList<ProgressAtr>> ProgressRtr(JenisRtrEnum jenisRtr)
         {
             return await _context.ProgressAtr
-                .Where(p => p.KodeJenisAtr == jenisRtr)
+                .Where(p => p.KodeJenisAtr == (int) jenisRtr)
                 .OrderBy(p => p.Nomor)
                 .ToListAsync();
         }
@@ -265,6 +414,21 @@ namespace MonevAtr.Models
                 .ToListAsync();
 
             return Tahun(list, "Pilih Tahun Perda");
+        }
+
+        private async Task<SelectList> TahunPerpres(int jenisRtr)
+        {
+            IQueryable<Atr> query = _context.Atr
+                .OrderBy(a => a.Tahun);
+
+            query = QueryByJenisRtr(query, jenisRtr);
+
+            List<short> list = await query
+                .Select(a => a.Tahun)
+                .Distinct()
+                .ToListAsync();
+
+            return Tahun(list, "Pilih Tahun Perpres");
         }
 
         private SelectList Tahun(List<short> listSumber, string pilih)

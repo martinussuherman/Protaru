@@ -1,0 +1,17 @@
+<script>
+    $(function(){
+        $('.bnote-rdtr').click(function(){
+            var note = $(this).val();
+            $('.bnote-rdtr').removeClass('addnote-rdtr');
+            $(this).addClass('addnote-rdtr');
+            $('.valnote-rdtr').val(note);
+        });
+
+        $('.snote-rdtr').click(function(){
+            var note = $('.valnote-rdtr').val();
+            $('.addnote-rdtr').val(note);
+            $('.addnote-rdtr').removeClass('addnote-rdtr');
+            $("#note-modal").modal('hide');
+        });
+    });
+</script>

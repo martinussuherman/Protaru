@@ -1,21 +1,22 @@
 @page
-@model MonevAtr.Pages.Dokumen.IndexModel
+@model MonevAtr.Pages_Dokumen.IndexModel
 
 @{
-    ViewData["Title"] = "Daftar Dokumen";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Daftar Dokumen</h1>
+<div class="bg-page-detail pt-4 pb-5 container">
+    <h1>Index</h1>
+
+    <div class="row row-cards card">
+        <div class="card-body">
 
 <p>
-    <a asp-page="Create">Tambah Dokumen</a>
+    <a asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Dokumen[0].Kode)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Dokumen[0].Nama)
             </th>
@@ -23,10 +24,16 @@
                 @Html.DisplayNameFor(model => model.Dokumen[0].Nomor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dokumen[0].KelompokDokumen)
+                @Html.DisplayNameFor(model => model.Dokumen[0].AmbilNomor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dokumen[0].KelompokDokumen.JenisAtr)
+                @Html.DisplayNameFor(model => model.Dokumen[0].JumlahTindakLanjut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].UntukPublik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dokumen[0].KelompokDokumen)
             </th>
             <th></th>
         </tr>
@@ -35,25 +42,33 @@
 @foreach (var item in Model.Dokumen) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Kode)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Nama)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nomor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KelompokDokumen.Nama)
+                @Html.DisplayFor(modelItem => item.AmbilNomor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KelompokDokumen.JenisAtr.Nama)
+                @Html.DisplayFor(modelItem => item.JumlahTindakLanjut)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Kode">Ubah</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Kode">Hapus</a>
+                @Html.DisplayFor(modelItem => item.UntukPublik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KelompokDokumen.DisplayNamaJenisAtr)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Kode">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Kode">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Kode">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+        </div>
+    </div>
+</div>

@@ -1,41 +1,63 @@
 @page
-@model MonevAtr.Pages.Dokumen.CreateModel
+@model MonevAtr.Pages_Dokumen.CreateModel
 
 @{
-    ViewData["Title"] = "Tambah Dokumen";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Tambah Dokumen</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Dokumen.Nama" class="control-label"></label>
-                <input asp-for="Dokumen.Nama" class="form-control" />
-                <span asp-validation-for="Dokumen.Nama" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dokumen.Nomor" class="control-label"></label>
-                <input asp-for="Dokumen.Nomor" class="form-control" />
-                <span asp-validation-for="Dokumen.Nomor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dokumen.KodeKelompokDokumen" class="control-label"></label>
-                <select asp-for="Dokumen.KodeKelompokDokumen" class ="form-control" asp-items="ViewBag.KelompokDokumen"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Simpan" class="btn btn-primary" />
-            </div>
-        </form>
+
+<div class="bg-page-detail pt-4 pb-5 container">
+    <h1>Create</h1>
+
+    <h4>Dokumen</h4>
+    <hr />
+
+    <div class="row row-cards card">
+        <div class="card-body">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Dokumen.Nama" class="control-label"></label>
+                    <input asp-for="Dokumen.Nama" class="form-control" />
+                    <span asp-validation-for="Dokumen.Nama" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dokumen.Nomor" class="control-label"></label>
+                    <input asp-for="Dokumen.Nomor" class="form-control" />
+                    <span asp-validation-for="Dokumen.Nomor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dokumen.KodeKelompokDokumen" class="control-label"></label>
+                    <select asp-for="Dokumen.KodeKelompokDokumen" class ="form-control" asp-items="ViewBag.KodeKelompokDokumen"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dokumen.AmbilNomor" class="control-label"></label>
+                    <input asp-for="Dokumen.AmbilNomor" class="form-control" />
+                    <span asp-validation-for="Dokumen.AmbilNomor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dokumen.JumlahTindakLanjut" class="control-label"></label>
+                    <input asp-for="Dokumen.JumlahTindakLanjut" class="form-control" />
+                    <span asp-validation-for="Dokumen.JumlahTindakLanjut" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dokumen.UntukPublik" class="control-label"></label>
+                    <input asp-for="Dokumen.UntukPublik" class="form-control" />
+                    <span asp-validation-for="Dokumen.UntukPublik" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="Index">Back to List</a>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Kembali ke Daftar Dokumen</a>
-</div>
-
-@section Scripts {
+@section Scripts
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -22,7 +22,8 @@ namespace MonevAtr.Areas.Identity
                         context.Configuration.GetConnectionString("MonevAtrIdentity"));
                 });
 
-                _ = services.AddDefaultIdentity<IdentityUser>()
+                _ = services
+                    .AddDefaultIdentity<IdentityUser>()
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<MonevAtrIdentityDbContext>();
             });

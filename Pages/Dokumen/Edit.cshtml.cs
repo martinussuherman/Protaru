@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
-namespace MonevAtr.Pages.Dokumen
+namespace MonevAtr.Pages_Dokumen
 {
     public class EditModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace MonevAtr.Pages.Dokumen
         }
 
         [BindProperty]
-        public Models.Dokumen Dokumen { get; set; }
+        public Dokumen Dokumen { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -25,16 +25,17 @@ namespace MonevAtr.Pages.Dokumen
                 return NotFound();
             }
 
-            this.Dokumen = await _context.Dokumen
+            Dokumen = await _context.Dokumen
                 .Include(d => d.KelompokDokumen)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (this.Dokumen == null)
+            if (Dokumen == null)
             {
                 return NotFound();
             }
 
-            ViewData["KelompokDokumen"] = await selectListUtilities.KelompokDokumen();
+            ViewData["KodeKelompokDokumen"] = await selectListUtilities.KelompokDokumen();
+
             return Page();
         }
 
@@ -45,7 +46,7 @@ namespace MonevAtr.Pages.Dokumen
                 return Page();
             }
 
-            _context.Attach(this.Dokumen).State = EntityState.Modified;
+            _context.Attach(Dokumen).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +54,7 @@ namespace MonevAtr.Pages.Dokumen
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DokumenExists(this.Dokumen.Kode))
+                if (!DokumenExists(Dokumen.Kode))
                 {
                     return NotFound();
                 }

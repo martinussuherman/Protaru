@@ -1,0 +1,299 @@
+@page "{id:int?}"
+@model EditModel
+
+@{
+    ViewData["Title"] = "Detail RTR Pulau/Kep T5-2";
+    ViewData["PageTitle"] = "RTR Pulau/Kepulauan";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+    <div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card pt-4">
+                <h5 class="text-center text-orange text-title-rtr font-weight-bold text-uppercase">@Model.Atr.DisplayNamaPulau</h5>
+                <h4 class="text-center font-weight-bold text-detail-rtr">@Model.Atr.DisplayNamaKabupatenKota</h4>
+                <h5 class="text-center text-detail-rtr">@Model.Atr.Nama</h5>
+                <h5 class="text-center text-detail-rtr">Nomor: @Model.Atr.Nomor</h5>
+
+                <div class="mt-2 tag-title-box-1 mb-0">
+                    <div class="tag-title"><span>KETERANGAN</span></div>
+                </div>
+
+                <form method="post">
+                    <div class="card-body row">
+                        <input type="hidden" asp-for="Atr.Kode" />
+                        <input type="hidden" asp-for="Atr.Nama" />
+                        <input type="hidden" asp-for="Atr.Nomor" />
+                        <input type="hidden" asp-for="Atr.Tanggal" />
+                        <input type="hidden" asp-for="Atr.Tahun" />
+                        <input type="hidden" asp-for="Atr.KodeJenisAtr" />
+                        <input type="hidden" asp-for="Atr.KodePulau" />
+                        <input type="hidden" asp-for="Atr.SudahDirevisi" />
+
+                        <!-- <div class="col-md-12 form-group">
+                            <label class="form-label">Area of Interest</label>
+                            <input asp-for="Atr.Aoi" class="form-control">
+                        </div> -->
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <label class="form-label">Luas (Ha)</label>
+                            <input asp-for="Atr.Luas" type="number" class="form-control" placeholder="0.000" step="0.001" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <label class="form-label">Tahun Penyusunan</label>
+                            <input asp-for="Atr.TahunPenyusunan" class="form-control">
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Progress</label>
+                            <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.Progress"></select>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Status Revisi</label>
+                            <select asp-for="Atr.StatusRevisi" class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Permasalahan</label>
+                            <textarea asp-for="Atr.Permasalahan" class ="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Tindak Lanjut</label>
+                            <textarea asp-for="Atr.TindakLanjut" class ="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Keterangan</label>
+                            <textarea asp-for="Atr.Keterangan" class ="form-control"></textarea>
+                        </div>
+                    </div>
+
+@{
+int index = 0;
+string path = "";
+string inputDivClass = "";
+string linkClass = "";
+}
+
+@foreach (var item in Model.KelompokDokumenList)
+{
+                    <hr>
+                    <h5 class="card-title">&nbsp; @item.Nomor . @item.Nama</h5>
+                    <hr>
+                    <div class="card-body row">
+
+    @foreach( var detailItem in item.Dokumen)
+    {
+        if( detailItem.DetailDokumen.FilePathAda )
+        {
+            path = Url.Content("~" + detailItem.DetailDokumen.FilePath);
+            inputDivClass = "custom-file d-none";
+            linkClass = "file-info";
+        }
+        else
+        {
+            path = "";
+            inputDivClass = "custom-file";
+            linkClass = "file-info d-none";
+        }
+
+                        <div class="col-sm-6 col-md-2 pt-2">
+                            @detailItem.Nama
+                        </div>
+
+                        <input type="hidden" name="AtrDokumenList[@index].Kode" value="@detailItem.DetailDokumen.Kode"/>
+                        <input type="hidden" name="AtrDokumenList[@index].KodeDokumen" value="@detailItem.Kode"/>
+
+                        <div class="col-sm-6 col-md-1 form-group p-2px">
+                            <select class="form-control" name="AtrDokumenList[@index].Status">
+                                <option value="0">Tidak</option>
+
+        @if(detailItem.DetailDokumen.StatusAda)
+        {
+                                <option value="1" selected="selected">Ada</option>
+        }
+        else
+        {
+                                <option value="1">Ada</option>
+        }
+
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6 col-md-2 form-group p-2px">
+                            <input type="text" name="AtrDokumenList[@index].Nomor" value="@detailItem.DetailDokumen.Nomor" class="form-control" placeholder="Nomor" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-2 form-group p-2px">
+                            <input type="date" name="AtrDokumenList[@index].Tanggal" value="@detailItem.DetailDokumen.DisplayTanggal" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-2 form-group p-2px">
+                            <textarea name="AtrDokumenList[@index].Keterangan" class="form-control bnote-rdtr" data-toggle="modal" data-target="#note-modal" rows="1">@detailItem.DetailDokumen.Keterangan</textarea>
+                        </div>
+
+                        <div class="col-md-3 form-group p-5px">
+                            <div class="@inputDivClass">
+                                <input type="hidden"
+                                    class="file-path"
+                                    name="AtrDokumenList[@index].FilePath"
+                                    value="@detailItem.DetailDokumen.FilePath" />
+                                <input type="file" class="dokumen-file" />
+								<div class="btn btn-warning btn-sm btn-upload">Upload</div>
+                            </div>
+						    <div class="@linkClass" >
+						        <a target="_blank"
+                                    class="file-link btn btn-success btn-sm"
+                                    href="@path">
+                                    Download File
+                                </a>
+                                <span>|</span>
+                                <a class="btn btn-danger btn-sm btn-delete">Delete</a>
+						    </div>
+                        </div>
+
+        @if( detailItem.JumlahTindakLanjut > 0 )
+        {
+                        <div class="col-sm-6 col-md-3 pt-2">
+                            Tindak Lanjut 1
+                        </div>
+
+                        <div class="col-sm-6 col-md-1 form-group">
+                            <input asp-for="Atr.TL1StatusYes" class="form-check custom-control"/>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <input asp-for="Atr.TL1Keterangan" class ="form-control"/>
+                        </div>
+
+                        <div class="col-md-2 form-group">
+                            <div class="custom-file">
+                                <input type="file" name="Atr.TL1FilePath" class="custom-file-input" name="example-file-input-custom" />
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 pt-2">
+                            Tindak Lanjut 2
+                        </div>
+
+                        <div class="col-sm-6 col-md-1 form-group">
+                            <input asp-for="Atr.TL2StatusYes" class="form-check custom-control"/>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <input asp-for="Atr.TL2Keterangan" class ="form-control"/>
+                        </div>
+
+                        <div class="col-md-2 form-group">
+                            <div class="custom-file">
+                                <input type="file" name="Atr.TL2FilePath" class="custom-file-input" name="example-file-input-custom" />
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 pt-2">
+                            Tindak Lanjut 3
+                        </div>
+
+                        <div class="col-sm-6 col-md-1 form-group">
+                            <input asp-for="Atr.TL3StatusYes" class="form-check custom-control"/>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <input asp-for="Atr.TL3Keterangan" class ="form-control"/>
+                        </div>
+
+                        <div class="col-md-2 form-group">
+                            <div class="custom-file">
+                                <input type="file" name="Atr.TL3FilePath" class="custom-file-input" name="example-file-input-custom" />
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 pt-2">
+                            Tindak Lanjut 4
+                        </div>
+
+                        <div class="col-sm-6 col-md-1 form-group">
+                            <input asp-for="Atr.TL4StatusYes" class="form-check custom-control"/>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <input asp-for="Atr.TL4Keterangan" class ="form-control"/>
+                        </div>
+
+                        <div class="col-md-2 form-group">
+                            <div class="custom-file">
+                                <input type="file" name="Atr.TL4FilePath" class="custom-file-input" name="example-file-input-custom" />
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 pt-2">
+                            Tindak Lanjut 5
+                        </div>
+
+                        <div class="col-sm-6 col-md-1 form-group">
+                            <input asp-for="Atr.TL5StatusYes" class="form-check custom-control"/>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <input asp-for="Atr.TL5Keterangan" class ="form-control"/>
+                        </div>
+
+                        <div class="col-md-2 form-group">
+                            <div class="custom-file">
+                                <input type="file" name="Atr.TL5FilePath" class="custom-file-input" name="example-file-input-custom" />
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+        }
+
+        index++;
+    }
+
+                    </div>
+}
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a asp-page="/Atr/Delete" asp-route-id="@Model.Atr.Kode" class="btn btn-primary">Hapus</a>
+                        <a asp-page="./Index" class="btn btn-primary">Kembali</a>
+                    </div>
+                </form>
+
+                <div class="card-body row">
+                    Pembaruan terakhir oleh: @Html.DisplayFor(model => model.Atr.PembaruanOleh)
+                    pada: @Html.DisplayFor(model => model.Atr.PembaruanTerakhir)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ModalInputPartial")
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ModalScriptPartial");}
+    @{await Html.RenderPartialAsync("_AjaxUploadFileScriptPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $('.btn-upload').click(function () {
+                process(this, 'RtrPulauT52');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,56 @@
+@using MonevAtr.Models
+
+@model List<FasilitasKegiatan>
+
+<hr>
+<h5 class="card-title">&nbsp; Fasilitas Kegiatan</h5>
+<hr>
+<div class="card-body row">
+
+@{
+int index = 0;
+string checkedValue = "";
+}
+
+@foreach (var fasilitas in Model) {
+
+    <input type="hidden"
+        name="FasKeg[@index].Kode"
+        value="@fasilitas.DetailFasilitasKegiatan.Kode"/>
+
+    <input type="hidden"
+        name="FasKeg[@index].KodeFasilitasKegiatan"
+        value="@fasilitas.DetailFasilitasKegiatan.KodeFasilitasKegiatan"/>
+
+    checkedValue = fasilitas.DetailFasilitasKegiatan.IsStatusYes ? @"checked=""" : "";
+
+    <div class="col-sm-3 col-md-1 form-group">
+        <input type="checkbox" 
+            name="FasKeg[@index].Status"
+            class="form-check custom-control"
+            value="1"
+            @checkedValue />
+    </div>
+
+    <div class="col-sm-9 col-md-3 pt-2">
+        @fasilitas.Nama
+    </div>
+
+    <div class="col-sm-6 col-md-2 form-group">
+        <input type="number" 
+            name="FasKeg[@index].Tahun"
+            class="form-control"
+            value="@fasilitas.DetailFasilitasKegiatan.Tahun"/>
+    </div>
+
+    <div class="col-sm-6 col-md-6 form-group">
+        <input type="text" 
+            name="FasKeg[@index].Keterangan"
+            class="form-control"
+            value="@fasilitas.DetailFasilitasKegiatan.Keterangan"/>
+    </div>
+
+    index++;
+}
+
+</div>

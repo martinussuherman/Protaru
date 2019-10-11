@@ -1,0 +1,45 @@
+@page
+@model IndexModel
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Pencarian RDTR T5-2";
+    ViewData["PageTitle"] = "RDTR";
+}
+
+<form method="get" asp-page="./SearchResult">
+    <div class="card-body">
+        <div class="col-md-12 form-group">
+            <label class="form-label">Provinsi</label>
+            <select id="provinsi" asp-for="Rtr.Prov" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Kabupaten/Kota</label>
+            <select id="kabupaten-kota" asp-for="Rtr.KabKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nama RRTR/RDTR</label>
+            <input asp-for="Rtr.Nama" class="form-control" />
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nomor Perda</label>
+            <input asp-for="Rtr.Nomor" class="form-control" />
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Tahun Perda</label>
+            <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
+        </div>
+
+        @await Html.PartialAsync("_ProgressSearchPartial", Model.ProgressAtr)
+    </div>
+
+    <div class="card-footer text-center">
+        <button type="submit" class="btn btn-primary">Cari</button>
+        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>
+
+@section Scripts 
+{
+    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
+}

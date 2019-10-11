@@ -1,0 +1,58 @@
+@using System.Collections.Generic
+@using MonevAtr.Models
+
+@model RtrDetail
+
+<div class="mt-4 tag-title-box-2">
+    <div class="tag-title"><span>DOKUMEN DETIL</span></div>
+</div>
+
+<div class="justify-content-md-center px-5">
+    <div class="card border-orange mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Nomor</th>
+                            <th scope="col">Tanggal</th>
+                            <th scope="col">Keterangan</th>
+                            <th scope="col">File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+@{
+int index = 1;
+}
+
+@foreach (var item in Model.KelompokDokumenList) 
+{
+    @foreach( var detailItem in item.Dokumen)
+    {
+        if( detailItem.UntukPublik == 0)
+        {
+            continue;
+        }
+
+                        <tr>
+                            <td>@index</td>
+                            <td>@detailItem.Nama</td>
+                            <td>@detailItem.DetailDokumen.Nomor</td>
+                            <td>@detailItem.DetailDokumen.DisplayTanggalForView</td>
+                            <td>@detailItem.DetailDokumen.Keterangan</td>
+                            @await Html.PartialAsync("_ViewDokumenFilePartial", detailItem.DetailDokumen)
+                        </tr>
+
+        index++;
+    }
+}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

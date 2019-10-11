@@ -1,0 +1,14 @@
+@using P.Pager
+@using P.Pager.Mvc.Core
+
+@model IPager
+
+@functions
+{
+    public string PagedUrl(int page)
+    {
+        return PagerUrlHelper.RetrievePagedUrl(Context,page);
+    }
+}
+
+@Html.Pager(Model, page => PagedUrl(page))

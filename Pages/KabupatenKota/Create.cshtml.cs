@@ -18,7 +18,7 @@ namespace MonevAtr.Pages.KabupatenKota
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["KodeProvinsi"] = await selectListUtilities.Provinsi();
+            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
             return Page();
         }
 
@@ -26,6 +26,7 @@ namespace MonevAtr.Pages.KabupatenKota
         {
             if (!ModelState.IsValid)
             {
+                ViewData["Provinsi"] = await selectListUtilities.Provinsi();
                 return Page();
             }
 

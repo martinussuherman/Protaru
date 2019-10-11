@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace organix_monev_atr.Pages
+namespace MonevAtr.Pages
 {
     public class PrivacyModel : PageModel
     {

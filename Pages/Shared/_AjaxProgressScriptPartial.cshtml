@@ -1,0 +1,111 @@
+<script type="text/javascript">
+    function UpdateProgressT51(data)
+    {
+        $('#progress-t51 .row:eq(0) .progress-score').html( data.penyusunan );
+        $('#progress-t51 .row:eq(0) .progress-bar').attr(
+            'style',
+            'width: ' + data.penyusunan / data.total * 100 + '%;' );
+        $('#progress-t51 .row:eq(1) .progress-score').html( data.rekomendasiGubernur );
+        $('#progress-t51 .row:eq(1) .progress-bar').attr(
+            'style',
+            'width: ' + data.rekomendasiGubernur / data.total * 100 + '%;' );
+        $('#progress-t51 .row:eq(2) .progress-score').html( data.persetujuanSubstansi );
+        $('#progress-t51 .row:eq(2) .progress-bar').attr(
+            'style',
+            'width: ' + data.persetujuanSubstansi / data.total * 100 + '%;' );
+        $('#progress-t51 .row:eq(3) .progress-score').html( data.perda );
+        $('#progress-t51 .row:eq(3) .progress-bar').attr(
+            'style',
+            'width: ' + data.perda / data.total * 100 + '%;' );
+    }
+
+    function UpdateProgressT52(data)
+    {
+        $('#progress-t52 .row:eq(0) .progress-score').html( data.prosesPK );
+        $('#progress-t52 .row:eq(0) .progress-bar').attr(
+            'style',
+            'width: ' + data.prosesPK / data.total * 100 + '%;' );
+        $('#progress-t52 .row:eq(1) .progress-score').html( data.revisi );
+        $('#progress-t52 .row:eq(1) .progress-bar').attr(
+            'style',
+            'width: ' + data.revisi / data.total * 100 + '%;' );
+        $('#progress-t52 .row:eq(2) .progress-score').html( data.rekomendasiGubernur );
+        $('#progress-t52 .row:eq(2) .progress-bar').attr(
+            'style',
+            'width: ' + data.rekomendasiGubernur / data.total * 100 + '%;' );
+        $('#progress-t52 .row:eq(3) .progress-score').html( data.persetujuanSubstansi );
+        $('#progress-t52 .row:eq(3) .progress-bar').attr(
+            'style',
+            'width: ' + data.persetujuanSubstansi / data.total * 100 + '%;' );
+        $('#progress-t52 .row:eq(4) .progress-score').html( data.perda );
+        $('#progress-t52 .row:eq(4) .progress-bar').attr(
+            'style',
+            'width: ' + data.perda / data.total * 100 + '%;' );
+    }
+
+    $(document).ready(function () {
+
+        $('#rdtr-t51-progress').click( function () {
+            $.getJSON('@Url.Content("~/Ajax/ProgressT51")',
+                { jenisRtr: 1 }, function(data){
+                    UpdateProgressT51(data);
+            });
+
+            $('#rdtr-t51-progress').addClass('active-progress');
+            $('#rtrw-t51-progress').removeClass('active-progress');
+            $('#progress-t51 .col-sm-2 a img').unwrap();
+            $('#progress-t51 .col-sm-2').each( function( index ) {
+                var stage = index + 1;
+                $( this ).wrapInner('<a href="@Url.Content("~/RdtrT51/SearchResult/ByProgress?stage=")' + stage + '"></a>');
+            });
+        });
+
+        $('#rtrw-t51-progress').click( function () {
+            $.getJSON('@Url.Content("~/Ajax/ProgressT51")',
+                { jenisRtr: 3 }, function(data){
+                    UpdateProgressT51(data);
+            });
+
+            $('#rtrw-t51-progress').addClass('active-progress');
+            $('#rdtr-t51-progress').removeClass('active-progress');
+            $('#progress-t51 .col-sm-2 a img').unwrap();
+            $('#progress-t51 .col-sm-2').each( function( index ) {
+                var stage = index + 1;
+                $( this ).wrapInner('<a href="@Url.Content("~/RtrwT51/SearchResult/ByProgress?stage=")' + stage + '"></a>');
+            });
+        });
+
+        $('#rdtr-t52-progress').click( function () {
+            $.getJSON('@Url.Content("~/Ajax/ProgressT52")',
+                { jenisRtr: 2 }, function(data){
+                    UpdateProgressT52(data);
+            });
+
+            $('#rdtr-t52-progress').addClass('active-progress');
+            $('#rtrw-t52-progress').removeClass('active-progress');
+            $('#progress-t52 .col-sm-2 a img').unwrap();
+            $('#progress-t52 .col-sm-2').each( function( index ) {
+                var stage = index + 1;
+                $( this ).wrapInner('<a href="@Url.Content("~/RdtrT52/SearchResult/ByProgress?stage=")' + stage + '"></a>');
+            });
+        });
+
+        $('#rtrw-t52-progress').click( function () {
+            $.getJSON('@Url.Content("~/Ajax/ProgressT52")',
+                { jenisRtr: 4 }, function(data){
+                    UpdateProgressT52(data);
+            });
+
+            $('#rtrw-t52-progress').addClass('active-progress');
+            $('#rdtr-t52-progress').removeClass('active-progress');
+            $('#progress-t52 .col-sm-2 a img').unwrap();
+            $('#progress-t52 .col-sm-2').each( function( index ) {
+                var stage = index + 1;
+                $( this ).wrapInner('<a href="@Url.Content("~/RtrwT52/SearchResult/ByProgress?stage=")' + stage + '"></a>');
+            });
+        });
+
+        $('#rtrw-t51-progress').trigger("click");
+        $('#rtrw-t52-progress').trigger("click");
+    });
+</script>
