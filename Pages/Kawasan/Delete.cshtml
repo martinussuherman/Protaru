@@ -1,0 +1,26 @@
+@page "{id:int?}"
+@model DeleteModel
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Hapus Kawasan";
+    ViewData["PageTitle"] = "Kawasan";
+}
+
+<div class="card-body">
+    <div class="form-group">
+        <label class="control-label">Kode</label>
+        <input asp-for="Kawasan.Kode" class="form-control" disabled/>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Nama</label>
+        <input asp-for="Kawasan.Nama" class="form-control" disabled/>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Kawasan.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
+</div>

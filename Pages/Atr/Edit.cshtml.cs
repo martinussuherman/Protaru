@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,17 +11,18 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Atr
 {
+    [Authorize]
     public class EditModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
+        private readonly MonevAtrDbContext _context;
 
-        public EditModel(MonevAtr.Models.MonevAtrDbContext context)
+        public EditModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public MonevAtr.Models.Atr Atr { get; set; }
+        public Models.Atr Atr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

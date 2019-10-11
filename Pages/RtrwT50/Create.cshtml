@@ -1,0 +1,74 @@
+@page
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Input RTRW T5-0";
+    ViewData["PageTitle"] = "RTRW";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card">
+                <div class="card-header pl-5">
+                    <h4 class="card-title mlm-15">@ViewData["Title"]</h4>
+                </div>
+
+                <form id="rtr" method="post">
+                    <div class="card-body">
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Atr.Provinsi" class="form-label"></label>
+                            <select id="provinsi" asp-for="Atr.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Atr.KabupatenKota" class="form-label"></label>
+                            <select id="kabupaten-kota" asp-for="Atr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Atr.KodeProgressAtr" class="control-label"></label>
+                            <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressAtr"></select>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Nama RTRW</label>
+                            <input asp-for="Atr.Nama" class="form-control">
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Area of Interest</label>
+                            <input asp-for="Atr.Aoi" class="form-control">
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <label class="form-label">Luas (Ha)</label>
+                            <input asp-for="Atr.Luas" type="number" class="form-control" placeholder="0.000" step="0.001" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 form-group">
+                            <label asp-for="Atr.TahunPenyusunan"></label>
+                            <input asp-for="Atr.TahunPenyusunan" class="form-control">
+                        </div>
+					</div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a asp-page="./Index" class="btn btn-primary">Kembali</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
+}

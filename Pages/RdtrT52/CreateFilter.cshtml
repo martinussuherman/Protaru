@@ -1,0 +1,78 @@
+@page
+@model CreateFilterModel
+
+@{
+    ViewData["Title"] = "Monitoring & Evaluasi RDTR T5-2";
+    ViewData["PageTitle"] = "RDTR";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card">
+                <div class="card-header">
+                    <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
+                    <div class="ml-auto float-sm-right">
+                        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+                    </div>
+                </div>
+
+	            <div class="card-body">
+	                <div class="table-responsive">
+	                    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+	                        <thead>
+	                            <tr class="text-light font-weight-bold text-center bg-info">
+                                    <th>No</th>
+                                    <th>Action</th>
+                                    <th>Provinsi</th>
+                                    <th>Kabupaten/Kota</th>
+                                    <th>Nama</th>
+                                    <th>Jenis</th>
+                                    <th>Tahun Perda</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+@{
+int index = Model.Hasil.StartItemIndex;
+}
+@foreach (var item in Model.Hasil)
+{
+                                <tr>
+                                    <td>@index</td>
+                                    <td class="text-center">
+                                        <a asp-page="./Create" asp-route-id="@item.Kode" class="btn btn-primary btn-sm">Pilih</a>
+                                        <span>@Html.HiddenFor(modelItem => item.Kode)</span>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nama)</td>
+                                    <!-- <td>@Html.DisplayFor(modelItem => item.Nomor)</td> -->
+                                    <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Keterangan)</td>
+                                </tr>
+    index++;
+}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @await Html.PartialAsync("_PagingPartial", Model.Hasil)
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

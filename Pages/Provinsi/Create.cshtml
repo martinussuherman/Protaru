@@ -1,32 +1,28 @@
 @page
-@model MonevAtr.Pages.Provinsi.CreateModel
+@model CreateModel
 
 @{
+    Layout = "_CommonLayout";
     ViewData["Title"] = "Tambah Provinsi";
+    ViewData["PageTitle"] = "Provinsi";
 }
 
-<h1>Tambah Provinsi</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Provinsi.Nama" class="control-label"></label>
-                <input asp-for="Provinsi.Nama" class="form-control" />
-                <span asp-validation-for="Provinsi.Nama" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Simpan" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="card-body">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label class="control-label">Nama</label>
+            <input asp-for="Provinsi.Nama" class="form-control" />
+            <span asp-validation-for="Provinsi.Nama" class="text-danger"></span>
+        </div>
+
+        <input type="submit" value="Simpan" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
 </div>
 
-<div>
-    <a asp-page="Index">Kembali ke Daftar Provinsi</a>
-</div>
-
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

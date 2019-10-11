@@ -1,33 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using P.Pager;
 
 namespace MonevAtr.Pages.Atr
 {
     public class IndexModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
+        private readonly MonevAtrDbContext _context;
 
-        public IndexModel(MonevAtr.Models.MonevAtrDbContext context)
+        public IndexModel(MonevAtrDbContext context)
         {
             _context = context;
         }
 
-        public IList<MonevAtr.Models.Atr> Atr { get; set; }
+        public IPager<Models.Atr> Hasil { get; set; }
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet([FromQuery] int page)
         {
-            Atr = await _context.Atr
+            Hasil = _context.Atr
                 .Include(a => a.JenisAtr)
-                .Include(a => a.KabupatenKota)
-                .Include(a => a.ProgressAtr)
-                .Include(a => a.Provinsi)
-                .ToListAsync();
+                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
+            return Page();
         }
     }
 }

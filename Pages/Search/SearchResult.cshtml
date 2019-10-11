@@ -1,83 +1,80 @@
 @page
-@model MonevAtr.Pages.Search.SearchResultModel
+@model SearchResultModel
 
 @{
     ViewData["Title"] = "Hasil Pencarian";
+    ViewData["PageTitle"] = "Pencarian";
 }
 
-<div class="page-header">
-    <h1 class="page-title"></h1>
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
 </div>
-<div class="row-cards">
-    <div class="col-12 card">
-        <div class="card-header">
-            <h3 class="card-title">Hasil Pencarian</h3>
-            <div class="ml-auto">
-                <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a>
-                <a asp-page="./Create" class="btn btn-success"><i class="fe fe-plus"></i> Tambah</a> -->
-                <a asp-page="./Index" class="btn btn-warning"><i class="fe fe-arrow-left"></i> Kembali</a>
-            </div>
-        </div>
-        <div class="table-responsive">
-            <table class="table card-table table-vcenter text-nowrap table-bordered table-sm table-hover table search-result">
-                <thead style="background-color: #eee;">
-                    <tr>
-                        <th class="text-center text-dark font-weight-bold">No</th>
-                        <th class="text-dark font-weight-bold">Action</th>
-                        <th class="text-dark font-weight-bold">Jenis</th>
-                        <th class="text-dark font-weight-bold">Status</th>
-                        <th class="text-dark font-weight-bold">Provinsi</th>
-                        <th class="text-dark font-weight-bold">Kabupaten/Kota</th>
-                        <th class="text-dark font-weight-bold">Nomor Perda</th>
-                        <th class="text-dark font-weight-bold">Tahun Perda</th>
-                        <th class="text-dark font-weight-bold">Progress</th>
-                    </tr>
-                </thead>
-                <tbody>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card">
+                <div class="card-header">
+                    <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
+                    <div class="ml-auto float-sm-right">
+                        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+                    </div>
+                </div>
+
+	            <div class="card-body">
+	                <div class="table-responsive">
+	                    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+	                        <thead>
+	                            <tr class="text-light font-weight-bold text-center bg-info">
+                                    <th>No</th>
+                                    <th>Action</th>
+                                    <th>Jenis</th>
+                                    <th>Status</th>
+                                    <th>Provinsi</th>
+                                    <th>Kabupaten/Kota</th>
+                                    <th>Nomor Perda</th>
+                                    <th>Tahun Perda</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
 @{
-int index = 1;
-string aspPage, statusRevisi;
+int index = Model.Pager.StartItemIndex;
 }
-@foreach (var item in Model.HasilPencarian) 
+@foreach (var item in Model.Hasil)
 {
-    if( item.KodeJenisAtr == (int) MonevAtr.Models.JenisAtrEnum.RdtrPerda )
-    {
-        aspPage = "/Rdtr/Edit";
-        statusRevisi = "";
-    }
-    else if( item.KodeJenisAtr == (int) MonevAtr.Models.JenisAtrEnum.RtrwRegular )
-    {
-        aspPage = "/RtrwRegular/Edit";
-        statusRevisi = MonevAtr.Models.StatusRevisi.NamaStatusRevisiRegular(item.StatusRevisi);
-    }
-    else
-    {
-        aspPage = "/RtrwRevisi/Edit";
-        statusRevisi = MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi);
-    }
-                    <tr>
-                        <td>@index</td>
-                        <td class="text-center">
-                            <a asp-page="@aspPage" asp-route-id="@item.Kode" class="btn btn-primary btn-sm"><span class="fe fe-edit-3"></span> Detail</a>
-                            <span>@Html.HiddenFor(modelItem => item.Kode)</span>
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
-                        <td>@statusRevisi</td>
-                        <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
-                        <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
-                    </tr>
+                                <tr>
+                                    <td>@index</td>
+                                    <td class="text-center">
+                                        <a asp-page="@item.DetailPath" asp-route-id="@item.Kode" class="btn btn-primary btn-sm">Detail</a>
+                                        <span>@Html.HiddenFor(modelItem => item.Kode)</span>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.NamaJenisRtr)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NamaStatusRevisi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NamaKabupatenKota)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NamaProgressRtr)</td>
+                                </tr>
+
     index++;
 }
-                </tbody>
-            </table>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @await Html.PartialAsync("_PagingPartial", Model.Pager)
+                </div>
+            </div>
         </div>
-    </div>
+	</div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-

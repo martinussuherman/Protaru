@@ -1,41 +1,49 @@
 @page
-@model MonevAtr.Pages.Provinsi.IndexModel
+@model IndexModel
 
 @{
+    Layout = "_CommonLayout";
     ViewData["Title"] = "Daftar Provinsi";
+    ViewData["PageTitle"] = "Provinsi";
 }
 
-<h1>Daftar Provinsi</h1>
+<div class="card-body">
+    <p>
+        <a asp-page="Create" class="btn btn-success">Tambah</a>
+    </p>
 
-<p>
-    <a asp-page="Create">Tambah Provinsi</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Provinsi[0].Kode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Provinsi[0].Nama)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Provinsi) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nama)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Kode">Ubah</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Kode">Hapus</a>
-            </td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Kode
+                </th>
+                <th>
+                    Nama
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+@foreach (var item in Model.Provinsi) 
+{
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nama)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Kode" class="btn btn-warning">Ubah</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Kode" class="btn btn-danger">Hapus</a>
+                </td>
+            </tr>
 }
-    </tbody>
-</table>
+
+        </tbody>
+    </table>
+</div>

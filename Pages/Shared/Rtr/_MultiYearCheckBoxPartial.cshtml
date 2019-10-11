@@ -1,0 +1,18 @@
+@model List<int>
+
+<div class="col-md-12 form-group">
+    <label class="form-label">@ViewData["Caption"]</label>
+    <div class="row">
+
+@foreach (int item in Model) 
+{
+        <div class="col-sm-6 col-md-3 form-group">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" name="@ViewData["InputName"]" value="@item" class="custom-control-input">
+                <span class="custom-control-label">@item</span>
+            </label>
+        </div>
+}
+
+    </div>
+</div>

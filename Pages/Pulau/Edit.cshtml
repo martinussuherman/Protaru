@@ -1,0 +1,29 @@
+@page "{id:int?}"
+@model EditModel
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Ubah Pulau";
+    ViewData["PageTitle"] = "Pulau";
+}
+
+<div class="card-body">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Pulau.Kode" />
+
+        <div class="form-group">
+            <label class="control-label">Nama</label>
+            <input asp-for="Pulau.Nama" class="form-control" />
+            <span asp-validation-for="Pulau.Nama" class="text-danger"></span>
+        </div>
+
+        <input type="submit" value="Simpan" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
+</div>
+
+@section Scripts 
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

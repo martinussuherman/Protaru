@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonevAtr.Models
 {
     [Table("atr_dokumen")]
-    public class AtrDokumen
+    public class AtrDokumen : IKode
     {
         [Key]
         public int Kode { get; set; }
@@ -29,7 +27,7 @@ namespace MonevAtr.Models
         [MaxLength(1000)]
         public string Keterangan { get; set; }
 
-        [BindNever, MaxLength(255)]
+        [MaxLength(255)]
         public string FilePath { get; set; }
 
         [ForeignKey("KodeAtr")]
@@ -45,46 +43,31 @@ namespace MonevAtr.Models
         public FormFileWrapper UploadFile { get; set; }
 
         [NotMapped]
-        public string DisplayTanggal
-        {
-            get
-            {
-                if (this.Tanggal == DateTime.MinValue)
-                {
-                    return String.Empty;
-                }
-
-                return this.Tanggal.ToString("yyyy-MM-dd");
-            }
-        }
+        public string DisplayTanggal =>
+            this.Tanggal == DateTime.MinValue ?
+            String.Empty :
+            this.Tanggal.ToString("yyyy-MM-dd");
 
         [NotMapped]
-        public bool StatusAda
-        {
-            get
-            {
-                return (!String.IsNullOrEmpty(this.Status) && this.Status == "1");
-            }
-        }
+        public string DisplayTanggalForView =>
+            this.Tanggal == DateTime.MinValue ?
+            String.Empty :
+            this.Tanggal.ToString("dd-MM-yyyy");
 
         [NotMapped]
-        public bool FilePathAda
-        {
-            get
-            {
-                return !String.IsNullOrEmpty(this.FilePath);
-            }
-        }
+        public bool StatusAda =>
+            !String.IsNullOrEmpty(this.Status) &&
+            this.Status == "1";
 
         [NotMapped]
-        public bool PerluSimpan
-        {
-            get
-            {
-                return !String.IsNullOrEmpty(this.Nomor) ||
-                    this.Tanggal != DateTime.MinValue ||
-                    this.FilePathAda;
-            }
-        }
+        public bool FilePathAda =>
+            !String.IsNullOrEmpty(this.FilePath);
+
+        [NotMapped]
+        public bool PerluSimpan =>
+            !String.IsNullOrEmpty(Nomor) ||
+            Tanggal != DateTime.MinValue ||
+            FilePathAda ||
+            StatusAda;
     }
 }

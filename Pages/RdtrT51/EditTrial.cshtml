@@ -1,0 +1,110 @@
+@page
+@model EditTrial
+
+@{
+    ViewData["Title"] = "Detail RDTR T5-1";
+}
+
+<div class="page-header">
+    <h1 class="page-title"></h1>
+</div>
+<div class="row row-cards text">
+    <div class="col-12 card">
+        <div class="card-body">
+            <h1 class="title">@Model.RtrDetail.Rtr.DisplayNamaProvinsiKabupatenKota</h1>
+            <h2 class="title">@Model.RtrDetail.Rtr.Nama</h2>
+            <h3 class="title">Nomor: @Model.RtrDetail.Rtr.Nomor</h3>
+        </div>
+        <hr>
+
+        <!-- <form asp-page="./EditResult" method="post" enctype="multipart/form-data"> -->
+        <form method="post" enctype="multipart/form-data">
+            <div class="card-body row">
+                @Html.Hidden( "RtrDetail.Rtr.Kode" )
+                @Html.Hidden( "RtrDetail.Rtr.Nama" )
+                @Html.Hidden( "RtrDetail.Rtr.Nomor" )
+                @Html.Hidden( "RtrDetail.Rtr.Tanggal" )
+                @Html.Hidden( "RtrDetail.Rtr.Tahun" )
+                @Html.Hidden( "RtrDetail.Rtr.KodeJenisAtr" )
+                @Html.Hidden( "RtrDetail.Rtr.KodeKabupatenKota" )
+                @Html.Hidden( "RtrDetail.Rtr.KodeProvinsi" )
+                @Html.Hidden( "RtrDetail.Rtr.SudahDirevisi" )
+
+                <div class="col-md-12 form-group">
+                    <h4 class="text-center text-dark font-weight-bold"> Keterangan </h4>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label class="form-label">Area of Interest</label>
+                    <input asp-for="RtrDetail.Rtr.Aoi" name="RtrDetail.Rtr.Aoi" class="form-control" />
+                </div>
+
+                <div class="col-sm-6 col-md-6 form-group">
+                    <label class="form-label">Luas (Ha)</label>
+                    <input asp-for="RtrDetail.Rtr.Luas" name="RtrDetail.Rtr.Luas" value="@String.Format( "0.000", Model.RtrDetail.Rtr.Luas)" type="number" class="form-control" placeholder="0.000" step="0.001" />
+                </div>
+
+                <div class="col-sm-6 col-md-6 form-group">
+                    <label asp-for="RtrDetail.Rtr.TahunPenyusunan"></label>
+                    <input asp-for="RtrDetail.Rtr.TahunPenyusunan" name="RtrDetail.Rtr.TahunPenyusunan" class="form-control" />
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="RtrDetail.Rtr.KodeProgressAtr" class="form-label"></label>
+                    <select asp-for="RtrDetail.Rtr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressRdtr"></select>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="RtrDetail.Rtr.Permasalahan" class="form-label"></label>
+                    <textarea asp-for="RtrDetail.Rtr.Permasalahan" class ="form-control"></textarea>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="RtrDetail.Rtr.TindakLanjut" class="form-label"></label>
+                    <textarea asp-for="RtrDetail.Rtr.TindakLanjut" class ="form-control"></textarea>
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="RtrDetail.Rtr.Keterangan" class="form-label"></label>
+                    <textarea asp-for="RtrDetail.Rtr.Keterangan" class ="form-control"></textarea>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("_RtrEditDokumenPartial", Model.RtrDetail)
+
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary"><i class="fe fe-save"></i> Simpan</button>
+                <a asp-page="/Atr/Delete" asp-route-id="@Model.RtrDetail.Rtr.Kode" class="btn btn-primary"><i class="fe fe-delete"></i> Hapus</a>
+                <a asp-page="./Index" class="btn btn-primary"><i class="fe fe-arrow-left"></i> Kembali</a>
+            </div>
+        </form>
+
+        <div class="card-body row">
+            Pembaruan terakhir oleh: @Html.DisplayFor(model => model.RtrDetail.Rtr.PembaruanOleh) 
+            pada: @Html.DisplayFor(model => model.RtrDetail.Rtr.PembaruanTerakhir)
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ModalInputPartial")
+
+<!-- Validation Result -->
+<div class="d-none">
+    <ul>
+@{
+    var errors = ViewData.ModelState.Where(n => n.Value.Errors.Count > 0).ToList();
+
+    foreach( var error in errors)
+    {
+        <li>@error.Key - @error.Value.Errors.Count</li>
+    }
+}
+    </ul>
+</div>
+
+@section Scripts 
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ModalScriptPartial");}
+}
+

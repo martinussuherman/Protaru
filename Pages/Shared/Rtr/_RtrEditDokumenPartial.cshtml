@@ -1,0 +1,252 @@
+@using MonevAtr.Models
+
+@model RtrDetail
+
+@{
+int index = 0;
+}
+
+@foreach (var item in Model.KelompokDokumenList) {
+
+    <hr>
+    <h3 class="card-title">&nbsp; @item.Nomor . @item.Nama</h3>
+    <hr>
+
+    <div class="card-body row">
+
+    @foreach( var detailItem in item.Dokumen)
+    {
+        <div class="col-sm-6 col-md-3 pt-2">
+            @detailItem.Nama
+        </div>
+
+        @Html.Hidden(
+            "DokumenList[@index].Kode", 
+            detailItem.DetailDokumen.Kode)
+        @Html.Hidden(
+            "DokumenList[@index].KodeAtr", 
+            detailItem.DetailDokumen.KodeAtr)
+        @Html.Hidden(
+            "DokumenList[@index].KodeDokumen", 
+            detailItem.Kode)
+
+        <div class="col-sm-6 col-md-1 form-group">
+            <select class="form-control" name="DokumenList[@index].Status">
+                <option value="0">Tidak</option>
+
+        @if(detailItem.DetailDokumen.StatusAda)
+        {
+                <option value="1" selected="selected">Ada</option>
+        }
+        else
+        {
+                <option value="1">Ada</option>
+        }
+
+            </select>
+        </div>
+
+        <div class="col-sm-6 col-md-2 form-group">
+            @Html.TextBox(
+                "DokumenList[@index].Nomor", 
+                detailItem.DetailDokumen.Nomor, 
+                new {@class = "form-control", placeholder = "Nomor"})
+            <!-- <input 
+                type="text" 
+                name="DokumenList[@index].Nomor" 
+                value="@detailItem.DetailDokumen.Nomor" 
+                class="form-control" 
+                placeholder="Nomor" /> -->
+        </div>
+
+        <div class="col-sm-6 col-md-2 form-group">
+            <input 
+                type="date" 
+                name="DokumenList[@index].Tanggal" 
+                value="@detailItem.DetailDokumen.DisplayTanggal" 
+                class="form-control" />
+        </div>
+
+        <div class="col-sm-6 col-md-2 form-group">
+            <textarea 
+                name="DokumenList[@index].Keterangan" 
+                class="form-control bnote-rdtr" 
+                data-toggle="modal" 
+                data-target="#note-modal" 
+                rows="1">
+                @detailItem.DetailDokumen.Keterangan
+            </textarea>
+        </div>
+
+        <div class="col-md-2 form-group">
+            <!-- <input type="hidden" name="DokumenList.Index" value="@index" /> -->
+            <div class="custom-file">
+                <input 
+                    type="file" 
+                    name="DokumenList[@index].UploadFile.File" 
+                    class="custom-file-input" />
+                <!-- <input type="file" name="DokumenList[@index].UploadFile" class="custom-file-input" /> -->
+                <!-- <input type="file" multiple="" name="UploadFile[@index]" class="custom-file-input" /> -->
+                <label class="custom-file-label">Choose file</label>
+            </div>
+        </div>
+
+        @if( detailItem.DetailDokumen.FilePathAda )
+        {
+            <div class="col-md-2 offset-md-10 form-group">
+                <a href="/upload/@detailItem.DetailDokumen.FilePath">
+                    @detailItem.DetailDokumen.FilePath
+                </a>
+            </div>
+        }
+        
+        @if( detailItem.JumlahTindakLanjut > 0 )
+        {
+            <div class="col-sm-6 col-md-3 pt-2">
+                Tindak Lanjut 1
+            </div>
+
+
+            <div class="col-sm-6 col-md-1 form-group">
+                @Html.CheckBox(
+                    "RtrDetail.Rtr.TL1StatusYes", 
+                    Model.Rtr.TL1StatusYes, 
+                    new {@class = "form-check custom-control"})
+            </div>
+
+            <div class="col-sm-6 col-md-6 form-group">
+                @Html.TextBox(
+                    "RtrDetail.Rtr.TL1Keterangan", 
+                    Model.Rtr.TL1Keterangan, 
+                    new {@class = "form-control"})
+            </div>
+
+            <div class="col-md-2 form-group">
+                <div class="custom-file">
+                    <input 
+                        type="file" 
+                        name="Rtr.TL1FilePath" 
+                        class="custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3 pt-2">
+                Tindak Lanjut 2
+            </div>
+
+            <div class="col-sm-6 col-md-1 form-group">
+                @Html.CheckBox(
+                    "RtrDetail.Rtr.TL2StatusYes", 
+                    Model.Rtr.TL2StatusYes, 
+                    new {@class = "form-check custom-control"})
+            </div>
+
+            <div class="col-sm-6 col-md-6 form-group">
+                @Html.TextBox(
+                    "RtrDetail.Rtr.TL2Keterangan", 
+                    Model.Rtr.TL2Keterangan, 
+                    new {@class = "form-control"})
+            </div>
+
+            <div class="col-md-2 form-group">
+                <div class="custom-file">
+                    <input 
+                        type="file" 
+                        name="Rtr.TL2FilePath" 
+                        class="custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3 pt-2">
+                Tindak Lanjut 3
+            </div>
+
+            <div class="col-sm-6 col-md-1 form-group">
+                @Html.CheckBox(
+                    "RtrDetail.Rtr.TL3StatusYes", 
+                    Model.Rtr.TL3StatusYes, 
+                    new {@class = "form-check custom-control"})
+            </div>
+
+            <div class="col-sm-6 col-md-6 form-group">
+                @Html.TextBox(
+                    "RtrDetail.Rtr.TL3Keterangan", 
+                    Model.Rtr.TL3Keterangan, 
+                    new {@class = "form-control"})
+            </div>
+
+            <div class="col-md-2 form-group">
+                <div class="custom-file">
+                    <input 
+                        type="file" 
+                        name="Rtr.TL3FilePath" 
+                        class="custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3 pt-2">
+                Tindak Lanjut 4
+            </div>
+ 
+            <div class="col-sm-6 col-md-1 form-group">
+                @Html.CheckBox(
+                    "RtrDetail.Rtr.TL4StatusYes", 
+                    Model.Rtr.TL4StatusYes, 
+                    new {@class = "form-check custom-control"})
+            </div>
+ 
+            <div class="col-sm-6 col-md-6 form-group">
+                @Html.TextBox(
+                    "RtrDetail.Rtr.TL4Keterangan", 
+                    Model.Rtr.TL4Keterangan, 
+                    new {@class = "form-control"})
+            </div>
+
+            <div class="col-md-2 form-group">
+                <div class="custom-file">
+                    <input 
+                        type="file" 
+                        name="Rtr.TL4FilePath" 
+                        class="custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3 pt-2">
+                Tindak Lanjut 5
+            </div>
+
+            <div class="col-sm-6 col-md-1 form-group">
+                @Html.CheckBox(
+                    "RtrDetail.Rtr.TL5StatusYes", 
+                    Model.Rtr.TL5StatusYes, 
+                    new {@class = "form-check custom-control"})
+            </div>
+
+            <div class="col-sm-6 col-md-6 form-group">
+                @Html.TextBox(
+                    "RtrDetail.Rtr.TL5Keterangan", 
+                    Model.Rtr.TL5Keterangan, 
+                    new {@class = "form-control"})
+            </div>
+
+            <div class="col-md-2 form-group">
+                <div class="custom-file">
+                    <input 
+                        type="file" 
+                        name="Rtr.TL5FilePath" 
+                        class="custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+        }
+
+        index++;
+    }
+
+    </div>
+}
+

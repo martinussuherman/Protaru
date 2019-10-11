@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using P.Pager;
 
 namespace MonevAtr.Pages.KabupatenKota
 {
@@ -14,15 +14,15 @@ namespace MonevAtr.Pages.KabupatenKota
             _context = context;
         }
 
-        public IList<Models.KabupatenKota> KabupatenKota { get; set; }
+        public IPager<Models.KabupatenKota> KabupatenKota { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGet([FromQuery] int page)
         {
-            this.KabupatenKota = await _context.KabupatenKota
+            this.KabupatenKota = _context.KabupatenKota
                 .Include(k => k.Provinsi)
                 .OrderBy(k => k.Provinsi.Nama)
                 .ThenBy(k => k.Nama)
-                .ToListAsync();
+                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
         private readonly MonevAtrDbContext _context;

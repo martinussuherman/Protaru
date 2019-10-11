@@ -27,7 +27,7 @@ namespace MonevAtr.Pages.Provinsi
                 return Page();
             }
 
-            _context.Provinsi.Add(this.Provinsi);
+            _context.Provinsi.Add(Provinsi);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

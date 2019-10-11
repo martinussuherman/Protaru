@@ -21,6 +21,8 @@ namespace MonevAtr.Models
         [Required(ErrorMessage = "Nama Jenis ATR harus diisi."), MaxLength(20)]
         public string Nama { get; set; }
 
+        public int Nomor { get; set; }
+
         public ICollection<Atr> Atr { get; set; }
 
         public ICollection<KelompokDokumen> KelompokDokumen { get; set; }

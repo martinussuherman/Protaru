@@ -1,124 +1,157 @@
-﻿<!doctype html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Language" content="en" />
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#4188c9">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
+﻿@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject ICompositeViewEngine Engine
+
+<!doctype html>
+<html lang="en">
+  <head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/assets/css/style.css">
+	<link rel="stylesheet" href="~/assets/css/slick.css"/>
+	<link rel="stylesheet" href="~/assets/css/slick-theme.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
     <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
-    <title>@ViewData["Title"] - MONEV TARU</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>@ViewData["Title"] - PROTARU</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-    <script src="~/assets/js/require.min.js"></script>
-    <script>
-        requirejs.config({
-            baseUrl: '.'
-        });
-    </script>
-    <!-- Dashboard Core -->
-    <link href="~/assets/css/setter.css" rel="stylesheet" />
-    <link href="~/assets/css/dashboard.css" rel="stylesheet" />
-    <link href="~/assets/css/fr.css" rel="stylesheet" />
-    <script src="~/assets/js/dashboard.js"></script>
-    <!-- c3.js Charts Plugin -->
-    <link href="~/assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
-    <script src="~/assets/plugins/charts-c3/plugin.js"></script>
-    <!-- Google Maps Plugin -->
-    <link href="~/assets/plugins/maps-google/plugin.css" rel="stylesheet" />
-    <script src="~/assets/plugins/maps-google/plugin.js"></script>
-    <!-- Input Mask Plugin -->
-    <script src="~/assets/plugins/input-mask/plugin.js"></script>
+	<!-- write your code here -->
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
-<body class="">
-    <div class="page">
-    <div class="page-main">
-        <div class="header py-4" style="display: none;">
-            <div class="container">
-                <div class="d-flex">
-                    <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
-                        <span class="header-toggler-icon"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
+<body onload="init();">
+	<header class="bg-menu">
+		<div class="container">
+			<nav class="navbar navbar-expand-lg navbar-light">
+				<a asp-page="/Index" class="navbar-brand">
+					<img src="~/assets/img/logo.png">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+					<ul class="navbar-nav">
+						<li class="nav-item active">
+							<a asp-page="/Index" class="nav-link nav-list">Home</a>
+						</li>
 
-        <div class="header collapse d-lg-flex p-0 fr-header" id="headerMenuCollapse">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 ml-auto text-right">
-                        <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                            <partial name="_LoginPartial" />
-                        </ul>
-                    </div>
-                    <div class="col-lg order-lg-first">
-                        <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                            <li class="fr-nav-brand">
-                                <a class="header-brand fr-header-brand" asp-page="/Index">
-                                    <img src="~/assets/images/logo-bpn.png" class="header-brand-img" alt="tabler logo" style="margin-top: 10px;"> MONEV TARU
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-page="/Index" class="nav-link fr-nav-link"><i class="fe fe-home"></i> HOME</a>
-                            </li>
+						<li class="nav-item dropdown">
+							<a class="nav-link nav-list dropdown-toggle" href="#" id="rtrw-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">RTRW</a>
 
-                            <li class="nav-item">
-                                <a asp-page="/RtrwRegular/Index" class="nav-link fr-nav-link"><i class="fe fe-box"></i> RTRW T5-1</a>
-                            </li>
+							<div class="dropdown-menu" aria-labelledby="rtrw-menu">
+                                <a asp-page="/RtrwT50/Index" class="dropdown-item">RTRW T5-0</a>
+                                <a asp-page="/RtrwT51/Index" class="dropdown-item">RTRW T5-1</a>
+                                <a asp-page="/RtrwT52/Index" class="dropdown-item">RTRW T5-2</a>
+							</div>
+						</li>
 
-                            <li class="nav-item">
-                                <a asp-page="/RtrwRevisi/Index" class="nav-link fr-nav-link"><i class="fe fe-box"></i> RTRW T5-2</a>
-                            </li>
+						<li class="nav-item dropdown">
+							<a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">RDTR</a>
+							<div class="dropdown-menu" aria-labelledby="rdtr-menu">
+                                <a asp-page="/RdtrT51/Index" class="dropdown-item">RDTR T5-1</a>
+                                <a asp-page="/RdtrT52/Index" class="dropdown-item">RDTR T5-2</a>
+							</div>
+						</li>
 
-                            <li class="nav-item">
-                                <a asp-page="/Rdtr/Index" class="nav-link fr-nav-link"><i class="fe fe-box"></i> RDTR</a>
-                            </li>
+						<!-- <li class="nav-item dropdown">
+							<a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERENCANAAN</a>
+							<div class="dropdown-menu" aria-labelledby="rdtr-menu">
+                                <a asp-page="/RtrPulauT51/Index" class="dropdown-item">RTR PULAU/KEP T5-1</a>
+                                <a asp-page="/RtrPulauT52/Index" class="dropdown-item">RTR PULAU/KEP T5-2</a>
+								<a asp-page="/RtrKsnT51/Index" class="dropdown-item">RTR KSN T5-1</a>
+								<a asp-page="/RtrKsnT52/Index" class="dropdown-item">RTR KSN T5-2</a>
+							</div>
+						</li> -->
 
-                            <li class="nav-item">
-                                <a asp-page="/Search/Index" class="nav-link fr-nav-link"><i class="fe fe-box"></i> PENCARIAN</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+						<li class="nav-item">
+							<a asp-page="/Search/Index" class="nav-link nav-list">Pencarian</a>
+						</li>
 
+@if (User.IsInRole("SuperAdmin"))
+{
+						<li class="nav-item dropdown">
+							<a class="nav-link nav-list dropdown-toggle" href="#" id="master" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Master</a>
+							<div class="dropdown-menu" aria-labelledby="master">
+								<a asp-page="/Provinsi/Index" class="dropdown-item">Provinsi</a>
+								<a asp-page="/KabupatenKota/Index" class="dropdown-item">Kabupaten/Kota</a>
+								<a asp-page="/Pulau/Index" class="dropdown-item">Pulau</a>
+								<a asp-page="/Kawasan/Index" class="dropdown-item">Kawasan</a>
+								<a asp-page="/JenisAtr/Index" class="dropdown-item">Jenis RTR</a>
+								<a asp-page="/ProgressAtr/Index"  class="dropdown-item">Progress RTR</a>
+								<a asp-page="/KelompokDokumen/Index" class="dropdown-item">Kelompok Dokumen</a>
+								<a asp-page="/Dokumen/Index" class="dropdown-item">Dokumen</a>
+								<a asp-page="/Atr/Index" class="dropdown-item">RTR</a>
+							</div>
+						</li>
+}
 
-        <div class="page-main">
-            <!-- <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg order-lg-first">
-                            <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                                <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link" data-toggle="dropdown">
-                                        <i class="fe fe-calendar"></i> Tabel
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a class="dropdown-item" asp-area="" asp-page="/Provinsi/Index"><i class="fe fe-file-text"></i>Provinsi</a>
-                                        <a class="dropdown-item" asp-area="" asp-page="/KabupatenKota/Index"><i class="fe fe-file-text"></i>Kabupaten/Kota</a>
-                                        <a class="dropdown-item" asp-area="" asp-page="/JenisAtr/Index"><i class="fe fe-file-text"></i>Jenis ATR</a>
-                                        <a class="dropdown-item" asp-area="" asp-page="/ProgressAtr/Index"><i class="fe fe-file-text"></i>Progress ATR</a>
-                                        <a class="dropdown-item" asp-area="" asp-page="/KelompokDokumen/Index"><i class="fe fe-file-text"></i>Kelompok Dokumen</a>
-                                        <a class="dropdown-item" asp-area="" asp-page="/Dokumen/Index"><i class="fe fe-file-text"></i>Dokumen</a>
-                                        <a class="dropdown-item" asp-area="" asp-page="/Atr/Index"><i class="fe fe-file-text"></i>ATR</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+						<!-- User menu -->
+                        <partial name="_LoginPartial" />
+						<!-- End User menu -->
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</header>
+
+    @RenderBody()
+
+	<footer class="mt-5 bg-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="mt-4 mb-4">
+						<img src="~/assets/img/logo-footer.png">
+						<div class="mt-4 footer-text">
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 mt-4 mb-4 footer-box">
+					<div class="pl-4">
+						<div class="footer-text-link">
+							<strong>TAUTAN</strong>
+						</div>
+						<div class="mt-4 footer-text-link">
+							<a target="_blank" rel="noopener" href="https://www.atrbpn.go.id">Website Kementerian Agraria dan Tata Ruang/Badan Pertanahan Nasional</a><br /><br />
+							<a target="_blank" rel="noopener" href="https://tataruang.atrbpn.go.id">Website Direktorat Jenderal Tata Ruang Kementerian Agraria dan Tata Ruang/ Badan Pertanahan Nasional</a><br /><br />
+							<a target="_blank" rel="noopener" href="http://gistaru.atrbpn.go.id">GIS Tata Ruang </a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mt-4 mb-4 footer-box">
+					<div class="pl-4">
+						<div class="footer-text-link">
+							<strong>HUBUNGI KAMI</strong>
+						</div>
+						<div class="mt-4 footer-text-link">
+							Gedung Ditjen Tata Ruang Jalan Raden Patah Nomor 1, Selong, Kebayoran Baru Jakarta 12110 <br /> <br />
+
+							Email : pdk.binda@gmail.com <br /> <br />
+							<a target="_blank" rel="noopener" href="https://www.facebook.com/atrbpn"><img src="~/assets/img/fb.png"></a>
+							<a target="_blank" rel="noopener" href="https://twitter.com/atr_bpn"><img src="~/assets/img/twitter.png"></a>
+							<a target="_blank" rel="noopener" href="https://www.instagram.com/kementerian.atrbpn/?hl=id"><img src="~/assets/img/ig.png"></a>
+							<a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UC29czQyZyoMFNDgXYYWjmkw"><img src="~/assets/img/yt.png"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copy text-center pt-2 pb-4">
+			&copy; 2019 PROTARU I KEMENTERIAN AGRARIA DAN TATA RUANG / BADAN PERTANAHAN NASIONAL
+		</div>
+	</footer>
+
+@*
+@if (Engine.FindView(ViewContext, "_Fake", isMainPage: false).Success)
+{
+            <partial name="_Fake" />
             <div class="my-3 my-md-5">
                 <div class="container">
                     <!-- <partial name="_CookieConsentPartial" /> -->
@@ -127,51 +160,22 @@
                     <!-- </main> -->
                 </div>
             </div>
-        </div>
-    </div>
+}
+else
+{
+            @RenderBody()
+}
+*@
 
-    <footer class="footer fr-footer">
-        <div class="container">
-            <div class="row align-items-center flex-row-reverse">
-                <div class="col-auto ml-lg-auto">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item"><a href="#" class="fr-footer-text">Profil</a></li>
-                                <li class="list-inline-item"><a href="#" class="fr-footer-text">FAQ</a></li>
-                                <li class="list-inline-item"><a href="#" class="fr-footer-text">Tautan</a></li>
-                                <li class="list-inline-item"><a href="#" class="fr-footer-text">Peta Situs</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center fr-footer-text">
-                    <a href="." class="fr-footer-text"><strong>MONEV TARU.</strong></a> Copyright ©2019 All rights reserved. Kementrian Agraria & Tata Ruang.
-                </div>
-            </div>
-        </div>
-    </footer>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- <script src="~/assets/js/jquery-3.3.1.slim.min.js"></script> -->
+	<script src="~/assets/js/jquery-3.4.1.min.js"></script>
+	<script src="~/assets/js/popper.min.js"></script>
+	<script src="~/assets/js/bootstrap.min.js"></script>
+	<script src="~/assets/js/slick.min.js"></script>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-        </script>
-    </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <!-- <script src="~/js/site.js" asp-append-version="true"></script> -->
     @RenderSection("Scripts", required: false)
 </body>
 </html>
