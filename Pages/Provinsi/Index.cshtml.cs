@@ -18,7 +18,7 @@ namespace MonevAtr.Pages.Provinsi
 
         public async Task OnGetAsync()
         {
-            this.Provinsi = await _context.Provinsi
+            Provinsi = await _context.Provinsi
                 .OrderBy(p => p.Nama)
                 .ToListAsync();
         }

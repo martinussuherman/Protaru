@@ -1,0 +1,26 @@
+@using MonevAtr.Models
+
+@model AtrDokumen
+
+@{
+    string path = "";
+    string fileInfoClass = "";
+
+    if( Model.FilePathAda )
+    {
+        path = Url.Content("~" + Model.FilePath);
+        fileInfoClass = "file-info";
+    }
+    else
+    {
+        fileInfoClass = "file-info d-none";
+    }
+}
+
+<td>
+    <span class="@fileInfoClass" >
+        <a target="_blank" class="btn btn-success btn-sm" style="color: #fff;" href="@path">
+            Download File
+        </a>
+    </span>
+</td>

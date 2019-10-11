@@ -1,33 +1,26 @@
-@page
-@model MonevAtr.Pages.Provinsi.DeleteModel
+@page "{id:int?}"
+@model DeleteModel
 
 @{
+    Layout = "_CommonLayout";
     ViewData["Title"] = "Hapus Provinsi";
+    ViewData["PageTitle"] = "Provinsi";
 }
 
-<h1>Hapus Provinsi</h1>
+<div class="card-body">
+    <div class="form-group">
+        <label class="control-label">Kode</label>
+        <input asp-for="Provinsi.Kode" class="form-control" disabled/>
+    </div>
 
-<h3>Hapus data ini?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Provinsi.Kode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Provinsi.Kode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Provinsi.Nama)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Provinsi.Nama)
-        </dd>
-    </dl>
-    
+    <div class="form-group">
+        <label class="control-label">Nama</label>
+        <input asp-for="Provinsi.Nama" class="form-control" disabled/>
+    </div>
+
     <form method="post">
         <input type="hidden" asp-for="Provinsi.Kode" />
-        <input type="submit" value="Hapus" class="btn btn-danger" /> |
-        <a asp-page="./Index">Kembali ke Daftar Provinsi</a>
+        <input type="submit" value="Hapus" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
     </form>
 </div>

@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Search
@@ -18,15 +16,75 @@ namespace MonevAtr.Pages.Search
         }
 
         [BindProperty]
-        public Models.AtrSearch AtrSearch { get; set; }
+        public AtrSearch Rtr { get; set; }
 
-        public IList<Models.JenisAtr> JenisAtr
+        public IList<Models.JenisAtr> JenisAtr => _context.JenisAtr
+            .OrderBy(p => p.Nomor)
+            .ToList();
+
+        public IList<FasilitasKegiatan> FasilitasKegiatan => _context.FasilitasKegiatan
+            .OrderBy(f => f.Kode)
+            .ToList();
+
+        public IList<int> TahunRekomendasiGubernur => _context.AtrDokumen
+            .ByKodeList(FilterUtilitiesExtensions.KodeDokumenRekomendasiGubernur)
+            .OrderBy(a => a.Tanggal.Year)
+            .Select(a => a.Tanggal.Year)
+            .Distinct()
+            .Where(y => y > 1)
+            .ToList();
+
+        public IList<int> TahunPermohonanPersetujuanSubstansi => _context.AtrDokumen
+            .ByKodeList(FilterUtilitiesExtensions.KodeDokumenPermohonanPersetujuanSubstansi)
+            .OrderBy(a => a.Tanggal.Year)
+            .Select(a => a.Tanggal.Year)
+            .Distinct()
+            .Where(y => y > 1)
+            .ToList();
+
+        public IList<int> TahunMasukLoket => _context.AtrDokumen
+            .ByKodeList(FilterUtilitiesExtensions.KodeDokumenMasukLoket)
+            .OrderBy(a => a.Tanggal.Year)
+            .Select(a => a.Tanggal.Year)
+            .Distinct()
+            .Where(y => y > 1)
+            .ToList();
+
+        public IList<int> TahunRapatLintasSektor => _context.AtrDokumen
+            .ByKodeList(FilterUtilitiesExtensions.KodeDokumenRapatLintasSektor)
+            .OrderBy(a => a.Tanggal.Year)
+            .Select(a => a.Tanggal.Year)
+            .Distinct()
+            .Where(y => y > 1)
+            .ToList();
+
+        public IList<int> TahunPersetujuanSubstansi => _context.AtrDokumen
+            .ByKodeList(FilterUtilitiesExtensions.KodeDokumenPersetujuanSubstansi)
+            .OrderBy(a => a.Tanggal.Year)
+            .Select(a => a.Tanggal.Year)
+            .Distinct()
+            .Where(y => y > 1)
+            .ToList();
+
+        public IList<int> TahunPerda
         {
             get
             {
-                return _context.JenisAtr
-                    .OrderBy(p => p.Kode)
+                List<short> list = _context.Atr
+                    .OrderBy(a => a.Tahun)
+                    .Select(a => a.Tahun)
+                    .Distinct()
+                    .Where(y => y > 1)
                     .ToList();
+
+                List<int> result = new List<int>();
+
+                foreach (short value in list)
+                {
+                    result.Add(value);
+                }
+
+                return result;
             }
         }
 
@@ -48,12 +106,6 @@ namespace MonevAtr.Pages.Search
         {
             ViewData["Provinsi"] = await selectListUtilities.Provinsi();
             ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
-            ViewData["TahunRekomendasiGubernur"] = await selectListUtilities.TahunRekomendasiGubernur();
-            ViewData["TahunPermohonanPersetujuanSubstansi"] = await selectListUtilities.TahunPermohonanPersetujuanSubstansi();
-            ViewData["TahunMasukLoket"] = await selectListUtilities.TahunMasukLoket();
-            ViewData["TahunRapatLintasSektor"] = await selectListUtilities.TahunRapatLintasSektor();
-            ViewData["TahunPersetujuanSubstansi"] = await selectListUtilities.TahunPersetujuanSubstansi();
-            ViewData["Tahun"] = await selectListUtilities.TahunPerdaRtr();
             return Page();
         }
 

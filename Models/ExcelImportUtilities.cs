@@ -34,7 +34,7 @@ namespace MonevAtr.Models
                 }
             }
 
-            return 0;
+            return progressList.Count > 0 ? progressList[0].Kode : 0;
         }
 
         public DateTime ParseExcelDate(ExcelRange cell)

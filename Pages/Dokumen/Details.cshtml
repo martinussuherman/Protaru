@@ -1,0 +1,55 @@
+@page
+@model MonevAtr.Pages_Dokumen.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Dokumen</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dokumen.Nama)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dokumen.Nama)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dokumen.Nomor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dokumen.Nomor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dokumen.AmbilNomor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dokumen.AmbilNomor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dokumen.JumlahTindakLanjut)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dokumen.JumlahTindakLanjut)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dokumen.UntukPublik)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dokumen.UntukPublik)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dokumen.KelompokDokumen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dokumen.KelompokDokumen.Nama)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Dokumen.Kode">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

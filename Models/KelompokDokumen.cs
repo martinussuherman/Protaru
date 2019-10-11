@@ -16,7 +16,8 @@ namespace MonevAtr.Models
         [Key]
         public int Kode { get; set; }
 
-        [Required(ErrorMessage = "Nama Kelompok Dokumen harus diisi."), MaxLength(50)]
+        [Required(ErrorMessage = "{0} harus diisi."), MaxLength(50, ErrorMessage = "{0} maksimal {1} karakter.")]
+        // [Required(ErrorMessage = "Nama Kelompok Dokumen harus diisi."), MaxLength(50)]
         public string Nama { get; set; }
 
         [Required(ErrorMessage = "Nomor Urut Kelompok Dokumen harus diisi."), Range(1, Int32.MaxValue, ErrorMessage = "Nomor Urut Kelompok Dokumen harus > 0.")]

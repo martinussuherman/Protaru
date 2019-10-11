@@ -6,225 +6,169 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MonevAtr.Models
 {
     [Table("atr")]
-    public class Atr
+    public partial class Atr : IKode
     {
         public Atr()
         {
             AtrDokumen = new HashSet<AtrDokumen>();
+            DokumenTindakLanjut = new HashSet<AtrDokumenTindakLanjut>();
+            // AtrProgressInfo = new HashSet<AtrProgressInfo>();
+            RtrFasilitasKegiatan = new HashSet<RtrFasilitasKegiatan>();
         }
 
         [Key]
+        [Column(TypeName = "int(11)")]
         public int Kode { get; set; }
 
-        [MaxLength(255)]
+        [StringLength(255)]
         public string Nama { get; set; }
 
-        [MaxLength(50)]
-        public string Nomor { get; set; }
-
-        public DateTime? Tanggal { get; set; }
-
-        [MaxLength(255)]
-        public string Aoi { get; set; }
-
-        public int Luas { get; set; }
-
-        [Display(Name = "Tahun Penyusunan")]
-        public short? TahunPenyusunan { get; set; }
-
-        public short Tahun { get; set; }
-
-        public short SudahDirevisi { get; set; }
-
-        [Display(Name = "Status")]
-        public byte? StatusRevisi { get; set; }
-
-        [MaxLength(1000, ErrorMessage = "Permasalahan maksimal 1000 karakter.")]
-        public string Permasalahan { get; set; } = String.Empty;
-
-        [Display(Name = "Tindak Lanjut"), MaxLength(1000, ErrorMessage = "Tindak lanjut maksimal 1000 karakter.")]
-        public string TindakLanjut { get; set; } = String.Empty;
-
-        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
-        public string Keterangan { get; set; } = String.Empty;
-
-        [Display(Name = "Jenis ATR")]
-        public int KodeJenisAtr { get; set; }
-
-        [Range(1, Int32.MaxValue, ErrorMessage = "Progress ATR harus diisi."), Display(Name = "Progress")]
-        public int? KodeProgressAtr { get; set; }
-
-        [Display(Name = "Kabupaten/Kota")]
-        public int? KodeKabupatenKota { get; set; }
-
-        [Display(Name = "Provinsi")]
+        [Column(TypeName = "int(11)")]
         public int? KodeProvinsi { get; set; }
 
-        [ForeignKey("KodeJenisAtr")]
-        public JenisAtr JenisAtr { get; set; }
+        [Column(TypeName = "int(11)")]
+        public int? KodeKabupatenKota { get; set; }
 
-        [ForeignKey("KodeProgressAtr")]
-        public ProgressAtr ProgressAtr { get; set; }
+        [Column(TypeName = "int(11)")]
+        public int? KodePulau { get; set; }
 
-        [ForeignKey("KodeKabupatenKota")]
-        public KabupatenKota KabupatenKota { get; set; }
+        [Column(TypeName = "int(11)")]
+        public int? KodeKawasan { get; set; }
 
-        [ForeignKey("KodeProvinsi")]
-        public Provinsi Provinsi { get; set; }
+        [StringLength(50)]
+        public string Nomor { get; set; }
 
-        [NotMapped]
-        public string DisplayNamaProvinsi
-        {
-            get
-            {
-                if (this.Provinsi != null)
-                {
-                    return this.Provinsi.Nama;
-                }
+        [Column(TypeName = "int(11)")]
+        public int KodeJenisAtr { get; set; }
+        // public int? KodeJenisAtr { get; set; }
 
-                if (this.KabupatenKota != null)
-                {
-                    return this.KabupatenKota.Provinsi.Nama;
-                }
+        [Column(TypeName = "date")]
+        public DateTime? Tanggal { get; set; }
 
-                return String.Empty;
-            }
-        }
+        [Column(TypeName = "int(11)")]
+        public int? KodeProgressAtr { get; set; }
 
-        [NotMapped]
-        public string DisplayNamaProvinsiKabupatenKota
-        {
-            get
-            {
-                if (this.KabupatenKota != null)
-                {
-                    return this.KabupatenKota.Provinsi.Nama + ", " + this.KabupatenKota.Nama;
-                }
+        [StringLength(2000)]
+        public string Aoi { get; set; }
 
-                if (this.Provinsi != null)
-                {
-                    return this.Provinsi.Nama;
-                }
+        [Column(TypeName = "decimal(18,3)")]
+        public decimal Luas { get; set; }
 
-                return String.Empty;
-            }
-        }
+        [Column(TypeName = "year(4)")]
+        public short Tahun { get; set; }
 
-        public ICollection<AtrDokumen> AtrDokumen { get; set; }
+        [Column(TypeName = "year(4)")]
+        public short TahunPenyusunan { get; set; }
 
+        [Column(TypeName = "tinyint(4)")]
+        public byte? StatusRevisi { get; set; }
+
+        [StringLength(2000)]
+        public string Permasalahan { get; set; }
+
+        [StringLength(2000)]
+        public string TindakLanjut { get; set; }
+
+        [StringLength(2000)]
+        public string Keterangan { get; set; }
+
+        [Column(TypeName = "tinyint(4)")]
+        public byte SudahDirevisi { get; set; }
+
+        [Column("TL1Status", TypeName = "char(1)")]
         public string TL1Status { get; set; }
 
-        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
+        [Column("TL1Keterangan")]
+        [StringLength(1000)]
         public string TL1Keterangan { get; set; }
 
+        [Column("TL1FilePath")]
+        [StringLength(255)]
         public string TL1FilePath { get; set; }
 
+        [Column("TL2Status", TypeName = "char(1)")]
         public string TL2Status { get; set; }
 
-        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
+        [Column("TL2Keterangan")]
+        [StringLength(1000)]
         public string TL2Keterangan { get; set; }
 
+        [Column("TL2FilePath")]
+        [StringLength(255)]
         public string TL2FilePath { get; set; }
 
+        [Column("TL3Status", TypeName = "char(1)")]
         public string TL3Status { get; set; }
 
-        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
+        [Column("TL3Keterangan")]
+        [StringLength(1000)]
         public string TL3Keterangan { get; set; }
 
+        [Column("TL3FilePath")]
+        [StringLength(255)]
         public string TL3FilePath { get; set; }
 
+        [Column("TL4Status", TypeName = "char(1)")]
         public string TL4Status { get; set; }
 
-        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
+        [Column("TL4Keterangan")]
+        [StringLength(1000)]
         public string TL4Keterangan { get; set; }
 
+        [Column("TL4FilePath")]
+        [StringLength(255)]
         public string TL4FilePath { get; set; }
 
+        [Column("TL5Status", TypeName = "char(1)")]
         public string TL5Status { get; set; }
 
-        [MaxLength(1000, ErrorMessage = "Keterangan maksimal 1000 karakter.")]
+        [Column("TL5Keterangan")]
+        [StringLength(1000)]
         public string TL5Keterangan { get; set; }
 
+        [Column("TL5FilePath")]
+        [StringLength(255)]
         public string TL5FilePath { get; set; }
+        public DateTimeOffset PembaruanTerakhir { get; set; }
 
-        [NotMapped]
-        public bool TL1StatusYes
-        {
-            get
-            {
-                return IsStatusYes(this.TL1Status);
-            }
-            set
-            {
-                this.TL1Status = ConvertToStatusString(value);
-            }
-        }
+        [Required]
+        [StringLength(50)]
+        public string PembaruanOleh { get; set; }
 
-        [NotMapped]
-        public bool TL2StatusYes
-        {
-            get
-            {
-                return IsStatusYes(this.TL2Status);
-            }
-            set
-            {
-                this.TL2Status = ConvertToStatusString(value);
-            }
-        }
+        [ForeignKey("KodeJenisAtr")]
+        [InverseProperty("Atr")]
+        public virtual JenisAtr JenisAtr { get; set; }
 
-        [NotMapped]
-        public bool TL3StatusYes
-        {
-            get
-            {
-                return IsStatusYes(this.TL3Status);
-            }
-            set
-            {
-                this.TL3Status = ConvertToStatusString(value);
-            }
-        }
+        [ForeignKey("KodeKabupatenKota")]
+        [InverseProperty("Atr")]
+        public virtual KabupatenKota KabupatenKota { get; set; }
 
-        [NotMapped]
-        public bool TL4StatusYes
-        {
-            get
-            {
-                return IsStatusYes(this.TL4Status);
-            }
-            set
-            {
-                this.TL4Status = ConvertToStatusString(value);
-            }
-        }
+        [ForeignKey("KodeProgressAtr")]
+        [InverseProperty("Atr")]
+        public virtual ProgressAtr ProgressAtr { get; set; }
 
-        [NotMapped]
-        public bool TL5StatusYes
-        {
-            get
-            {
-                return IsStatusYes(this.TL5Status);
-            }
-            set
-            {
-                this.TL5Status = ConvertToStatusString(value);
-            }
-        }
+        [ForeignKey("KodeProvinsi")]
+        [InverseProperty("Atr")]
+        public virtual Provinsi Provinsi { get; set; }
 
-        private string ConvertToStatusString(bool status)
-        {
-            if (status)
-            {
-                return "1";
-            }
+        [ForeignKey("KodePulau")]
+        [InverseProperty("Atr")]
+        public virtual Pulau Pulau { get; set; }
 
-            return "0";
-        }
+        [ForeignKey("KodeKawasan")]
+        [InverseProperty("Atr")]
+        public virtual Kawasan Kawasan { get; set; }
 
-        private bool IsStatusYes(string status)
-        {
-            return !String.IsNullOrEmpty(status) && status == "1";
-        }
+        [InverseProperty("Atr")]
+        public virtual ICollection<AtrDokumen> AtrDokumen { get; set; }
+
+        [InverseProperty("Rtr")]
+        public virtual ICollection<AtrDokumenTindakLanjut> DokumenTindakLanjut { get; set; }
+
+        // [InverseProperty("KodeAtrNavigation")]
+        // public virtual ICollection<AtrProgressInfo> AtrProgressInfo { get; set; }
+
+        [InverseProperty("Rtr")]
+        public virtual ICollection<RtrFasilitasKegiatan> RtrFasilitasKegiatan { get; set; }
     }
 }

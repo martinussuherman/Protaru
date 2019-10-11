@@ -1,22 +1,96 @@
-﻿.bnote-rdtr
+﻿#StatusYear
+{
+  font: bold 24px Roboto;
+  display: inline-block;
+}
+
+.bnote-rdtr
 {
   overflow: hidden;
   resize: none;
 }
 
+.progress-bar
+{
+  padding-left: 32px;
+}
+
+.title-progress, .month-type, #month-status a
+{
+  cursor: pointer;
+}
+
+#type-rtrw, #type-rdtr
+{
+  color: #808080;
+}
+
+#type-rtrw.month-type-active, #type-rdtr.month-type-active
+{
+  color: #ff4500;
+}
+
+.p-2px
+{
+  padding: 2px;
+}
+
+.p-5px
+{
+  padding: 5px;
+}
+
+.dokumen-file
+{
+  float: left;
+  width: 200px;
+}
+
+.btn-upload, .file-link, .btn-delete
+{
+  color: #fff;
+}
+
+/*
 #logout
 {
   background-color: transparent;
 }
 
-/* table.search-result
+.page-main
 {
-  table-layout: fixed;
-  width: 100%;
+  background-color: #dcdcdc;
 }
 
-table.search-result th.nama, table.search-result td.nama
+.search-result thead
 {
-  width: 30%;
-  word-wrap: break-word;
-} */
+  background-color:  #4682b4;
+}
+
+.search-result .text-light th 
+{
+  color: white;
+}
+
+.search-result .mw25
+{
+  max-width: 25%;
+}
+
+.nav-tabs .nav-item .nav-link
+{
+  color: white;
+}
+
+.nav-tabs .nav-item .nav-link:hover:not(.disabled) 
+{
+  color: #000
+}
+
+.dropdown:hover .dropdown-menu 
+{
+  display: block;
+  margin-top: 0;
+}
+
+*/

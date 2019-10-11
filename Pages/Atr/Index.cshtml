@@ -1,90 +1,83 @@
 @page
-@model MonevAtr.Pages.Atr.IndexModel
+@model IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
+<div class="bg-page-detail pt-4 pb-5 container">
 
-<h1>Index</h1>
+    <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Nama)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Nomor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Tanggal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Aoi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Luas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Tahun)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].JenisAtr)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].ProgressAtr)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].KabupatenKota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Atr[0].Provinsi)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Atr) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nama)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nomor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tanggal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aoi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Luas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tahun)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JenisAtr.Kode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProgressAtr.Kode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KabupatenKota.Kode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Provinsi.Kode)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Kode">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Kode">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Kode">Delete</a>
-            </td>
-        </tr>
+    <div class="row row-cards card">
+        <div class="card-body">
+            <p>
+                <a asp-page="Create">Create New</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Aoi</th>
+                        <th>Luas</th>
+                        <th>Tahun</th>
+                        <th>Jenis</th>
+                        <th>Progress</th>
+                        <th>Kab/Kota</th>
+                        <th>Provinsi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+@{
+int index = Model.Hasil.StartItemIndex;
 }
-    </tbody>
-</table>
+@foreach (var item in Model.Hasil)
+{
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nama)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nomor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tanggal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Aoi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Luas)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tahun)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JenisAtr.Kode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProgressAtr.Kode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KabupatenKota.Kode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Provinsi.Kode)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Kode">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Kode">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Kode">Delete</a>
+                        </td>
+                    </tr>
+}
+                </tbody>
+            </table>
+
+            @await Html.PartialAsync("_PagingPartial", Model.Hasil)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using MonevAtr.Models
+
+@model Atr
+
+<td class="text-center">
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-page="./Edit" asp-route-id="@Model.Kode" class="btn btn-primary btn-sm">Detail</a>
+}
+else
+{
+    <a asp-page="./View" asp-route-id="@Model.Kode" class="btn btn-primary btn-sm">Detail</a>
+}
+
+    <span>@Html.HiddenFor(modelItem => Model.Kode)</span>
+</td>
+

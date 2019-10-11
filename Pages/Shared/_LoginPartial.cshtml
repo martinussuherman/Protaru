@@ -2,28 +2,38 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+<li class="nav-item dropdown">
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link fr-nav-link"><i class="fe fe-user"></i>@UserManager.GetUserName(User).ToUpper()</a>
-    </li>
+    <a class="nav-link nav-list dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @UserManager.GetUserName(User)
+    </a>
 
-    @if (User.IsInRole("Admin"))
+    <div class="dropdown-menu" aria-labelledby="user">
+        <!-- <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="dropdown-item">
+            Profil
+        </a> -->
+
+    @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
     {
-        <li class="nav-item">
-            <a id="register" asp-area="Identity" asp-page="/Account/Register" class="nav-link fr-nav-link"> REGISTER</a>
-        </li>
+        <a id="register" asp-area="Identity" asp-page="/Account/Register" class="dropdown-item">Register</a>
+        <!-- <a asp-area="Identity" asp-page="/Account/List" class="dropdown-item">User List</a> -->
     }
 
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link fr-nav-link"> LOGOUT</button>
+        <form 
+            id="logoutForm" 
+            class="form-inline" 
+            asp-area="Identity" 
+            asp-page="/Account/Logout" 
+            asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+            <button id="logout" type="submit" class="dropdown-item text-left">Logout</button>
         </form>
-    </li>
+    </div>
 }
 else
 {
-    <li class="nav-item">
-        <a id="login" asp-area="Identity" asp-page="/Account/Login" class="nav-link fr-nav-link"><i class="fe fe-user"></i> LOGIN</a>
-    </li>
+    <a id="login" asp-area="Identity" asp-page="/Account/Login" class="nav-link">Login</a>
 }
+
+</li>

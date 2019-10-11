@@ -1,0 +1,18 @@
+@page "{id:int?}"
+@model ViewModel
+
+@{
+    Layout = "_RtrViewLayout";
+    ViewData["Title"] = "Detail RTR KSN T5-1";
+    ViewData["PageTitle"] = "RTR KSN";
+}
+
+@await Html.PartialAsync("_RtrViewTitlePartial", Model.RtrDetail)
+
+<div class="justify-content-md-center px-5">
+    <div class="card border-orange mb-3 card-body">
+        @await Html.PartialAsync("_RtrViewCommonHeaderPartial", Model.RtrDetail)
+    </div>
+</div>
+
+@await Html.PartialAsync("_RtrViewDokumenPartial", Model.RtrDetail)

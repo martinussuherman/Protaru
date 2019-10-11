@@ -1,97 +1,126 @@
 @page
-@model MonevAtr.Pages.Search.IndexModel
+@model IndexModel
 
 @{
     ViewData["Title"] = "Pencarian RTR";
+    ViewData["PageTitle"] = "Pencarian";
 }
 
-<div class="page-header">
-    <h1 class="page-title"></h1>
-</div>
-<div class="row row-cards text col-12 card">
-    <div class="card-header">
-        <h3 class="card-title"> Pencarian RTR</h3>
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
     </div>
-    <form asp-page="./SearchResult">
-        <div class="card-body row">
-            <div class="col-md-12 form-group">
-                <label class="form-label">Jenis RTR</label>
+</div>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+		    <div class="row row-cards card">
+			    <div class="card-header pl-5">
+				    <h4 class="card-title mlm-15">@ViewData["Title"]</h4>
+			    </div>
+
+                <form method="get" asp-page="./SearchResult">
+                    <div class="card-body row">
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Jenis RTR</label>
 @{
 int jenisIndex = 1;
 }
-@foreach (var item in Model.JenisAtr) {
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" name="AtrSearch.KodeJenisAtrList" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
-                    <span class="custom-control-label">@jenisIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
-                </label>
+@foreach (var item in Model.JenisAtr)
+{
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Rtr.JenisList" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                                <span class="custom-control-label">@jenisIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                            </label>
     jenisIndex++;
 }
-            </div>
+                        </div>
 
-            <div class="col-md-12 form-group">
-                <label asp-for="AtrSearch.KodeProvinsi" class="form-label"></label>
-                <select id="provinsi" asp-for="AtrSearch.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label asp-for="AtrSearch.KodeKabupatenKota" class="form-label"></label>
-                <select id="kabupaten-kota" asp-for="AtrSearch.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Surat/BA Rekomendasi Gubernur</label>
-                <select asp-for="AtrSearch.TahunRekomendasiGubernur" class ="form-control" asp-items="ViewBag.TahunRekomendasiGubernur"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Surat Permohonan Persetujuan Subtansi Prov/Kab/Kota</label>
-                <select asp-for="AtrSearch.TahunPermohonanPersetujuanSubstansi" class ="form-control" asp-items="ViewBag.TahunPermohonanPersetujuanSubstansi"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Tanggal Masuk Loket</label>
-                <select asp-for="AtrSearch.TahunMasukLoket" class ="form-control" asp-items="ViewBag.TahunMasukLoket"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Rapat Lintas Sektor</label>
-                <select asp-for="AtrSearch.TahunRapatLintasSektor" class ="form-control" asp-items="ViewBag.TahunRapatLintasSektor"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Persetujuan Substansi</label>
-                <select asp-for="AtrSearch.TahunPersetujuanSubstansi" class ="form-control" asp-items="ViewBag.TahunPersetujuanSubstansi"></select>
-            </div>
-            <div class="col-md-12 form-group">
-                <label class="form-label">Ditetapkan Menjadi Peraturan Daerah</label>
-                <select asp-for="AtrSearch.Tahun" class ="form-control" asp-items="ViewBag.Tahun"></select>
-            </div>
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Rtr.Prov" class="form-label"></label>
+                            <select id="provinsi" asp-for="Rtr.Prov" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+                        </div>
 
-            <!-- <div class="col-md-12 form-group">
-                <label class="form-label">Dokumen</label>
-                <select asp-for="AtrSearch.KodeDokumen" class="form-control" asp-items="ViewBag.Dokumen"></select>
-            </div> -->
-        </div>
-        <div class="card-footer text-center">
-            <button type="submit" class="btn btn-primary"><i class="fe fe-search"></i> Cari</button>
-            <a asp-page="./Index" class="btn btn-primary"><i class="fe fe-refresh-ccw"></i> Reset</a>
-        </div>
-    </form>
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Rtr.KabKota" class="form-label"></label>
+                            <select id="kabupaten-kota" asp-for="Rtr.KabKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+                        </div>
+
+@{
+    ViewData["Caption"] = "Surat/BA Rekomendasi Gubernur";
+    ViewData["InputName"] = "Rtr.RekGubList";
+}
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunRekomendasiGubernur)
+
+@{
+    ViewData["Caption"] = "Surat Permohonan Persetujuan Subtansi Prov/Kab/Kota";
+    ViewData["InputName"] = "Rtr.PerPerSubList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunPermohonanPersetujuanSubstansi)
+
+@{
+    ViewData["Caption"] = "Tanggal Masuk Loket";
+    ViewData["InputName"] = "Rtr.MasLokList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunMasukLoket)
+
+@{
+    ViewData["Caption"] = "Rapat Lintas Sektor";
+    ViewData["InputName"] = "Rtr.LinSekList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunRapatLintasSektor)
+
+@{
+    ViewData["Caption"] = "Persetujuan Substansi";
+    ViewData["InputName"] = "Rtr.PerSubList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunPersetujuanSubstansi)
+
+@{
+    ViewData["Caption"] = "Ditetapkan Menjadi Peraturan Daerah";
+    ViewData["InputName"] = "Rtr.PerdaList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunPerda)
+
+                        <!-- <div class="col-md-12 form-group">
+                            <label class="form-label">Dokumen</label>
+                            <select asp-for="Rtr.KodeDokumen" class="form-control" asp-items="ViewBag.Dokumen"></select>
+                        </div> -->
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Fasilitas Kegiatan</label>
+@{
+int fasilitasIndex = 1;
+}
+@foreach (var item in Model.FasilitasKegiatan)
+{
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Rtr.Faskeg" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                                <span class="custom-control-label">@fasilitasIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                            </label>
+    fasilitasIndex++;
+}
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+				    </div>
+			    </form>
+		    </div>
+	    </div>
+	</div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#provinsi').change( function () {
-                var url='@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")';
-
-                $.getJSON('@Url.Content("/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")', 
-                    { kodeProvinsi: $('#provinsi').val()}, function(data){
-                    var items='';
-                    $('#kabupaten-kota').empty();
-                    $.each(data, function(i, kabupatenKota){
-                        items+='<option value="' + kabupatenKota.value + '">' + kabupatenKota.text + '</option>';
-                    });
-                    $('#kabupaten-kota').html(items); 
-                });
-            });
-        });
-    </script>
+    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
 }
-

@@ -16,27 +16,45 @@ namespace MonevAtr.Models
         public short Tahun { get; set; }
 
         [Display(Name = "Kabupaten/Kota")]
-        public int KodeKabupatenKota { get; set; }
+        public int KabKota { get; set; }
 
         [Display(Name = "Provinsi")]
-        public int KodeProvinsi { get; set; }
+        public int Prov { get; set; }
 
-        public List<int> KodeProgressAtr { get; set; } = new List<int>();
+        public int Pulau { get; set; }
+
+        public int Kawasan { get; set; }
+
+        public List<int> ProgressList { get; set; } = new List<int>();
 
         public List<int> KodeDokumenList { get; set; } = new List<int>();
 
-        public List<int> KodeJenisAtrList { get; set; } = new List<int>();
+        public List<int> JenisList { get; set; } = new List<int>();
+
+        public List<int> Faskeg { get; set; } = new List<int>();
+
+        public List<int> RekGubList { get; set; } = new List<int>();
+
+        public List<int> PerPerSubList { get; set; } = new List<int>();
+
+        public List<int> MasLokList { get; set; } = new List<int>();
+
+        public List<int> LinSekList { get; set; } = new List<int>();
+
+        public List<int> PerSubList { get; set; } = new List<int>();
+
+        public List<int> PerdaList { get; set; } = new List<int>();
 
         public int KodeDokumen { get; set; }
 
-        public int TahunRekomendasiGubernur { get; set; }
+        public int RekGub { get; set; }
 
-        public int TahunPermohonanPersetujuanSubstansi { get; set; }
+        public int PerPerSub { get; set; }
 
-        public int TahunMasukLoket { get; set; }
+        public int MasLok { get; set; }
 
-        public int TahunRapatLintasSektor { get; set; }
+        public int LinSek { get; set; }
 
-        public int TahunPersetujuanSubstansi { get; set; }
+        public int PerSub { get; set; }
     }
 }

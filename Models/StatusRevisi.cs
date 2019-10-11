@@ -15,69 +15,37 @@ namespace MonevAtr.Models
 
         public string Nama { get; set; }
 
-        public static StatusRevisi RegularT51
-        {
-            get
-            {
-                return regularT51;
-            }
-        }
+        public static StatusRevisi Kosong => kosong;
 
-        public static StatusRevisi RegularT52
-        {
-            get
-            {
-                return regularT52;
-            }
-        }
+        public static StatusRevisi RegularT51 => regularT51;
 
-        public static StatusRevisi RevisiT52
-        {
-            get
-            {
-                return revisiT52;
-            }
-        }
+        public static StatusRevisi RegularT52 => regularT52;
 
-        public static StatusRevisi RevisiT53
-        {
-            get
-            {
-                return revisiT53;
-            }
-        }
+        public static StatusRevisi RevisiT52 => revisiT52;
 
-        public static StatusRevisi RevisiT54
-        {
-            get
-            {
-                return revisiT54;
-            }
-        }
+        public static StatusRevisi RevisiT53 => revisiT53;
+
+        public static StatusRevisi RevisiT54 => revisiT54;
 
         public static string NamaStatusRevisiRegular(byte? kode)
         {
-            if (!kode.HasValue)
-            {
-                return String.Empty;
-            }
-
-            return listRegular
+            return !kode.HasValue || !listRegular.Exists(s => s.Kode == kode.Value) ?
+                String.Empty :
+                listRegular
                 .Find(s => s.Kode == kode.Value)
                 .Nama;
         }
 
         public static string NamaStatusRevisiRevisi(byte? kode)
         {
-            if (!kode.HasValue)
-            {
-                return String.Empty;
-            }
-
-            return listRevisi
+            return !kode.HasValue || !listRevisi.Exists(s => s.Kode == kode.Value) ?
+                String.Empty :
+                listRevisi
                 .Find(s => s.Kode == kode.Value)
                 .Nama;
         }
+
+        private static readonly StatusRevisi kosong = new StatusRevisi(0, String.Empty);
 
         private static readonly StatusRevisi regularT51 = new StatusRevisi(1, "T5-1");
 

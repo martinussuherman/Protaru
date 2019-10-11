@@ -1,0 +1,24 @@
+@using System.Collections.Generic
+@using MonevAtr.Models
+
+@model RtrDetail
+
+<div class="col-md-12 form-group">
+    <label class="form-label font-weight-bold">Progress</label>
+    <input type="text" value="@Html.DisplayFor(model => model.Rtr.ProgressAtr.Nama)" class="form-control" disabled />
+</div>
+
+<div class="col-md-12 form-group">
+    <label class="form-label font-weight-bold">Permasalahan</label>
+    <textarea asp-for="Rtr.Permasalahan" class ="form-control" disabled></textarea>
+</div>
+
+<div class="col-md-12 form-group">
+    <label class="form-label font-weight-bold">Tindak Lanjut</label>
+    <textarea asp-for="Rtr.TindakLanjut" class ="form-control" disabled></textarea>
+</div>
+
+<div class="col-md-12">
+    <label class="form-label font-weight-bold">Keterangan</label>
+    <textarea asp-for="Rtr.Keterangan" class ="form-control" disabled></textarea>
+</div>
