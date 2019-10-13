@@ -25,6 +25,10 @@ namespace MonevAtr.Models
         [ForeignKey("KodeProvinsi"), Display(Name = "Provinsi")]
         public Provinsi Provinsi { get; set; }
 
+        [InverseProperty("KabupatenKota")]
         public ICollection<Atr> Atr { get; set; }
+
+        [InverseProperty("KabupatenKota")]
+        public virtual ICollection<KawasanKabupatenKota> KawasanKabupatenKota { get; set; }
     }
 }
