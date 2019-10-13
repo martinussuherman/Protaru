@@ -19,6 +19,11 @@ namespace MonevAtr.Models
         [Required(ErrorMessage = "{0} harus diisi."), MaxLength(20)]
         public string Nama { get; set; }
 
+        [InverseProperty("Kawasan")]
         public ICollection<Atr> Atr { get; set; }
+
+        [InverseProperty("Kawasan")]
+        public virtual ICollection<KawasanKabupatenKota> KawasanKabupatenKota { get; set; }
+
     }
 }

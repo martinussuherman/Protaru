@@ -18,6 +18,14 @@
         <input asp-for="Kawasan.Nama" class="form-control" disabled/>
     </div>
 
+@foreach (var item in Model.Kawasan.KawasanKabupatenKota)
+{
+    <div class="form-group">
+        <label class="control-label">Kabupaten/Kota</label>
+        <input type="text" value="@item.KabupatenKota.Nama" class="form-control" disabled/>
+    </div>
+}
+
     <form method="post">
         <input type="hidden" asp-for="Kawasan.Kode" />
         <input type="submit" value="Hapus" class="btn btn-danger" />
