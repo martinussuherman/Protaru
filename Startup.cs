@@ -33,12 +33,12 @@ namespace MonevAtr
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            _ = services.AddDbContext<Models.MonevAtrDbContext>(options =>
+            _ = services.AddDbContextPool<Models.MonevAtrDbContext>(options =>
             {
                 _ = options.UseMySQL(Configuration.GetConnectionString("MonevAtr"));
             });
 
-            _ = services.AddDbContext<Models.PomeloDbContext>(options =>
+            _ = services.AddDbContextPool<Models.PomeloDbContext>(options =>
             {
                 _ = options.UseMySql(Configuration.GetConnectionString("MonevAtr"));
             });
