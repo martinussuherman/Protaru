@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,13 @@ namespace MonevAtr.Pages.Kawasan
                 return NotFound();
             }
 
+            List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+                .Include(k => k.KabupatenKota)
+                .Where(k => k.KodeKawasan == Kawasan.Kode)
+                .ToListAsync();
+
+            Kawasan.KawasanKabupatenKota = list;
+
             return Page();
         }
 
@@ -48,8 +57,14 @@ namespace MonevAtr.Pages.Kawasan
             if (Kawasan != null)
             {
                 _context.Kawasan.Remove(Kawasan);
-                await _context.SaveChangesAsync();
             }
+
+            List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+                .Where(k => k.KodeKawasan == id)
+                .ToListAsync();
+
+            _context.KawasanKabupatenKota.RemoveRange(list);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

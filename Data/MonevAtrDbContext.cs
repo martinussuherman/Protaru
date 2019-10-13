@@ -23,6 +23,7 @@ namespace MonevAtr.Models
         public virtual DbSet<JenisAtr> JenisAtr { get; set; }
         public virtual DbSet<KabupatenKota> KabupatenKota { get; set; }
         public virtual DbSet<Kawasan> Kawasan { get; set; }
+        public virtual DbSet<KawasanKabupatenKota> KawasanKabupatenKota { get; set; }
         public virtual DbSet<KelompokDokumen> KelompokDokumen { get; set; }
         public virtual DbSet<ProgressAtr> ProgressAtr { get; set; }
         public virtual DbSet<Provinsi> Provinsi { get; set; }
@@ -350,6 +351,26 @@ namespace MonevAtr.Models
                 entity.Property(e => e.Nama)
                     .IsUnicode(false)
                     .HasDefaultValueSql("''");
+            });
+
+            modelBuilder.Entity<KawasanKabupatenKota>(entity =>
+            {
+                entity.HasKey(e => new { e.KodeKawasan, e.KodeKabupatenKota });
+
+                entity.HasIndex(e => e.KodeKabupatenKota)
+                    .HasName("FK_kawasan_kabupaten_kota_kabupaten_kota");
+
+                entity.HasOne(d => d.KabupatenKota)
+                    .WithMany(p => p.KawasanKabupatenKota)
+                    .HasForeignKey(d => d.KodeKabupatenKota)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_kawasan_kabupaten_kota_kabupaten_kota");
+
+                entity.HasOne(d => d.Kawasan)
+                    .WithMany(p => p.KawasanKabupatenKota)
+                    .HasForeignKey(d => d.KodeKawasan)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_kawasan_kabupaten_kota_kawasan");
             });
 
             modelBuilder.Entity<KelompokDokumen>(entity =>

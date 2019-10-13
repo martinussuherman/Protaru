@@ -72,6 +72,16 @@ namespace MonevAtr.Models
             return new SelectList(list, "Kode", "Nama");
         }
 
+        public async Task<SelectList> KabupatenKota()
+        {
+            IList<KabupatenKota> list = await _context.KabupatenKota
+                .OrderBy(k => k.Nama)
+                .ToListAsync();
+
+            InsertPilihKabupatenKota(list);
+            return new SelectList(list, "Kode", "Nama");
+        }
+
         public async Task<SelectList> KabupatenKota(int kodeProvinsi)
         {
             IList<KabupatenKota> list = await _context.KabupatenKota
