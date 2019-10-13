@@ -38,6 +38,11 @@ namespace MonevAtr
                 _ = options.UseMySQL(Configuration.GetConnectionString("MonevAtr"));
             });
 
+            _ = services.AddDbContext<Models.PomeloDbContext>(options =>
+            {
+                _ = options.UseMySql(Configuration.GetConnectionString("MonevAtr"));
+            });
+
             _ = services.AddDistributedMemoryCache();
 
             _ = services.AddSession(options =>

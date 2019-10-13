@@ -9,8 +9,9 @@ namespace MonevAtr.Pages.Search
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(MonevAtrDbContext context, PomeloDbContext pomeloDbContext)
         {
+            _pomeloDbContext = pomeloDbContext;
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
         }
@@ -26,7 +27,7 @@ namespace MonevAtr.Pages.Search
             .OrderBy(f => f.Kode)
             .ToList();
 
-        public IList<int> TahunRekomendasiGubernur => _context.AtrDokumen
+        public IList<int> TahunRekomendasiGubernur => _pomeloDbContext.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenRekomendasiGubernur)
             .OrderBy(a => a.Tanggal.Year)
             .Select(a => a.Tanggal.Year)
@@ -34,7 +35,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunPermohonanPersetujuanSubstansi => _context.AtrDokumen
+        public IList<int> TahunPermohonanPersetujuanSubstansi => _pomeloDbContext.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenPermohonanPersetujuanSubstansi)
             .OrderBy(a => a.Tanggal.Year)
             .Select(a => a.Tanggal.Year)
@@ -42,7 +43,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunMasukLoket => _context.AtrDokumen
+        public IList<int> TahunMasukLoket => _pomeloDbContext.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenMasukLoket)
             .OrderBy(a => a.Tanggal.Year)
             .Select(a => a.Tanggal.Year)
@@ -50,7 +51,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunRapatLintasSektor => _context.AtrDokumen
+        public IList<int> TahunRapatLintasSektor => _pomeloDbContext.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenRapatLintasSektor)
             .OrderBy(a => a.Tanggal.Year)
             .Select(a => a.Tanggal.Year)
@@ -58,7 +59,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunPersetujuanSubstansi => _context.AtrDokumen
+        public IList<int> TahunPersetujuanSubstansi => _pomeloDbContext.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenPersetujuanSubstansi)
             .OrderBy(a => a.Tanggal.Year)
             .Select(a => a.Tanggal.Year)
@@ -70,7 +71,7 @@ namespace MonevAtr.Pages.Search
         {
             get
             {
-                List<short> list = _context.Atr
+                List<short> list = _pomeloDbContext.Atr
                     .OrderBy(a => a.Tahun)
                     .Select(a => a.Tahun)
                     .Distinct()
@@ -112,5 +113,7 @@ namespace MonevAtr.Pages.Search
         private readonly SelectListUtilities selectListUtilities;
 
         private readonly MonevAtrDbContext _context;
+
+        private readonly PomeloDbContext _pomeloDbContext;
     }
 }
