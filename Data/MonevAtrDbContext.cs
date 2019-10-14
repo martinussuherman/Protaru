@@ -4,10 +4,6 @@ namespace MonevAtr.Models
 {
     public partial class MonevAtrDbContext : DbContext
     {
-        public MonevAtrDbContext()
-        {
-
-        }
         public MonevAtrDbContext(DbContextOptions<MonevAtrDbContext> options) : base(options)
         {
 
