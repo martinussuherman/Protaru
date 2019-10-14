@@ -16,7 +16,7 @@ namespace MonevAtr.Models
         [Key]
         public int Kode { get; set; }
 
-        [Required(ErrorMessage = "{0} harus diisi."), MaxLength(20)]
+        [Required(ErrorMessage = "{0} harus diisi."), MaxLength(300)]
         public string Nama { get; set; }
 
         [InverseProperty("Kawasan")]
