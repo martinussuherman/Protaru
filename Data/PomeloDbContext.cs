@@ -6,8 +6,6 @@ namespace MonevAtr.Models
 {
     public partial class PomeloDbContext : DbContext
     {
-        public PomeloDbContext() {}
-
         public PomeloDbContext(DbContextOptions<PomeloDbContext> options) : base(options) {}
 
         public virtual DbSet<Area> Area { get; set; }
