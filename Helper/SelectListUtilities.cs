@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -112,10 +113,12 @@ namespace MonevAtr.Models
 
         public async Task<SelectList> Kawasan()
         {
-            IList<Kawasan> list = await _context.Kawasan
-                .Where(p => p.Kode > 0)
-                .OrderBy(p => p.Nama)
+            List<Kawasan> list = await _context.Kawasan
+                .Where(q => q.Kode > 0)
+                .OrderBy(q => q.Nama)
                 .ToListAsync();
+
+            UpdateNamaKawasan(list);
 
             Kawasan pilih = new Kawasan
             {
@@ -498,6 +501,38 @@ namespace MonevAtr.Models
         private void UpdateNamaDokumen(Dokumen dokumen)
         {
             dokumen.Nama = dokumen.Nama + " - " + dokumen.KelompokDokumen.JenisAtr.Nama;
+        }
+
+        private async void UpdateNamaKawasan(List<Kawasan> list)
+        {
+            List<KawasanKabupatenKota> listKabKota = await _context.KawasanKabupatenKota
+                .Include(q => q.KabupatenKota)
+                .OrderBy(q => q.KodeKawasan)
+                .ThenBy(q => q.KabupatenKota.Nama)
+                .ToListAsync();
+
+            StringBuilder builder = new StringBuilder();
+
+            foreach (Kawasan kawasan in list)
+            {
+                builder.Clear();
+                builder.Append(kawasan.Nama);
+                builder.Append(" - ");
+
+                List<KawasanKabupatenKota> match = listKabKota.FindAll(q => q.KodeKawasan == kawasan.Kode);
+
+                for (int index = 0; index < match.Count; index++)
+                {
+                    if (index > 0)
+                    {
+                        builder.Append(", ");
+                    }
+
+                    builder.Append(match[index].KabupatenKota.Nama);
+                }
+
+                kawasan.Nama = builder.ToString();
+            }
         }
 
         private readonly MonevAtrDbContext _context;
