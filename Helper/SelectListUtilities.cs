@@ -254,6 +254,16 @@ namespace MonevAtr.Models
             return await TahunPerpres((int) JenisRtrEnum.RtrKsnT52);
         }
 
+        public async Task<SelectList> TahunPerpresRtrwnT51()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrwnT51);
+        }
+
+        public async Task<SelectList> TahunPerpresRtrwnT52()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrwnT52);
+        }
+
         public async Task<SelectList> TahunPerdaRtr()
         {
             return await TahunPerda(0);
