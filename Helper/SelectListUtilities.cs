@@ -416,6 +416,24 @@ namespace MonevAtr.Models
             return new SelectList(list, "Kode", "Nama");
         }
 
+        public async Task<SelectList> ProgressRtrwnT51()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrwnT51);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRWN T5-1"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrwnT52()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrwnT52);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRWN T5-2"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
         private async Task<IList<ProgressAtr>> ProgressRtr(JenisRtrEnum jenisRtr)
         {
             return await _context.ProgressAtr
