@@ -1,0 +1,45 @@
+@page "{id:int?}"
+@model ViewModel
+
+@{
+    ViewData["Title"] = "Detail RTRWN T5-2";
+    ViewData["PageTitle"] = "RTRWN";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+    <div class="pt-4 pb-5 container">
+        <div class="row row-cards card py-4">
+            @await Html.PartialAsync("_RtrViewTitlePartial", Model.RtrDetail)
+
+            <div class="justify-content-md-center px-5">
+                <div class="card border-orange mb-3 card-body">
+                    <div class="col-md-12 form-group">
+                        <label class="form-label">Status Revisi</label>
+                        <input type="text"value="@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(Model.RtrDetail.Rtr.StatusRevisi)" class="form-control" disabled />
+                    </div>
+
+                    @await Html.PartialAsync("_RtrViewCommonHeaderPartial", Model.RtrDetail)
+                </div>
+            </div>
+
+            @await Html.PartialAsync("_RtrViewDokumenPartial", Model.RtrDetail)
+
+            <div class="ml-auto float-sm-right px-5">
+                <a asp-page="./Index" class="btn btn-warning text-light">Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ModalInputPartial")
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptPartial");}
+}
