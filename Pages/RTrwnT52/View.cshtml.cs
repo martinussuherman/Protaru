@@ -32,6 +32,8 @@ namespace MonevAtr.Pages.RtrwnT52
                 RtrDetail.Rtr,
                 id,
                 RtrDetail.KelompokDokumenList);
+            ViewData["StatusRevisi"] = StatusRevisi.NamaStatusRevisiRevisi(
+                RtrDetail.Rtr.StatusRevisi);
             return Page();
         }
 
