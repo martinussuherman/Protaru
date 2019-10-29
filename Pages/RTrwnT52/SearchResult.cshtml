@@ -49,6 +49,7 @@
 	                            <tr class="text-light font-weight-bold text-center bg-info">
                                     <th>No</th>
                                     <th>Action</th>
+                                    <th>Nama</th>
                                     <th>Status</th>
                                     <th>Nomor Perpres</th>
                                     <th>Tahun Perpres</th>
@@ -64,6 +65,7 @@ int index = Model.Hasil.StartItemIndex;
                                 <tr>
                                     <td>@index</td>
                                     @await Html.PartialAsync("_DokumenEditOrViewLink", item)
+                                    <td>@Html.DisplayFor(modelItem => item.Nama)</td>
                                     <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
@@ -82,8 +84,3 @@ int index = Model.Hasil.StartItemIndex;
         </div>
 	</div>
 </div>
-
-@section Scripts 
-{
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
