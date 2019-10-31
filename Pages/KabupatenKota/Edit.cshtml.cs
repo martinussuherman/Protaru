@@ -25,16 +25,16 @@ namespace MonevAtr.Pages.KabupatenKota
                 return NotFound();
             }
 
-            this.KabupatenKota = await _context.KabupatenKota
+            KabupatenKota = await _context.KabupatenKota
                 .Include(k => k.Provinsi)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (this.KabupatenKota == null)
+            if (KabupatenKota == null)
             {
                 return NotFound();
             }
 
-            ViewData["KodeProvinsi"] = await selectListUtilities.Provinsi();
+            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
             return Page();
         }
 
@@ -45,7 +45,7 @@ namespace MonevAtr.Pages.KabupatenKota
                 return Page();
             }
 
-            _context.Attach(this.KabupatenKota).State = EntityState.Modified;
+            _context.Attach(KabupatenKota).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +53,7 @@ namespace MonevAtr.Pages.KabupatenKota
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!KabupatenKotaExists(this.KabupatenKota.Kode))
+                if (!KabupatenKotaExists(KabupatenKota.Kode))
                 {
                     return NotFound();
                 }
