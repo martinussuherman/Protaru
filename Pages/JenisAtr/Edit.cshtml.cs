@@ -15,7 +15,7 @@ namespace MonevAtr.Pages.JenisAtr
         }
 
         [BindProperty]
-        public Models.JenisAtr JenisAtr { get; set; }
+        public Models.JenisAtr JenisRtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -24,10 +24,10 @@ namespace MonevAtr.Pages.JenisAtr
                 return NotFound();
             }
 
-            this.JenisAtr = await _context.JenisAtr
+            JenisRtr = await _context.JenisAtr
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (this.JenisAtr == null)
+            if (JenisRtr == null)
             {
                 return NotFound();
             }
@@ -42,7 +42,7 @@ namespace MonevAtr.Pages.JenisAtr
                 return Page();
             }
 
-            _context.Attach(this.JenisAtr).State = EntityState.Modified;
+            _context.Attach(JenisRtr).State = EntityState.Modified;
 
             try
             {
@@ -50,7 +50,7 @@ namespace MonevAtr.Pages.JenisAtr
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JenisAtrExists(this.JenisAtr.Kode))
+                if (!JenisAtrExists(JenisRtr.Kode))
                 {
                     return NotFound();
                 }
