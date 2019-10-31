@@ -13,7 +13,7 @@ namespace MonevAtr.Pages.JenisAtr
         }
 
         [BindProperty]
-        public Models.JenisAtr JenisAtr { get; set; }
+        public Models.JenisAtr JenisRtr { get; set; }
 
         public IActionResult OnGet()
         {
@@ -27,7 +27,7 @@ namespace MonevAtr.Pages.JenisAtr
                 return Page();
             }
 
-            _context.JenisAtr.Add(this.JenisAtr);
+            _context.JenisAtr.Add(JenisRtr);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

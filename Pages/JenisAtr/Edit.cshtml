@@ -1,33 +1,29 @@
-@page
+@page "{id:int?}"
 @model EditModel
 
 @{
-    ViewData["Title"] = "Ubah Jenis ATR";
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Ubah Jenis RTR";
+    ViewData["PageTitle"] = "Jenis RTR";
 }
 
-<h1>Ubah Jenis ATR</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="JenisAtr.Kode" />
-            <div class="form-group">
-                <label asp-for="JenisAtr.Nama" class="control-label"></label>
-                <input asp-for="JenisAtr.Nama" class="form-control" />
-                <span asp-validation-for="JenisAtr.Nama" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Simpan" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="card-body">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="JenisRtr.Kode" />
+
+        <div class="form-group">
+            <label class="control-label">Nama</label>
+            <input asp-for="JenisRtr.Nama" class="form-control" />
+            <span asp-validation-for="JenisRtr.Nama" class="text-danger"></span>
+        </div>
+
+        <input type="submit" value="Simpan" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
 </div>
 
-<div>
-    <a asp-page="./Index">Kembali ke Daftar Jenis ATR</a>
-</div>
-
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
