@@ -14,7 +14,7 @@ namespace MonevAtr.Pages.ProgressAtr
         }
 
         [BindProperty]
-        public Models.ProgressAtr ProgressAtr { get; set; }
+        public Models.ProgressAtr ProgressRtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -23,11 +23,11 @@ namespace MonevAtr.Pages.ProgressAtr
                 return NotFound();
             }
 
-            this.ProgressAtr = await _context.ProgressAtr
+            ProgressRtr = await _context.ProgressAtr
                 .Include(p => p.JenisAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (this.ProgressAtr == null)
+            if (ProgressRtr == null)
             {
                 return NotFound();
             }
@@ -42,11 +42,11 @@ namespace MonevAtr.Pages.ProgressAtr
                 return NotFound();
             }
 
-            this.ProgressAtr = await _context.ProgressAtr.FindAsync(id);
+            ProgressRtr = await _context.ProgressAtr.FindAsync(id);
 
-            if (this.ProgressAtr != null)
+            if (ProgressRtr != null)
             {
-                _context.ProgressAtr.Remove(this.ProgressAtr);
+                _context.ProgressAtr.Remove(ProgressRtr);
                 await _context.SaveChangesAsync();
             }
 

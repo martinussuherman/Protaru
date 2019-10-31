@@ -1,45 +1,31 @@
-@page
+@page "{id:int?}"
 @model DeleteModel
 
 @{
-    ViewData["Title"] = "Hapus Progress ATR";
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Hapus Progress RTR";
+    ViewData["PageTitle"] = "Progress RTR";
 }
 
-<h1>Hapus Progress ATR</h1>
+<div class="card-body">
+    <div class="form-group">
+        <label class="control-label">Kode</label>
+        <input asp-for="ProgressRtr.Kode" class="form-control" disabled/>
+    </div>
 
-<h3>Hapus data ini?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgressAtr.Kode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgressAtr.Kode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgressAtr.Nama)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgressAtr.Nama)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgressAtr.Nomor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgressAtr.Nomor)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgressAtr.JenisAtr)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProgressAtr.JenisAtr.Nama)
-        </dd>
-    </dl>
-    
+    <div class="form-group">
+        <label class="control-label">Nama</label>
+        <input asp-for="ProgressRtr.Nama" class="form-control" disabled/>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Jenis RTR</label>
+        <input asp-for="ProgressRtr.JenisAtr.Nama" class="form-control" disabled/>
+    </div>
+
     <form method="post">
-        <input type="hidden" asp-for="ProgressAtr.Kode" />
-        <input type="submit" value="Hapus" class="btn btn-danger" /> |
-        <a asp-page="./Index">Kembali ke Daftar Progress ATR</a>
+        <input type="hidden" asp-for="ProgressRtr.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
     </form>
 </div>

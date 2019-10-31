@@ -14,11 +14,11 @@ namespace MonevAtr.Pages.ProgressAtr
         }
 
         [BindProperty]
-        public Models.ProgressAtr ProgressAtr { get; set; }
+        public Models.ProgressAtr ProgressRtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["JenisAtr"] = await selectListUtilities.JenisRtr();
+            ViewData["JenisRtr"] = await selectListUtilities.JenisRtr();
             return Page();
         }
 
@@ -29,7 +29,7 @@ namespace MonevAtr.Pages.ProgressAtr
                 return Page();
             }
 
-            _context.ProgressAtr.Add(this.ProgressAtr);
+            _context.ProgressAtr.Add(ProgressRtr);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

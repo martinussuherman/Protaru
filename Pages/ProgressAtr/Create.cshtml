@@ -2,40 +2,38 @@
 @model CreateModel
 
 @{
-    ViewData["Title"] = "Tambah Progress ATR";
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Tambah Progress RTR";
+    ViewData["PageTitle"] = "Progress RTR";
 }
 
-<h1>Tambah Progress ATR</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProgressAtr.Nama" class="control-label"></label>
-                <input asp-for="ProgressAtr.Nama" class="form-control" />
-                <span asp-validation-for="ProgressAtr.Nama" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProgressAtr.Nomor" class="control-label"></label>
-                <input asp-for="ProgressAtr.Nomor" class="form-control" />
-                <span asp-validation-for="ProgressAtr.Nomor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProgressAtr.KodeJenisAtr" class="control-label"></label>
-                <select asp-for="ProgressAtr.KodeJenisAtr" class ="form-control" asp-items="ViewBag.JenisAtr"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Simpan" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="card-body">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label class="control-label">Nama</label>
+            <input asp-for="ProgressRtr.Nama" class="form-control" />
+            <span asp-validation-for="ProgressRtr.Nama" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Nomor</label>
+            <input asp-for="ProgressRtr.Nomor" class="form-control" />
+            <span asp-validation-for="ProgressRtr.Nomor" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Jenis RTR</label>
+            <select asp-for="ProgressRtr.KodeJenisAtr" class ="form-control" asp-items="ViewBag.JenisRtr"></select>
+        </div>
+
+        <input type="submit" value="Simpan" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
 </div>
 
-<div>
-    <a asp-page="Index">Kembali ke Daftar Progress ATR</a>
-</div>
-
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
