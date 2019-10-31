@@ -1,33 +1,26 @@
-@page
+@page "{id:int?}"
 @model DeleteModel
 
 @{
-    ViewData["Title"] = "Hapus Jenis ATR";
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Hapus Jenis RTR";
+    ViewData["PageTitle"] = "Jenis RTR";
 }
 
-<h1>Hapus Jenis ATR</h1>
+<div class="card-body">
+    <div class="form-group">
+        <label class="control-label">Kode</label>
+        <input asp-for="JenisRtr.Kode" class="form-control" disabled/>
+    </div>
 
-<h3>Hapus data ini?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JenisAtr.Kode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JenisAtr.Kode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JenisAtr.Nama)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JenisAtr.Nama)
-        </dd>
-    </dl>
-    
+    <div class="form-group">
+        <label class="control-label">Nama</label>
+        <input asp-for="JenisRtr.Nama" class="form-control" disabled/>
+    </div>
+
     <form method="post">
-        <input type="hidden" asp-for="JenisAtr.Kode" />
-        <input type="submit" value="Hapus" class="btn btn-danger" /> |
-        <a asp-page="./Index">Kembali ke Daftar Jenis ATR</a>
+        <input type="hidden" asp-for="JenisRtr.Kode" />
+        <input type="submit" value="Hapus" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
     </form>
 </div>

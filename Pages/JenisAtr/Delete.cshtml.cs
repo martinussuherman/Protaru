@@ -14,7 +14,7 @@ namespace MonevAtr.Pages.JenisAtr
         }
 
         [BindProperty]
-        public Models.JenisAtr JenisAtr { get; set; }
+        public Models.JenisAtr JenisRtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -23,10 +23,10 @@ namespace MonevAtr.Pages.JenisAtr
                 return NotFound();
             }
 
-            this.JenisAtr = await _context.JenisAtr
+            JenisRtr = await _context.JenisAtr
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (this.JenisAtr == null)
+            if (JenisRtr == null)
             {
                 return NotFound();
             }
@@ -40,11 +40,11 @@ namespace MonevAtr.Pages.JenisAtr
                 return NotFound();
             }
 
-            this.JenisAtr = await _context.JenisAtr.FindAsync(id);
+            JenisRtr = await _context.JenisAtr.FindAsync(id);
 
-            if (this.JenisAtr != null)
+            if (JenisRtr != null)
             {
-                _context.JenisAtr.Remove(this.JenisAtr);
+                _context.JenisAtr.Remove(JenisRtr);
                 await _context.SaveChangesAsync();
             }
 

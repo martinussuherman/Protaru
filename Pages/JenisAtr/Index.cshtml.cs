@@ -1,8 +1,9 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using P.Pager;
 
 namespace MonevAtr.Pages.JenisAtr
 {
@@ -13,12 +14,13 @@ namespace MonevAtr.Pages.JenisAtr
             _context = context;
         }
 
-        public IList<Models.JenisAtr> JenisAtr { get; set; }
+        public IPager<Models.JenisAtr> JenisRtr { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGet([FromQuery] int page)
         {
-            this.JenisAtr = await _context.JenisAtr
-                .ToListAsync();
+            JenisRtr = _context.JenisAtr
+                .OrderBy(q => q.Nomor)
+                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
         private readonly MonevAtrDbContext _context;
