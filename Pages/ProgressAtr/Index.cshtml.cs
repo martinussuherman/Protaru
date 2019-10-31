@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using P.Pager;
 
 namespace MonevAtr.Pages.ProgressAtr
 {
@@ -14,15 +15,15 @@ namespace MonevAtr.Pages.ProgressAtr
             _context = context;
         }
 
-        public IList<Models.ProgressAtr> ProgressAtr { get; set; }
+        public IPager<Models.ProgressAtr> ProgressRtr { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGet([FromQuery] int page)
         {
-            this.ProgressAtr = await _context.ProgressAtr
+            ProgressRtr = _context.ProgressAtr
                 .Include(p => p.JenisAtr)
                 .OrderBy(p => p.JenisAtr.Nama)
                 .ThenBy(p => p.Nomor)
-                .ToListAsync();
+                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
         private readonly MonevAtrDbContext _context;

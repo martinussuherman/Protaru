@@ -16,7 +16,7 @@ namespace MonevAtr.Pages.ProgressAtr
         }
 
         [BindProperty]
-        public Models.ProgressAtr ProgressAtr { get; set; }
+        public Models.ProgressAtr ProgressRtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -25,16 +25,16 @@ namespace MonevAtr.Pages.ProgressAtr
                 return NotFound();
             }
 
-            this.ProgressAtr = await _context.ProgressAtr
+            ProgressRtr = await _context.ProgressAtr
                 .Include(p => p.JenisAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            if (this.ProgressAtr == null)
+            if (ProgressRtr == null)
             {
                 return NotFound();
             }
 
-            ViewData["JenisAtr"] = await selectListUtilities.JenisRtr();
+            ViewData["JenisRtr"] = await selectListUtilities.JenisRtr();
             return Page();
         }
 
@@ -45,7 +45,7 @@ namespace MonevAtr.Pages.ProgressAtr
                 return Page();
             }
 
-            _context.Attach(this.ProgressAtr).State = EntityState.Modified;
+            _context.Attach(ProgressRtr).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +53,7 @@ namespace MonevAtr.Pages.ProgressAtr
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProgressAtrExists(this.ProgressAtr.Kode))
+                if (!ProgressAtrExists(ProgressRtr.Kode))
                 {
                     return NotFound();
                 }
