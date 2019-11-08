@@ -18,7 +18,7 @@ namespace MonevAtr.Pages.KelompokDokumen
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["JenisAtr"] = await selectListUtilities.JenisRtr();
+            ViewData["JenisRtr"] = await selectListUtilities.JenisRtr();
             return Page();
         }
 
@@ -29,7 +29,7 @@ namespace MonevAtr.Pages.KelompokDokumen
                 return Page();
             }
 
-            _context.KelompokDokumen.Add(this.KelompokDokumen);
+            _context.KelompokDokumen.Add(KelompokDokumen);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

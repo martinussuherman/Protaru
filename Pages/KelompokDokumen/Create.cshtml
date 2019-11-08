@@ -2,40 +2,38 @@
 @model CreateModel
 
 @{
+    Layout = "_CommonLayout";
     ViewData["Title"] = "Tambah Kelompok Dokumen";
+    ViewData["PageTitle"] = "Kelompok Dokumen";
 }
 
-<h1>Tambah Kelompok Dokumen</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="KelompokDokumen.Nama" class="control-label"></label>
-                <input asp-for="KelompokDokumen.Nama" class="form-control" />
-                <span asp-validation-for="KelompokDokumen.Nama" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KelompokDokumen.Nomor" class="control-label"></label>
-                <input asp-for="KelompokDokumen.Nomor" class="form-control" />
-                <span asp-validation-for="KelompokDokumen.Nomor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KelompokDokumen.KodeJenisAtr" class="control-label"></label>
-                <select asp-for="KelompokDokumen.KodeJenisAtr" class ="form-control" asp-items="ViewBag.JenisAtr"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Simpan" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="card-body">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label class="control-label">Nama</label>
+            <input asp-for="KelompokDokumen.Nama" class="form-control" />
+            <span asp-validation-for="KelompokDokumen.Nama" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Nomor</label>
+            <input asp-for="KelompokDokumen.Nomor" class="form-control" />
+            <span asp-validation-for="KelompokDokumen.Nomor" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Jenis RTR</label>
+            <select asp-for="KelompokDokumen.KodeJenisAtr" class ="form-control" asp-items="ViewBag.JenisRtr"></select>
+        </div>
+
+        <input type="submit" value="Simpan" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
 </div>
 
-<div>
-    <a asp-page="Index">Kembali ke Daftar Kelompok Dokumen</a>
-</div>
-
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
