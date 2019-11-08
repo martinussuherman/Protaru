@@ -21,14 +21,50 @@ namespace MonevAtr.Pages.Kawasan
         [BindProperty]
         public Models.Kawasan Kawasan { get; set; }
 
-        [BindProperty]
-        public KawasanKabupatenKota KabupatenKota1 { get; set; }
+        // [BindProperty]
+        // public KawasanKabupatenKota KabupatenKota1 { get; set; }
+
+        // [BindProperty]
+        // public KawasanKabupatenKota KabupatenKota2 { get; set; }
+
+        // [BindProperty]
+        // public KawasanKabupatenKota KabupatenKota3 { get; set; }
 
         [BindProperty]
-        public KawasanKabupatenKota KabupatenKota2 { get; set; }
+        public KawasanProvinsi Provinsi1 { get; set; }
 
         [BindProperty]
-        public KawasanKabupatenKota KabupatenKota3 { get; set; }
+        public KawasanProvinsi Provinsi2 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi3 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi4 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi5 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi6 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi7 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi8 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi9 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi10 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi11 { get; set; }
+
+        [BindProperty]
+        public KawasanProvinsi Provinsi12 { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -45,15 +81,29 @@ namespace MonevAtr.Pages.Kawasan
                 return NotFound();
             }
 
-            List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+            List<KawasanProvinsi> list = await _context.KawasanProvinsi
                 .Where(k => k.KodeKawasan == id)
                 .ToListAsync();
 
-            KabupatenKota1 = Retrieve(list, 0);
-            KabupatenKota2 = Retrieve(list, 1);
-            KabupatenKota3 = Retrieve(list, 2);
+            // List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+            //     .Where(k => k.KodeKawasan == id)
+            //     .ToListAsync();
 
-            ViewData["KabupatenKota"] = await _selectListUtilities.KabupatenKota();
+            Provinsi1 = Retrieve(list, 0);
+            Provinsi2 = Retrieve(list, 1);
+            Provinsi3 = Retrieve(list, 2);
+            Provinsi4 = Retrieve(list, 3);
+            Provinsi5 = Retrieve(list, 4);
+            Provinsi6 = Retrieve(list, 5);
+            Provinsi7 = Retrieve(list, 6);
+            Provinsi8 = Retrieve(list, 7);
+            Provinsi9 = Retrieve(list, 8);
+            Provinsi10 = Retrieve(list, 9);
+            Provinsi11 = Retrieve(list, 10);
+            Provinsi12 = Retrieve(list, 11);
+
+            ViewData["Provinsi"] = await _selectListUtilities.Provinsi();
+            // ViewData["KabupatenKota"] = await _selectListUtilities.KabupatenKota();
 
             return Page();
         }
@@ -83,42 +133,83 @@ namespace MonevAtr.Pages.Kawasan
                 }
             }
 
-            List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+            // List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+            //     .Where(k => k.KodeKawasan == Kawasan.Kode)
+            //     .ToListAsync();
+            List<KawasanProvinsi> list = await _context.KawasanProvinsi
                 .Where(k => k.KodeKawasan == Kawasan.Kode)
                 .ToListAsync();
 
-            _context.KawasanKabupatenKota.RemoveRange(list);
-            AddKabupatenKotaToContext(KabupatenKota1);
-            AddKabupatenKotaToContext(KabupatenKota2);
-            AddKabupatenKotaToContext(KabupatenKota3);
+            _context.KawasanProvinsi.RemoveRange(list);
+            // AddKabupatenKotaToContext(KabupatenKota1);
+            // AddKabupatenKotaToContext(KabupatenKota2);
+            // AddKabupatenKotaToContext(KabupatenKota3);
+
+            AddProvinsiToContext(Provinsi1);
+            AddProvinsiToContext(Provinsi2);
+            AddProvinsiToContext(Provinsi3);
+            AddProvinsiToContext(Provinsi4);
+            AddProvinsiToContext(Provinsi5);
+            AddProvinsiToContext(Provinsi6);
+            AddProvinsiToContext(Provinsi7);
+            AddProvinsiToContext(Provinsi8);
+            AddProvinsiToContext(Provinsi9);
+            AddProvinsiToContext(Provinsi10);
+            AddProvinsiToContext(Provinsi11);
+            AddProvinsiToContext(Provinsi12);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
 
-        private KawasanKabupatenKota Retrieve(List<KawasanKabupatenKota> list, int index)
+        private KawasanProvinsi Retrieve(List<KawasanProvinsi> list, int index)
         {
             if (index < list.Count)
             {
                 return list[index];
             }
 
-            return new KawasanKabupatenKota
+            return new KawasanProvinsi
             {
-                KodeKabupatenKota = 0
+                KodeProvinsi = 0
             };
         }
 
-        private void AddKabupatenKotaToContext(KawasanKabupatenKota item)
+        private void AddProvinsiToContext(KawasanProvinsi item)
         {
-            if (item == null || item.KodeKabupatenKota == 0)
+            if (item == null || item.KodeProvinsi == 0)
             {
                 return;
             }
 
             item.KodeKawasan = Kawasan.Kode;
-            _context.KawasanKabupatenKota.Add(item);
+            _context.KawasanProvinsi.Add(item);
         }
+
+        // private KawasanKabupatenKota Retrieve(List<KawasanKabupatenKota> list, int index)
+        // {
+        //     if (index < list.Count)
+        //     {
+        //         return list[index];
+        //     }
+
+        //     return new KawasanKabupatenKota
+        //     {
+        //         KodeKabupatenKota = 0
+        //     };
+        // }
+
+        // private void AddKabupatenKotaToContext(KawasanKabupatenKota item)
+        // {
+        //     if (item == null || item.KodeKabupatenKota == 0)
+        //     {
+        //         return;
+        //     }
+
+        //     item.KodeKawasan = Kawasan.Kode;
+        //     _context.KawasanKabupatenKota.Add(item);
+        // }
 
         private bool Exists(int id)
         {

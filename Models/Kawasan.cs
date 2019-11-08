@@ -25,5 +25,7 @@ namespace MonevAtr.Models
         [InverseProperty("Kawasan")]
         public virtual ICollection<KawasanKabupatenKota> KawasanKabupatenKota { get; set; }
 
-    }
+         [InverseProperty("Kawasan")]
+        public virtual ICollection<KawasanProvinsi> KawasanProvinsi { get; set; }
+   }
 }
