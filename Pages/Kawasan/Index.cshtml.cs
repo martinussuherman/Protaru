@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Kawasan
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         public IndexModel(MonevAtrDbContext context)
