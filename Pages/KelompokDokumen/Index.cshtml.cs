@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using P.Pager;
 
 namespace MonevAtr.Pages.KelompokDokumen
 {
@@ -14,15 +14,15 @@ namespace MonevAtr.Pages.KelompokDokumen
             _context = context;
         }
 
-        public IList<Models.KelompokDokumen> KelompokDokumen { get; set; }
+        public IPager<Models.KelompokDokumen> KelompokDokumen { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGet([FromQuery] int page)
         {
-            this.KelompokDokumen = await _context.KelompokDokumen
+            KelompokDokumen = _context.KelompokDokumen
                 .Include(k => k.JenisAtr)
                 .OrderBy(k => k.JenisAtr.Nama)
                 .ThenBy(k => k.Nomor)
-                .ToListAsync();
+                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
         private readonly MonevAtrDbContext _context;
