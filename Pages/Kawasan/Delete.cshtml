@@ -18,11 +18,11 @@
         <input asp-for="Kawasan.Nama" class="form-control" disabled/>
     </div>
 
-@foreach (var item in Model.Kawasan.KawasanKabupatenKota)
+@foreach (var item in Model.Kawasan.KawasanProvinsi)
 {
     <div class="form-group">
-        <label class="control-label">Kabupaten/Kota</label>
-        <input type="text" value="@item.KabupatenKota.Nama" class="form-control" disabled/>
+        <label class="control-label">Provinsi</label>
+        <input type="text" value="@item.Provinsi.Nama" class="form-control" disabled/>
     </div>
 }
 

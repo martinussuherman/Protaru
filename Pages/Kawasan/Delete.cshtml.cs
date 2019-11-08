@@ -35,12 +35,12 @@ namespace MonevAtr.Pages.Kawasan
                 return NotFound();
             }
 
-            List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
-                .Include(k => k.KabupatenKota)
+            List<KawasanProvinsi> list = await _context.KawasanProvinsi
+                .Include(k => k.Provinsi)
                 .Where(k => k.KodeKawasan == Kawasan.Kode)
                 .ToListAsync();
 
-            Kawasan.KawasanKabupatenKota = list;
+            Kawasan.KawasanProvinsi = list;
 
             return Page();
         }
@@ -59,11 +59,11 @@ namespace MonevAtr.Pages.Kawasan
                 _context.Kawasan.Remove(Kawasan);
             }
 
-            List<KawasanKabupatenKota> list = await _context.KawasanKabupatenKota
+            List<KawasanProvinsi> list = await _context.KawasanProvinsi
                 .Where(k => k.KodeKawasan == id)
                 .ToListAsync();
 
-            _context.KawasanKabupatenKota.RemoveRange(list);
+            _context.KawasanProvinsi.RemoveRange(list);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

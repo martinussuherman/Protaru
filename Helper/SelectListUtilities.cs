@@ -533,10 +533,10 @@ namespace MonevAtr.Models
 
         private async void UpdateNamaKawasan(List<Kawasan> list)
         {
-            List<KawasanKabupatenKota> listKabKota = await _context.KawasanKabupatenKota
-                .Include(q => q.KabupatenKota)
+            List<KawasanProvinsi> listProvinsi = await _context.KawasanProvinsi
+                .Include(q => q.Provinsi)
                 .OrderBy(q => q.KodeKawasan)
-                .ThenBy(q => q.KabupatenKota.Nama)
+                .ThenBy(q => q.Provinsi.Nama)
                 .ToListAsync();
 
             StringBuilder builder = new StringBuilder();
@@ -547,7 +547,7 @@ namespace MonevAtr.Models
                 builder.Append(kawasan.Nama);
                 builder.Append(" - ");
 
-                List<KawasanKabupatenKota> match = listKabKota.FindAll(q => q.KodeKawasan == kawasan.Kode);
+                List<KawasanProvinsi> match = listProvinsi.FindAll(q => q.KodeKawasan == kawasan.Kode);
 
                 for (int index = 0; index < match.Count; index++)
                 {
@@ -556,7 +556,7 @@ namespace MonevAtr.Models
                         builder.Append(", ");
                     }
 
-                    builder.Append(match[index].KabupatenKota.Nama);
+                    builder.Append(match[index].Provinsi.Nama);
                 }
 
                 kawasan.Nama = builder.ToString();
