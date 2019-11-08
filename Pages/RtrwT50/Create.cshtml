@@ -23,22 +23,22 @@
                 <form id="rtr" method="post">
                     <div class="card-body">
                         <div class="col-md-12 form-group">
-                            <label asp-for="Atr.Provinsi" class="form-label"></label>
+                            <label class="form-label">Provinsi</label>
                             <select id="provinsi" asp-for="Atr.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <label asp-for="Atr.KabupatenKota" class="form-label"></label>
+                            <label class="form-label">Kabupaten/Kota</label>
                             <select id="kabupaten-kota" asp-for="Atr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <label asp-for="Atr.KodeProgressAtr" class="control-label"></label>
+                            <label class="form-label">Progress</label>
                             <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressAtr"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <label class="form-label">Nama RTRW</label>
+                            <label class="form-label">Nama RTR</label>
                             <input asp-for="Atr.Nama" class="form-control">
                         </div>
 
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="col-sm-6 col-md-6 form-group">
-                            <label asp-for="Atr.TahunPenyusunan"></label>
+                            <label class="form-label">Tahun Penyusunan</label>
                             <input asp-for="Atr.TahunPenyusunan" class="form-control">
                         </div>
 					</div>
@@ -68,7 +68,8 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
 }

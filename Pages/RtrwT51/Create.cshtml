@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <label class="form-label">Nama RTRW</label>
+                            <label class="form-label">Nama RTR</label>
                             <input asp-for="Atr.Nama" class="form-control">
                         </div>
 
@@ -72,7 +72,8 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
 }
