@@ -264,6 +264,16 @@ namespace MonevAtr.Models
             return await TahunPerpres((int) JenisRtrEnum.RtrwnT52);
         }
 
+        public async Task<SelectList> TahunPerpresRtrKpnT51()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrKpnT51);
+        }
+
+        public async Task<SelectList> TahunPerpresRtrKpnT52()
+        {
+            return await TahunPerpres((int) JenisRtrEnum.RtrKpnT52);
+        }
+
         public async Task<SelectList> TahunPerdaRtr()
         {
             return await TahunPerda(0);
@@ -431,6 +441,24 @@ namespace MonevAtr.Models
                 JenisRtrEnum.RtrwnT52);
 
             list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRWN T5-2"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrKpnT51()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrKpnT51);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KPN T5-1"));
+            return new SelectList(list, "Kode", "Nama");
+        }
+
+        public async Task<SelectList> ProgressRtrKpnT52()
+        {
+            IList<ProgressAtr> list = await ProgressRtr(
+                JenisRtrEnum.RtrKpnT52);
+
+            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KPN T5-2"));
             return new SelectList(list, "Kode", "Nama");
         }
 
