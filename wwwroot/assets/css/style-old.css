@@ -69,11 +69,11 @@
 
 .tag-title span { 
 	font-family: 'Roboto',Sans-serif;
-	font-weight: 700;
-	font-size: 28px;
-	color: #ff4500; 
-	background-color: #fff; 
-	padding: 0 20px;
+   	font-weight: 700;
+   	font-size: 28px;
+   	color: #ff4500; 
+   	background-color: #fff; 
+   	padding: 0 20px;
 }
 
 .tag-title-2 {
@@ -85,11 +85,11 @@
 
 .tag-title-2 span { 
 	font-family: 'Roboto',Sans-serif;
-	font-weight: 700;
-	font-size: 28px;
-	color: #ff4500; 
-	background-color: #fff; 
-	padding: 0 15px;
+   	font-weight: 700;
+   	font-size: 28px;
+   	color: #ff4500; 
+   	background-color: #fff; 
+   	padding: 0 15px;
 }
 
 
@@ -124,19 +124,19 @@
 }
 
 .progress-init {
-	margin: 20px 0 0px -4px;
+    margin: 20px 0 0px 5px;
 }
 
 .progress-general {
-	margin: 0px 0 0px -4px;
+    margin: 0px 0 0px 5px;
 }
 /*
 .progress-init-2 {
-	margin: 20px 0 0px 11px;
+    margin: 20px 0 0px 11px;
 }
 
 .progress-general-2 {
-	margin: 0px 0 0px 11px;
+    margin: 0px 0 0px 11px;
 }
 */
 
@@ -187,44 +187,44 @@
 
 .progress-circle {
 	position: relative;
-	left: -32px;
-	width: 80px;
-	height: 70px;
-	overflow: hidden;
-	top: -3px;
+    left: -35px;
+    width: 68px;
+    height: 70px;
+    overflow: hidden;
+    top: -3px;
 }
 
 .circle-dark {
-	background: url(../img/circle-dark.png) no-repeat;
+    background: url(../img/circle-dark.png) no-repeat;
 }
 
 .circle-medium-dark {
-	background: url(../img/circle-medium-dark.png) no-repeat;
+    background: url(../img/circle-medium-dark.png) no-repeat;
 }
 
 .circle-medium {
-	background: url(../img/circle-medium.png) no-repeat;
+    background: url(../img/circle-medium.png) no-repeat;
 }
 
 .circle-light {
-	background: url(../img/circle-light.png) no-repeat;
+    background: url(../img/circle-light.png) no-repeat;
 }
 
 .progress-score {
 	color: #fff;
-	font: bold 16px Roboto;
-	position: relative;
-	left: -5px;
-	top: 25px;
-	text-align: center;
+    font: bold 22px Roboto;
+    position: relative;
+    left: -2px;
+    top: 18px;
+    text-align: center;
 }
 
 .month-link li {
 	list-style: none;
-	background: url(../img/bg-month.png) no-repeat;
-	width: 175px;
-	height: 37px;
-	padding-top: 2px;
+    background: url(../img/bg-month.png) no-repeat;
+    width: 175px;
+    height: 37px;
+    padding-top: 2px;
 }
 
 .month-link-active {
@@ -233,8 +233,8 @@
 
 .month-link li span {
 	font: bold 20px Roboto;
-	color: #666;
-	padding: 0 10px 0 8px;
+    color: #666;
+    padding: 0 10px 0 8px;
 }
 
 .month-link li a {
@@ -268,8 +268,8 @@
 }
 .month-data {
 	border: 1px solid #808080;
-	border-radius: 8px;
-	padding: 0px 30px 30px;
+    border-radius: 8px;
+    padding: 0px 30px 30px;
 }
 
 .month-data-box {
@@ -361,8 +361,8 @@
 
 .page-title h4{
 	color: #ff4500;
-	font: bold 32px 'Helvetica',Roboto;
-	padding: 30px 0 30px 20px;
+    font: bold 32px 'Helvetica',Roboto;
+    padding: 30px 0 30px 20px;
 }
 
 .bg-page-detail {
@@ -423,38 +423,20 @@
 	   display: none !important;
 	}
 
-	.tagline-web {
-		margin-top: 30px;
-	}
-
-	.tag-title-box-2 {
-		margin-bottom: 30px;
-		margin-top: 20px !important;
-	}
+	/*.box-graphic img {
+	   display: none;
+	}*/
 
 	.tag-title span {
 		padding: 0;
-		font-size: larger;
-	}
-
-	.tag-title-2 span {
-		font-size: larger;
 	}
 
 	.nav-list {
 		border-left : 0;
 	}
 
-	ul#month-status{
-		padding: 0;
-	}
-
 	.month-link li{
-		background: #eee;
-	    border-bottom: 1px solid #ccc;
-	    width: 100%;
-	    padding-top: 7px;
-
+		background: transparent;
 	}
 
 	.month-link li span{
@@ -467,6 +449,8 @@
 
 	.month-link-active{
 		background: #ff4500 !important;
+		width: 85% !important;
+    	height: 30px !important;
 	}
 
 	.month-link-active a{
@@ -477,53 +461,18 @@
 		height: auto;
 	}
 
-	#progress-t51 {
-		margin-bottom: 40px;
-	}
-
 }
 
 @media (max-width: 575px) {
 	.text-month {
-		display: none;
+		display: inline;
 	}
 	
 	.img-fluid {
-		height: 60px;
-		width: 85px;
-	}
-	
-	.month-link {
-    	margin-top: -40px;
-	}
-
-	.box-graphic .col-sm-2 {
-		width: auto;
 		height: auto;
 	}
 
-	.box-graphic .col-sm-9 {
-		width: 240px;
-	}
-
-	.progress-init {
-		margin: 0;
-	}
-
-	.progress-general {
-		margin: 0;
-	}
-
-	.progress-score {
-		color: #fff;
-		font: bold 16px Roboto;
-		position: relative;
-		left: -2px;
-		top: 25px;
-		text-align: center;
-	}
-
-	.copy {
-		margin-bottom: 30px;
+	.month-link {
+		padding-top: 6rem !important;
 	}
 }

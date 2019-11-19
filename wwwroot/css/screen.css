@@ -3,7 +3,7 @@ html, body {
 }
 
 .header-screen{
-	background: url('../img/bg-head.jpg') repeat-x;
+	background: url('../assets/img/bg-head.jpg') repeat-x;
 	height: 74px;
 }
 
