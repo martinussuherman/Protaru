@@ -11,3 +11,8 @@ html, body {
 	color: #444;
 	font-family: Roboto, sans-serif;
 }
+
+.img-fluid {
+  width: 100% !important;
+  height: auto !important;
+}
