@@ -1,0 +1,29 @@
+@{
+    Layout = "_RtrDaerahLayout";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+    <div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card">
+			    <div class="card-header pl-5">
+				    <h4 class="card-title mlm-15">@ViewData["Title"]</h4>
+			    </div>
+
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts 
+{
+    @RenderSection("Scripts", required: false)
+}

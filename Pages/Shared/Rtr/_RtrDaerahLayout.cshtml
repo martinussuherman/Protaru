@@ -138,25 +138,6 @@
 		</div>
 	</footer>
 
-@*
-@if (Engine.FindView(ViewContext, "_Fake", isMainPage: false).Success)
-{
-            <partial name="_Fake" />
-            <div class="my-3 my-md-5">
-                <div class="container">
-                    <!-- <partial name="_CookieConsentPartial" /> -->
-                    <!-- <main role="main" class="pb-3"> -->
-                        @RenderBody()
-                    <!-- </main> -->
-                </div>
-            </div>
-}
-else
-{
-            @RenderBody()
-}
-*@
-
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<!-- <script src="~/assets/js/jquery-3.3.1.slim.min.js"></script> -->
