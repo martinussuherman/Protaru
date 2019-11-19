@@ -1,0 +1,13 @@
+html, body {
+	background-color: #cfcdbb;
+}
+
+.header-screen{
+	background: url('../img/bg-head.jpg') repeat-x;
+	height: 74px;
+}
+
+.text-gray {
+	color: #444;
+	font-family: Roboto, sans-serif;
+}

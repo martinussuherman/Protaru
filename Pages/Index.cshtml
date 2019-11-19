@@ -1,303 +1,71 @@
 ﻿@page
-@model IndexModel
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject ICompositeViewEngine Engine
+
 @{
-    ViewData["Title"] = "Kementerian Agraria dan Tata Ruang";
+    Layout = "";
+	ViewData["Title"] = "Kementerian Agraria dan Tata Ruang";
 }
 
-	<div class="slide">
-		<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:1600px; height:550px; margin: 0 auto;">
-			<canvas id="canvas" width="1600" height="550" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
-			<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1600px; height:550px; position: absolute; left: 0px; top: 0px; display: block;">
-			</div>
-		</div>
+<!doctype html>
+<html lang="en">
+  <head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/assets/css/style.css">
+	<link rel="stylesheet" href="~/assets/css/slick.css"/>
+	<link rel="stylesheet" href="~/assets/css/slick-theme.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <title>@ViewData["Title"] - PROTARU</title>
+
+	<!-- write your code here -->
+    <link rel="stylesheet" href="~/css/screen.css" />
+</head>
+
+<body>
+	<header class="text-center header-screen">
+		<img src="~/assets/img/logo.png" class="mt-3">
+	</header>
+
+	<div class="banner-screen">
+		<img src="~/assets/img/banner-screen.jpg" class="img-fluid" alt="Progress Penyelesaian Rencana Tata Ruang">
 	</div>
 
 	<div class="container">
-		<div class="text-center mt-3">
-			<p class="tagline-web">
-				<img src="~/assets/img/protaru.png">
-				 Sistem Informasi Basis Data yang menyajikan Progress Penyelesaian Rencana Tata Ruang <br />baik Rencana Umum maupun Rencana Rinci yang disusun oleh Pemerintah Pusat dan Pemerintah Daerah.
-				 <img src="~/assets/img/mark.png" class="img-mark">
-			</p>
-		</div>
-		<div class="mt-4 icon-menu">
-			<div data-toggle="tooltip" data-placement="bottom" title="RTRW T5-0 adalah RTRW yang disusun sebelum Undang-Undang No. 26 Tahun 2007 ditetapkan atau merupakan Perda Induk sebelum pemekaran di Kabupaten " class="img-icon-menu">
-				<a asp-page="/RtrwT50/Index" class="icon-link"><img src="~/assets/img/icon-rtrwt50.png"></a>
-			</div>
-			<div data-toggle="tooltip" data-placement="bottom" title="RTRW T5-1 adalah RTRW yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan" class="img-icon-menu">
-				<a asp-page="/RtrwT51/Index" class="icon-link"><img src="~/assets/img/icon-rtrwt51.png"></a>
-			</div>
-			<div data-toggle="tooltip" data-placement="bottom" title="RTRW T5-2 adalah RTRW yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RTRW T5-1" class="img-icon-menu">
-				<a asp-page="/RtrwT52/Index" class="icon-link"><img src="~/assets/img/icon-rtrwt52.png"></a>
-			</div>
-			<div data-toggle="tooltip" data-placement="bottom" title="RDTR T5-1 adalah RDTR yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan" class="img-icon-menu">
-				<a asp-page="/RdtrT51/Index" class="icon-link"><img src="~/assets/img/icon-rdtrt51.png"></a>
-			</div>
-			<div data-toggle="tooltip" data-placement="bottom" title="RDTR T5-2 adalah RDTR yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RDTR T5-1" class="img-icon-menu">
-				<a asp-page="/RdtrT52/Index" class="icon-link"><img src="~/assets/img/icon-rdtrt52.png"></a>
-			</div>
-		</div>
-	</div>
-
-	<!-- Progress Penyelesaian RTR -->
-	<div class="mt-5 tag-title-box-2">
-		<div class="tag-title"><span>PROGRESS PENYELESAIAN RTR</span></div>
-	</div>
-
-	<div class="container">
-		<div class="row">
+		<div class="row mt-5">
 			<div class="col-md-6">
-				<a id="rtrw-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTRW T5-1 adalah RTRW yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan" class="title-progress active-progress">RTRW T51 </a> 
-				<span class="title-progress">|</span> 
-				<a id="rdtr-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR T5-1 adalah RDTR yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan" class="title-progress">RDTR T51</a>
-				<h6 class="text-progress">Lima Tahun Pertama</h6>
-
-				<div id="progress-t51" class="box-graphic">
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/penyusunan.png">
-							<span class="text-month">Penyusunan</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-init">
-								<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/rekom-gub.png">
-							<span class="text-month">Rekomendasi Gubernur</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar black-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/persub.png">
-							<span class="text-month">Persetujuan Substansi</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/perda.png">
-							<span class="text-month">Peraturan Daerah</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-light">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<a asp-page="/RtrNasional">
+					<img src="~/assets/img/btn1.png">
+				</a>
 			</div>
 
 			<div class="col-md-6">
-				<a id="rtrw-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTRW T5-2 adalah RTRW yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RTRW T5-1" class="title-progress active-progress">RTRW T52 </a> 
-				<span class="title-progress">|</span> 
-				<a id="rdtr-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR T5-2 adalah RDTR yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RDTR T5-1" class="title-progress">RDTR T52</a>
-				<h6 class="text-progress">Lima Tahun Kedua</h6>
-
-				<div id="progress-t52" class="box-graphic">
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/proses-pk.png">
-							<span class="text-month">Proses Peninjauan Kembali</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-init">
-								<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/revisi.png">
-							<span class="text-month">Revisi</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar black-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/rekom-gub.png">
-							<span class="text-month">Rekomendasi Gubernur</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/persub.png">
-							<span class="text-month">Persetujuan Substansi</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-light">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/perda.png">
-							<span class="text-month">Peraturan Daerah</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar purple-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-light">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<a asp-page="/RtrDaerah">
+					<img src="~/assets/img/btn2.png">
+				</a>
 			</div>
 		</div>
-	</div>
 
-	<!-- Status Rapat Lintas Sektor -->
-
-	<div class="mt-5 tag-title-box-3">
-		<div class="tag-title-2"><span>STATUS RAPAT LINTAS SEKTOR</span> <br /> <span>& SURAT PERSETUJUAN SUBSTANSI</span></div>
-	</div>
-
-	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
-				<div class="month-link">
-					<ul id="month-status" aria-month="@Model.StatusMonth" aria-isrdtr="0">
-						<li><span>01</span><a aria-value="1">JANUARI</a></li>
-						<li><span>02</span><a aria-value="2">FEBRUARI</a></li>
-						<li><span>03</span><a aria-value="3">MARET</a></li>
-						<li><span>04</span><a aria-value="4">APRIL</a></li>
-						<li><span>05</span><a aria-value="5">MEI</a></li>
-						<li><span>06</span><a aria-value="6">JUNI</a></li>
-						<li><span>07</span><a aria-value="7">JULI</a></li>
-						<li><span>08</span><a aria-value="8">AGUSTUS</a></li>
-						<li><span>09</span><a aria-value="9">SEPTEMBER</a></li>
-						<li><span>10</span><a aria-value="10">OKTOBER</a></li>
-						<li><span>11</span><a aria-value="11">NOVEMBER</a></li>
-						<li><span>12</span><a aria-value="12">DESEMBER</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-9">
-				<div class="month-data">
-					<div class="row">
-						<select asp-for="StatusYear" class ="form-control col-md-4 mt-4 ml-3" asp-items="ViewBag.TahunLintasSektorDanPersetujuanSubstansi"></select>
-						<div class="col-md-8"></div>
-
-						<div class="col-md-6">
-							<div id="nama-bulan" class="month-title">
-								JANUARI
-							</div>
-							<div id="lintas-sektor" class="month-data-box">
-								<div class="month-data-title text-center">
-									Rapat Lintas Sektor
-								</div>
-								<div class="month-data-text">
-									<ul>
-									</ul>
-								</div>
-								<!-- <div class="month-data-pagination text-right">
-									<a href="#" class="month-pagination-active">1</a>
-									<a href="#">2</a>
-									<a href="#">3</a>
-									<a href="#">4</a>
-									<a href="#">5</a>
-								</div> -->
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="month-title text-right">
-								<a id="type-rtrw" class="month-type month-type-active">RTRW</a> | <a id="type-rdtr" class="month-type">RDTR</a> 
-							</div>
-							<div id="persetujuan-substansi" class="month-data-box">
-								<div class="month-data-title text-center">
-									Surat Persetujuan Substansi
-								</div>
-								<div class="month-data-text">
-									<ul>
-									</ul>
-								</div>
-								<!-- <div class="month-data-pagination text-right">
-									<a href="#" class="month-pagination-active">1</a>
-									<a href="#">2</a>
-									<a href="#">3</a>
-									<a href="#">4</a>
-									<a href="#">5</a>
-								</div> -->
-							</div>
-						</div>
-					</div>
+			<div class="col-md-12 text-center">
+				<div class="text-center mt-4 mb-5">
+					<p class="tagline-web text-gray">
+						<img src="~/assets/img/protaru.png">
+						Sistem Informasi Basis Data yang menyajikan Progress Penyelesaian Rencana Tata Ruang <br>baik Rencana Umum maupun Rencana Rinci yang disusun oleh Pemerintah Pusat dan Pemerintah Daerah.
+						<img src="~/assets/img/mark.png" class="img-mark">
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
-
-@section Scripts {
-	<script type="text/javascript">
-		var pathBase = '@Url.Content("~")';
-
-		$(document).ready(function(){
-			$('.icon-menu').slick({
-				infinite: true,
-				slidesToShow: 4,
-				slidesToScroll: 4
-			});
-
-			$('[data-toggle="tooltip"]').tooltip();
-		});
-	</script>
-
-	@{await Html.RenderPartialAsync("_HomepageScriptPartial");}
-    @{await Html.RenderPartialAsync("_AjaxProgressScriptPartial");}
-    @{await Html.RenderPartialAsync("_ActiveMonthStatusScriptPartial");}
-    @{await Html.RenderPartialAsync("_AjaxRtrListLinSekSubstansiScriptPartial");}
-}
+</body>
+</html>
