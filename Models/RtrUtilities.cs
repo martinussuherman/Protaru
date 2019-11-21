@@ -39,6 +39,16 @@ namespace MonevAtr.Models
                 rtr.KodeProgressAtr = null;
             }
 
+            if (rtr.KodePulau == 0)
+            {
+                rtr.KodePulau = null;
+            }
+
+            if (rtr.KodeKawasan == 0)
+            {
+                rtr.KodeKawasan = null;
+            }
+
             rtr.KodeJenisAtr = (int) jenisRtr;
             rtr.StatusRevisi = (byte) statusRevisi.Kode;
             rtr.Tahun = 0;
