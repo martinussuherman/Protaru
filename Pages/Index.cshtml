@@ -1,12 +1,8 @@
 ﻿@page
-@using Microsoft.AspNetCore.Mvc.ViewEngines
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> UserManager
-@inject ICompositeViewEngine Engine
+@model IndexModel
 
 @{
-    Layout = "";
-	ViewData["Title"] = "Kementerian Agraria dan Tata Ruang";
+    Layout = Model.Layout;
 }
 
 <!doctype html>
@@ -25,7 +21,7 @@
 
     <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
-    <title>@ViewData["Title"] - PROTARU</title>
+    <title>@Model.Title - PROTARU</title>
 
 	<!-- write your code here -->
     <link rel="stylesheet" href="~/css/screen.css" />
@@ -43,13 +39,13 @@
 	<div class="container">
 		<div class="row mt-5">
 			<div class="col-md-6">
-				<a asp-page="/RtrNasional">
+				<a asp-page="/RtrIndex" asp-route-rtrType="1">
 					<img src="~/assets/img/btn1.png">
 				</a>
 			</div>
 
 			<div class="col-md-6">
-				<a asp-page="/RtrDaerah">
+				<a asp-page="/RtrIndex" asp-route-rtrType="2">
 					<img src="~/assets/img/btn2.png">
 				</a>
 			</div>
