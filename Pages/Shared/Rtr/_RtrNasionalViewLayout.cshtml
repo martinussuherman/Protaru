@@ -1,0 +1,29 @@
+@{
+    Layout = "_RtrNasionalLayout";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+    <div class="pt-4 pb-5 container">
+        <div class="row row-cards card py-4">
+
+            @RenderBody()
+
+            <div class="ml-auto float-sm-right px-5">
+                <a asp-page="./Index" class="btn btn-warning text-light">Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ModalInputPartial")
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptPartial");}
+}
