@@ -1,0 +1,127 @@
+@page
+@model IndexModel
+
+@{
+    Layout = "_RtrDaerahLayout";
+    ViewData["Title"] = "Pencarian RTR";
+    ViewData["PageTitle"] = "Pencarian";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+		    <div class="row row-cards card">
+			    <div class="card-header pl-5">
+				    <h4 class="card-title mlm-15">@ViewData["Title"]</h4>
+			    </div>
+
+                <form method="get" asp-page="./SearchResultDaerah">
+                    <div class="card-body row">
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Jenis RTR</label>
+@{
+int jenisIndex = 1;
+}
+@foreach (var item in Model.JenisAtr)
+{
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Rtr.JenisList" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                                <span class="custom-control-label">@jenisIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                            </label>
+    jenisIndex++;
+}
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Rtr.Prov" class="form-label"></label>
+                            <select id="provinsi" asp-for="Rtr.Prov" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <label asp-for="Rtr.KabKota" class="form-label"></label>
+                            <select id="kabupaten-kota" asp-for="Rtr.KabKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+                        </div>
+
+@{
+    ViewData["Caption"] = "Surat/BA Rekomendasi Gubernur";
+    ViewData["InputName"] = "Rtr.RekGubList";
+}
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunRekomendasiGubernur)
+
+@{
+    ViewData["Caption"] = "Surat Permohonan Persetujuan Subtansi Prov/Kab/Kota";
+    ViewData["InputName"] = "Rtr.PerPerSubList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunPermohonanPersetujuanSubstansi)
+
+@{
+    ViewData["Caption"] = "Tanggal Masuk Loket";
+    ViewData["InputName"] = "Rtr.MasLokList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunMasukLoket)
+
+@{
+    ViewData["Caption"] = "Rapat Lintas Sektor";
+    ViewData["InputName"] = "Rtr.LinSekList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunRapatLintasSektor)
+
+@{
+    ViewData["Caption"] = "Persetujuan Substansi";
+    ViewData["InputName"] = "Rtr.PerSubList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunPersetujuanSubstansi)
+
+@{
+    ViewData["Caption"] = "Ditetapkan Menjadi Peraturan Daerah";
+    ViewData["InputName"] = "Rtr.PerdaList";
+}
+
+                        @await Html.PartialAsync("_MultiYearCheckBoxPartial", Model.TahunPerda)
+
+                        <!-- <div class="col-md-12 form-group">
+                            <label class="form-label">Dokumen</label>
+                            <select asp-for="Rtr.KodeDokumen" class="form-control" asp-items="ViewBag.Dokumen"></select>
+                        </div> -->
+
+                        <div class="col-md-12 form-group">
+                            <label class="form-label">Fasilitas Kegiatan</label>
+@{
+int fasilitasIndex = 1;
+}
+@foreach (var item in Model.FasilitasKegiatan)
+{
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Rtr.Faskeg" value="@Html.DisplayFor(modelItem => item.Kode)" class="custom-control-input">
+                                <span class="custom-control-label">@fasilitasIndex -&NonBreakingSpace; @Html.DisplayFor(modelItem => item.Nama)</span>
+                            </label>
+    fasilitasIndex++;
+}
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+				    </div>
+			    </form>
+		    </div>
+	    </div>
+	</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
+}
