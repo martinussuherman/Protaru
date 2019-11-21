@@ -2,6 +2,7 @@
 @model CreateModel
 
 @{
+    Layout = "_RtrNasionalLayout";
     ViewData["Title"] = "Input RTR Pulau/Kep T5-1";
     ViewData["PageTitle"] = "RTR Pulau/Kepulauan";
 }
@@ -67,6 +68,7 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
