@@ -21,15 +21,17 @@ namespace MonevAtr.Pages
         {
             if (rtrType == 1)
             {
-                Layout = "_RtrNasionalLayout";
+                Layout      = "_RtrNasionalLayout";
+                Title       = "Kementerian Agraria dan Tata Ruang Nasional";
             }
 
             if (rtrType == 2)
             {
-                Layout = "_RtrDaerahLayout";
+                Layout      = "_RtrDaerahLayout";
+                Title       = "Kementerian Agraria dan Tata Ruang Daerah";
             }
 
-            Title = "Kementerian Agraria dan Tata Ruang";
+            
             ActiveMenu = ActiveMenu.Home;
             StatusYear = DateTime.Today.Year;
             StatusMonth = DateTime.Today.Month;
