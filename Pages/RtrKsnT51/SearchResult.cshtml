@@ -7,39 +7,37 @@
     ViewData["PageTitle"] = "RTR KSN";
 }
 
-<div class="card-body">
-    <div class="table-responsive">
-        <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-            <thead>
-                <tr class="text-light font-weight-bold text-center bg-info">
-                    <th>No</th>
-                    <th>Action</th>
-                    <th>Kawasan</th>
-                    <th>Nama</th>
-                    <th>Tahun Perpres</th>
-                    <th>Progress</th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="card-body table-responsive">
+    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+        <thead>
+            <tr class="text-light font-weight-bold text-center bg-info">
+                <th>No</th>
+                <th>Action</th>
+                <th>Kawasan</th>
+                <th>Nama</th>
+                <th>Tahun Perpres</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
 @{
 int index = Model.Hasil.StartItemIndex;
 }
 @foreach (var item in Model.Hasil)
 {
-                <tr>
-                    <td>@index</td>
-                    @await Html.PartialAsync("_DokumenEditOrViewLink", item)
-                    <td>@Html.DisplayFor(modelItem => item.Kawasan.Nama)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Nama)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
-                </tr>
+            <tr>
+                <td>@index</td>
+                @await Html.PartialAsync("_DokumenEditOrViewLink", item)
+                <td>@Html.DisplayFor(modelItem => item.Kawasan.Nama)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nama)</td>
+                <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
+            </tr>
     index++;
 }
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
 
     @await Html.PartialAsync("_PagingPartial", Model.Hasil)
 </div>
