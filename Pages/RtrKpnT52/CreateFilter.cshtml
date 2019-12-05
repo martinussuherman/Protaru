@@ -3,8 +3,8 @@
 
 @{
     Layout = "_RtrNasionalLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RTR KPN T5-2";
-    ViewData["PageTitle"] = "RTR KPN";
+    ViewData["Title"] = "Monitoring & Evaluasi RDTR KPN T5-2";
+    ViewData["PageTitle"] = "RDTR KPN";
 }
 
 <div class="page-title">
@@ -24,48 +24,46 @@
                     </div>
                 </div>
 
-	            <div class="card-body">
-	                <div class="table-responsive">
-	                    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-	                        <thead>
-	                            <tr class="text-light font-weight-bold text-center bg-info">
-                                    <th>No</th>
-                                    <th>Action</th>
-                                    <th>Provinsi</th>
-                                    <th>Kabupaten/Kota</th>
-                                    <th>Nama</th>
-                                    <th>Jenis</th>
-                                    <th>Tahun Perpres</th>
-                                    <th>Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                <div class="card-body table-responsive">
+                    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+                        <thead>
+                            <tr class="text-light font-weight-bold text-center bg-info">
+                                <th>No</th>
+                                <th>Action</th>
+                                <th>Provinsi</th>
+                                <th>Kabupaten/Kota</th>
+                                <th>Nama</th>
+                                <th>Jenis</th>
+                                <th>Tahun Perpres</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
 @{
 int index = Model.Hasil.StartItemIndex;
 }
 @foreach (var item in Model.Hasil)
 {
-                                <tr>
-                                    <td>@index</td>
-                                    <td class="text-center">
-                                        <a asp-page="./Create" asp-route-id="@item.Kode" class="btn btn-primary btn-sm">Pilih</a>
-                                        <span>@Html.HiddenFor(modelItem => item.Kode)</span>
-                                    </td>
-                                    <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Nama)</td>
-                                    <!-- <td>@Html.DisplayFor(modelItem => item.Nomor)</td> -->
-                                    <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Keterangan)</td>
-                                </tr>
+                            <tr>
+                                <td>@index</td>
+                                <td class="text-center">
+                                    <a asp-page="./Create" asp-route-id="@item.Kode" class="btn btn-primary btn-sm">Pilih</a>
+                                    <span>@Html.HiddenFor(modelItem => item.Kode)</span>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
+                                <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Nama)</td>
+                                <!-- <td>@Html.DisplayFor(modelItem => item.Nomor)</td> -->
+                                <td>@Html.DisplayFor(modelItem => item.JenisAtr.Nama)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Keterangan)</td>
+                            </tr>
     index++;
 }
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
 
                     @await Html.PartialAsync("_PagingPartial", Model.Hasil)
                 </div>
