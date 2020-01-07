@@ -61,6 +61,7 @@ namespace MonevAtr.Models
             IList<Provinsi> list = await _context.Provinsi
                 .Where(p => p.Kode > 0)
                 .OrderBy(p => p.Nama)
+                .AsNoTracking()
                 .ToListAsync();
 
             Provinsi pilih = new Provinsi
@@ -77,6 +78,7 @@ namespace MonevAtr.Models
         {
             IList<KabupatenKota> list = await _context.KabupatenKota
                 .OrderBy(k => k.Nama)
+                .AsNoTracking()
                 .ToListAsync();
 
             InsertPilihKabupatenKota(list);
@@ -88,6 +90,7 @@ namespace MonevAtr.Models
             IList<KabupatenKota> list = await _context.KabupatenKota
                 .Where(k => k.KodeProvinsi == kodeProvinsi)
                 .OrderBy(k => k.Nama)
+                .AsNoTracking()
                 .ToListAsync();
 
             InsertPilihKabupatenKota(list);
@@ -99,6 +102,7 @@ namespace MonevAtr.Models
             IList<Pulau> list = await _context.Pulau
                 .Where(p => p.Kode > 0)
                 .OrderBy(p => p.Nama)
+                .AsNoTracking()
                 .ToListAsync();
 
             Pulau pilih = new Pulau
@@ -116,6 +120,7 @@ namespace MonevAtr.Models
             List<Kawasan> list = await _context.Kawasan
                 .Where(q => q.Kode > 0)
                 .OrderBy(q => q.Nama)
+                .AsNoTracking()
                 .ToListAsync();
 
             UpdateNamaKawasan(list);
@@ -135,6 +140,7 @@ namespace MonevAtr.Models
             List<int> list = await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 24 || a.KodeDokumen == 58 || a.KodeDokumen == 97)
                 .OrderBy(a => a.Tanggal.Year)
+                .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
                 .ToListAsync();
@@ -147,6 +153,7 @@ namespace MonevAtr.Models
             List<int> list = await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 25 || a.KodeDokumen == 59 || a.KodeDokumen == 98)
                 .OrderBy(a => a.Tanggal.Year)
+                .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
                 .ToListAsync();
@@ -159,6 +166,7 @@ namespace MonevAtr.Models
             List<int> list = await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 29 || a.KodeDokumen == 63 || a.KodeDokumen == 99)
                 .OrderBy(a => a.Tanggal.Year)
+                .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
                 .ToListAsync();
@@ -171,6 +179,7 @@ namespace MonevAtr.Models
             List<int> list = await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 30 || a.KodeDokumen == 64 || a.KodeDokumen == 100)
                 .OrderBy(a => a.Tanggal.Year)
+                .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
                 .ToListAsync();
@@ -183,6 +192,7 @@ namespace MonevAtr.Models
             List<int> list = await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 31 || a.KodeDokumen == 65 || a.KodeDokumen == 101)
                 .OrderBy(a => a.Tanggal.Year)
+                .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
                 .ToListAsync();
@@ -201,6 +211,7 @@ namespace MonevAtr.Models
                     a.KodeDokumen == 65 ||
                     a.KodeDokumen == 101)
                 .OrderBy(a => a.Tanggal.Year)
+                .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
                 .ToListAsync();
@@ -285,6 +296,7 @@ namespace MonevAtr.Models
                 .Include(k => k.JenisAtr)
                 .OrderBy(k => k.KodeJenisAtr)
                 .ThenBy(k => k.Nomor)
+                .AsNoTracking()
                 .ToListAsync();
 
             KelompokDokumen pilih = new KelompokDokumen
@@ -305,6 +317,7 @@ namespace MonevAtr.Models
                 .OrderBy(p => p.KelompokDokumen.KodeJenisAtr)
                 .ThenBy(p => p.KelompokDokumen.Nomor)
                 .ThenBy(p => p.Nomor)
+                .AsNoTracking()
                 .ToListAsync();
 
             list.ForEach(UpdateNamaDokumen);
@@ -322,6 +335,7 @@ namespace MonevAtr.Models
         public async Task<SelectList> JenisRtr()
         {
             IList<JenisAtr> list = await _context.JenisAtr
+                .AsNoTracking()
                 .ToListAsync();
 
             JenisAtr pilih = new JenisAtr
@@ -467,6 +481,7 @@ namespace MonevAtr.Models
             return await _context.ProgressAtr
                 .Where(p => p.KodeJenisAtr == (int) jenisRtr)
                 .OrderBy(p => p.Nomor)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -478,6 +493,7 @@ namespace MonevAtr.Models
             query = QueryByJenisRtr(query, jenisRtr);
 
             List<short> list = await query
+                .AsNoTracking()
                 .Select(a => a.Tahun)
                 .Distinct()
                 .ToListAsync();
@@ -493,6 +509,7 @@ namespace MonevAtr.Models
             query = QueryByJenisRtr(query, jenisRtr);
 
             List<short> list = await query
+                .AsNoTracking()
                 .Select(a => a.Tahun)
                 .Distinct()
                 .ToListAsync();
@@ -565,6 +582,7 @@ namespace MonevAtr.Models
                 .Include(q => q.Provinsi)
                 .OrderBy(q => q.KodeKawasan)
                 .ThenBy(q => q.Provinsi.Nama)
+                .AsNoTracking()
                 .ToListAsync();
 
             StringBuilder builder = new StringBuilder();
