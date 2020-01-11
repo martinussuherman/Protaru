@@ -41,7 +41,7 @@ namespace MonevAtr.Pages.Ajax
                 .Where(q => q.ProgressAtr.Nomor == 1);
 
             query = QueryByJenisRtr(query, jenisRtr);
-            return await query.CountAsync();
+            return await query.AsNoTracking().CountAsync();
         }
 
         private async Task<int> CountPenyepakatanTpak(int jenisRtr)
@@ -51,7 +51,7 @@ namespace MonevAtr.Pages.Ajax
                 .Where(q => q.ProgressAtr.Nomor == 2);
 
             query = QueryByJenisRtr(query, jenisRtr);
-            return await query.CountAsync();
+            return await query.AsNoTracking().CountAsync();
         }
 
         private async Task<int> CountHarmonisasiKemenkumham(int jenisRtr)
@@ -61,7 +61,7 @@ namespace MonevAtr.Pages.Ajax
                 .Where(q => q.ProgressAtr.Nomor == 3);
 
             query = QueryByJenisRtr(query, jenisRtr);
-            return await query.CountAsync();
+            return await query.AsNoTracking().CountAsync();
         }
 
         private async Task<int> CountPembahasanSekretariat(int jenisRtr)
@@ -71,7 +71,7 @@ namespace MonevAtr.Pages.Ajax
                 .Where(q => q.ProgressAtr.Nomor == 4);
 
             query = QueryByJenisRtr(query, jenisRtr);
-            return await query.CountAsync();
+            return await query.AsNoTracking().CountAsync();
         }
 
         private async Task<int> CountPenetapanPresiden(int jenisRtr)
@@ -81,7 +81,7 @@ namespace MonevAtr.Pages.Ajax
                 .Where(q => q.ProgressAtr.Nomor == 5);
 
             query = QueryByJenisRtr(query, jenisRtr);
-            return await query.CountAsync();
+            return await query.AsNoTracking().CountAsync();
         }
 
         private IQueryable<Models.Atr> QueryByJenisRtr(IQueryable<Models.Atr> query, int jenisRtr)
