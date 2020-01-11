@@ -25,6 +25,7 @@ namespace MonevAtr.Pages.Ajax
             List<PencarianRtr> result = await query
                 .Where(q => q.TahunDokumen == tahun && q.BulanDokumen == bulan)
                 .Take(20)
+                .AsNoTracking()
                 .ToListAsync();
 
             return new JsonResult(result);
