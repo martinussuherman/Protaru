@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>MonevAtr</RootNamespace>
+    <DefineConstants>$(DefineConstants);NETCORE2</DefineConstants>
   </PropertyGroup>
 
 
