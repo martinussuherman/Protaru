@@ -29,6 +29,7 @@ namespace MonevAtr.Pages.RtrwnT51
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
             rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(

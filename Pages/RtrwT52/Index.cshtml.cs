@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
 namespace MonevAtr.Pages.RtrwT52
@@ -25,6 +26,7 @@ namespace MonevAtr.Pages.RtrwT52
                 return _context.ProgressAtr
                     .Where(p => p.KodeJenisAtr == (int) JenisRtrEnum.RtrwT52)
                     .OrderBy(p => p.Nomor)
+                    .AsNoTracking()
                     .ToList();
             }
         }

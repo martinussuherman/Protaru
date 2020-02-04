@@ -35,6 +35,7 @@ namespace MonevAtr.Pages.RtrwT52
                 .ByNomor(rtr.Nomor)
                 .ByProgressList(rtr.ProgressList)
                 .RtrInclude()
+                .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
             return Page();
         }

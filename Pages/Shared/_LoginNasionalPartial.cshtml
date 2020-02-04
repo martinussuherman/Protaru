@@ -1,40 +1,25 @@
-@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Http.Extensions
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Identity
+@using Itm.Identity
+@inject SignInManager<ApplicationUser> SignInManager
 
 <li class="nav-item dropdown">
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <a class="nav-link nav-list dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        @UserManager.GetUserName(User)
-    </a>
-
-    <div class="dropdown-menu" aria-labelledby="user">
-        <!-- <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="dropdown-item">
-            Profil
-        </a> -->
-
-    @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
-    {
-        <a id="register" asp-area="Identity" asp-page="/Account/Register" class="dropdown-item">Register</a>
-        <!-- <a asp-area="Identity" asp-page="/Account/List" class="dropdown-item">User List</a> -->
-    }
-
-        <form 
-            id="logoutForm" 
-            class="form-inline" 
-            asp-area="Identity" 
-            asp-page="/Account/Logout" 
-            asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-            <button id="logout" type="submit" class="dropdown-item text-left">Logout</button>
-        </form>
-    </div>
+    <partial name="_CommonLoginPartial" />
 }
 else
 {
-    <a id="login" asp-area="Identity" asp-page="/Account/Login" asp-route-rtrType="1" asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()" class="nav-link">Login</a>
+    <a id="login" 
+        asp-area="Identity" 
+        asp-page="/Account/Login" 
+        asp-route-rtrType="1" 
+        asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()" 
+        class="nav-link">
+        Login
+    </a>
 }
 
 </li>
+
