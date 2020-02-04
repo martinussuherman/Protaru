@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Itm.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,18 +13,15 @@ namespace MonevAtr.Areas.Identity.Pages.Account
     [Authorize(Roles = "SuperAdmin, Admin")]
     public class RegisterModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        // private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             ILogger<RegisterModel> logger)
-        // ,            IEmailSender emailSender)
         {
             _userManager = userManager;
             _logger = logger;
-            // _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -64,7 +62,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                IdentityUser user = new IdentityUser
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = Input.UserName,
                     Email = Input.Email
@@ -77,17 +75,6 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
-                    // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    // var callbackUrl = Url.Page(
-                    //     "/Account/ConfirmEmail",
-                    //     pageHandler: null,
-                    //     values: new { userId = user.Id, code = code },
-                    //     protocol: Request.Scheme);
-
-                    // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
                     return RedirectToPage("./List");
                 }
 

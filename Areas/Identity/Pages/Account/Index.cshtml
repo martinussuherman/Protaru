@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+
+@{
+    Layout = "_CommonLayout";
+}
+
+<div class="card-body">
+    <p>
+        <a asp-page="Create" class="btn btn-success">Tambah</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nama User
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+@foreach (var item in Model.UserList) 
+{
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">Ubah</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Hapus</a>
+                </td>
+            </tr>
+}
+
+        </tbody>
+    </table>
+</div>
