@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Itm.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,6 +55,16 @@ namespace MonevAtr.Models
 
                 return new SelectList(list, "Kode", "Nama");
             }
+        }
+
+        public async Task<SelectList> UserRoles(IdentityDbContext context)
+        {
+            List<ApplicationRole> list = await context.Roles
+                .OrderBy(e => e.Name)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return new SelectList(list, "Name", "Name");
         }
 
         public async Task<SelectList> Provinsi()
@@ -222,67 +233,67 @@ namespace MonevAtr.Models
 
         public async Task<SelectList> TahunPerdaRdtrT51()
         {
-            return await TahunPerda((int) JenisRtrEnum.RdtrT51);
+            return await TahunPerda((int)JenisRtrEnum.RdtrT51);
         }
 
         public async Task<SelectList> TahunPerdaRdtrT52()
         {
-            return await TahunPerda((int) JenisRtrEnum.RdtrT52);
+            return await TahunPerda((int)JenisRtrEnum.RdtrT52);
         }
 
         public async Task<SelectList> TahunPerdaRtrwT50()
         {
-            return await TahunPerda((int) JenisRtrEnum.RtrwT50);
+            return await TahunPerda((int)JenisRtrEnum.RtrwT50);
         }
 
         public async Task<SelectList> TahunPerdaRtrwT51()
         {
-            return await TahunPerda((int) JenisRtrEnum.RtrwT51);
+            return await TahunPerda((int)JenisRtrEnum.RtrwT51);
         }
 
         public async Task<SelectList> TahunPerdaRtrwT52()
         {
-            return await TahunPerda((int) JenisRtrEnum.RtrwT52);
+            return await TahunPerda((int)JenisRtrEnum.RtrwT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrPulauT51()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrPulauT51);
+            return await TahunPerpres((int)JenisRtrEnum.RtrPulauT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrPulauT52()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrPulauT52);
+            return await TahunPerpres((int)JenisRtrEnum.RtrPulauT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrKsnT51()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrKsnT51);
+            return await TahunPerpres((int)JenisRtrEnum.RtrKsnT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrKsnT52()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrKsnT52);
+            return await TahunPerpres((int)JenisRtrEnum.RtrKsnT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrwnT51()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrwnT51);
+            return await TahunPerpres((int)JenisRtrEnum.RtrwnT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrwnT52()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrwnT52);
+            return await TahunPerpres((int)JenisRtrEnum.RtrwnT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrKpnT51()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrKpnT51);
+            return await TahunPerpres((int)JenisRtrEnum.RtrKpnT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrKpnT52()
         {
-            return await TahunPerpres((int) JenisRtrEnum.RtrKpnT52);
+            return await TahunPerpres((int)JenisRtrEnum.RtrKpnT52);
         }
 
         public async Task<SelectList> TahunPerdaRtr()
@@ -479,7 +490,7 @@ namespace MonevAtr.Models
         private async Task<IList<ProgressAtr>> ProgressRtr(JenisRtrEnum jenisRtr)
         {
             return await _context.ProgressAtr
-                .Where(p => p.KodeJenisAtr == (int) jenisRtr)
+                .Where(p => p.KodeJenisAtr == (int)jenisRtr)
                 .OrderBy(p => p.Nomor)
                 .AsNoTracking()
                 .ToListAsync();
