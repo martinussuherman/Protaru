@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Itm.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,13 @@ namespace MonevAtr.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -27,7 +28,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -53,6 +54,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -65,7 +67,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user)
             };
 
-            Id = await _userManager.GetUserIdAsync(user);
+            Id = Convert.ToInt32(await _userManager.GetUserIdAsync(user));
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
 
             return Page();
@@ -78,7 +80,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            IdentityUser user = await _userManager.GetUserAsync(User);
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
@@ -149,9 +151,9 @@ namespace MonevAtr.Areas.Identity.Pages.Account.Manage
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
-                pageHandler : null,
-                values : new { userId, code },
-                protocol : Request.Scheme);
+                pageHandler: null,
+                values: new { userId, code },
+                protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
                 "Confirm your email",

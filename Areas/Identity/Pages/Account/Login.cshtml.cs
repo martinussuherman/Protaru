@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Itm.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Protaru.Areas.Page;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    public class LoginModel : ProtaruPageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(
-            SignInManager<IdentityUser> signInManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
@@ -32,6 +33,8 @@ namespace MonevAtr.Areas.Identity.Pages.Account
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public int RtrType { get; set; }
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -46,8 +49,21 @@ namespace MonevAtr.Areas.Identity.Pages.Account
             public string Password { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(int? rtrType, string returnUrl = null)
         {
+            if (rtrType == 1)
+            {
+                Layout = "_RtrNasionalLayout";
+            }
+
+            if (rtrType == 2)
+            {
+                Layout = "_RtrDaerahLayout";
+            }
+
+            Title = "Login";
+            ActiveMenu = ActiveMenu.Login;
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -61,9 +77,10 @@ namespace MonevAtr.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(int rtrType = 0, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -76,18 +93,26 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                         Input.UserName,
                         Input.Password,
                         false,
-                        lockoutOnFailure : true);
+                        lockoutOnFailure: true);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    if (returnUrl != null)
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToPage();
+                    }
                 }
 
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", (ReturnUrl: returnUrl, false));
-                }
+                // if (result.RequiresTwoFactor)
+                // {
+                //     return RedirectToPage("./LoginWith2fa", (ReturnUrl: returnUrl, false));
+                // }
 
                 if (result.IsLockedOut)
                 {
@@ -96,11 +121,11 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return Page();
+                return await OnGetAsync(rtrType, returnUrl);
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return await OnGetAsync(rtrType, returnUrl);
         }
     }
 }
