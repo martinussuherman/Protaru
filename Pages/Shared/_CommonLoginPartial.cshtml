@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Itm.Identity
+@using Protaru.Identity
+@inject IAuthorizationService AuthorizationService
+@inject UserManager<ApplicationUser> UserManager
+
+<a href="#" 
+    class="nav-link nav-list dropdown-toggle"
+    id="user"
+    role="button" 
+    data-toggle="dropdown" 
+    aria-haspopup="true" 
+    aria-expanded="false">
+    @User.Identity.Name
+</a>
+
+<div class="dropdown-menu" aria-labelledby="user">
+    <a asp-area="Identity" 
+        asp-page="/Account/Manage/ChangePassword" 
+        class="dropdown-item">
+        Ganti Password
+    </a>
+
+@if ((await AuthorizationService.AuthorizeAsync(User, Permissions.Users.All)).Succeeded)
+{
+    <a asp-area="Identity" 
+        asp-page="/Account/Index" 
+        class="dropdown-item">
+        Daftar User
+    </a>
+}
+
+    <form id="logoutForm" 
+        class="form-inline" 
+        asp-area="Identity" 
+        asp-page="/Account/Logout" 
+        asp-route-returnUrl="@Url.Page("/", new { area = "" })" 
+        method="post" >
+        <button id="logout"
+            type="submit" 
+            class="dropdown-item text-left">
+            Logout
+        </button>
+    </form>
+</div>

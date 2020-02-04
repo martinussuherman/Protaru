@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Itm.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,7 +16,7 @@ namespace MonevAtr.Pages.Search
     {
         public SearchResultModel(
             MonevAtrDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -28,7 +29,9 @@ namespace MonevAtr.Pages.Search
 
         public List<PencarianRtr> Hasil { get; set; } = new List<PencarianRtr>();
 
-        public async Task<IActionResult> OnGetAsync([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
+        public async Task<IActionResult> OnGetAsync(
+            [FromQuery] AtrSearch rtr,
+            [FromQuery] int page = 1)
         {
             Rtr = rtr;
             Pager = _context.FilterPencarianRtr
@@ -42,6 +45,7 @@ namespace MonevAtr.Pages.Search
                 .ByTahunPersetujuanSubstansiList(Rtr)
                 .ByTahunPerdaList(Rtr)
                 .ByFasilitasKegiatanList(Rtr)
+                .AsNoTracking()
                 .Select(f => f.Kode)
                 .Distinct()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
@@ -51,6 +55,7 @@ namespace MonevAtr.Pages.Search
                 .OrderBy(p => p.NamaProvinsi)
                 .ThenBy(p => p.NamaProvinsiKabupatenKota)
                 .ThenBy(p => p.NamaKabupatenKota)
+                .AsNoTracking()
                 .ToListAsync();
 
             Hasil = temp
@@ -68,12 +73,12 @@ namespace MonevAtr.Pages.Search
         {
             switch (item.KodeJenisRtr)
             {
-                case (int) JenisRtrEnum.RtrwT50:
-                case (int) JenisRtrEnum.RtrwT51:
+                case (int)JenisRtrEnum.RtrwT50:
+                case (int)JenisRtrEnum.RtrwT51:
                     item.NamaStatusRevisi =
                         StatusRevisi.NamaStatusRevisiRegular(item.StatusRevisi);
                     break;
-                case (int) JenisRtrEnum.RtrwT52:
+                case (int)JenisRtrEnum.RtrwT52:
                     item.NamaStatusRevisi =
                         StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi);
                     break;
@@ -92,15 +97,15 @@ namespace MonevAtr.Pages.Search
         {
             switch (kodeJenisRtr)
             {
-                case (int) JenisRtrEnum.RdtrT51:
+                case (int)JenisRtrEnum.RdtrT51:
                     return "/RdtrT51";
-                case (int) JenisRtrEnum.RdtrT52:
+                case (int)JenisRtrEnum.RdtrT52:
                     return "/RdtrT52";
-                case (int) JenisRtrEnum.RtrwT50:
+                case (int)JenisRtrEnum.RtrwT50:
                     return "/RtrwT50";
-                case (int) JenisRtrEnum.RtrwT51:
+                case (int)JenisRtrEnum.RtrwT51:
                     return "/RtrwT51";
-                case (int) JenisRtrEnum.RtrwT52:
+                case (int)JenisRtrEnum.RtrwT52:
                     return "/RtrwT52";
                 default:
                     break;
@@ -110,20 +115,26 @@ namespace MonevAtr.Pages.Search
         }
 
         private string AppendViewOrEdit() =>
-            String.IsNullOrEmpty(_currentUserId) ? "/View" : "/Edit";
+            _currentUserId == -1 ? "/View" : "/Edit";
 
-        private Task<IdentityUser> GetCurrentUserAsync() =>
+        private Task<ApplicationUser> GetCurrentUserAsync() =>
             _userManager.GetUserAsync(HttpContext.User);
 
-        private async Task<string> GetCurrentUserId()
+        private async Task<int> GetCurrentUserId()
         {
-            IdentityUser usr = await GetCurrentUserAsync();
-            return usr?.Id;
+            ApplicationUser user = await GetCurrentUserAsync();
+
+            if (user == null)
+            {
+                return -1;
+            }
+
+            return user.Id;
         }
 
-        private string _currentUserId;
+        private int _currentUserId;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly MonevAtrDbContext _context;
     }

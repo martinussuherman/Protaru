@@ -32,6 +32,7 @@ namespace MonevAtr.Pages.RtrwT52
                 .Include(a => a.Provinsi)
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.KabupatenKota.Provinsi)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
 
             ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrwT52();

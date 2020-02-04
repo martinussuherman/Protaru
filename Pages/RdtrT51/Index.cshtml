@@ -40,16 +40,8 @@
             value="Cari" 
             class="btn btn-primary" 
             asp-page="./SearchResult" 
-            asp-page-handler="view" 
             formmethod="get" />
-        <input 
-            type="submit" 
-            name="export" 
-            value="Export" 
-            class="btn btn-primary" 
-            asp-page="./SearchResult" 
-            asp-page-handler="export" 
-            formmethod="get" />
+        @{await Html.RenderPartialAsync("_ExportData");}
         <a asp-page="./Index" class="btn btn-primary">Reset</a>
     </div>
 </form>

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
 
@@ -29,8 +30,14 @@ namespace MonevAtr.Pages.RtrKsnT52
                 .ByNomor(rtr.Nomor)
                 .ByProgressList(rtr.ProgressList)
                 .RtrKsnInclude()
+                .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
             return Page();
+        }
+
+        public async Task<IActionResult> OnGetExport([FromQuery] AtrSearch rtr)
+        {
+            return await this.RtrOneFieldExport(_context, JenisRtrEnum.RtrKsnT52, rtr);
         }
 
         private readonly MonevAtrDbContext _context;

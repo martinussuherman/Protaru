@@ -8,9 +8,9 @@ using MonevAtr.Models;
 
 namespace MonevAtr.Pages.Search
 {
-    public class IndexModel : PageModel
+    public class IndexDaerahModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context, PomeloDbContext pomeloDbContext)
+        public IndexDaerahModel(MonevAtrDbContext context, PomeloDbContext pomeloDbContext)
         {
             _pomeloDbContext = pomeloDbContext;
             _context = context;
@@ -21,8 +21,7 @@ namespace MonevAtr.Pages.Search
         public AtrSearch Rtr { get; set; }
 
         public IList<Models.JenisAtr> JenisAtr => _context.JenisAtr
-            .OrderBy(e => e.Nomor)
-            .Where(e => e.Perencanaan == 0)
+            .OrderBy(p => p.Nomor)
             .AsNoTracking()
             .ToList();
 
