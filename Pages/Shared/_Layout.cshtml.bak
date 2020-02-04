@@ -1,11 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ViewEngines
 @using Microsoft.AspNetCore.Identity
-@using Itm.Identity
-
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<IdentityUser> UserManager
 @inject ICompositeViewEngine Engine
-
-@* @inject UserManager<IdentityUser> UserManager *@
 
 <!doctype html>
 <html lang="en">
@@ -63,8 +59,22 @@
 							</div>
 						</li>
 
+						<li class="nav-item dropdown">
+							<a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERENCANAAN</a>
+							<div class="dropdown-menu" aria-labelledby="rdtr-menu">
+								<a asp-page="/RtrwnT51/Index" class="dropdown-item">RTRWN T5-1</a>
+								<a asp-page="/RtrwnT52/Index" class="dropdown-item">RTRWN T5-2</a>
+                                <a asp-page="/RtrPulauT51/Index" class="dropdown-item">RTR PULAU/KEP T5-1</a>
+                                <a asp-page="/RtrPulauT52/Index" class="dropdown-item">RTR PULAU/KEP T5-2</a>
+								<a asp-page="/RtrKsnT51/Index" class="dropdown-item">RTR KSN T5-1</a>
+								<a asp-page="/RtrKsnT52/Index" class="dropdown-item">RTR KSN T5-2</a>
+								<a asp-page="/RtrKpnT51/Index" class="dropdown-item">RDTR KPN T5-1</a>
+								<a asp-page="/RtrKpnT52/Index" class="dropdown-item">RDTR KPN T5-2</a>
+							</div>
+						</li>
+
 						<li class="nav-item">
-							<a asp-page="/Search/IndexDaerah" class="nav-link nav-list">Pencarian</a>
+							<a asp-page="/Search/Index" class="nav-link nav-list">Pencarian</a>
 						</li>
 
 @if (User.IsInRole("SuperAdmin"))
@@ -86,7 +96,7 @@
 }
 
 						<!-- User menu -->
-                        <partial name="_LoginDaerahPartial" />
+                        <partial name="_LoginPartial" />
 						<!-- End User menu -->
 					</ul>
 				</div>
@@ -141,6 +151,25 @@
 			&copy; 2019 PROTARU I KEMENTERIAN AGRARIA DAN TATA RUANG / BADAN PERTANAHAN NASIONAL
 		</div>
 	</footer>
+
+@*
+@if (Engine.FindView(ViewContext, "_Fake", isMainPage: false).Success)
+{
+            <partial name="_Fake" />
+            <div class="my-3 my-md-5">
+                <div class="container">
+                    <!-- <partial name="_CookieConsentPartial" /> -->
+                    <!-- <main role="main" class="pb-3"> -->
+                        @RenderBody()
+                    <!-- </main> -->
+                </div>
+            </div>
+}
+else
+{
+            @RenderBody()
+}
+*@
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
