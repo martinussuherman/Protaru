@@ -1,10 +1,10 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using Itm.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +56,25 @@ namespace MonevAtr
             {
                 options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
             });
+
+            // _ = services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+            services.AddDbContextPool<IdentityDbContext>(options =>
+                options.UseMySql(
+                    Configuration.GetConnectionString("IdentityConnection"),
+                    sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            10,
+                            TimeSpan.FromSeconds(30),
+                            null);
+                    }), 16);
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>();
+
+            services.AddScoped<IAuthorizationHandler, Itm.Identity.PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, Itm.Identity.PermissionPolicyProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +96,7 @@ namespace MonevAtr
             _ = app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "upload")),
-                    RequestPath = new PathString("/upload")
+                RequestPath = new PathString("/upload")
             });
 
             app
