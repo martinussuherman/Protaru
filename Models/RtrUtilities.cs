@@ -77,6 +77,7 @@ namespace MonevAtr.Models
                 .Include(k => k.Dokumen)
                 .Where(k => k.KodeJenisAtr == kodeJenisRtr)
                 .OrderBy(k => k.Nomor)
+                .AsNoTracking()
                 .ToListAsync();
 
             result.ForEach(k => k.Dokumen = k.Dokumen
@@ -93,6 +94,7 @@ namespace MonevAtr.Models
         {
             List<AtrDokumen> rtrDokumenList = await _context.AtrDokumen
                 .Where(d => d.KodeAtr == id)
+                .AsNoTracking()
                 .ToListAsync();
 
             foreach (KelompokDokumen kelompokDokumen in kelompokDokumenList)
@@ -108,6 +110,7 @@ namespace MonevAtr.Models
         {
             return await _context.FasilitasKegiatan
                 .OrderBy(f => f.Kode)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -119,6 +122,7 @@ namespace MonevAtr.Models
             List<RtrFasilitasKegiatan> rtrFasilitasKegiatanList =
                 await _context.RtrFasilitasKegiatan
                 .Where(r => r.KodeRtr == id)
+                .AsNoTracking()
                 .ToListAsync();
 
             foreach (FasilitasKegiatan kegiatan in fasilitasKegiatanList)

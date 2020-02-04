@@ -23,6 +23,8 @@ namespace MonevAtr.Models
 
         public int Nomor { get; set; }
 
+        public short Perencanaan { get; set; }
+
         public ICollection<Atr> Atr { get; set; }
 
         public ICollection<KelompokDokumen> KelompokDokumen { get; set; }

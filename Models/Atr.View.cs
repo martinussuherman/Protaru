@@ -16,18 +16,22 @@ namespace MonevAtr.Models
             Kawasan != null ? Kawasan.Nama : String.Empty;
 
         [NotMapped]
+        public string DisplayNamaProgress =>
+            ProgressAtr != null ? ProgressAtr.Nama : String.Empty;
+
+        [NotMapped]
         public string DisplayNamaProvinsi
         {
             get
             {
-                if (this.Provinsi != null)
+                if (Provinsi != null)
                 {
-                    return this.Provinsi.Nama;
+                    return Provinsi.Nama;
                 }
 
-                if (this.KabupatenKota != null)
+                if (KabupatenKota != null)
                 {
-                    return this.KabupatenKota.Provinsi.Nama;
+                    return KabupatenKota.Provinsi.Nama;
                 }
 
                 return String.Empty;
@@ -35,27 +39,22 @@ namespace MonevAtr.Models
         }
 
         [NotMapped]
-        public string DisplayNamaKabupatenKota
-        {
-            get
-            {
-                return this.KabupatenKota != null ? this.KabupatenKota.Nama : String.Empty;
-            }
-        }
+        public string DisplayNamaKabupatenKota =>
+            KabupatenKota != null ? KabupatenKota.Nama : String.Empty;
 
         [NotMapped]
         public string DisplayNamaProvinsiKabupatenKota
         {
             get
             {
-                if (this.KabupatenKota != null)
+                if (KabupatenKota != null)
                 {
-                    return this.KabupatenKota.Provinsi.Nama + ", " + this.KabupatenKota.Nama;
+                    return KabupatenKota.Provinsi.Nama + ", " + KabupatenKota.Nama;
                 }
 
-                if (this.Provinsi != null)
+                if (Provinsi != null)
                 {
-                    return this.Provinsi.Nama;
+                    return Provinsi.Nama;
                 }
 
                 return String.Empty;
@@ -65,36 +64,36 @@ namespace MonevAtr.Models
         [NotMapped]
         public bool TL1StatusYes
         {
-            get => IsStatusYes(this.TL1Status);
-            set => this.TL1Status = ConvertToStatusString(value);
+            get => IsStatusYes(TL1Status);
+            set => TL1Status = ConvertToStatusString(value);
         }
 
         [NotMapped]
         public bool TL2StatusYes
         {
-            get => IsStatusYes(this.TL2Status);
-            set => this.TL2Status = ConvertToStatusString(value);
+            get => IsStatusYes(TL2Status);
+            set => TL2Status = ConvertToStatusString(value);
         }
 
         [NotMapped]
         public bool TL3StatusYes
         {
-            get => IsStatusYes(this.TL3Status);
-            set => this.TL3Status = ConvertToStatusString(value);
+            get => IsStatusYes(TL3Status);
+            set => TL3Status = ConvertToStatusString(value);
         }
 
         [NotMapped]
         public bool TL4StatusYes
         {
-            get => IsStatusYes(this.TL4Status);
-            set => this.TL4Status = ConvertToStatusString(value);
+            get => IsStatusYes(TL4Status);
+            set => TL4Status = ConvertToStatusString(value);
         }
 
         [NotMapped]
         public bool TL5StatusYes
         {
-            get => IsStatusYes(this.TL5Status);
-            set => this.TL5Status = ConvertToStatusString(value);
+            get => IsStatusYes(TL5Status);
+            set => TL5Status = ConvertToStatusString(value);
         }
 
         private string ConvertToStatusString(bool status)
