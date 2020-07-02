@@ -24,6 +24,10 @@ namespace MonevAtr.Models
         public virtual DbSet<Provinsi> Provinsi { get; set; }
         public virtual DbSet<RtrFasilitasKegiatan> RtrFasilitasKegiatan { get; set; }
 
+        public DbQuery<PencarianRtr> PencarianRtr { get; set; }
+
+        public DbQuery<FilterPencarianRtr> FilterPencarianRtr { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Atr>(entity =>
