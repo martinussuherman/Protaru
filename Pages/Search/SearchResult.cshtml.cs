@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Itm.Identity;
+using Itm.Misc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
 
 namespace MonevAtr.Pages.Search
 {
-    public class SearchResultModel : PageModel
+    public class SearchResultModel : CustomPageModel
     {
         public SearchResultModel(
             MonevAtrDbContext context,
@@ -20,6 +20,8 @@ namespace MonevAtr.Pages.Search
         {
             _context = context;
             _userManager = userManager;
+            Title = "Hasil Pencarian";
+            PageTitle = "Pencarian";
         }
 
         [BindProperty]
@@ -114,6 +116,7 @@ namespace MonevAtr.Pages.Search
             return String.Empty;
         }
 
+        // TODO : check user permission
         private string AppendViewOrEdit() =>
             _currentUserId == -1 ? "/View" : "/Edit";
 

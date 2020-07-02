@@ -1,7 +1,4 @@
 @page "{handler?}"
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
 @model SearchResultModel
 
 @{
@@ -33,7 +30,7 @@
                             <input type="hidden" name="Rtr.ProgressList" value="@item" />
 }
 
-@if (SignInManager.IsSignedIn(User))
+@if(Model.IsCanCreate)
 {
                     <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a> -->
                             <button type="submit" class="btn btn-success">Tambah</button>
@@ -57,14 +54,24 @@
                             </tr>
                         </thead>
                         <tbody>
+
 @{
 int index = Model.Hasil.StartItemIndex;
+string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
+
 @foreach (var item in Model.Hasil)
 {
                             <tr>
                                 <td>@index</td>
-                                @await Html.PartialAsync("_DokumenEditOrViewLink", item)
+                                <td class="text-center">
+                                    <a asp-page="@pageName" 
+                                        asp-route-id="@item.Kode" 
+                                        class="btn btn-primary btn-sm">
+                                        Detail
+                                    </a>
+                                    <span>@Html.HiddenFor(modelItem => item.Kode)</span>
+                                </td>
                                 <td>@Html.DisplayFor(modelItem => item.Nama)</td>
                                 <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Nomor)</td>

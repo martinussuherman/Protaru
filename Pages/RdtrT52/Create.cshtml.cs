@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RdtrT52
 {
-    [Authorize]
+    [Authorize(Permissions.RdtrT52.Create)]
     public class CreateModel : PageModel
     {
         public CreateModel(MonevAtrDbContext context)

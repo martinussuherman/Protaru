@@ -21,14 +21,24 @@
             </tr>
         </thead>
         <tbody>
+
 @{
 int index = Model.Hasil.StartItemIndex;
+string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
+
 @foreach (var item in Model.Hasil)
 {
             <tr>
                 <td>@index</td>
-                @await Html.PartialAsync("_DokumenEditOrViewLink", item)
+                <td class="text-center">
+                    <a asp-page="@pageName" 
+                        asp-route-id="@item.Kode" 
+                        class="btn btn-primary btn-sm">
+                        Detail
+                    </a>
+                    <span>@Html.HiddenFor(modelItem => item.Kode)</span>
+                </td>
                 <td>@Html.DisplayFor(modelItem => item.Nama)</td>
                 <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRegular(item.StatusRevisi)</td>
                 <td>@Html.DisplayFor(modelItem => item.Nomor)</td>

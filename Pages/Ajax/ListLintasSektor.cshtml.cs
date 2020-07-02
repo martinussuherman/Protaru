@@ -11,7 +11,7 @@ namespace MonevAtr.Pages.Ajax
 {
     public class ListLintasSektor : PageModel
     {
-        public ListLintasSektor(MonevAtrDbContext context)
+        public ListLintasSektor(PomeloDbContext context)
         {
             _context = context;
         }
@@ -24,6 +24,7 @@ namespace MonevAtr.Pages.Ajax
 
             List<PencarianRtr> result = await query
                 .Where(q => q.TahunDokumen == tahun && q.BulanDokumen == bulan)
+                // .OrderBy(q=>q.)
                 .Take(20)
                 .AsNoTracking()
                 .ToListAsync();
@@ -63,6 +64,6 @@ namespace MonevAtr.Pages.Ajax
                 q.KodeJenisRtr == 5);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

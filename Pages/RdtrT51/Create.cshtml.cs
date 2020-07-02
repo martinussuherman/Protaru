@@ -1,21 +1,24 @@
 using System;
 using System.Threading.Tasks;
+using Itm.Misc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RdtrT51
 {
-    [Authorize]
-    public class CreateModel : PageModel
+    [Authorize(Permissions.RdtrT51.Create)]
+    public class CreateModel : CustomPageModel
     {
         public CreateModel(MonevAtrDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
+            Title = "Input RDTR T5-1";
+            PageTitle = "RDTR";
         }
 
         [BindProperty]
