@@ -27,6 +27,10 @@ namespace MonevAtr.Models
 
         public static StatusRevisi RevisiT54 => revisiT54;
 
+        public static string NamaStatusRevisiRegular(sbyte? kode)
+        {
+            return NamaStatusRevisiRegular((byte?)kode);
+        }
         public static string NamaStatusRevisiRegular(byte? kode)
         {
             return !kode.HasValue || !listRegular.Exists(s => s.Kode == kode.Value) ?
@@ -36,6 +40,10 @@ namespace MonevAtr.Models
                 .Nama;
         }
 
+        public static string NamaStatusRevisiRevisi(sbyte? kode)
+        {
+            return NamaStatusRevisiRevisi((byte?)kode);
+        }
         public static string NamaStatusRevisiRevisi(byte? kode)
         {
             return !kode.HasValue || !listRevisi.Exists(s => s.Kode == kode.Value) ?

@@ -16,7 +16,7 @@ namespace MonevAtr.Models
 
         public short Tahun { get; set; }
 
-        public byte? StatusRevisi { get; set; }
+        public sbyte? StatusRevisi { get; set; }
 
         public int? KodeJenisRtr { get; set; }
 
