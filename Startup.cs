@@ -34,14 +34,26 @@ namespace MonevAtr
             });
 
             _ = services.AddDbContextPool<Models.MonevAtrDbContext>(options =>
-            {
-                _ = options.UseMySQL(Configuration.GetConnectionString("MonevAtr"));
-            });
+                options.UseMySql(
+                    Configuration.GetConnectionString("MonevAtr"),
+                    sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            10,
+                            TimeSpan.FromSeconds(30),
+                            null);
+                    }), 16);
 
             _ = services.AddDbContextPool<Models.PomeloDbContext>(options =>
-            {
-                _ = options.UseMySql(Configuration.GetConnectionString("MonevAtr"));
-            });
+                options.UseMySql(
+                    Configuration.GetConnectionString("MonevAtr"),
+                    sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            10,
+                            TimeSpan.FromSeconds(30),
+                            null);
+                    }), 16);
 
             _ = services.AddDistributedMemoryCache();
 
@@ -51,6 +63,13 @@ namespace MonevAtr
             });
 
             _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                // options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
 
             _ = services.Configure<RazorViewEngineOptions>(options =>
             {
@@ -91,16 +110,15 @@ namespace MonevAtr
                 _ = app.UseHsts();
             }
 
-            _ = app.UseHttpsRedirection();
-            _ = app.UseStaticFiles();
-            _ = app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "upload")),
-                RequestPath = new PathString("/upload")
-            });
-
             app
+                .UseHttpsRedirection()
                 .UsePathBase(Configuration.GetValue<string>("BasePath"))
+                .UseStaticFiles()
+                .UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "upload")),
+                    RequestPath = new PathString("/upload")
+                })
                 .UseSession()
                 .UseAuthentication()
                 .UseCookiePolicy()
