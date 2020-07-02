@@ -43,7 +43,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountKajianPk(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 1);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -53,7 +52,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountPenyusunanPk(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 2);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -63,7 +61,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountPenyusunanMateriTeknisPulauT52(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 3);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -73,7 +70,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountPenyepakatanDaerahPulauT52(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 4);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -83,7 +79,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountPenyepakatanTpakPulauT52(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 5);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -93,7 +88,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountHarmonisasiKemenkumhamPulauT52(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 6);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -103,7 +97,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountPembahasanSekretariatPulauT52(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 7);
 
             query = QueryByJenisRtr(query, jenisRtr);
@@ -113,7 +106,6 @@ namespace MonevAtr.Pages.Ajax
         private async Task<int> CountPenetapanPresidenPulauT52(int jenisRtr)
         {
             IQueryable<Models.Atr> query = _context.Atr
-                .Include(q => q.ProgressAtr)
                 .Where(q => q.ProgressAtr.Nomor == 8);
 
             query = QueryByJenisRtr(query, jenisRtr);

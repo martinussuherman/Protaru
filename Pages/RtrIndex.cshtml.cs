@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MonevAtr.Models;
-using Protaru.Areas.Page;
+using Itm.Misc;
 
 namespace MonevAtr.Pages
 {
-    public class RtrIndexModel : ProtaruPageModel
+    public class RtrIndexModel : CustomPageModel
     {
         public RtrIndexModel(MonevAtrDbContext context)
         {
@@ -17,22 +17,8 @@ namespace MonevAtr.Pages
 
         public int StatusMonth { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? rtrType)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (rtrType == 1)
-            {
-                Layout      = "_RtrNasionalLayout";
-                Title       = "Kementerian Agraria dan Tata Ruang Nasional";
-            }
-
-            if (rtrType == 2)
-            {
-                Layout      = "_RtrDaerahLayout";
-                Title       = "Kementerian Agraria dan Tata Ruang Daerah";
-            }
-
-            
-            ActiveMenu = ActiveMenu.Home;
             StatusYear = DateTime.Today.Year;
             StatusMonth = DateTime.Today.Month;
             ViewData["TahunLintasSektorDanPersetujuanSubstansi"] =

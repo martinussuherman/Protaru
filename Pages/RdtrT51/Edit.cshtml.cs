@@ -10,10 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RdtrT51
 {
-    [Authorize]
+    [Authorize(Permissions.RdtrT51.Edit)]
     public class EditModel : PageModel
     {
         public EditModel(
@@ -49,7 +50,7 @@ namespace MonevAtr.Pages.RdtrT51
         {
             KelompokDokumenList =
                 await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                    (int) JenisRtrEnum.RdtrT51);
+                    (int)JenisRtrEnum.RdtrT51);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
 
             Atr = await _context.Atr
@@ -151,7 +152,7 @@ namespace MonevAtr.Pages.RdtrT51
             string filePath = Path.Combine(hostingEnvironment.WebRootPath, "upload", file.FileName);
             dokumen.FilePath = file.FileName;
 
-            using(FileStream stream = new FileStream(filePath, FileMode.Create))
+            using (FileStream stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }

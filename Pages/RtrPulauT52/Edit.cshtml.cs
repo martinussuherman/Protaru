@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RtrPulauT52
 {
-    [Authorize]
+    [Authorize(Permissions.RtrPulauT52.Edit)]
     public class EditModel : PageModel
     {
         public EditModel(MonevAtrDbContext context)
