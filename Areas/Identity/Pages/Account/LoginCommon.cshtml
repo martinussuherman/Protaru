@@ -1,0 +1,43 @@
+﻿@model LoginModel
+
+<div class="page-login pb-5">
+    <div class="container">
+        <div class="row row-cards card bg-transparent border-transparant col-md-5 m-auto pt-5 pb-2">
+            <h3 class="text-title-rtr font-weight-bold mlm-15">LOGIN</h3>
+            <h4 class="text-title-rtr font-weight-bold text-grey mlm-15">Use a local account to login</h4>
+        </div>
+        <div class="row row-cards card col-md-5 m-auto">
+            <div class="px-0 pb-4 pt-3">
+                <div class="card border-light mb-3">
+                    <div class="card-body">
+                        <form id="account" method="post">
+                            <h4 class="pb-4 pl-3 text-title-rtr text-grey">Login to your Account</h4>
+                            <div class="col-md-12 form-group">
+                                <label class="form-label font-weight-bold">User</label>
+                                <input asp-for="Input.UserName" class="form-control" placeholder="Enter User Name"/>
+                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label class="form-label font-weight-bold">Password</label>
+                                <input asp-for="Input.Password" class="form-control" placeholder="Password"/>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+
+                            <div class="col-md-12 form-group pt-2">
+                                <button type="submit" class="btn btn-primary btn-block"> Sign In</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts 
+{
+    <partial name="_ValidationScriptsPartial" />
+}

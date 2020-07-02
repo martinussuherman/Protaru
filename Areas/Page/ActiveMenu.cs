@@ -14,6 +14,9 @@ namespace Protaru.Areas.Page
         RdtrT52Edit,
         RdtrT52View,
         SearchIndex,
-        SearchResult
+        SearchResult,
+        Login,
+        Register
+
     }
 }
