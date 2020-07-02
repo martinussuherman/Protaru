@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RtrwT52
 {
-    [Authorize]
+    [Authorize(Permissions.RtrwT52.Create)]
     public class CreateFilterModel : PageModel
     {
         public CreateFilterModel(MonevAtrDbContext context)

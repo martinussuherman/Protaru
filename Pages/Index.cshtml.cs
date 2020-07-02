@@ -1,14 +1,13 @@
 ﻿using System;
-using Protaru.Areas.Page;
+using Itm.Misc;
 
 namespace MonevAtr.Pages
 {
-    public class IndexModel : ProtaruPageModel
+    public class IndexModel : CustomPageModel
     {
         public void OnGet()
         {
             Title = "Kementerian Agraria dan Tata Ruang";
-            ActiveMenu = ActiveMenu.Home;
         }
     }
 }

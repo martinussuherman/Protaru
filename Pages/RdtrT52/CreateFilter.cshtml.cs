@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MonevAtr.Models;
 using P.Pager;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RdtrT52
 {
-    [Authorize]
+    [Authorize(Permissions.RdtrT52.Create)]
     public class CreateFilterModel : PageModel
     {
         public CreateFilterModel(MonevAtrDbContext context)

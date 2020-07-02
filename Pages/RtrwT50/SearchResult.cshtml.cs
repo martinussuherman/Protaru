@@ -1,29 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
-using OfficeOpenXml;
 using P.Pager;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RtrwT50
 {
     public class SearchResultModel : PageModel
     {
-        public SearchResultModel(MonevAtrDbContext context)
+        public SearchResultModel(
+            IAuthorizationService authorizationService,
+            MonevAtrDbContext context)
         {
+            _authorizationService = authorizationService;
             _context = context;
         }
 
         public IPager<Models.Atr> Hasil { get; set; }
 
-        [BindProperty]
-        public Models.AtrSearch AtrSearch { get; set; }
+        [ViewData]
+        public bool IsCanCreate { get; set; }
 
-        public List<Models.Atr> HasilPencarian { get; set; } = new List<Models.Atr>();
+        public bool IsCanEdit { get; set; }
 
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
@@ -38,6 +39,14 @@ namespace MonevAtr.Pages.RtrwT50
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
+
+            IsCanCreate = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RtrwT50.Create).Result.Succeeded;
+            IsCanEdit = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RtrwT50.Edit).Result.Succeeded;
+
             return Page();
         }
 
@@ -46,8 +55,7 @@ namespace MonevAtr.Pages.RtrwT50
             return await this.RtrProvKabKotaExport(_context, JenisRtrEnum.RtrwT50, rtr);
         }
 
-        private readonly FilterUtilities filter = new FilterUtilities();
-
+        private readonly IAuthorizationService _authorizationService;
         private readonly MonevAtrDbContext _context;
     }
 }

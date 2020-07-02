@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RtrwT51
 {
-    [Authorize]
+    [Authorize(Permissions.RtrwT51.Edit)]
     public class EditModel : PageModel
     {
         public EditModel(MonevAtrDbContext context)
@@ -35,7 +36,7 @@ namespace MonevAtr.Pages.RtrwT51
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int) JenisRtrEnum.RtrwT51);
+                (int)JenisRtrEnum.RtrwT51);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
 
             Atr = await _context.Atr

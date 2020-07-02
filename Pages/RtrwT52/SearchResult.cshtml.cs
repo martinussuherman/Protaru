@@ -1,18 +1,21 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
-using OfficeOpenXml;
 using P.Pager;
+using Protaru.Identity;
 
 namespace MonevAtr.Pages.RtrwT52
 {
     public class SearchResultModel : PageModel
     {
-        public SearchResultModel(MonevAtrDbContext context)
+        public SearchResultModel(
+            IAuthorizationService authorizationService,
+            MonevAtrDbContext context)
         {
+            _authorizationService = authorizationService;
             _context = context;
         }
 
@@ -20,6 +23,11 @@ namespace MonevAtr.Pages.RtrwT52
         public AtrSearch Rtr { get; set; }
 
         public IPager<Models.Atr> Hasil { get; set; }
+
+        [ViewData]
+        public bool IsCanCreate { get; set; }
+
+        public bool IsCanEdit { get; set; }
 
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
@@ -35,6 +43,14 @@ namespace MonevAtr.Pages.RtrwT52
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
+
+            IsCanCreate = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RtrwT52.Create).Result.Succeeded;
+            IsCanEdit = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RtrwT52.Edit).Result.Succeeded;
+
             return Page();
         }
 
@@ -46,7 +62,6 @@ namespace MonevAtr.Pages.RtrwT52
         public IActionResult OnGetByProgress([FromQuery] int stage, [FromQuery] int page = 1)
         {
             AtrSearch rtr = new AtrSearch();
-            Rtr = rtr;
             AddProgressByStage(rtr, stage);
             Hasil = _context.Atr
                 .ByJenis(JenisRtrEnum.RtrwT52)
@@ -88,6 +103,7 @@ namespace MonevAtr.Pages.RtrwT52
             }
         }
 
+        private readonly IAuthorizationService _authorizationService;
         private readonly MonevAtrDbContext _context;
     }
 }
