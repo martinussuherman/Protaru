@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 
 namespace MonevAtr
 {
@@ -26,44 +27,47 @@ namespace MonevAtr
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            _ = services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services
+                .AddDbContextPool<Models.MonevAtrDbContext>(options =>
+                    options.UseMySql(
+                        Configuration.GetConnectionString("MonevAtr"),
+                        sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(
+                                10,
+                                TimeSpan.FromSeconds(30),
+                                null);
+                        }),
+                    16)
+                .AddDbContextPool<Models.PomeloDbContext>(options =>
+                    options.UseMySql(
+                        Configuration.GetConnectionString("MonevAtr"),
+                        sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(
+                                10,
+                                TimeSpan.FromSeconds(30),
+                                null);
+                        }),
+                    16)
+                .AddDbContextPool<IdentityDbContext>(options =>
+                    options.UseMySql(
+                        Configuration.GetConnectionString("IdentityConnection"),
+                        sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(
+                                10,
+                                TimeSpan.FromSeconds(30),
+                                null);
+                        }),
+                    16);
 
-            _ = services.AddDbContextPool<Models.MonevAtrDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("MonevAtr"),
-                    sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            10,
-                            TimeSpan.FromSeconds(30),
-                            null);
-                    }), 16);
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>();
 
-            _ = services.AddDbContextPool<Models.PomeloDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("MonevAtr"),
-                    sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            10,
-                            TimeSpan.FromSeconds(30),
-                            null);
-                    }), 16);
-
-            _ = services.AddDistributedMemoryCache();
-
-            _ = services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-            });
-
-            _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddRazorPages();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/Identity/Account/Login";
@@ -75,54 +79,44 @@ namespace MonevAtr
             {
                 options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
             });
-
-            // _ = services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-
-            services.AddDbContextPool<IdentityDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("IdentityConnection"),
-                    sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            10,
-                            TimeSpan.FromSeconds(30),
-                            null);
-                    }), 16);
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
-
-            services.AddScoped<IAuthorizationHandler, Itm.Identity.PermissionAuthorizationHandler>();
-            services.AddSingleton<IAuthorizationPolicyProvider, Itm.Identity.PermissionPolicyProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                _ = app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
-                _ = app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                _ = app.UseHsts();
+                app.UseHsts();
             }
 
             app
-                .UseHttpsRedirection()
                 .UsePathBase(Configuration.GetValue<string>("BasePath"))
+                .UseHttpsRedirection()
+                .UseRouting()
+                .UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                })
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapRazorPages();
+                })
                 .UseStaticFiles()
                 .UseStaticFiles(new StaticFileOptions
                 {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "upload")),
+                    FileProvider = new PhysicalFileProvider(
+                        Path.Combine(env.WebRootPath, "upload")),
                     RequestPath = new PathString("/upload")
-                })
-                .UseSession()
-                .UseAuthentication()
-                .UseCookiePolicy()
-                .UseMvc();
+                });
 
             PagerUrlHelper.ItemPerPage = 200;
 

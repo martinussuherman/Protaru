@@ -7,9 +7,9 @@ namespace MonevAtr
 {
     public class UploadFolderCreator
     {
-        public UploadFolderCreator(IHostingEnvironment environment)
+        public UploadFolderCreator(IWebHostEnvironment environment)
         {
-            hostingEnvironment = environment;
+            _environment = environment;
         }
 
         public void CreateUploadFolders()
@@ -17,7 +17,7 @@ namespace MonevAtr
             foreach (string namaRtr in Enum.GetNames(typeof(JenisRtrEnum)))
             {
                 string path = Path.Combine(
-                    hostingEnvironment.WebRootPath,
+                    _environment.WebRootPath,
                     "upload",
                     namaRtr);
 
@@ -28,6 +28,6 @@ namespace MonevAtr
             }
         }
 
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _environment;
     }
 }
