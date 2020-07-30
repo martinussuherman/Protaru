@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Itm.Identity;
-using Microsoft.AspNetCore;
+﻿using Itm.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Protaru.Identity;
+using System.Threading.Tasks;
 
 namespace MonevAtr
 {
@@ -12,31 +12,39 @@ namespace MonevAtr
     {
         public static async Task Main(string[] args)
         {
-            // CreateWebHostBuilder(args).Build().Run();
-
             PermissionGlobalSetting.CustomClaimType = Permissions.CustomClaimTypes;
             PermissionGlobalSetting.SuperPermission = Permissions.All;
 
             (await BuildWebHostAsync(args)).Run();
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host
+                .CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging
+                        .ClearProviders()
+                        .AddConsole();
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
 
-        private static async Task<IWebHost> BuildWebHostAsync(string[] args)
+        private static async Task<IHost> BuildWebHostAsync(string[] args)
         {
-            IWebHost host = CreateWebHostBuilder(args)
+            IHost host = CreateHostBuilder(args)
                 .Build();
 
             await CheckAddSuperAdminAsync(host);
             return host;
         }
 
-        private static async Task CheckAddSuperAdminAsync(IWebHost host)
+        private static async Task CheckAddSuperAdminAsync(IHost host)
         {
-            IServiceProvider services = host.Services;
-
+            using IServiceScope scope = host.Services.CreateScope();
+            System.IServiceProvider services = scope.ServiceProvider;
             await services.CreateSuperAdmin();
             // await services.CreateUserRole();
         }
