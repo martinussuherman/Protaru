@@ -228,6 +228,12 @@ namespace MonevAtr.Models
                 query.Where(q => q.KodeKabupatenKota == kodeKabupatenKota);
         }
 
+        public static IQueryable<Atr> ByIsPerdaPerpres(
+            this IQueryable<Atr> query, AtrSearch search)
+        {
+            return query.Where(q => q.ProgressAtr.IsPerdaPerpres == search.Perda);
+        }
+
         public static IQueryable<Atr> ByNama(
             this IQueryable<Atr> query,
             string nama)
@@ -267,7 +273,22 @@ namespace MonevAtr.Models
             this IQueryable<Atr> query,
             JenisRtrEnum jenis)
         {
-            return query.Where(a => a.KodeJenisAtr == (int) jenis);
+            return query.Where(a => a.KodeJenisAtr == (int)jenis);
+        }
+
+        public static IQueryable<Atr> ByJenisList(
+            this IQueryable<Atr> query,
+            AtrSearch search)
+        {
+            ExpressionStarter<Atr> predicate =
+                PredicateBuilder.New<Atr>(true);
+
+            foreach (int kode in search.JenisList)
+            {
+                predicate = predicate.Or(p => p.KodeJenisAtr == kode);
+            }
+
+            return query.Where(predicate);
         }
 
         public static IQueryable<Atr> ByPulau(

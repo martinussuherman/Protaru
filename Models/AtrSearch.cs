@@ -56,5 +56,7 @@ namespace MonevAtr.Models
         public int LinSek { get; set; }
 
         public int PerSub { get; set; }
+
+        public int Perda { get; set; }
     }
 }
