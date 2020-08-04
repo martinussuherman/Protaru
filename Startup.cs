@@ -27,14 +27,12 @@ namespace MonevAtr
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContextPool<Models.MonevAtrDbContext>(options =>
+                .AddDbContext<Models.MonevAtrDbContext>(options =>
                     options.UseMySQL(
-                        Configuration.GetConnectionString("MonevAtr")),
-                    16)
-                .AddDbContextPool<IdentityDbContext>(options =>
+                        Configuration.GetConnectionString("MonevAtr")))
+                .AddDbContext<IdentityDbContext>(options =>
                     options.UseMySQL(
-                        Configuration.GetConnectionString("IdentityConnection")),
-                    16);
+                        Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>();
