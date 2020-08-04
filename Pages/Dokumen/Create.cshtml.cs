@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MonevAtr.Models;
 
-namespace MonevAtr.Pages_Dokumen
+namespace MonevAtr.Pages.Dokumen
 {
     public class CreateModel : PageModel
     {
@@ -14,7 +14,7 @@ namespace MonevAtr.Pages_Dokumen
         }
 
         [BindProperty]
-        public Dokumen Dokumen { get; set; }
+        public Models.Dokumen Dokumen { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
