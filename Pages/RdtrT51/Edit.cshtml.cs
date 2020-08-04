@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +17,7 @@ namespace MonevAtr.Pages.RdtrT51
     public class EditModel : PageModel
     {
         public EditModel(
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             IWebHostEnvironment environment)
         {
             _context = context;
@@ -187,7 +186,7 @@ namespace MonevAtr.Pages.RdtrT51
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
 
         private readonly IWebHostEnvironment _environment;
     }

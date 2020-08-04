@@ -8,7 +8,7 @@ namespace MonevAtr.Pages.Ajax
 {
     public class FilterKabupatenKotaBerdasarkanProvinsiModel : PageModel
     {
-        public FilterKabupatenKotaBerdasarkanProvinsiModel(MonevAtrDbContext context)
+        public FilterKabupatenKotaBerdasarkanProvinsiModel(PomeloDbContext context)
         {
             selectListUtilities = new SelectListUtilities(context);
         }

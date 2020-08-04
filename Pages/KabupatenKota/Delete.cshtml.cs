@@ -8,7 +8,7 @@ namespace MonevAtr.Pages.KabupatenKota
 {
     public class DeleteModel : PageModel
     {
-        public DeleteModel(MonevAtrDbContext context)
+        public DeleteModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -52,6 +52,6 @@ namespace MonevAtr.Pages.KabupatenKota
             return RedirectToPage("./Index");
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

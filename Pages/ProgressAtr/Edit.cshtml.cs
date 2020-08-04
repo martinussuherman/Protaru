@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.ProgressAtr
 {
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -73,6 +73,6 @@ namespace MonevAtr.Pages.ProgressAtr
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

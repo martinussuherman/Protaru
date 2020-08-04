@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,7 +8,7 @@ namespace MonevAtr.Pages.RdtrT51
 {
     public class EditResultModel : PageModel
     {
-        public EditResultModel(MonevAtrDbContext context)
+        public EditResultModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -43,6 +41,6 @@ namespace MonevAtr.Pages.RdtrT51
             }
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

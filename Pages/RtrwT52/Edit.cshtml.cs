@@ -13,7 +13,7 @@ namespace MonevAtr.Pages.RtrwT52
     [Authorize(Permissions.RtrwT52.Edit)]
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -99,6 +99,6 @@ namespace MonevAtr.Pages.RtrwT52
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

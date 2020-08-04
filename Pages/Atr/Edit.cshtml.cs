@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -14,9 +12,9 @@ namespace MonevAtr.Pages.Atr
     [Authorize]
     public class EditModel : PageModel
     {
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
 
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
         }

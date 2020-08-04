@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.KabupatenKota
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -25,6 +25,6 @@ namespace MonevAtr.Pages.KabupatenKota
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

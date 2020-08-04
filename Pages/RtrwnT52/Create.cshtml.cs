@@ -12,7 +12,7 @@ namespace MonevAtr.Pages.RtrwnT52
     [Authorize(Permissions.RtrwnT52.Create)]
     public class CreateModel : PageModel
     {
-        public CreateModel(MonevAtrDbContext context)
+        public CreateModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -27,7 +27,7 @@ namespace MonevAtr.Pages.RtrwnT52
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KodeReferensiAtr = (int) id;
+            KodeReferensiAtr = (int)id;
 
             Atr = await _context.Atr
                 .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
@@ -61,6 +61,6 @@ namespace MonevAtr.Pages.RtrwnT52
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

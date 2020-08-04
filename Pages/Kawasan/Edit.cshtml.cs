@@ -12,7 +12,7 @@ namespace MonevAtr.Pages.Kawasan
     [Authorize]
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
             _selectListUtilities = new SelectListUtilities(context);
@@ -218,6 +218,6 @@ namespace MonevAtr.Pages.Kawasan
 
         private readonly SelectListUtilities _selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }
