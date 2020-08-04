@@ -31,7 +31,7 @@ namespace MonevAtr.Pages.RtrPulauT52
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int) JenisRtrEnum.RtrPulauT52);
+                (int)JenisRtrEnum.RtrPulauT52);
 
             Atr = await _context.Atr
                 .Include(a => a.JenisAtr)
@@ -75,7 +75,7 @@ namespace MonevAtr.Pages.RtrPulauT52
             return await OnGetAsync(Atr.Kode);
         }
 
-        private List<Dokumen> dokumenList;
+        private List<Models.Dokumen> dokumenList;
 
         private readonly RtrUtilities rtrUtilities;
 

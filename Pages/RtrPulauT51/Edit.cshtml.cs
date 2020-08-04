@@ -38,7 +38,7 @@ namespace MonevAtr.Pages.RtrPulauT51
         {
             KelompokDokumenList =
                 await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                    (int) JenisRtrEnum.RtrPulauT51);
+                    (int)JenisRtrEnum.RtrPulauT51);
 
             Atr = await _context.Atr
                 .Include(a => a.JenisAtr)
@@ -93,7 +93,7 @@ namespace MonevAtr.Pages.RtrPulauT51
             return await OnGetAsync(Atr.Kode);
         }
 
-        private List<Dokumen> dokumenList;
+        private List<Models.Dokumen> dokumenList;
 
         private readonly RtrUtilities rtrUtilities;
 
