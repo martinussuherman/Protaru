@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +27,8 @@ namespace MonevAtr.Models
 
         [Required(ErrorMessage = "Nomor Urut Progress ATR harus diisi."), Range(1, Int32.MaxValue, ErrorMessage = "Nomor Urut Progress ATR harus > 0.")]
         public int Nomor { get; set; }
+
+        public sbyte IsPerdaPerpres { get; set; }
 
         [Range(1, Int32.MaxValue, ErrorMessage = "Jenis ATR harus diisi."), Display(Name = "Jenis ATR")]
         public int KodeJenisAtr { get; set; }
