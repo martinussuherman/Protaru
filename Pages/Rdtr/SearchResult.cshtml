@@ -1,5 +1,6 @@
 @page "{handler?}"
 @model SearchResultModel
+@using MonevAtr.Models
 
 @{
     Layout = "_RtrDaerahSearchResultLayout";
@@ -24,11 +25,13 @@
 
 @{
 int index = Model.Hasil.StartItemIndex;
-string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
 
 @foreach (var item in Model.Hasil)
 {
+    JenisRtrEnum jenis = (JenisRtrEnum)item.JenisAtr.Kode;
+    string pageName = $"/{jenis}/View";
+
             <tr>
                 <td>@index</td>
                 <td class="text-center">
