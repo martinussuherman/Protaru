@@ -18,10 +18,10 @@ namespace MonevAtr.Pages.RdtrT51
     public class ImportModel : PageModel
     {
         public ImportModel(MonevAtrDbContext context,
-            IHostingEnvironment environment)
+            IWebHostEnvironment environment)
         {
             _context = context;
-            hostingEnvironment = environment;
+            _environment = environment;
         }
 
         [BindProperty]
@@ -51,9 +51,9 @@ namespace MonevAtr.Pages.RdtrT51
                 return false;
             }
 
-            using(FileStream stream = new FileStream(
+            using (FileStream stream = new FileStream(
                 Path.Combine(
-                    hostingEnvironment.WebRootPath,
+                    _environment.WebRootPath,
                     "upload/impor-rdtr",
                     this.ImportFile.FileName),
                 FileMode.Create))
@@ -67,15 +67,15 @@ namespace MonevAtr.Pages.RdtrT51
         private async Task<bool> SaveImportData()
         {
             FileInfo file = new FileInfo(Path.Combine(
-                hostingEnvironment.WebRootPath,
+                _environment.WebRootPath,
                 "upload/impor-rdtr",
                 this.ImportFile.FileName));
             List<Models.ProgressAtr> progressList = await _context.ProgressAtr
-                .Where(p => p.KodeJenisAtr == (int) JenisRtrEnum.RdtrT51)
+                .Where(p => p.KodeJenisAtr == (int)JenisRtrEnum.RdtrT51)
                 .OrderBy(p => p.Nomor)
                 .ToListAsync();
 
-            using(ExcelPackage package = new ExcelPackage(file))
+            using (ExcelPackage package = new ExcelPackage(file))
             {
                 ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
 
@@ -155,7 +155,7 @@ namespace MonevAtr.Pages.RdtrT51
             }
 
             atr.Nomor = perda.Nomor;
-            atr.Tahun = (short) perda.Tanggal.Year;
+            atr.Tahun = (short)perda.Tanggal.Year;
 
             _context.Atr.Attach(atr);
             _context.Entry(atr).Property(r => r.Nomor).IsModified = true;
@@ -168,13 +168,13 @@ namespace MonevAtr.Pages.RdtrT51
         {
             Models.Atr atr = new Models.Atr
             {
-                KodeJenisAtr = (int) JenisRtrEnum.RdtrT51,
+                KodeJenisAtr = (int)JenisRtrEnum.RdtrT51,
                 KodeProvinsi = null,
                 KodeKabupatenKota = utilities.ParseExcelNumber(cells[row, 2]),
                 Nama = utilities.ParseExcelString(cells[row, 3]),
                 Aoi = utilities.ParseExcelString(cells[row, 4]),
                 Luas = utilities.ParseExcelNumber(cells[row, 5]),
-                TahunPenyusunan = (short) utilities.ParseExcelNumber(cells[row, 6]),
+                TahunPenyusunan = (short)utilities.ParseExcelNumber(cells[row, 6]),
                 KodeProgressAtr = utilities.ParseProgress(progressList, cells, row, 7),
                 TL1Status = utilities.ParseExcelString(cells[row, 175]),
                 TL1Keterangan = utilities.ParseExcelString(cells[row, 176]),
@@ -379,6 +379,6 @@ namespace MonevAtr.Pages.RdtrT51
 
         private readonly MonevAtrDbContext _context;
 
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _environment;
     }
 }
