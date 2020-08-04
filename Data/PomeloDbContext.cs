@@ -1,6 +1,4 @@
-using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MonevAtr.Models
 {
@@ -17,19 +15,27 @@ namespace MonevAtr.Models
         public virtual DbSet<FasilitasKegiatan> FasilitasKegiatan { get; set; }
         public virtual DbSet<JenisAtr> JenisAtr { get; set; }
         public virtual DbSet<KabupatenKota> KabupatenKota { get; set; }
+        public virtual DbSet<Kawasan> Kawasan { get; set; }
         public virtual DbSet<KawasanKabupatenKota> KawasanKabupatenKota { get; set; }
         public virtual DbSet<KawasanProvinsi> KawasanProvinsi { get; set; }
         public virtual DbSet<KelompokDokumen> KelompokDokumen { get; set; }
         public virtual DbSet<ProgressAtr> ProgressAtr { get; set; }
         public virtual DbSet<Provinsi> Provinsi { get; set; }
+        public virtual DbSet<Pulau> Pulau { get; set; }
         public virtual DbSet<RtrFasilitasKegiatan> RtrFasilitasKegiatan { get; set; }
 
         public DbSet<PencarianRtr> PencarianRtr { get; set; }
-
         public DbSet<FilterPencarianRtr> FilterPencarianRtr { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Area>(entity =>
+            {
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+            });
+
             modelBuilder.Entity<Atr>(entity =>
             {
                 entity.HasKey(e => e.Kode)
@@ -261,6 +267,141 @@ namespace MonevAtr.Models
                     .HasConstraintName("FK_atr_dokumen_dokumen");
             });
 
+            modelBuilder.Entity<AtrDokumenTindakLanjut>(entity =>
+            {
+                entity.HasIndex(e => e.KodeAtr)
+                    .HasName("FK_atr_dokumen_tindak_lanjut_atr");
+
+                entity.HasIndex(e => e.KodeDokumen)
+                    .HasName("FK_atr_dokumen_tindak_lanjut_dokumen");
+
+                entity.Property(e => e.FilePath)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Keterangan)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Nomor).HasDefaultValueSql("0");
+
+                entity.Property(e => e.Status).HasDefaultValueSql("NULL");
+
+                entity.HasOne(d => d.Rtr)
+                    .WithMany(p => p.DokumenTindakLanjut)
+                    .HasForeignKey(d => d.KodeAtr)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_atr_dokumen_tindak_lanjut_atr");
+
+                entity.HasOne(d => d.Dokumen)
+                    .WithMany(p => p.AtrDokumenTindakLanjut)
+                    .HasForeignKey(d => d.KodeDokumen)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_atr_dokumen_tindak_lanjut_dokumen");
+            });
+
+            modelBuilder.Entity<AtrProgressInfo>(entity =>
+            {
+                entity.HasIndex(e => e.KodeAtr)
+                    .HasName("FK_atr_progress_info_atr");
+
+                entity.HasIndex(e => e.KodeProgressAtr)
+                    .HasName("FK_atr_progress_info_progress_atr");
+
+                entity.Property(e => e.FilePath)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Keterangan)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Permasalahan)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.TindakLanjut)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
+                // entity.HasOne(d => d.KodeAtrNavigation)
+                //     .WithMany(p => p.AtrProgressInfo)
+                //     .HasForeignKey(d => d.KodeAtr)
+                //     .OnDelete(DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName("FK_atr_progress_info_atr");
+
+                // entity.HasOne(d => d.KodeProgressAtrNavigation)
+                //     .WithMany(p => p.AtrProgressInfo)
+                //     .HasForeignKey(d => d.KodeProgressAtr)
+                //     .OnDelete(DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName("FK_atr_progress_info_progress_atr");
+            });
+
+            modelBuilder.Entity<Dokumen>(entity =>
+            {
+                entity.HasIndex(e => e.KodeKelompokDokumen)
+                    .HasName("FK_dokumen_kelompok_dokumen");
+
+                entity.Property(e => e.AmbilNomor).HasDefaultValueSql("0");
+
+                entity.Property(e => e.JumlahTindakLanjut).HasDefaultValueSql("0");
+
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Nomor).HasDefaultValueSql("0");
+
+                entity.Property(e => e.UntukPublik).HasDefaultValueSql("0");
+
+                entity.HasOne(d => d.KelompokDokumen)
+                    .WithMany(p => p.Dokumen)
+                    .HasForeignKey(d => d.KodeKelompokDokumen)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_dokumen_kelompok_dokumen");
+            });
+
+            modelBuilder.Entity<FasilitasKegiatan>(entity =>
+            {
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+            });
+
+            modelBuilder.Entity<JenisAtr>(entity =>
+            {
+                // entity.Property(e => e.LastModified).HasDefaultValueSql("current_timestamp()");
+
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Nomor).HasDefaultValueSql("NULL");
+            });
+
+            modelBuilder.Entity<KabupatenKota>(entity =>
+            {
+                entity.HasIndex(e => e.KodeProvinsi)
+                    .HasName("FK_kabupaten_kota_provinsi");
+
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                entity.HasOne(d => d.Provinsi)
+                    .WithMany(p => p.KabupatenKota)
+                    .HasForeignKey(d => d.KodeProvinsi)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_kabupaten_kota_provinsi");
+            });
+
+            modelBuilder.Entity<Kawasan>(entity =>
+            {
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+            });
+
             modelBuilder.Entity<KawasanKabupatenKota>(entity =>
             {
                 entity.HasKey(e => new { e.KodeKawasan, e.KodeKabupatenKota })
@@ -308,6 +449,93 @@ namespace MonevAtr.Models
                     .HasConstraintName("FK_kawasan_provinsi_kawasan");
             });
 
+            modelBuilder.Entity<KelompokDokumen>(entity =>
+            {
+                entity.HasIndex(e => e.KodeJenisAtr)
+                    .HasName("FK_kelompok_dokumen_jenis_atr");
+
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Nomor).HasDefaultValueSql("0");
+
+                entity.HasOne(d => d.JenisAtr)
+                    .WithMany(p => p.KelompokDokumen)
+                    .HasForeignKey(d => d.KodeJenisAtr)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_kelompok_dokumen_jenis_atr");
+            });
+
+            modelBuilder.Entity<ProgressAtr>(entity =>
+            {
+                entity.HasIndex(e => e.KodeJenisAtr)
+                    .HasName("FK_progress_atr_jenis_atr");
+
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Nomor).HasDefaultValueSql("0");
+
+                entity.HasOne(d => d.JenisAtr)
+                    .WithMany(p => p.ProgressAtr)
+                    .HasForeignKey(d => d.KodeJenisAtr)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_progress_atr_jenis_atr");
+            });
+
+            modelBuilder.Entity<Provinsi>(entity =>
+            {
+                // entity.HasIndex(e => e.KodeArea)
+                //     .HasName("FK_provinsi_area");
+
+                // entity.Property(e => e.KodeArea).HasDefaultValueSql("0");
+
+                entity.Property(e => e.Nama)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                // entity.HasOne(d => d.KodeAreaNavigation)
+                //     .WithMany(p => p.Provinsi)
+                //     .HasForeignKey(d => d.KodeArea)
+                //     .OnDelete(DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName("FK_provinsi_area");
+            });
+
+            modelBuilder.Entity<RtrFasilitasKegiatan>(entity =>
+            {
+                entity.HasIndex(e => e.KodeFasilitasKegiatan)
+                    .HasName("FK_rtr_fasilitas_kegiatan_fasilitas_kegiatan");
+
+                entity.HasIndex(e => e.KodeRtr)
+                    .HasName("FK_rtr_fasilitas_kegiatan_atr");
+
+                entity.Property(e => e.Keterangan)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.KodeFasilitasKegiatan).HasDefaultValueSql("0");
+
+                entity.Property(e => e.KodeRtr).HasDefaultValueSql("0");
+
+                entity.Property(e => e.Status).HasDefaultValueSql("0");
+
+                entity.Property(e => e.Tahun).HasDefaultValueSql("0000");
+
+                entity.HasOne(d => d.FasilitasKegiatan)
+                    .WithMany(p => p.RtrFasilitasKegiatan)
+                    .HasForeignKey(d => d.KodeFasilitasKegiatan)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_rtr_fasilitas_kegiatan_fasilitas_kegiatan");
+
+                entity.HasOne(d => d.Rtr)
+                    .WithMany(p => p.RtrFasilitasKegiatan)
+                    .HasForeignKey(d => d.KodeRtr)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_rtr_fasilitas_kegiatan_atr");
+            });
+
             modelBuilder.Entity<PencarianRtr>(entity =>
             {
                 entity.HasNoKey();
@@ -317,6 +545,6 @@ namespace MonevAtr.Models
             {
                 entity.HasNoKey();
             });
-     }
+        }
     }
 }

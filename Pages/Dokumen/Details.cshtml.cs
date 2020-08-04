@@ -7,9 +7,9 @@ namespace MonevAtr.Pages.Dokumen
 {
     public class DetailsModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
+        private readonly MonevAtr.Models.PomeloDbContext _context;
 
-        public DetailsModel(MonevAtr.Models.MonevAtrDbContext context)
+        public DetailsModel(MonevAtr.Models.PomeloDbContext context)
         {
             _context = context;
         }

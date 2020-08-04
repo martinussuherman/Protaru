@@ -17,7 +17,7 @@ namespace MonevAtr.Pages.RtrwT51
     [Authorize]
     public class ImportModel : PageModel
     {
-        public ImportModel(MonevAtrDbContext context,
+        public ImportModel(PomeloDbContext context,
             IWebHostEnvironment environment)
         {
             _context = context;
@@ -372,7 +372,7 @@ namespace MonevAtr.Pages.RtrwT51
 
         private readonly ExcelImportUtilities utilities = new ExcelImportUtilities();
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
 
         private readonly IWebHostEnvironment _environment;
     }

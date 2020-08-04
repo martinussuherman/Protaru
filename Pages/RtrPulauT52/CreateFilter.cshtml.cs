@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,7 +11,7 @@ namespace MonevAtr.Pages.RtrPulauT52
     [Authorize(Permissions.RtrPulauT52.Create)]
     public class CreateFilterModel : PageModel
     {
-        public CreateFilterModel(MonevAtrDbContext context)
+        public CreateFilterModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -22,8 +21,8 @@ namespace MonevAtr.Pages.RtrPulauT52
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
             Hasil = _context.Atr
-                .Where(a => (a.KodeJenisAtr == (int) JenisRtrEnum.RtrPulauT51 ||
-                        a.KodeJenisAtr == (int) JenisRtrEnum.RtrPulauT52) &&
+                .Where(a => (a.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT51 ||
+                        a.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT52) &&
                     a.SudahDirevisi == 0)
                 .ByPulau(rtr.Pulau)
                 .ByTahun(rtr.Tahun)
@@ -35,6 +34,6 @@ namespace MonevAtr.Pages.RtrPulauT52
             return Page();
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

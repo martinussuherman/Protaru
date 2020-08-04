@@ -8,9 +8,9 @@ namespace MonevAtr.Pages.Dokumen
 {
     public class IndexModel : PageModel
     {
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
 
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
         }

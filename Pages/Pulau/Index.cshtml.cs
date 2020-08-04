@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,7 +8,7 @@ namespace MonevAtr.Pages.Pulau
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -22,6 +21,6 @@ namespace MonevAtr.Pages.Pulau
                 .ToListAsync();
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

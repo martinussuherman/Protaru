@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +10,9 @@ namespace MonevAtr.Pages.Atr
     [Authorize]
     public class DetailsModel : PageModel
     {
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
 
-        public DetailsModel(MonevAtrDbContext context)
+        public DetailsModel(PomeloDbContext context)
         {
             _context = context;
         }

@@ -13,7 +13,7 @@ namespace MonevAtr.Pages.RtrPulauT52
     {
         public SearchResultModel(
             IAuthorizationService authorizationService,
-            MonevAtrDbContext context)
+            PomeloDbContext context)
         {
             _authorizationService = authorizationService;
             _context = context;
@@ -59,6 +59,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         }
 
         private readonly IAuthorizationService _authorizationService;
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

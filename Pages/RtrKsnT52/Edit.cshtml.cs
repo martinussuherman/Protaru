@@ -13,7 +13,7 @@ namespace MonevAtr.Pages.RtrKsnT52
     [Authorize(Permissions.RtrKsnT52.Edit)]
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -31,7 +31,7 @@ namespace MonevAtr.Pages.RtrKsnT52
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int) JenisRtrEnum.RtrKsnT52);
+                (int)JenisRtrEnum.RtrKsnT52);
 
             Atr = await _context.Atr
                 .Include(a => a.JenisAtr)
@@ -81,6 +81,6 @@ namespace MonevAtr.Pages.RtrKsnT52
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

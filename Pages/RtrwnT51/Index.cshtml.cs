@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.RtrwnT51
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -23,7 +23,7 @@ namespace MonevAtr.Pages.RtrwnT51
             get
             {
                 return _context.ProgressAtr
-                    .Where(p => p.KodeJenisAtr == (int) JenisRtrEnum.RtrwnT51)
+                    .Where(p => p.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT51)
                     .OrderBy(p => p.Nomor)
                     .ToList();
             }
@@ -37,6 +37,6 @@ namespace MonevAtr.Pages.RtrwnT51
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +11,7 @@ namespace MonevAtr.Pages.RtrKsnT51
     [Authorize(Permissions.RtrKsnT51.Create)]
     public class CreateModel : PageModel
     {
-        public CreateModel(MonevAtrDbContext context)
+        public CreateModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -48,6 +47,6 @@ namespace MonevAtr.Pages.RtrKsnT51
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

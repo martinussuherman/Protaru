@@ -7,7 +7,7 @@ namespace MonevAtr.Pages.Provinsi
 {
     public class CreateModel : PageModel
     {
-        public CreateModel(MonevAtrDbContext context)
+        public CreateModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -33,6 +33,6 @@ namespace MonevAtr.Pages.Provinsi
             return RedirectToPage("./Index");
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

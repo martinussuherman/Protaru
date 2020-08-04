@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +11,7 @@ namespace MonevAtr.Pages.RtrPulauT52
     [Authorize(Permissions.RtrPulauT52.Create)]
     public class CreateModel : PageModel
     {
-        public CreateModel(MonevAtrDbContext context)
+        public CreateModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -27,7 +26,7 @@ namespace MonevAtr.Pages.RtrPulauT52
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KodeReferensiAtr = (int) id;
+            KodeReferensiAtr = (int)id;
 
             Atr = await _context.Atr
                 .Include(a => a.Pulau)
@@ -62,6 +61,6 @@ namespace MonevAtr.Pages.RtrPulauT52
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

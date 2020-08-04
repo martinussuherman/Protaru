@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.Ajax
 {
     public class ProgressRtrwnT52 : PageModel
     {
-        public ProgressRtrwnT52(MonevAtrDbContext context)
+        public ProgressRtrwnT52(PomeloDbContext context)
         {
             _context = context;
         }
@@ -120,6 +120,6 @@ namespace MonevAtr.Pages.Ajax
             public int Total { get; set; }
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

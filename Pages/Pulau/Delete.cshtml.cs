@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +10,7 @@ namespace MonevAtr.Pages.Pulau
     [Authorize]
     public class DeleteModel : PageModel
     {
-        public DeleteModel(MonevAtrDbContext context)
+        public DeleteModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -56,6 +54,6 @@ namespace MonevAtr.Pages.Pulau
             return RedirectToPage("./Index");
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

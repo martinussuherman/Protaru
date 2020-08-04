@@ -15,7 +15,7 @@ namespace MonevAtr.Pages.Search
     public class SearchResultModel : CustomPageModel
     {
         public SearchResultModel(
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -139,6 +139,6 @@ namespace MonevAtr.Pages.Search
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

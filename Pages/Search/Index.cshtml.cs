@@ -10,7 +10,7 @@ namespace MonevAtr.Pages.Search
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context, PomeloDbContext pomeloDbContext)
+        public IndexModel(PomeloDbContext context, PomeloDbContext pomeloDbContext)
         {
             _pomeloDbContext = pomeloDbContext;
             _context = context;
@@ -122,7 +122,7 @@ namespace MonevAtr.Pages.Search
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
 
         private readonly PomeloDbContext _pomeloDbContext;
     }

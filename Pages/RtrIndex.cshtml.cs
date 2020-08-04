@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MonevAtr.Models;
@@ -8,7 +8,7 @@ namespace MonevAtr.Pages
 {
     public class RtrIndexModel : CustomPageModel
     {
-        public RtrIndexModel(MonevAtrDbContext context)
+        public RtrIndexModel(PomeloDbContext context)
         {
             selectListUtilities = new SelectListUtilities(context);
         }

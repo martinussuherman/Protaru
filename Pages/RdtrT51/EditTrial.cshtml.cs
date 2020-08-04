@@ -11,7 +11,7 @@ namespace MonevAtr.Pages.RdtrT51
     [Authorize]
     public class EditTrial : PageModel
     {
-        public EditTrial(MonevAtrDbContext context)
+        public EditTrial(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -27,7 +27,7 @@ namespace MonevAtr.Pages.RdtrT51
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             RtrDetail.KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int) JenisRtrEnum.RdtrT51);
+                (int)JenisRtrEnum.RdtrT51);
             RtrDetail.Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
@@ -71,6 +71,6 @@ namespace MonevAtr.Pages.RdtrT51
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

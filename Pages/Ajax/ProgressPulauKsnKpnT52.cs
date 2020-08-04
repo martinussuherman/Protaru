@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.Ajax
 {
     public class ProgressPulauKsnKpnT52 : PageModel
     {
-        public ProgressPulauKsnKpnT52(MonevAtrDbContext context)
+        public ProgressPulauKsnKpnT52(PomeloDbContext context)
         {
             _context = context;
         }
@@ -132,6 +132,6 @@ namespace MonevAtr.Pages.Ajax
             public int Total { get; set; }
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }
