@@ -1,0 +1,61 @@
+@using Microsoft.AspNetCore.Identity
+@using Itm.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+<li class="nav-item active">
+    <a asp-page="/Index" class="nav-link nav-list">Home</a>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">RTRWN</a>
+    <div class="dropdown-menu" aria-labelledby="rdtr-menu">
+        <a asp-page="/RtrwnT51/Index" class="dropdown-item">RTRWN T5-1</a>
+        <a asp-page="/RtrwnT52/Index" class="dropdown-item">RTRWN T5-2</a>
+    </div>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PULAU/KEP</a>
+    <div class="dropdown-menu" aria-labelledby="rdtr-menu">
+        <a asp-page="/RtrPulauT51/Index" class="dropdown-item">RTR PULAU/KEP T5-1</a>
+        <a asp-page="/RtrPulauT52/Index" class="dropdown-item">RTR PULAU/KEP T5-2</a>
+    </div>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">KSN</a>
+    <div class="dropdown-menu" aria-labelledby="rdtr-menu">
+        <a asp-page="/RtrKsnT51/Index" class="dropdown-item">RTR KSN T5-1</a>
+        <a asp-page="/RtrKsnT52/Index" class="dropdown-item">RTR KSN T5-2</a>
+    </div>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">KPN</a>
+    <div class="dropdown-menu" aria-labelledby="rdtr-menu">
+        <a asp-page="/RtrKpnT51/Index" class="dropdown-item">RDTR KPN T5-1</a>
+        <a asp-page="/RtrKpnT52/Index" class="dropdown-item">RDTR KPN T5-2</a>
+    </div>
+</li>
+
+<li class="nav-item">
+    <a asp-page="/Search/IndexNasional" class="nav-link nav-list">Pencarian</a>
+</li>
+
+@if (User.IsInRole("SuperAdmin"))
+{
+<li class="nav-item dropdown">
+    <a class="nav-link nav-list dropdown-toggle" href="#" id="master" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Master</a>
+    <div class="dropdown-menu" aria-labelledby="master">
+        <a asp-page="/Provinsi/Index" class="dropdown-item">Provinsi</a>
+        <a asp-page="/KabupatenKota/Index" class="dropdown-item">Kabupaten/Kota</a>
+        <a asp-page="/Pulau/Index" class="dropdown-item">Pulau</a>
+        <a asp-page="/Kawasan/Index" class="dropdown-item">Kawasan</a>
+        <a asp-page="/JenisAtr/Index" class="dropdown-item">Jenis RTR</a>
+        <a asp-page="/ProgressAtr/Index"  class="dropdown-item">Progress RTR</a>
+        <a asp-page="/KelompokDokumen/Index" class="dropdown-item">Kelompok Dokumen</a>
+        <a asp-page="/Dokumen/Index" class="dropdown-item">Dokumen</a>
+        <a asp-page="/Atr/Index" class="dropdown-item">RTR</a>
+    </div>
+</li>
+}
