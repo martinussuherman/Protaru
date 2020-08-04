@@ -139,16 +139,16 @@ namespace MonevAtr.Pages.RtrwT52
                     dokumenList.Add(perda);
 
                     _context.AddRange(dokumenList);
-                    _ = await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
 
-                    UpdateAtrDenganDataPerda(atr, perda);
+                    await UpdateAtrDenganDataPerda(atr, perda);
                 }
             }
 
             return true;
         }
 
-        private async void UpdateAtrDenganDataPerda(Models.Atr atr, Models.AtrDokumen perda)
+        private async Task UpdateAtrDenganDataPerda(Models.Atr atr, Models.AtrDokumen perda)
         {
             if (String.IsNullOrEmpty(perda.Nomor))
             {

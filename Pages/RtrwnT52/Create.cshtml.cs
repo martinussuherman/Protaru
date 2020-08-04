@@ -51,8 +51,8 @@ namespace MonevAtr.Pages.RtrwnT52
 
             _context.Atr.Attach(Atr);
             _context.Entry(Atr).State = EntityState.Added;
-            _ = await _context.SaveChangesAsync();
-            rtrUtilities.UpdateReferensiRtr(KodeReferensiAtr);
+            await _context.SaveChangesAsync();
+            await rtrUtilities.UpdateReferensiRtr(KodeReferensiAtr);
 
             return RedirectToPage("./Index");
         }

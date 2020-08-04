@@ -55,7 +55,7 @@ namespace MonevAtr.Models
             rtr.PembaruanOleh = user.Identity.Name;
         }
 
-        public async void UpdateReferensiRtr(int kodeReferensiRtr)
+        public async Task UpdateReferensiRtr(int kodeReferensiRtr)
         {
             Atr referensi = new Atr()
             {
@@ -67,7 +67,7 @@ namespace MonevAtr.Models
             _context.Entry(referensi)
                 .Property(r => r.SudahDirevisi)
                 .IsModified = true;
-            _ = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<KelompokDokumen>> LoadKelompokDokumenDanDokumen(
@@ -87,7 +87,7 @@ namespace MonevAtr.Models
             return result;
         }
 
-        public async void MergeRtrDokumenDenganKelompokDokumen(
+        public async Task MergeRtrDokumenDenganKelompokDokumen(
             Atr rtr,
             int? id,
             List<KelompokDokumen> kelompokDokumenList)
@@ -114,7 +114,7 @@ namespace MonevAtr.Models
                 .ToListAsync();
         }
 
-        public async void MergeRtrFasilitasKegiatan(
+        public async Task MergeRtrFasilitasKegiatan(
             Atr rtr,
             int? id,
             List<FasilitasKegiatan> fasilitasKegiatanList)
