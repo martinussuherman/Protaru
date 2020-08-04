@@ -1,0 +1,51 @@
+@page
+@model PerdaModel
+
+@{
+    Layout = "_RtrDaerahIndexLayout";
+    ViewData["Title"] = "Pencarian RDTR Perda";
+    ViewData["PageTitle"] = "RDTR";
+}
+
+<form>
+    <div class="card-body">
+        <input type="hidden" name="Rtr.Perda" value="1" />
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Provinsi</label>
+            <select id="provinsi" asp-for="Rtr.Prov" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Kabupaten/Kota</label>
+            <select id="kabupaten-kota" asp-for="Rtr.KabKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nama RTR</label>
+            <input asp-for="Rtr.Nama" class="form-control" />
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nomor Perda </label>
+            <input asp-for="Rtr.Nomor" class="form-control" />
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Tahun Perda</label>
+            <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
+        </div>
+    </div>
+
+    <div class="card-footer text-center">
+        <input 
+            type="submit" 
+            name="cari" 
+            value="Cari" 
+            class="btn btn-primary" 
+            asp-page="./SearchResult" 
+            formmethod="get" />
+        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>
+
+@section Scripts 
+{
+    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
+}
