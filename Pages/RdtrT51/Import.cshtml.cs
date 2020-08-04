@@ -138,8 +138,7 @@ namespace MonevAtr.Pages.RdtrT51
                     dokumenList.Add(perda);
 
                     _context.AddRange(dokumenList);
-                    _ = await _context.SaveChangesAsync();
-
+                    await _context.SaveChangesAsync();
                     await UpdateAtrDenganDataPerda(atr, perda);
                 }
             }
@@ -160,7 +159,7 @@ namespace MonevAtr.Pages.RdtrT51
             _context.Atr.Attach(atr);
             _context.Entry(atr).Property(r => r.Nomor).IsModified = true;
             _context.Entry(atr).Property(r => r.Tahun).IsModified = true;
-            _ = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         private Models.Atr ParseAtr(List<Models.ProgressAtr> progressList,

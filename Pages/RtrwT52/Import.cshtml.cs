@@ -161,7 +161,7 @@ namespace MonevAtr.Pages.RtrwT52
             _context.Atr.Attach(atr);
             _context.Entry(atr).Property(r => r.Nomor).IsModified = true;
             _context.Entry(atr).Property(r => r.Tahun).IsModified = true;
-            _ = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         private Models.Atr ParseAtr(List<Models.ProgressAtr> progressList,

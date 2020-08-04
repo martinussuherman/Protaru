@@ -44,7 +44,7 @@ namespace MonevAtr.Pages.RtrwT51
 
             _context.Atr.Attach(this.Atr);
             _context.Entry(this.Atr).State = EntityState.Added;
-            _ = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
