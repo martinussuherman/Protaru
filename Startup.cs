@@ -28,17 +28,6 @@ namespace MonevAtr
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContextPool<Models.MonevAtrDbContext>(options =>
-                    options.UseMySql(
-                        Configuration.GetConnectionString("MonevAtr"),
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(
-                                10,
-                                TimeSpan.FromSeconds(30),
-                                null);
-                        }),
-                    16)
                 .AddDbContextPool<Models.PomeloDbContext>(options =>
                     options.UseMySql(
                         Configuration.GetConnectionString("MonevAtr"),
