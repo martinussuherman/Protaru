@@ -32,7 +32,7 @@ namespace MonevAtr.Pages.RtrwT50
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
+            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 RtrDetail.Rtr,
                 id,
                 RtrDetail.KelompokDokumenList);

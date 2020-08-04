@@ -60,11 +60,11 @@ namespace MonevAtr.Pages.RdtrT51
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
+            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 Atr,
                 id,
                 KelompokDokumenList);
-            rtrUtilities.MergeRtrFasilitasKegiatan(Atr, id, FasilitasList);
+            await rtrUtilities.MergeRtrFasilitasKegiatan(Atr, id, FasilitasList);
 
             ViewData["ProgressRdtr"] =
                 await selectListUtilities.ProgressRdtrT51();
@@ -138,7 +138,7 @@ namespace MonevAtr.Pages.RdtrT51
         //     return await SaveAtrDokumen(this.AtrDokumenList[index]);
         // }
 
-        private async void CopyUploadedFile(AtrDokumen dokumen)
+        private async Task CopyUploadedFile(AtrDokumen dokumen)
         {
             // IFormFile file = dokumen.UploadFile;
             IFormFile file = dokumen.UploadFile.File;
@@ -157,7 +157,7 @@ namespace MonevAtr.Pages.RdtrT51
             }
         }
 
-        // private async void CopyUploadedFile(int index)
+        // private async Task CopyUploadedFile(int index)
         // {
         //     if (index >= this.UploadFile.Count)
         //     {
