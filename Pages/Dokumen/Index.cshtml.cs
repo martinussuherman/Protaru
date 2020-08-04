@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
-namespace MonevAtr.Pages_Dokumen
+namespace MonevAtr.Pages.Dokumen
 {
     public class IndexModel : PageModel
     {
@@ -15,7 +15,7 @@ namespace MonevAtr.Pages_Dokumen
             _context = context;
         }
 
-        public IList<Dokumen> Dokumen { get; set; }
+        public IList<Models.Dokumen> Dokumen { get; set; }
 
         public async Task OnGetAsync()
         {
