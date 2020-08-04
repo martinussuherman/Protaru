@@ -4,8 +4,8 @@ namespace MonevAtr.Models
 {
     public partial class MonevAtrDbContext : DbContext
     {
-        public DbQuery<PencarianRtr> PencarianRtr { get; set; }
+        public DbSet<PencarianRtr> PencarianRtr { get; set; }
 
-        public DbQuery<FilterPencarianRtr> FilterPencarianRtr { get; set; }
+        public DbSet<FilterPencarianRtr> FilterPencarianRtr { get; set; }
     }
 }
