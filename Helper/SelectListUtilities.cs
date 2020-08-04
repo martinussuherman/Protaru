@@ -134,7 +134,7 @@ namespace MonevAtr.Models
                 .AsNoTracking()
                 .ToListAsync();
 
-            UpdateNamaKawasan(list);
+            await UpdateNamaKawasan(list);
 
             Kawasan pilih = new Kawasan
             {
@@ -587,7 +587,7 @@ namespace MonevAtr.Models
             dokumen.Nama = dokumen.Nama + " - " + dokumen.KelompokDokumen.JenisAtr.Nama;
         }
 
-        private async void UpdateNamaKawasan(List<Kawasan> list)
+        private async Task UpdateNamaKawasan(List<Kawasan> list)
         {
             List<KawasanProvinsi> listProvinsi = await _context.KawasanProvinsi
                 .Include(q => q.Provinsi)

@@ -45,7 +45,7 @@ namespace MonevAtr.Pages.RtrKsnT51
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
+            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 Atr,
                 id,
                 KelompokDokumenList);

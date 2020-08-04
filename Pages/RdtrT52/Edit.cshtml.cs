@@ -46,11 +46,11 @@ namespace MonevAtr.Pages.RdtrT52
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
-            rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
+            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 Atr,
                 id,
                 KelompokDokumenList);
-            rtrUtilities.MergeRtrFasilitasKegiatan(Atr, id, FasilitasList);
+            await rtrUtilities.MergeRtrFasilitasKegiatan(Atr, id, FasilitasList);
 
             ViewData["Progress"] = await selectListUtilities.ProgressRdtrT52();
             ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRevisi;
