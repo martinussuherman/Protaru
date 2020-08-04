@@ -12,9 +12,9 @@ namespace MonevAtr.Pages.Ajax
     [Authorize]
     public class UploadFileModel : PageModel
     {
-        public UploadFileModel(IHostingEnvironment environment)
+        public UploadFileModel(IWebHostEnvironment environment)
         {
-            hostingEnvironment = environment;
+            _environment = environment;
         }
 
         [BindProperty]
@@ -44,12 +44,12 @@ namespace MonevAtr.Pages.Ajax
             }
 
             string filePath = Path.Combine(
-                hostingEnvironment.WebRootPath,
+                _environment.WebRootPath,
                 "upload",
                 NamaRtr,
                 UploadFile.FileName);
 
-            using(FileStream stream = new FileStream(filePath, FileMode.Create))
+            using (FileStream stream = new FileStream(filePath, FileMode.Create))
             {
                 await UploadFile.CopyToAsync(stream);
             }
@@ -57,6 +57,6 @@ namespace MonevAtr.Pages.Ajax
             return true;
         }
 
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _environment;
     }
 }
