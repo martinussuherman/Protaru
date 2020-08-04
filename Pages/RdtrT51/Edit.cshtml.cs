@@ -19,10 +19,10 @@ namespace MonevAtr.Pages.RdtrT51
     {
         public EditModel(
             MonevAtrDbContext context,
-            IHostingEnvironment environment)
+            IWebHostEnvironment environment)
         {
             _context = context;
-            hostingEnvironment = environment;
+            _environment = environment;
             selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
@@ -149,7 +149,7 @@ namespace MonevAtr.Pages.RdtrT51
                 return;
             }
 
-            string filePath = Path.Combine(hostingEnvironment.WebRootPath, "upload", file.FileName);
+            string filePath = Path.Combine(_environment.WebRootPath, "upload", file.FileName);
             dokumen.FilePath = file.FileName;
 
             using (FileStream stream = new FileStream(filePath, FileMode.Create))
@@ -189,6 +189,6 @@ namespace MonevAtr.Pages.RdtrT51
 
         private readonly MonevAtrDbContext _context;
 
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _environment;
     }
 }
