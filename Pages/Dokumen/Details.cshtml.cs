@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MonevAtr.Models;
 
-namespace MonevAtr.Pages_Dokumen
+namespace MonevAtr.Pages.Dokumen
 {
     public class DetailsModel : PageModel
     {
@@ -18,7 +14,7 @@ namespace MonevAtr.Pages_Dokumen
             _context = context;
         }
 
-        public Dokumen Dokumen { get; set; }
+        public Models.Dokumen Dokumen { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

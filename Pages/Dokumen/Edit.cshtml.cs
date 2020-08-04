@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
-namespace MonevAtr.Pages_Dokumen
+namespace MonevAtr.Pages.Dokumen
 {
     public class EditModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace MonevAtr.Pages_Dokumen
         }
 
         [BindProperty]
-        public Dokumen Dokumen { get; set; }
+        public Models.Dokumen Dokumen { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
