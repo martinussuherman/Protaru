@@ -11,7 +11,7 @@ namespace MonevAtr.Models
 {
     public class SelectListUtilities
     {
-        public SelectListUtilities(MonevAtrDbContext context)
+        public SelectListUtilities(PomeloDbContext context)
         {
             _context = context;
         }
@@ -620,6 +620,6 @@ namespace MonevAtr.Models
             }
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
 using Protaru.Identity;
@@ -15,7 +11,7 @@ namespace MonevAtr.Pages.RtrwnT52
     [Authorize(Permissions.RtrwnT52.Create)]
     public class CreateFilterModel : PageModel
     {
-        public CreateFilterModel(MonevAtrDbContext context)
+        public CreateFilterModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -25,9 +21,9 @@ namespace MonevAtr.Pages.RtrwnT52
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
             Hasil = _context.Atr
-                .Where(a => ((a.KodeJenisAtr == (int) JenisRtrEnum.RtrwnT51 &&
+                .Where(a => ((a.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT51 &&
                             a.StatusRevisi >= 2) ||
-                        a.KodeJenisAtr == (int) JenisRtrEnum.RtrwnT52) &&
+                        a.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT52) &&
                     a.SudahDirevisi == 0)
                 .ByTahun(rtr.Tahun)
                 .ByNama(rtr.Nama)
@@ -38,6 +34,6 @@ namespace MonevAtr.Pages.RtrwnT52
             return Page();
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

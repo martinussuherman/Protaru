@@ -11,7 +11,7 @@ namespace MonevAtr.Pages.RtrwnT51
     [Authorize(Permissions.RtrwnT51.Create)]
     public class CreateModel : PageModel
     {
-        public CreateModel(MonevAtrDbContext context)
+        public CreateModel(PomeloDbContext context)
         {
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
@@ -51,6 +51,6 @@ namespace MonevAtr.Pages.RtrwnT51
 
         private readonly SelectListUtilities selectListUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

@@ -23,7 +23,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
         public CreateModel(
             UserManager<ApplicationUser> userManager,
             ILogger<CreateModel> logger,
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             IdentityDbContext identityContext)
         {
             _userManager = userManager;

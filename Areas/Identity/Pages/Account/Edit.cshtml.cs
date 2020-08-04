@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +24,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
         public EditModel(
             UserManager<ApplicationUser> userManager,
             ILogger<EditModel> logger,
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             IdentityDbContext identityContext)
         {
             _userManager = userManager;

@@ -9,7 +9,7 @@ namespace MonevAtr.Models
 {
     public class RtrUtilities
     {
-        public RtrUtilities(MonevAtrDbContext context)
+        public RtrUtilities(PomeloDbContext context)
         {
             _context = context;
         }
@@ -49,8 +49,8 @@ namespace MonevAtr.Models
                 rtr.KodeKawasan = null;
             }
 
-            rtr.KodeJenisAtr = (int) jenisRtr;
-            rtr.StatusRevisi = (byte) statusRevisi.Kode;
+            rtr.KodeJenisAtr = (int)jenisRtr;
+            rtr.StatusRevisi = (byte)statusRevisi.Kode;
             rtr.Tahun = 0;
             rtr.PembaruanOleh = user.Identity.Name;
         }
@@ -297,7 +297,7 @@ namespace MonevAtr.Models
                 return;
             }
 
-            rtr.Tahun = (short) rtrDokumen.Tanggal.Year;
+            rtr.Tahun = (short)rtrDokumen.Tanggal.Year;
         }
 
         private void SelaraskanIsiDokumen(
@@ -312,8 +312,8 @@ namespace MonevAtr.Models
             {
                 joinedItem = new AtrDokumen
                 {
-                KodeAtr = rtr.Kode,
-                KodeDokumen = dokumen.Kode
+                    KodeAtr = rtr.Kode,
+                    KodeDokumen = dokumen.Kode
                 };
             }
 
@@ -334,8 +334,8 @@ namespace MonevAtr.Models
             {
                 joinedItem = new RtrFasilitasKegiatan
                 {
-                KodeRtr = rtr.Kode,
-                KodeFasilitasKegiatan = fasilitasKegiatan.Kode
+                    KodeRtr = rtr.Kode,
+                    KodeFasilitasKegiatan = fasilitasKegiatan.Kode
                 };
             }
 
@@ -359,6 +359,6 @@ namespace MonevAtr.Models
             return _context.RtrFasilitasKegiatan.Any(e => e.Kode == kode);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

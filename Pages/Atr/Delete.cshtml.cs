@@ -12,7 +12,7 @@ namespace MonevAtr.Pages.Atr
     [Authorize]
     public class DeleteModel : PageModel
     {
-        public DeleteModel(MonevAtrDbContext context)
+        public DeleteModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -85,25 +85,25 @@ namespace MonevAtr.Pages.Atr
         {
             switch (kodeJenisRtr)
             {
-                case (int) JenisRtrEnum.RdtrT51:
+                case (int)JenisRtrEnum.RdtrT51:
                     return "/RdtrT51/Index";
 
-                case (int) JenisRtrEnum.RdtrT52:
+                case (int)JenisRtrEnum.RdtrT52:
                     return "/RdtrT52/Index";
 
-                case (int) JenisRtrEnum.RtrwT50:
+                case (int)JenisRtrEnum.RtrwT50:
                     return "/RtrwT50/Index";
 
-                case (int) JenisRtrEnum.RtrwT51:
+                case (int)JenisRtrEnum.RtrwT51:
                     return "/RtrwT51/Index";
 
-                case (int) JenisRtrEnum.RtrwT52:
+                case (int)JenisRtrEnum.RtrwT52:
                     return "/RtrwT52/Index";
 
-                case (int) JenisRtrEnum.RtrPulauT51:
+                case (int)JenisRtrEnum.RtrPulauT51:
                     return "/RtrPulauT51/Index";
 
-                case (int) JenisRtrEnum.RtrPulauT52:
+                case (int)JenisRtrEnum.RtrPulauT52:
                     return "/RtrPulauT52/Index";
 
                 default:
@@ -113,6 +113,6 @@ namespace MonevAtr.Pages.Atr
             return "/Index";
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

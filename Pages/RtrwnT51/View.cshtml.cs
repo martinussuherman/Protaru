@@ -10,7 +10,7 @@ namespace MonevAtr.Pages.RtrwT51
     [AllowAnonymous]
     public class ViewModel : PageModel
     {
-        public ViewModel(MonevAtrDbContext context)
+        public ViewModel(PomeloDbContext context)
         {
             _context = context;
             rtrUtilities = new RtrUtilities(context);
@@ -22,7 +22,7 @@ namespace MonevAtr.Pages.RtrwT51
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             RtrDetail.KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int) JenisRtrEnum.RtrwT51);
+                (int)JenisRtrEnum.RtrwT51);
             RtrDetail.Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
@@ -42,6 +42,6 @@ namespace MonevAtr.Pages.RtrwT51
 
         private readonly RtrUtilities rtrUtilities;
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

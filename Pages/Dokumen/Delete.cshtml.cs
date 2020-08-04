@@ -7,9 +7,9 @@ namespace MonevAtr.Pages.Dokumen
 {
     public class DeleteModel : PageModel
     {
-        private readonly MonevAtr.Models.MonevAtrDbContext _context;
+        private readonly MonevAtr.Models.PomeloDbContext _context;
 
-        public DeleteModel(MonevAtr.Models.MonevAtrDbContext context)
+        public DeleteModel(MonevAtr.Models.PomeloDbContext context)
         {
             _context = context;
         }

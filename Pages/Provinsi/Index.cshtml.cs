@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.Provinsi
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -23,6 +23,6 @@ namespace MonevAtr.Pages.Provinsi
                 .ToListAsync();
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

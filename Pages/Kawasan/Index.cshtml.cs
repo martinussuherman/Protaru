@@ -10,7 +10,7 @@ namespace MonevAtr.Pages.Kawasan
     [Authorize]
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -23,6 +23,6 @@ namespace MonevAtr.Pages.Kawasan
                 .ToListAsync();
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

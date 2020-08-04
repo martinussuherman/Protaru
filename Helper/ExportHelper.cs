@@ -15,7 +15,7 @@ namespace MonevAtr
     {
         public static async Task<IActionResult> RtrProvKabKotaExport(
             this PageModel model,
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             JenisRtrEnum jenisRtr,
             AtrSearch rtr)
         {
@@ -56,7 +56,7 @@ namespace MonevAtr
 
         public static async Task<IActionResult> RtrOneFieldExport(
             this PageModel model,
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             JenisRtrEnum jenisRtr,
             AtrSearch rtr)
         {
@@ -122,7 +122,7 @@ namespace MonevAtr
 
         public static async Task<IActionResult> RtrZeroFieldExport(
             this PageModel model,
-            MonevAtrDbContext context,
+            PomeloDbContext context,
             JenisRtrEnum jenisRtr,
             AtrSearch rtr)
         {

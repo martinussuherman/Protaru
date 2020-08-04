@@ -1,7 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
 
@@ -9,7 +8,7 @@ namespace MonevAtr.Pages.JenisAtr
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(MonevAtrDbContext context)
+        public IndexModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -23,6 +22,6 @@ namespace MonevAtr.Pages.JenisAtr
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +11,7 @@ namespace MonevAtr.Pages.Pulau
     [Authorize]
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -71,6 +70,6 @@ namespace MonevAtr.Pages.Pulau
             return _context.Pulau.Any(e => e.Kode == id);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }

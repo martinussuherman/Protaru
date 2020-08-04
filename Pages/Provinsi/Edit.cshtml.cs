@@ -9,7 +9,7 @@ namespace MonevAtr.Pages.Provinsi
 {
     public class EditModel : PageModel
     {
-        public EditModel(MonevAtrDbContext context)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
         }
@@ -68,6 +68,6 @@ namespace MonevAtr.Pages.Provinsi
             return _context.Provinsi.Any(e => e.Kode == id);
         }
 
-        private readonly MonevAtrDbContext _context;
+        private readonly PomeloDbContext _context;
     }
 }
