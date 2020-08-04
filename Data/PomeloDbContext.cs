@@ -6,7 +6,7 @@ namespace MonevAtr.Models
 {
     public partial class PomeloDbContext : DbContext
     {
-        public PomeloDbContext(DbContextOptions<PomeloDbContext> options) : base(options) {}
+        public PomeloDbContext(DbContextOptions<PomeloDbContext> options) : base(options) { }
 
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<Atr> Atr { get; set; }
@@ -24,9 +24,9 @@ namespace MonevAtr.Models
         public virtual DbSet<Provinsi> Provinsi { get; set; }
         public virtual DbSet<RtrFasilitasKegiatan> RtrFasilitasKegiatan { get; set; }
 
-        public DbQuery<PencarianRtr> PencarianRtr { get; set; }
+        public DbSet<PencarianRtr> PencarianRtr { get; set; }
 
-        public DbQuery<FilterPencarianRtr> FilterPencarianRtr { get; set; }
+        public DbSet<FilterPencarianRtr> FilterPencarianRtr { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
