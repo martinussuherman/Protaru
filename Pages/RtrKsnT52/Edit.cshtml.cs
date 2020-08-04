@@ -75,7 +75,7 @@ namespace MonevAtr.Pages.RtrKsnT52
             return await OnGetAsync(Atr.Kode);
         }
 
-        private List<Dokumen> dokumenList;
+        private List<Models.Dokumen> dokumenList;
 
         private readonly RtrUtilities rtrUtilities;
 
