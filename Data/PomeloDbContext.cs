@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -308,6 +308,15 @@ namespace MonevAtr.Models
                     .HasConstraintName("FK_kawasan_provinsi_kawasan");
             });
 
-        }
+            modelBuilder.Entity<PencarianRtr>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<FilterPencarianRtr>(entity =>
+            {
+                entity.HasNoKey();
+            });
+     }
     }
 }
