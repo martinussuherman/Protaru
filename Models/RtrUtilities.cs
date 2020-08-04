@@ -179,14 +179,14 @@ namespace MonevAtr.Models
                 }
 
                 _context.AtrDokumen.Add(dokumen);
-                _ = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return true;
             }
 
             if (!dokumen.PerluSimpan)
             {
                 _context.AtrDokumen.Remove(dokumen);
-                _ = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return true;
             }
 
@@ -229,14 +229,14 @@ namespace MonevAtr.Models
                 }
 
                 _context.RtrFasilitasKegiatan.Add(rtrFasilitasKegiatan);
-                _ = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return true;
             }
 
             if (!rtrFasilitasKegiatan.PerluSimpan)
             {
                 _context.RtrFasilitasKegiatan.Remove(rtrFasilitasKegiatan);
-                _ = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return true;
             }
 

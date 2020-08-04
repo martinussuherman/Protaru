@@ -64,7 +64,7 @@ namespace MonevAtr
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            _ = services.Configure<RazorViewEngineOptions>(options =>
+            services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
             });

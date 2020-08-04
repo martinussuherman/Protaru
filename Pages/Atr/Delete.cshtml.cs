@@ -76,7 +76,7 @@ namespace MonevAtr.Pages.Atr
             _context.AtrDokumen.RemoveRange(dokumenList);
             _context.RtrFasilitasKegiatan.RemoveRange(fasilitasList);
             _context.Atr.Remove(RtrDetail.Rtr);
-            _ = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToPage(RetrieveIndexPage(kodeJenisRtr));
         }
