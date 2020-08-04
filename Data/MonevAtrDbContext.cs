@@ -477,6 +477,16 @@ namespace MonevAtr.Models
                     .HasConstraintName("FK_rtr_fasilitas_kegiatan_atr");
             });
 
+            modelBuilder.Entity<PencarianRtr>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<FilterPencarianRtr>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
             // modelBuilder.Entity<StatusRevisi>(entity =>
             // {
             //     entity.HasIndex(e => e.KodeJenis)
