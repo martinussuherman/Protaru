@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ namespace MonevAtr.Pages.Ajax
 {
     public class ListLintasSektor : PageModel
     {
-        public ListLintasSektor(PomeloDbContext context)
+        public ListLintasSektor(MonevAtrDbContext context)
         {
             _context = context;
         }
@@ -64,6 +63,6 @@ namespace MonevAtr.Pages.Ajax
                 q.KodeJenisRtr == 5);
         }
 
-        private readonly PomeloDbContext _context;
+        private readonly MonevAtrDbContext _context;
     }
 }

@@ -10,7 +10,7 @@ namespace MonevAtr.Pages.Ajax
 {
     public class ListPersetujuanSubstansi : PageModel
     {
-        public ListPersetujuanSubstansi(PomeloDbContext context)
+        public ListPersetujuanSubstansi(MonevAtrDbContext context)
         {
             _context = context;
         }
@@ -62,6 +62,6 @@ namespace MonevAtr.Pages.Ajax
                 q.KodeJenisRtr == 5);
         }
 
-        private readonly PomeloDbContext _context;
+        private readonly MonevAtrDbContext _context;
     }
 }

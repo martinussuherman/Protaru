@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Itm.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -29,37 +28,12 @@ namespace MonevAtr
         {
             services
                 .AddDbContextPool<Models.MonevAtrDbContext>(options =>
-                    options.UseMySql(
-                        Configuration.GetConnectionString("MonevAtr"),
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(
-                                10,
-                                TimeSpan.FromSeconds(30),
-                                null);
-                        }),
-                    16)
-                .AddDbContextPool<Models.PomeloDbContext>(options =>
-                    options.UseMySql(
-                        Configuration.GetConnectionString("MonevAtr"),
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(
-                                10,
-                                TimeSpan.FromSeconds(30),
-                                null);
-                        }),
+                    options.UseMySQL(
+                        Configuration.GetConnectionString("MonevAtr")),
                     16)
                 .AddDbContextPool<IdentityDbContext>(options =>
-                    options.UseMySql(
-                        Configuration.GetConnectionString("IdentityConnection"),
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(
-                                10,
-                                TimeSpan.FromSeconds(30),
-                                null);
-                        }),
+                    options.UseMySQL(
+                        Configuration.GetConnectionString("IdentityConnection")),
                     16);
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
