@@ -1,0 +1,34 @@
+@page
+@model ProgressModel
+
+@{
+    Layout = "_RtrNasionalIndexLayout";
+    ViewData["Title"] = "Pencarian RTR Pulau/Kep";
+    ViewData["PageTitle"] = "RTR Pulau/Kepulauan";
+}
+
+<form method="get" asp-page="./SearchResult">
+    <input type="hidden" name="Rtr.Perda" value="0" />
+
+    <div class="card-body">
+        <div class="col-md-12 form-group">
+            <label class="form-label">Pulau</label>
+            <select asp-for="Rtr.Pulau" class ="form-control" asp-items="ViewBag.Pulau"></select>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="form-label">Nama RTR</label>
+            <input asp-for="Rtr.Nama" class="form-control" />
+        </div>
+    </div>
+
+    <div class="card-footer text-center">
+        <input 
+            type="submit" 
+            name="cari" 
+            value="Cari" 
+            class="btn btn-primary" 
+            asp-page="./SearchResult" 
+            formmethod="get" />
+        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+    </div>
+</form>
