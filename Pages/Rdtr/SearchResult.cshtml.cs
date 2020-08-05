@@ -1,21 +1,15 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
-using Protaru.Identity;
 
 namespace MonevAtr.Pages.Rdtr
 {
     public class SearchResultModel : PageModel
     {
-        public SearchResultModel(
-            IAuthorizationService authorizationService,
-            PomeloDbContext context)
+        public SearchResultModel(PomeloDbContext context)
         {
-            _authorizationService = authorizationService;
             _context = context;
         }
 
@@ -23,8 +17,6 @@ namespace MonevAtr.Pages.Rdtr
 
         [ViewData]
         public bool IsCanCreate { get; set; }
-
-        public bool IsCanEdit { get; set; }
 
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
@@ -43,7 +35,6 @@ namespace MonevAtr.Pages.Rdtr
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
 
             IsCanCreate = false;
-            IsCanEdit = false;
 
             return Page();
         }
@@ -54,7 +45,6 @@ namespace MonevAtr.Pages.Rdtr
             rtr.JenisList.Add((int)JenisRtrEnum.RdtrT52);
         }
 
-        private readonly IAuthorizationService _authorizationService;
         private readonly PomeloDbContext _context;
     }
 }
