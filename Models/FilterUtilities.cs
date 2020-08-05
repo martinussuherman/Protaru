@@ -7,88 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MonevAtr.Models
 {
-    public class FilterUtilities
-    {
-        // TODO : deprecated when query via PencarianRtr is done
-        public IQueryable<Atr> QueryAtrByProvinsi(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            return search.Prov == 0 || search.KabKota != 0 ?
-                query :
-                query.Where(q => q.KodeProvinsi == search.Prov ||
-                    q.KabupatenKota.KodeProvinsi == search.Prov);
-        }
-
-        public IQueryable<Atr> QueryAtrByKabupatenKota(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            return search.KabKota == 0 ?
-                query :
-                query.Where(q => q.KodeKabupatenKota == search.KabKota);
-        }
-
-        public IQueryable<Atr> QueryAtrByPulau(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            return search.Prov == 0 || search.KabKota != 0 ?
-                query :
-                query.Where(q => q.KodeProvinsi == search.Prov ||
-                    q.KabupatenKota.KodeProvinsi == search.Prov);
-        }
-
-        public IQueryable<Atr> QueryAtrByTahun(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            return search.Tahun == 0 ?
-                query :
-                query.Where(q => q.Tahun == search.Tahun);
-        }
-
-        public IQueryable<Atr> QueryAtrByNama(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            if (String.IsNullOrEmpty(search.Nama))
-            {
-                return query;
-            }
-
-            string pattern = search.Nama + "%";
-            return query.Where(q => EF.Functions.Like(q.Nama, pattern));
-        }
-
-        public IQueryable<Atr> QueryAtrByNomor(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            if (String.IsNullOrEmpty(search.Nomor))
-            {
-                return query;
-            }
-
-            string pattern = search.Nomor + "%";
-            return query.Where(q => EF.Functions.Like(q.Nomor, pattern));
-        }
-
-        public IQueryable<Atr> QueryAtrByProgress(
-            IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            ExpressionStarter<Atr> predicate = PredicateBuilder.New<Atr>(true);
-
-            foreach (int kodeProgress in search.ProgressList)
-            {
-                predicate = predicate.Or(p => p.KodeProgressAtr == kodeProgress);
-            }
-
-            return query.Where(predicate);
-        }
-    }
-
     public static class FilterUtilitiesExtensions
     {
         public static List<int> KodeDokumenRekomendasiGubernur
@@ -273,6 +191,11 @@ namespace MonevAtr.Models
             this IQueryable<Atr> query,
             JenisRtrEnum jenis)
         {
+            if (jenis == JenisRtrEnum.All)
+            {
+                return query;
+            }
+
             return query.Where(a => a.KodeJenisAtr == (int)jenis);
         }
 
