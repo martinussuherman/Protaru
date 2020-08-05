@@ -233,72 +233,72 @@ namespace MonevAtr.Models
 
         public async Task<SelectList> TahunPerdaRdtrT51()
         {
-            return await TahunPerda((int)JenisRtrEnum.RdtrT51);
+            return await TahunPerda(JenisRtrEnum.RdtrT51);
         }
 
         public async Task<SelectList> TahunPerdaRdtrT52()
         {
-            return await TahunPerda((int)JenisRtrEnum.RdtrT52);
+            return await TahunPerda(JenisRtrEnum.RdtrT52);
         }
 
         public async Task<SelectList> TahunPerdaRtrwT50()
         {
-            return await TahunPerda((int)JenisRtrEnum.RtrwT50);
+            return await TahunPerda(JenisRtrEnum.RtrwT50);
         }
 
         public async Task<SelectList> TahunPerdaRtrwT51()
         {
-            return await TahunPerda((int)JenisRtrEnum.RtrwT51);
+            return await TahunPerda(JenisRtrEnum.RtrwT51);
         }
 
         public async Task<SelectList> TahunPerdaRtrwT52()
         {
-            return await TahunPerda((int)JenisRtrEnum.RtrwT52);
+            return await TahunPerda(JenisRtrEnum.RtrwT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrPulauT51()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrPulauT51);
+            return await TahunPerpres(JenisRtrEnum.RtrPulauT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrPulauT52()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrPulauT52);
+            return await TahunPerpres(JenisRtrEnum.RtrPulauT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrKsnT51()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrKsnT51);
+            return await TahunPerpres(JenisRtrEnum.RtrKsnT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrKsnT52()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrKsnT52);
+            return await TahunPerpres(JenisRtrEnum.RtrKsnT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrwnT51()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrwnT51);
+            return await TahunPerpres(JenisRtrEnum.RtrwnT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrwnT52()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrwnT52);
+            return await TahunPerpres(JenisRtrEnum.RtrwnT52);
         }
 
         public async Task<SelectList> TahunPerpresRtrKpnT51()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrKpnT51);
+            return await TahunPerpres(JenisRtrEnum.RtrKpnT51);
         }
 
         public async Task<SelectList> TahunPerpresRtrKpnT52()
         {
-            return await TahunPerpres((int)JenisRtrEnum.RtrKpnT52);
+            return await TahunPerpres(JenisRtrEnum.RtrKpnT52);
         }
 
         public async Task<SelectList> TahunPerdaRtr()
         {
-            return await TahunPerda(0);
+            return await TahunPerda(JenisRtrEnum.All);
         }
 
         public async Task<SelectList> KelompokDokumen()
@@ -496,14 +496,11 @@ namespace MonevAtr.Models
                 .ToListAsync();
         }
 
-        private async Task<SelectList> TahunPerda(int jenisRtr)
+        private async Task<SelectList> TahunPerda(JenisRtrEnum jenis)
         {
-            IQueryable<Atr> query = _context.Atr
-                .OrderBy(a => a.Tahun);
-
-            query = QueryByJenisRtr(query, jenisRtr);
-
-            List<short> list = await query
+            List<short> list = await _context.Atr
+                .ByJenis(jenis)
+                .OrderBy(a => a.Tahun)
                 .AsNoTracking()
                 .Select(a => a.Tahun)
                 .Distinct()
@@ -512,14 +509,11 @@ namespace MonevAtr.Models
             return Tahun(list, "Pilih Tahun Perda");
         }
 
-        private async Task<SelectList> TahunPerpres(int jenisRtr)
+        private async Task<SelectList> TahunPerpres(JenisRtrEnum jenis)
         {
-            IQueryable<Atr> query = _context.Atr
-                .OrderBy(a => a.Tahun);
-
-            query = QueryByJenisRtr(query, jenisRtr);
-
-            List<short> list = await query
+            List<short> list = await _context.Atr
+                .ByJenis(jenis)
+                .OrderBy(a => a.Tahun)
                 .AsNoTracking()
                 .Select(a => a.Tahun)
                 .Distinct()
@@ -562,13 +556,6 @@ namespace MonevAtr.Models
             {
                 listHasil.Add(new Tahun(tahun));
             }
-        }
-
-        private IQueryable<Atr> QueryByJenisRtr(IQueryable<Atr> query, int jenisRtr)
-        {
-            return jenisRtr == 0 ?
-                query :
-                query.Where(q => q.KodeJenisAtr == jenisRtr);
         }
 
         private void InsertPilihKabupatenKota(IList<KabupatenKota> list)

@@ -14,6 +14,7 @@ namespace MonevAtr.Models
         RtrwnT51 = 10,
         RtrwnT52 = 11,
         RtrKpnT51 = 12,
-        RtrKpnT52 = 13
+        RtrKpnT52 = 13,
+        All = 200
     }
 }
