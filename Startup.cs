@@ -111,6 +111,8 @@ namespace MonevAtr
 
             UploadFolderCreator folderCreator = new UploadFolderCreator(env);
             folderCreator.CreateUploadFolders();
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+                Configuration.GetValue<string>("SfKey"));
         }
     }
 }
