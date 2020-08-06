@@ -1,4 +1,4 @@
-﻿#StatusYear
+#StatusYear
 {
   font: bold 24px Roboto;
   display: inline-block;
@@ -49,6 +49,27 @@
 .btn-upload, .file-link, .btn-delete
 {
   color: #fff;
+}
+
+.protaru-tooltip
+{
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#maps_Zooming_KitCollection
+{
+  opacity: 0.8;
+}
+
+.e-maps-toolbar > path {
+  fill: #fff;
+  stroke: #fff;
+}
+
+.e-maps-toolbar > circle {
+  stroke: #fff;
+  stroke-width: 2px;
 }
 
 /*
