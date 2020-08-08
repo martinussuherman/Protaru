@@ -1,17 +1,44 @@
 @page
 @model RtrIndexModel
+@using Syncfusion.EJ2.Maps
 
 @{
 	Layout = "_RtrDaerahLayout";
 	ViewData["Title"] = "Kementerian Agraria dan Tata Ruang Daerah";
 }
 
+<ejs-maps 
+	id="maps" 
+	format="n" 
+	useGroupingSeparator="true" 
+	load="window.onMapLoad"
+	centerPosition="Model.CenterPosition"
+	zoomSettings="Model.ZoomSettings">
+
+	<e-maps-layers>
+		<e-maps-layer 
+			layerType="Bing" 
+			bingMapType="AerialWithLabel" 
+			key="@Model.BingKey"
+			markerClusterSettings="Model.ClusterSettings"
+			markerSettings="Model.MarkerSettings">
+		</e-maps-layer>
+	</e-maps-layers>
+</ejs-maps>
+
+<div id="tooltip-template" style="display: none;">
+	<div class="protaru-tooltip">
+		<h4>${city}</h4>
+		<p>${area}</p>
+	</div>
+</div>
+
 <div class="slide">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:1600px; height:550px; margin: 0 auto;">
+	@* <div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:1600px; height:550px; margin: 0 auto;">
 		<canvas id="canvas" width="1600" height="550" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
 		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1600px; height:550px; position: absolute; left: 0px; top: 0px; display: block;">
 		</div>
-	</div>
+	</div> *@
 </div>
 
 <div class="container">
