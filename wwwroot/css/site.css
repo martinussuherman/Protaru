@@ -115,3 +115,96 @@
 }
 
 */
+
+/* New style 08-08-2020 */
+
+body {
+	font-family: Roboto;
+}
+
+.nav-list {
+	border-left: 1px solid #dcdcdc;
+	padding-left: 1rem !important;
+	padding-right: 1rem !important;
+	font : 16px Roboto;
+}
+
+.search-box {
+	background: #e1e7f3 url('../assets/img/bg-search.jpg') no-repeat;
+}
+
+.form-search {
+	background: #fff url('../assets/img/search-icon.png') no-repeat 1rem;
+}
+
+.btn-search {
+  background-color: #9aa6c0;
+  color: #fff;
+}
+
+.progress-total {
+	background-color: #dcdcdc;
+}
+
+.rtr-progress-total {
+	background: url('../assets/img/bg-progress.png') no-repeat center;
+	height: 5.6rem;
+}
+
+.progress-type {
+  font-size: 1.8rem; 
+  line-height: 2rem;
+}
+
+.progress-chart {
+  box-shadow: inset 0 6px 5px -3px #686868;
+	background: #eee url('../assets/img/bg-body.jpg') no-repeat center center fixed;
+	background-size: cover;
+}
+
+.chart-title {
+	font-size: x-large;
+}
+
+.border-chart-title {
+  width: 12.5rem; 
+  border-bottom: 2px solid coral; 
+  margin: -1.5rem auto;
+}
+
+@media (max-width: 991px) {
+	#maps {
+	   display: none;
+	}
+
+	.navbar-brand img{
+		object-fit: cover;
+		width: 14rem;
+	}
+
+	.nav-list {
+		border-left: 0;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.progress-number-box {
+		padding-top: 1.25rem !important;
+	}
+
+	.progress-number{
+		font-size: 2rem;
+	}
+
+	.progress-type{
+		font-size: 1rem;
+		line-height: inherit;
+		margin-left: -1rem;
+	}
+}
+
+@media (max-width: 575px){
+	.copy {
+		margin-bottom: 0;
+	}
+}
