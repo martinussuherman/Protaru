@@ -1,11 +1,14 @@
 using Itm.Misc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MonevAtr.Models;
 using Newtonsoft.Json;
+using Syncfusion.EJ2.DropDowns;
 using Syncfusion.EJ2.Maps;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MonevAtr.Pages
@@ -16,8 +19,9 @@ namespace MonevAtr.Pages
             PomeloDbContext context,
             IConfiguration configuration)
         {
+            _context = context;
             _configuration = configuration;
-            selectListUtilities = new SelectListUtilities(context);
+            selectListUtilities = new SelectListUtilities(_context);
         }
 
         public int StatusYear { get; set; }
@@ -80,11 +84,20 @@ namespace MonevAtr.Pages
             ZoomFactor = 5
         };
 
+        public List<Models.Provinsi> Provinsi { get; set; }
+
+        public AutoCompleteFieldSettings FieldSettings => new AutoCompleteFieldSettings
+        {
+            Text = "Nama",
+            Value = "Kode"
+        };
+
 
         public async Task<IActionResult> OnGetAsync()
         {
             StatusYear = DateTime.Today.Year;
             StatusMonth = DateTime.Today.Month;
+            Provinsi = await _context.Provinsi.ToListAsync();
             ViewData["TahunLintasSektorDanPersetujuanSubstansi"] =
                 await selectListUtilities.TahunRapatLintasSektorDanPersetujuanSubstansi();
             return Page();
@@ -110,6 +123,8 @@ namespace MonevAtr.Pages
             Visible = true,
             ValuePath = "city"
         };
+
+        private readonly PomeloDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly SelectListUtilities selectListUtilities;
     }

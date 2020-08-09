@@ -1,6 +1,8 @@
 @page
 @model RtrIndexModel
-@using Syncfusion.EJ2.Maps
+
+@using Syncfusion.EJ2.Maps;
+@using Newtonsoft.Json;
 
 @{
 	Layout = "_RtrDaerahLayout";
@@ -39,9 +41,19 @@
 		<div class="row">
 			<div class="col-lg-2 text-center"></div>
 			<div class="col-lg-8 text-center">
-				<form class="form-inline py-4 px-3">
+				<form method="get" asp-page="/Search/DaerahByProgress" class="form-inline py-4 px-3">
 					<div class="form-group col-lg-9">
-						<input type="text" class="form-control form-control-lg w-100 form-search pl-5 text-sm-center shadow" id="search" aria-describedby="search" name="q" placeholder="Cari berdasarkan nama provinsi" autocomplete="off">
+						<ejs-autocomplete 
+							autocomplete="true"
+							autofill="true" 
+							dataSource="@Model.Provinsi" 
+							fields="@Model.FieldSettings"
+							filtering="filtering"
+							id="provinsi" 
+							placeholder="Cari berdasarkan nama provinsi"
+							class="form-control form-control-lg w-100 form-search pl-5 text-sm-center shadow">
+						</ejs-autocomplete>
+						@* <input type="text" class="form-control form-control-lg w-100 form-search pl-5 text-sm-center shadow" id="search" aria-describedby="search" name="q" placeholder="Cari berdasarkan nama provinsi" autocomplete="off"> *@
 					</div>
 					<div class="col-lg-3">
 						<button type="submit" class="btn btn-search btn-lg btn-block shadow border-0">SEARCH</button>
@@ -248,6 +260,14 @@
 
 @section Scripts 
 {
+	<script>
+		function filtering(e) {
+			var predicate = new ej.data.Predicate('Nama', 'startsWith', e.text, true);
+			var query = new ej.data.Query();
+			query = (e.text !== '' && e.value !== '') ? query.where(predicate) : query;
+			e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.Provinsi)), query);
+		}
+	</script>
 	<script type="text/javascript">
 		var pathBase = '@Url.Content("~")';
 
