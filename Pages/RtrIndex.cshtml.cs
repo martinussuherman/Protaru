@@ -28,6 +28,12 @@ namespace MonevAtr.Pages
 
         public object MapsMarkerData => ReadMarkerFromFile();
 
+        public MapsBorder Border => new MapsBorder
+        {
+            Color = "#868686",
+            Width = 20
+        };
+
         public MapsCenterPosition CenterPosition => new MapsCenterPosition
         {
             Latitude = -2.8,
