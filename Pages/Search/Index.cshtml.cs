@@ -10,9 +10,8 @@ namespace MonevAtr.Pages.Search
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(PomeloDbContext context, PomeloDbContext pomeloDbContext)
+        public IndexModel(PomeloDbContext context)
         {
-            _pomeloDbContext = pomeloDbContext;
             _context = context;
             selectListUtilities = new SelectListUtilities(context);
         }
@@ -31,7 +30,7 @@ namespace MonevAtr.Pages.Search
             .AsNoTracking()
             .ToList();
 
-        public IList<int> TahunRekomendasiGubernur => _pomeloDbContext.AtrDokumen
+        public IList<int> TahunRekomendasiGubernur => _context.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenRekomendasiGubernur)
             .OrderBy(a => a.Tanggal.Year)
             .AsNoTracking()
@@ -40,7 +39,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunPermohonanPersetujuanSubstansi => _pomeloDbContext.AtrDokumen
+        public IList<int> TahunPermohonanPersetujuanSubstansi => _context.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenPermohonanPersetujuanSubstansi)
             .OrderBy(a => a.Tanggal.Year)
             .AsNoTracking()
@@ -49,7 +48,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunMasukLoket => _pomeloDbContext.AtrDokumen
+        public IList<int> TahunMasukLoket => _context.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenMasukLoket)
             .OrderBy(a => a.Tanggal.Year)
             .AsNoTracking()
@@ -58,7 +57,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunRapatLintasSektor => _pomeloDbContext.AtrDokumen
+        public IList<int> TahunRapatLintasSektor => _context.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenRapatLintasSektor)
             .OrderBy(a => a.Tanggal.Year)
             .AsNoTracking()
@@ -67,7 +66,7 @@ namespace MonevAtr.Pages.Search
             .Where(y => y > 1)
             .ToList();
 
-        public IList<int> TahunPersetujuanSubstansi => _pomeloDbContext.AtrDokumen
+        public IList<int> TahunPersetujuanSubstansi => _context.AtrDokumen
             .ByKodeList(FilterUtilitiesExtensions.KodeDokumenPersetujuanSubstansi)
             .OrderBy(a => a.Tanggal.Year)
             .AsNoTracking()
@@ -80,7 +79,7 @@ namespace MonevAtr.Pages.Search
         {
             get
             {
-                List<short> list = _pomeloDbContext.Atr
+                List<short> list = _context.Atr
                     .OrderBy(a => a.Tahun)
                     .AsNoTracking()
                     .Select(a => a.Tahun)
@@ -123,7 +122,5 @@ namespace MonevAtr.Pages.Search
         private readonly SelectListUtilities selectListUtilities;
 
         private readonly PomeloDbContext _context;
-
-        private readonly PomeloDbContext _pomeloDbContext;
     }
 }
