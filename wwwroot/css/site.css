@@ -79,6 +79,12 @@
   stroke-width: 2px;
 }
 
+#provinsi {
+  background: #fff url('../assets/img/search-icon.png') no-repeat 1rem;
+  height: calc(1.5em + 2px + 1rem);
+  font-size: 1.25rem;
+}
+
 /*
 #logout
 {
