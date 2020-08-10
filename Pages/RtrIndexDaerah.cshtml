@@ -12,10 +12,11 @@
 <ejs-maps 
 	id="maps" 
 	border="Model.Border"
-	format="n" 
-	useGroupingSeparator="true" 
-	load="window.onMapLoad"
 	centerPosition="Model.CenterPosition"
+	format="n" 
+	load="window.onMapLoad"
+	tooltipDisplayMode="Click"
+	useGroupingSeparator="true" 
 	zoomSettings="Model.ZoomSettings">
 
 	<e-maps-layers>
@@ -268,22 +269,7 @@
 			e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.Provinsi)), query);
 		}
 	</script>
-	<script type="text/javascript">
-		var pathBase = '@Url.Content("~")';
-
-		$(document).ready(function(){
-			$('.icon-menu').slick({
-				infinite: true,
-				slidesToShow: 4,
-				slidesToScroll: 4
-			});
-
-			$('[data-toggle="tooltip"]').tooltip();
-		});
-	</script>
 
 	@{await Html.RenderPartialAsync("_HomepageScriptPartial");}
     @{await Html.RenderPartialAsync("_AjaxProgressScriptPartial");}
-    @{await Html.RenderPartialAsync("_ActiveMonthStatusScriptPartial");}
-    @{await Html.RenderPartialAsync("_AjaxRtrListLinSekSubstansiScriptPartial");}
 }
