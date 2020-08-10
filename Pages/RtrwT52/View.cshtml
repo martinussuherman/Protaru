@@ -11,11 +11,6 @@
 
 <div class="justify-content-md-center px-5">
     <div class="card border-orange mb-3 card-body">
-        <div class="col-md-12 form-group">
-            <label class="form-label">Status Revisi</label>
-            <input type="text"value="@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(Model.RtrDetail.Rtr.StatusRevisi)" class="form-control" disabled />
-        </div>
-
         @await Html.PartialAsync("_RtrViewCommonHeaderPartial", Model.RtrDetail)
     </div>
 </div>
