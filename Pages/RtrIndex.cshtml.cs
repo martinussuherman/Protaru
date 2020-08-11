@@ -77,6 +77,7 @@ namespace MonevAtr.Pages
         {
             Enable = true,
             HorizontalAlignment = Alignment.Near,
+            MouseWheelZoom = false,
             PinchZooming = true,
             ShouldZoomInitially = false,
             Toolbars = _toolbars,
