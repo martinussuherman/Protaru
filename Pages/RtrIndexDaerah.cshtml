@@ -7,6 +7,7 @@
 @{
 	Layout = "_RtrDaerahLayout";
 	ViewData["Title"] = "Kementerian Agraria dan Tata Ruang Daerah";
+	ViewData["ReturnUrl"] = "/RtrIndexDaerah";
 }
 
 <ejs-maps 
@@ -54,7 +55,6 @@
 							placeholder="Cari berdasarkan nama provinsi"
 							class="form-control form-control-lg w-100 form-search pl-5 text-sm-center shadow">
 						</ejs-autocomplete>
-						@* <input type="text" class="form-control form-control-lg w-100 form-search pl-5 text-sm-center shadow" id="search" aria-describedby="search" name="q" placeholder="Cari berdasarkan nama provinsi" autocomplete="off"> *@
 					</div>
 					<div class="col-lg-3">
 						<button type="submit" class="btn btn-search btn-lg btn-block shadow border-0">SEARCH</button>
