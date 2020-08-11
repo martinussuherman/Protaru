@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 
-namespace MonevAtr.Pages.RtrwnT51
+namespace MonevAtr.Pages.RtrwT51
 {
     [AllowAnonymous]
     public class ViewModel : PageModel
