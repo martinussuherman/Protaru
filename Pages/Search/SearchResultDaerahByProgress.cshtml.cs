@@ -18,8 +18,12 @@ namespace MonevAtr.Pages.Search
         [ViewData]
         public bool IsCanCreate { get; set; }
 
+        [ViewData]
+        public string ReturnUrl { get; set; }
+
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
+            ReturnUrl = "/RtrIndexDaerah";
             FilterByJenis(rtr);
 
             Hasil = _context.Atr
