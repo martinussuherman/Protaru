@@ -37,6 +37,7 @@ int index = Model.Hasil.StartItemIndex;
                 <td class="text-center">
                     <a asp-page="@pageName" 
                         asp-route-id="@item.Kode" 
+                        asp-route-returnUrl="@Model.ReturnUrl"
                         class="btn btn-primary btn-sm">
                         Detail
                     </a>

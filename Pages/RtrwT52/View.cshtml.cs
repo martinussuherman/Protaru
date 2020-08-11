@@ -19,8 +19,12 @@ namespace MonevAtr.Pages.RtrwT52
         [BindProperty]
         public RtrDetail RtrDetail { get; set; } = new RtrDetail();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [ViewData]
+        public string ReturnUrl { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int? id, string returnUrl)
         {
+            ReturnUrl = string.IsNullOrEmpty(returnUrl) ? "./Index" : returnUrl;
             RtrDetail.KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
                 (int)JenisRtrEnum.RtrwT52);
             RtrDetail.Rtr = await _context.Atr
