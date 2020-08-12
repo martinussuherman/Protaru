@@ -7,6 +7,19 @@
     Layout = "_RtrDaerahLayout";
 }
 
+@{
+    string returnUrl;
+
+    if(ViewData["ReturnUrl"]==null)
+    {
+        returnUrl="./Index";
+    }
+    else
+    {
+        returnUrl=ViewData["ReturnUrl"] as string;
+    }
+}
+
 <div class="page-title">
     <div class="container">
         <h4>@ViewData["PageTitle"]</h4>
@@ -26,7 +39,7 @@
                         <a asp-page="./Create" class="btn btn-success">Tambah</a>
 }
 
-                        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+                        <a asp-page="@returnUrl" class="btn btn-warning">Kembali</a>
                     </div>
                 </div>
 

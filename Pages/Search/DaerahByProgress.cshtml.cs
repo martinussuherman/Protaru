@@ -15,8 +15,12 @@ namespace MonevAtr.Pages.Search
 
         public AtrSearch Rtr { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int provinsi)
+        [ViewData]
+        public string ReturnUrl { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int provinsi, string returnUrl)
         {
+            ReturnUrl = string.IsNullOrEmpty(returnUrl) ? "./Index" : returnUrl;
             Rtr = new AtrSearch
             {
                 Prov = provinsi
