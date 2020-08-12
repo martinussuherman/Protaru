@@ -22,7 +22,7 @@ namespace MonevAtr.Pages.RdtrT51
         [ViewData]
         public string ReturnUrl { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id, string returnUrl)
+        public async Task<IActionResult> OnGetAsync(int? id, string returnUrl = "./Index")
         {
             ReturnUrl = string.IsNullOrEmpty(returnUrl) ? "./Index" : returnUrl;
             RtrDetail.KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
