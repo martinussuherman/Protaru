@@ -21,9 +21,9 @@ namespace MonevAtr.Pages.Search
         [ViewData]
         public string ReturnUrl { get; set; }
 
-        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
+        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] string returnUrl, [FromQuery] int page = 1)
         {
-            ReturnUrl = "/RtrIndexDaerah";
+            ReturnUrl = string.IsNullOrEmpty(returnUrl) ? "./Index" : returnUrl;
             FilterByJenis(rtr);
 
             Hasil = _context.Atr
