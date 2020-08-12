@@ -9,6 +9,7 @@
 
 <form>
     <div class="card-body">
+        <input type="hidden" asp-for="ReturnUrl"/>
         <input type="hidden" asp-for="Rtr.Prov"/>
         <div class="col-md-12 form-group">
             <label class="form-label">Kabupaten/Kota</label>
@@ -35,6 +36,6 @@
             class="btn btn-primary" 
             asp-page="./SearchResultDaerahByProgress" 
             formmethod="get" />
-        <a asp-page="./Index" class="btn btn-primary">Reset</a>
+        <a asp-page="@Model.ReturnUrl" class="btn btn-primary">Reset</a>
     </div>
 </form>
