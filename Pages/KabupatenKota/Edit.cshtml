@@ -19,6 +19,18 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label">Lintang</label>
+            <input type="number" asp-for="KabupatenKota.Lat" class="form-control" />
+            <span asp-validation-for="KabupatenKota.Lat" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Bujur</label>
+            <input type="number" asp-for="KabupatenKota.Long" class="form-control" />
+            <span asp-validation-for="KabupatenKota.Long" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
             <label class="control-label">Provinsi</label>
             <select asp-for="KabupatenKota.KodeProvinsi" class="form-control" asp-items="ViewBag.Provinsi"></select>
             <span asp-validation-for="KabupatenKota.KodeProvinsi" class="text-danger"></span>
