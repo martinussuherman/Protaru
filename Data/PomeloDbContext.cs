@@ -381,12 +381,28 @@ namespace MonevAtr.Models
 
             modelBuilder.Entity<KabupatenKota>(entity =>
             {
+                entity.HasKey(e => e.Kode)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("kabupaten_kota");
+
                 entity.HasIndex(e => e.KodeProvinsi)
                     .HasName("FK_kabupaten_kota_provinsi");
 
+                entity.Property(e => e.Kode).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeProvinsi).HasColumnType("int(11)");
+
+                entity.Property(e => e.Lat).HasColumnType("decimal(9,6)");
+
+                entity.Property(e => e.Long).HasColumnType("decimal(9,6)");
+
                 entity.Property(e => e.Nama)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("''");
+                    .IsRequired()
+                    .HasColumnType("varchar(100)")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.Provinsi)
                     .WithMany(p => p.KabupatenKota)
