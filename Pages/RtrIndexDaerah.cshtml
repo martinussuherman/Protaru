@@ -32,9 +32,15 @@
 </ejs-maps>
 
 <div id="tooltip-template" style="display: none;">
-	<div class="protaru-tooltip">
-		<h4>${city}</h4>
-		<p>${area}</p>
+	<div class="protaru-tooltip p-2">
+		<h5 class="text-center">${location}</h5>
+		<h6 class="text-center">${rtr}</h6>
+		<p class="mb-0">Progress: ${progress}</p>
+		<p class="mb-0">Surat Rekom Gub: ${rekomGub}</p>
+		<p class="mb-0">Rapat Lintas Sektor: ${linSek}</p>
+		<p class="mb-0">Surat Persetujuan Substansi: ${perSub}</p>
+		<p class="mb-0">No. Perda: ${perda}</p>
+		<a href="${link}" class="btn btn-primary btn-block p-0">Detail</a>
 	</div>
 </div>
 
