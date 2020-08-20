@@ -22,6 +22,10 @@ namespace MonevAtr.Models
         [Range(1, Int32.MaxValue, ErrorMessage = "Provinsi harus diisi."), Display(Name = "Provinsi")]
         public int KodeProvinsi { get; set; }
 
+        public decimal Lat { get; set; }
+
+        public decimal Long { get; set; }
+
         [ForeignKey("KodeProvinsi"), Display(Name = "Provinsi")]
         public Provinsi Provinsi { get; set; }
 
