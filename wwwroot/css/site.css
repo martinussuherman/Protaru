@@ -59,6 +59,11 @@
   border-radius: 1em;
 }
 
+.protaru-tooltip a
+{
+  pointer-events: all;
+}
+
 #maps
 {
   width: 100%; 
