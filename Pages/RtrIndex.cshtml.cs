@@ -120,9 +120,9 @@ namespace MonevAtr.Pages
         };
         private readonly MapsTooltipSettings _tooltipSettings = new MapsTooltipSettings
         {
-            // Template = "#tooltip-template",
+            Template = "#tooltip-template",
             Visible = true,
-            ValuePath = "city"
+            ValuePath = "location"
         };
 
         private readonly PomeloDbContext _context;
