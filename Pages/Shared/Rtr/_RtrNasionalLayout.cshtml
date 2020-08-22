@@ -40,18 +40,13 @@
 				</button>
 				<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
 					<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-						await Html.RenderPartialAsync("_MenuNasionalPrivate");
+@{
+						await Html.RenderPartialAsync(
+							SignInManager.IsSignedIn(User) ? 
+								"_MenuNasionalPrivate" : 
+								"_MenuNasionalPublic");
+						await Html.RenderPartialAsync("_LoginNasionalPartial");
 }
-else
-{
-						await Html.RenderPartialAsync("_MenuNasionalPublic");
-}
-
-						<!-- User menu -->
-                        <partial name="_LoginNasionalPartial" />
-						<!-- End User menu -->
 					</ul>
 				</div>
 			</nav>
