@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 
 @{
@@ -8,55 +8,225 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="~/assets/css/style.css">
-	<link rel="stylesheet" href="~/assets/css/slick.css"/>
-	<link rel="stylesheet" href="~/assets/css/slick-theme.css"/>
-	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
-    <title>@Model.Title - PROTARU</title>
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <title>Kementerian Agraria dan Tata Ruang - PROTARU</title>
+  </head>
 
-	<!-- write your code here -->
-    <link rel="stylesheet" href="~/css/screen.css" />
-</head>
+  <body>
+    <header class="bg-menu">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand" asp-page="/Index">
+            <img src="~/assets/img/logo.png">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
 
-<body>
-	<header class="text-center header-screen">
-		<img src="~/assets/img/logo.png" class="mt-3">
-	</header>
+              <li class="nav-item active">
+                <a class="nav-link nav-list" asp-page="/Index">Beranda</a>
+              </li>
 
-	<div class="banner-screen">
-		<img src="~/assets/img/banner-screen.jpg" class="img-fluid" alt="Progress Penyelesaian Rencana Tata Ruang">
-	</div>
+              <li class="nav-item">
+				        <a class="nav-link nav-list" asp-page="/RtrIndexNasional">Rtr Nasional</a>
+              </li>
 
-	<div class="container">
-		<div class="row mt-5">
-			<div class="col-md-6">
-				<a asp-page="/RtrIndexNasional">
-					<img src="~/assets/img/btn1.png" class="img-fluid">
-				</a>
-			</div>
+              <li class="nav-item">
+				        <a class="nav-link nav-list" asp-page="/RtrIndexDaerah">Rtr Daerah</a>
+              </li>
 
-			<div class="col-md-6">
-				<a asp-page="/RtrIndexDaerah">
-					<img src="~/assets/img/btn2.png" class="img-fluid">
-				</a>
-			</div>
-		</div>
+	            @{await Html.RenderPartialAsync("_LoginDaerahPartial");}
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<div class="text-center mt-4 mb-5">
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+    <div class="home-header pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 pt-5 mt-5 welcome-title">
+            <h1 class="title-status-progress pt-5 mt-4 welcome-title">
+              <strong>SELAMAT <br> DATANG</strong>
+            </h1>
+            <div class="border-title" style="width: 50%;"></div>
+            <h2 class="subtitle-welcome pt-2">
+              di Aplikasi PROTARU <br>
+              Progress Penyelesaian <br>
+              Tata Ruang
+            </h2>
+          </div>
+          <div class="col-lg-9">
+            <img src="~/assets/img/bg-header-home-2.jpg" style="max-width: 100%; height: auto;">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="progress-total">
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-3"></div>
+                  <div class="col-sm-6 py-2">
+                    <div class="row rtr-progress-total">
+                      <div class="col-3 text-right pt-3 progress-number-box">
+                        <div class="text-white progress-number" style="font-size: 2rem;">529</div>
+                      </div>
+                      <div class="col-3 text-left pt-4">
+                        <div class="text-white progress-type">RTR<br>Progress</div>
+                      </div>
+                      
+                      <div class="col-3 text-right pt-3 progress-number-box">
+                        <div class="text-white progress-number" style="font-size: 2rem;">359</div>
+                      </div>
+                      <div class="col-3 text-left pt-4">
+                        <div class="text-white progress-type">RTR<br>Perda</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <a href="#" class="btn btn-success text-white font-italic px-4" style="border-radius: 15px;">Temukan Rtr kamu disini</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="introduction" style="background-color: #f7f7f7;">
+      <div class="text-center w-100">
+        <h1 class="py-4 title-proratu-intro"><span>YUK, KENALAN DENGAN PROTARU!</span></h1>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7">
+            <img src="~/assets/img/introduce.jpg" style="max-width: 100%; height: auto; object-fit: cover;">
+          </div>
+          <div class="col-lg-5">
+            <p class="protaru-desc">Dalam Rangka mewujudkan ruang yang aman, nyaman, produktif dan berkelanjutan dengan tersedianya Perda Tata Ruang di seluruh Indonesia baik yang merupakan rencana umum maupun rencana detail.</p>
+
+            <p class="protaru-desc">Direktorat Jenderal Tata Ruang Kementerian Agraria dan Tata Ruang membangun sebuah aplikasi yang dinamakan PROTARU guna mengelola data dan informasi terkait kegiatan Perencanaan Tata Ruang dan Pemanfaatan Ruang Daerah yang  dilakukan  oleh  Pemerintah  di provinsi,  kabupaten, dan  kota</p>
+          </div>
+        </div>
+        <div class="row py-5">
+          <div class="col-md-2 p-2">
+            <a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px;">RTRW</a>
+          </div>
+          <div class="col-md-2 p-2">
+            <a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px;">RDTR</a>
+          </div>
+          <div class="col-md-2 p-2">
+            <a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px;">RTRWN</a>
+          </div>
+          <div class="col-md-2 p-2">
+            <a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px;">PULAU/KEP</a>
+          </div>
+          <div class="col-md-2 p-2">
+            <a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px;">KSN</a>
+          </div>
+          <div class="col-md-2 p-2">
+            <a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px;">KPN</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="description">
+      <div class="container py-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <h1 class="title-proratu-desc">KEMUDAHAN MENGGUNAKAN PROTARU</h1>
+            <div class="border-title"></div>
+            <p class="pt-3 protaru-desc">PROTARU menyajikan Progress Penyelesaian Rencana Tata Ruang baik Rencana 
+            Umum maupun Rencana Rinci yang disusun oleh Pemerintah. Berbagai macam 
+            kemudahan pengaksesan serta tata cara mencari data Rencana Tata Ruang
+            dapat anda lihat dalam video tutorial yang sudah kami sediakan.</p>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="text-center">
+                  <img src="~/assets/img/proses-daerah-icon.png">
+                </div>
+                <div class="text-center pt-3">
+                  <h2 class="font-weight-bold title-step-desc">1. Proses di Daerah</h2>
+                  <p class="text-secondary step-desc">Pelaksanaan RTR di Daerah</p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="text-center">
+                  <img src="~/assets/img/pencatatan-icon.png">
+                </div>
+                <div class="text-center pt-3">
+                  <h2 class="font-weight-bold title-step-desc">2. Pencatatan</h2>
+                  <p class="text-secondary step-desc">Aplikasi Protaru mencatat di dalam database sentral</p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="text-center">
+                  <img src="~/assets/img/sajian-data-icon.png">
+                </div>
+                <div class="text-center pt-3">
+                  <h2 class="font-weight-bold title-step-desc">3. Sajian Data</h2>
+                  <p class="text-secondary step-desc">Khalayak umum dapat melihat sajian data Progress RTR</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 py-5 yt-box">
+            <div class="videowrapper">
+              <iframe style="border-radius: 10px;" width="560" height="315" src="https://www.youtube.com/embed/BX5sqka5A8w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="pt-3 bg-footer">
+      <div class="text-center font-weight-bold pt-5 mt-5 text-footer">
+        <a href="#"><img src="~/assets/img/footer-icon-1.png"></a>
+        <a href="#"><img src="~/assets/img/footer-icon-2.png"></a>
+        <div>
+          <span class="footer-copyright">&copy; 2020 APLIKASI PROTARU</span> <br>
+          Jalan Raden Patah I No. 1 Kebayoran Baru Jakarta Selatan - Kode Pos 12110 <br>
+
+          Direktorat Jenderal Tata Ruang Kementrian Agraria dan Tata Ruang <br>
+          Badan Pertanahan Nasional <br>
+        </div>
+      </div>
+
+      <div class="text-center pt-2">
+        <a target="_blank" rel="noopener" href="https://www.facebook.com/atrbpn" class="px-2">
+          <img src="~/assets/img/facebook-icon.png" style="width: 32px; height: 32px; object-fit: cover;">
+        </a>
+        <a target="_blank" rel="noopener" href="https://twitter.com/atr_bpn" class="px-2">
+          <img src="~/assets/img/twitter-icon.png" style="width: 32px; height: 32px; object-fit: cover;">
+        </a>
+        <a target="_blank" rel="noopener" href="https://www.instagram.com/kementerian.atrbpn/?hl=id" class="px-2">
+          <img src="~/assets/img/instagram-icon.png" style="width: 32px; height: 32px; object-fit: cover;">
+        </a>
+        <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UC29czQyZyoMFNDgXYYWjmkw" class="px-2">
+          <img src="~/assets/img/youtube-icon.png" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px;">
+        </a>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
 </html>
