@@ -55,12 +55,8 @@
 {
   color: black;
   background-color: rgba(240, 240, 240, 0.85);
-  width: 180px;
+  width: 240px;
   border-radius: 1em;
-}
-
-.protaru-tooltip a
-{
   pointer-events: all;
 }
 
