@@ -7,7 +7,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <partial name="_CommonLoginPartial" />
+    await Html.RenderPartialAsync("_CommonLoginPartial");
 }
 else
 {
@@ -16,7 +16,7 @@ else
         asp-page="/Account/LoginNasional" 
         asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()" 
         class="nav-link">
-        Login
+        Masuk
     </a>
 }
 
