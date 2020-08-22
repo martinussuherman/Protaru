@@ -1,4 +1,3 @@
-@using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Identity
 @using Itm.Identity
 @inject SignInManager<ApplicationUser> SignInManager
@@ -7,13 +6,17 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <partial name="_CommonLoginPartial" />
+    await Html.RenderPartialAsync("_CommonLoginPartial");
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    <a id="login" 
+        asp-area="Identity" 
+        asp-page="/Account/LoginDaerah" 
+        asp-route-returnUrl="~/" 
+        class="nav-link">
+        Masuk
+    </a>
 }
 
-</ul>
+</li>
