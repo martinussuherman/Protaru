@@ -87,9 +87,14 @@
 }
 
 #provinsi-autocomplete {
-  background: #fff url('../assets/img/search-icon.png') no-repeat 1rem;
-  height: calc(1.5em + 2px + 1rem);
-  font-size: 1.25rem;
+  background: #dedede url('../assets/img/search-icon.png') no-repeat 1rem;
+  width: 550px !important;
+  border-radius: 16px;
+  box-shadow: 0 .2rem .5rem rgba(0,0,0,.15)!important;
+}
+
+#provinsi-autocomplete::placeholder {
+  font-size: 18px;
 }
 
 /* New style 22-08-2020 */
