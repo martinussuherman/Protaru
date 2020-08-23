@@ -3,7 +3,7 @@
 @using Itm.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 
-<li class="nav-item dropdown">
+<li id="menu-login" class="nav-item dropdown">
 
 @if (SignInManager.IsSignedIn(User))
 {
