@@ -1,0 +1,15 @@
+<ul class="navbar-nav">
+    <li id="menu-home" class="nav-item">
+        <a class="nav-link nav-list" asp-page="/Index">Beranda</a>
+    </li>
+
+    <li id="menu-nasional" class="nav-item">
+        <a class="nav-link nav-list" asp-page="/RtrIndexNasional">Rtr Nasional</a>
+    </li>
+
+    <li id="menu-daerah" class="nav-item">
+        <a class="nav-link nav-list" asp-page="/RtrIndexDaerah">Rtr Daerah</a>
+    </li>
+
+    @{await Html.RenderPartialAsync("_LoginPartial");}
+</ul>
