@@ -1,8 +1,9 @@
-﻿@page 
+@page 
 @model LoginModel
 
-@{
-	Layout = "_RtrDaerahLayout";
+@section Menu 
+{
+	@await Html.PartialAsync("_MenuHome")
 }
 
 @await Html.PartialAsync("LoginCommon", Model)
