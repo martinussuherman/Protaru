@@ -17,7 +17,9 @@ namespace MonevAtr
             List<string> result = new List<string>(viewLocations)
             {
                 "~/Pages/Shared/Rtr/{1}/{0}.cshtml",
-                "~/Pages/Shared/Rtr/{0}.cshtml"
+                "~/Pages/Shared/Rtr/{0}.cshtml",
+                "~/Pages/Shared/Login/{0}.cshtml",
+                "~/Pages/Shared/Menu/{0}.cshtml"
             };
 
             return result;
