@@ -1,0 +1,29 @@
+@using Microsoft.AspNetCore.Identity
+@using Itm.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@if (User.IsInRole("SuperAdmin"))
+{
+    <li id="menu-master" class="nav-item dropdown">
+        <a class="nav-link nav-list dropdown-toggle" 
+            href="#" 
+            role="button" 
+            data-toggle="dropdown" 
+            aria-haspopup="true" 
+            aria-expanded="false">
+            Master
+        </a>
+
+        <div class="dropdown-menu">
+            <a asp-page="/Provinsi/Index" class="dropdown-item">Provinsi</a>
+            <a asp-page="/KabupatenKota/Index" class="dropdown-item">Kabupaten/Kota</a>
+            <a asp-page="/Pulau/Index" class="dropdown-item">Pulau</a>
+            <a asp-page="/Kawasan/Index" class="dropdown-item">Kawasan</a>
+            <a asp-page="/JenisAtr/Index" class="dropdown-item">Jenis RTR</a>
+            <a asp-page="/ProgressAtr/Index"  class="dropdown-item">Progress RTR</a>
+            <a asp-page="/KelompokDokumen/Index" class="dropdown-item">Kelompok Dokumen</a>
+            <a asp-page="/Dokumen/Index" class="dropdown-item">Dokumen</a>
+            <a asp-page="/Atr/Index" class="dropdown-item">RTR</a>
+        </div>
+    </li>
+}
