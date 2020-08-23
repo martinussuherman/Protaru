@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Microsoft.AspNetCore.Mvc.ViewEngines
 @using Microsoft.AspNetCore.Identity
 @using Itm.Identity
 @inject UserManager<ApplicationUser> UserManager
@@ -7,180 +7,78 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="~/assets/css/style.css">
-	<link rel="stylesheet" href="~/assets/css/slick.css"/>
-	<link rel="stylesheet" href="~/assets/css/slick-theme.css"/>
-	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha512-tDXPcamuZsWWd6OsKFyH6nAqh/MjZ/5Yk88T5o+aMfygqNFPan1pLyPFAndRzmOWHKT+jSDzWpJv8krj6x1LMA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+	@RenderSection("Styles", false)
+
     <title>@ViewData["Title"] - PROTARU</title>
+  </head>
 
-	<!-- write your code here -->
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
+  <body>
+    <header class="bg-menu">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand" asp-page="/Index">
+            <img src="~/assets/img/logo.png">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
 
-<body onload="init();">
-	<header class="bg-menu">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<a asp-page="/Index" class="navbar-brand">
-					<img src="~/assets/img/logo.png">
-				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-					<ul class="navbar-nav">
-						<li class="nav-item active">
-							<a asp-page="/Index" class="nav-link nav-list">Home</a>
-						</li>
+			@RenderSection("Menu", true)
 
-						<li class="nav-item dropdown">
-							<a class="nav-link nav-list dropdown-toggle" href="#" id="rtrw-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">RTRW</a>
-
-							<div class="dropdown-menu" aria-labelledby="rtrw-menu">
-                                <a asp-page="/RtrwT50/Index" class="dropdown-item">RTRW T5-0</a>
-                                <a asp-page="/RtrwT51/Index" class="dropdown-item">RTRW T5-1</a>
-                                <a asp-page="/RtrwT52/Index" class="dropdown-item">RTRW T5-2</a>
-							</div>
-						</li>
-
-						<li class="nav-item dropdown">
-							<a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">RDTR</a>
-							<div class="dropdown-menu" aria-labelledby="rdtr-menu">
-                                <a asp-page="/RdtrT51/Index" class="dropdown-item">RDTR T5-1</a>
-                                <a asp-page="/RdtrT52/Index" class="dropdown-item">RDTR T5-2</a>
-							</div>
-						</li>
-
-						<li class="nav-item dropdown">
-							<a class="nav-link nav-list dropdown-toggle" href="#" id="rdtr-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PERENCANAAN</a>
-							<div class="dropdown-menu" aria-labelledby="rdtr-menu">
-								<a asp-page="/RtrwnT51/Index" class="dropdown-item">RTRWN T5-1</a>
-								<a asp-page="/RtrwnT52/Index" class="dropdown-item">RTRWN T5-2</a>
-                                <a asp-page="/RtrPulauT51/Index" class="dropdown-item">RTR PULAU/KEP T5-1</a>
-                                <a asp-page="/RtrPulauT52/Index" class="dropdown-item">RTR PULAU/KEP T5-2</a>
-								<a asp-page="/RtrKsnT51/Index" class="dropdown-item">RTR KSN T5-1</a>
-								<a asp-page="/RtrKsnT52/Index" class="dropdown-item">RTR KSN T5-2</a>
-								<a asp-page="/RtrKpnT51/Index" class="dropdown-item">RDTR KPN T5-1</a>
-								<a asp-page="/RtrKpnT52/Index" class="dropdown-item">RDTR KPN T5-2</a>
-							</div>
-						</li>
-
-						<li class="nav-item">
-							<a asp-page="/Search/Index" class="nav-link nav-list">Pencarian</a>
-						</li>
-
-@if (User.IsInRole("SuperAdmin"))
-{
-						<li class="nav-item dropdown">
-							<a class="nav-link nav-list dropdown-toggle" href="#" id="master" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Master</a>
-							<div class="dropdown-menu" aria-labelledby="master">
-								<a asp-page="/Provinsi/Index" class="dropdown-item">Provinsi</a>
-								<a asp-page="/KabupatenKota/Index" class="dropdown-item">Kabupaten/Kota</a>
-								<a asp-page="/Pulau/Index" class="dropdown-item">Pulau</a>
-								<a asp-page="/Kawasan/Index" class="dropdown-item">Kawasan</a>
-								<a asp-page="/JenisAtr/Index" class="dropdown-item">Jenis RTR</a>
-								<a asp-page="/ProgressAtr/Index"  class="dropdown-item">Progress RTR</a>
-								<a asp-page="/KelompokDokumen/Index" class="dropdown-item">Kelompok Dokumen</a>
-								<a asp-page="/Dokumen/Index" class="dropdown-item">Dokumen</a>
-								<a asp-page="/Atr/Index" class="dropdown-item">RTR</a>
-							</div>
-						</li>
-}
-
-						<!-- User menu -->
-                        <partial name="_LoginPartial" />
-						<!-- End User menu -->
-					</ul>
-				</div>
-			</nav>
-		</div>
-	</header>
+          </div>
+        </nav>
+      </div>
+    </header>
 
     @RenderBody()
 
-	<footer class="mt-5 bg-footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-5">
-					<div class="mt-4 mb-4">
-						<img src="~/assets/img/logo-footer.png">
-						<div class="mt-4 footer-text">
+    <footer class="pt-3 bg-footer">
+      <div class="text-center font-weight-bold pt-5 mt-5 text-footer">
+        <a href="#"><img src="~/assets/img/footer-icon-1.png"></a>
+        <a href="#"><img src="~/assets/img/footer-icon-2.png"></a>
+        <div>
+          <span class="footer-copyright">&copy; 2020 APLIKASI PROTARU</span> <br>
+          Jalan Raden Patah I No. 1 Kebayoran Baru Jakarta Selatan - Kode Pos 12110 <br>
 
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 mt-4 mb-4 footer-box">
-					<div class="pl-4">
-						<div class="footer-text-link">
-							<strong>TAUTAN</strong>
-						</div>
-						<div class="mt-4 footer-text-link">
-							<a target="_blank" rel="noopener" href="https://www.atrbpn.go.id">Website Kementerian Agraria dan Tata Ruang/Badan Pertanahan Nasional</a><br /><br />
-							<a target="_blank" rel="noopener" href="https://tataruang.atrbpn.go.id">Website Direktorat Jenderal Tata Ruang Kementerian Agraria dan Tata Ruang/ Badan Pertanahan Nasional</a><br /><br />
-							<a target="_blank" rel="noopener" href="http://gistaru.atrbpn.go.id">GIS Tata Ruang </a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 mt-4 mb-4 footer-box">
-					<div class="pl-4">
-						<div class="footer-text-link">
-							<strong>HUBUNGI KAMI</strong>
-						</div>
-						<div class="mt-4 footer-text-link">
-							Gedung Ditjen Tata Ruang Jalan Raden Patah Nomor 1, Selong, Kebayoran Baru Jakarta 12110 <br /> <br />
+          Direktorat Jenderal Tata Ruang Kementrian Agraria dan Tata Ruang <br>
+          Badan Pertanahan Nasional <br>
+        </div>
+      </div>
 
-							Email : pdk.binda@gmail.com <br /> <br />
-							<a target="_blank" rel="noopener" href="https://www.facebook.com/atrbpn"><img src="~/assets/img/fb.png"></a>
-							<a target="_blank" rel="noopener" href="https://twitter.com/atr_bpn"><img src="~/assets/img/twitter.png"></a>
-							<a target="_blank" rel="noopener" href="https://www.instagram.com/kementerian.atrbpn/?hl=id"><img src="~/assets/img/ig.png"></a>
-							<a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UC29czQyZyoMFNDgXYYWjmkw"><img src="~/assets/img/yt.png"></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="copy text-center pt-2 pb-4">
-			&copy; 2019 PROTARU I KEMENTERIAN AGRARIA DAN TATA RUANG / BADAN PERTANAHAN NASIONAL
-		</div>
-	</footer>
+      <div class="text-center pt-2">
+        <a target="_blank" rel="noopener" href="https://www.facebook.com/atrbpn" class="px-2">
+          <img src="~/assets/img/facebook-icon.png" style="width: 32px; height: 32px; object-fit: cover;">
+        </a>
+        <a target="_blank" rel="noopener" href="https://twitter.com/atr_bpn" class="px-2">
+          <img src="~/assets/img/twitter-icon.png" style="width: 32px; height: 32px; object-fit: cover;">
+        </a>
+        <a target="_blank" rel="noopener" href="https://www.instagram.com/kementerian.atrbpn/?hl=id" class="px-2">
+          <img src="~/assets/img/instagram-icon.png" style="width: 32px; height: 32px; object-fit: cover;">
+        </a>
+        <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UC29czQyZyoMFNDgXYYWjmkw" class="px-2">
+          <img src="~/assets/img/youtube-icon.png" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px;">
+        </a>
+      </div>
+    </footer>
 
-@*
-@if (Engine.FindView(ViewContext, "_Fake", isMainPage: false).Success)
-{
-            <partial name="_Fake" />
-            <div class="my-3 my-md-5">
-                <div class="container">
-                    <!-- <partial name="_CookieConsentPartial" /> -->
-                    <!-- <main role="main" class="pb-3"> -->
-                        @RenderBody()
-                    <!-- </main> -->
-                </div>
-            </div>
-}
-else
-{
-            @RenderBody()
-}
-*@
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/popper.min.js" integrity="sha512-LZLOQO34zgeOVeY/PjcUy3aA7Zgv/D9yOrbe/M+RTNtZFutE5S0sWg1V5CL5IlQyxhp/Y5W54X27l35ckK7GJg==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha512-Ah5hWYPzDsVHf9i2EejFBFrG2ZAPmpu4ZJtW4MfSgpZacn+M9QHDt+Hd/wL1tEkk1UgbzqepJr6KnhZjFKB+0A==" crossorigin="anonymous"></script>
 
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<!-- <script src="~/assets/js/jquery-3.3.1.slim.min.js"></script> -->
-	<script src="~/assets/js/jquery-3.4.1.min.js"></script>
-	<script src="~/assets/js/popper.min.js"></script>
-	<script src="~/assets/js/bootstrap.min.js"></script>
-	<script src="~/assets/js/slick.min.js"></script>
-
-    <!-- <script src="~/js/site.js" asp-append-version="true"></script> -->
     @RenderSection("Scripts", required: false)
-</body>
+
+  </body>
 </html>
