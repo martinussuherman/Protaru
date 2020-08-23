@@ -14,7 +14,7 @@
                             <h4 class="pb-4 pl-3 text-title-rtr text-grey">Login to your Account</h4>
                             <div class="col-md-12 form-group">
                                 <label class="form-label font-weight-bold">User</label>
-                                <input asp-for="Input.UserName" class="form-control" placeholder="Enter User Name"/>
+                                <input asp-for="Input.UserName" class="form-control" placeholder="User"/>
                                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
                             </div>
 
@@ -36,11 +36,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts 
-{
-    <partial name="_ValidationScriptsPartial" />
-	<script>
-		$("#menu-login").addClass("active");
-	</script>
-}
