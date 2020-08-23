@@ -1,8 +1,9 @@
+@using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Identity
 @using Itm.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 
-<li class="nav-item dropdown">
+<li id="menu-login" class="nav-item dropdown">
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -12,8 +13,8 @@ else
 {
     <a id="login" 
         asp-area="Identity" 
-        asp-page="/Account/LoginDaerah" 
-        asp-route-returnUrl="~/" 
+        asp-page="/Account/Login" 
+        asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()" 
         class="nav-link">
         Masuk
     </a>
