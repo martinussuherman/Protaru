@@ -1,4 +1,4 @@
-﻿@page 
+@page 
 @model LoginModel
 
 @{
@@ -6,3 +6,11 @@
 }
 
 @await Html.PartialAsync("LoginCommon", Model)
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+	<script>
+		$("#menu-login").addClass("active");
+	</script>
+}

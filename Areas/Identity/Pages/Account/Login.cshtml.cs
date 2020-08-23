@@ -35,10 +35,10 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage="Mohon isi user.")]
             public string UserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage="Mohon isi password.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
         }
