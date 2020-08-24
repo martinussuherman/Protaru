@@ -3,8 +3,10 @@
 
 @{
     Layout = "_RtrDaerahSearchResultLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RDTR T5-1";
     ViewData["PageTitle"] = "RDTR";
+    int index = Model.Hasil.StartItemIndex;
+    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
+    ViewData["Title"] = Model.IsCanEdit ? "Monitoring & Evaluasi RDTR T5-1" : "Monitoring & Evaluasi RDTR";
 }
 
 <div class="card-body table-responsive">
@@ -21,11 +23,6 @@
             </tr>
         </thead>
         <tbody>
-
-@{
-int index = Model.Hasil.StartItemIndex;
-string pageName = Model.IsCanEdit ? "./Edit" : "./View";
-}
 
 @foreach (var item in Model.Hasil)
 {
