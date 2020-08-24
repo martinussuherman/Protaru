@@ -3,30 +3,17 @@
 
 @{
     Layout = "_RtrDaerahSearchResultLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RTRW T5-1";
     ViewData["PageTitle"] = "RTRW";
+    int index = Model.Hasil.StartItemIndex;
+    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
+    ViewData["Title"] = Model.IsCanEdit ? "Monitoring & Evaluasi RTRW T5-1" : "Monitoring & Evaluasi RTRW";
 }
 
 <div class="card-body table-responsive">
     <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-        <thead>
-            <tr class="text-light font-weight-bold text-center bg-info">
-                <th>No</th>
-                <th>Action</th>
-                <th>Provinsi</th>
-                <th>Kabupaten/Kota</th>
-                <th>Status</th>
-                <th>Nomor Perda</th>
-                <th>Tahun Perda</th>
-                <th>Progress</th>
-            </tr>
-        </thead>
-        <tbody>
+        @await Html.PartialAsync("_TableHeader", Model.IsCanEdit)
 
-@{
-int index = Model.Hasil.StartItemIndex;
-string pageName = Model.IsCanEdit ? "./Edit" : "./View";
-}
+        <tbody>
 
 @foreach (var item in Model.Hasil)
 {
@@ -42,7 +29,12 @@ string pageName = Model.IsCanEdit ? "./Edit" : "./View";
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
                 <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
+
+@if(Model.IsCanEdit)
+{
                 <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRegular(item.StatusRevisi)</td>
+}
+
                 <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
                 <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
