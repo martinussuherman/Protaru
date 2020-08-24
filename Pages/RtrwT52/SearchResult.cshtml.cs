@@ -62,6 +62,7 @@ namespace MonevAtr.Pages.RtrwT52
         public IActionResult OnGetByProgress([FromQuery] int stage, [FromQuery] int page = 1)
         {
             AtrSearch rtr = new AtrSearch();
+            Rtr = rtr;
             AddProgressByStage(rtr, stage);
             Hasil = _context.Atr
                 .ByJenis(JenisRtrEnum.RtrwT52)
