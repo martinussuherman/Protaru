@@ -6,110 +6,31 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject ICompositeViewEngine Engine
 
-<!doctype html>
-<html lang="en">
-  <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="~/assets/css/style.css">
-	<link rel="stylesheet" href="~/assets/css/slick.css"/>
-	<link rel="stylesheet" href="~/assets/css/slick-theme.css"/>
-	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
-    <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
-    <title>@ViewData["Title"] - PROTARU</title>
-
-	<!-- write your code here -->
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-
-<body onload="init();">
-	<header class="bg-menu">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<a asp-page="/Index" class="navbar-brand">
-					<img src="~/assets/img/logo.png">
-				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-					<ul class="navbar-nav">
 @{
-						await Html.RenderPartialAsync(
-							SignInManager.IsSignedIn(User) ? 
-								"_MenuNasionalPrivate" : 
-								"_MenuNasionalPublic");
-						await Html.RenderPartialAsync("_LoginNasionalPartial");
+	Layout = "_Layout";
 }
-					</ul>
-				</div>
-			</nav>
-		</div>
-	</header>
 
-    @RenderBody()
+@section Styles
+{
+    <!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="~/css/material-dropdown.css" />
+}
 
-	<footer class="mt-5 bg-footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-5">
-					<div class="mt-4 mb-4">
-						<img src="~/assets/img/logo-footer.png">
-						<div class="mt-4 footer-text">
+@section Menu
+{
+	@await Html.PartialAsync(
+		SignInManager.IsSignedIn(User) ? 
+			"_MenuNasionalPrivate" : 
+			"_MenuNasionalPublic")
+}
 
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 mt-4 mb-4 footer-box">
-					<div class="pl-4">
-						<div class="footer-text-link">
-							<strong>TAUTAN</strong>
-						</div>
-						<div class="mt-4 footer-text-link">
-							<a target="_blank" rel="noopener" href="https://www.atrbpn.go.id">Website Kementerian Agraria dan Tata Ruang/Badan Pertanahan Nasional</a><br /><br />
-							<a target="_blank" rel="noopener" href="https://tataruang.atrbpn.go.id">Website Direktorat Jenderal Tata Ruang Kementerian Agraria dan Tata Ruang/ Badan Pertanahan Nasional</a><br /><br />
-							<a target="_blank" rel="noopener" href="http://gistaru.atrbpn.go.id">GIS Tata Ruang </a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 mt-4 mb-4 footer-box">
-					<div class="pl-4">
-						<div class="footer-text-link">
-							<strong>HUBUNGI KAMI</strong>
-						</div>
-						<div class="mt-4 footer-text-link">
-							Gedung Ditjen Tata Ruang Jalan Raden Patah Nomor 1, Selong, Kebayoran Baru Jakarta 12110 <br /> <br />
+@section Scripts
+{
+	@RenderSection("Scripts", required: false)
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="~/js/ej2.min.js"></script>
+    <!-- Syncfusion Essential JS 2 ScriptManager -->
+    <ejs-scripts></ejs-scripts>
+}
 
-							Email : pdk.binda@gmail.com <br /> <br />
-							<a target="_blank" rel="noopener" href="https://www.facebook.com/atrbpn"><img src="~/assets/img/fb.png"></a>
-							<a target="_blank" rel="noopener" href="https://twitter.com/atr_bpn"><img src="~/assets/img/twitter.png"></a>
-							<a target="_blank" rel="noopener" href="https://www.instagram.com/kementerian.atrbpn/?hl=id"><img src="~/assets/img/ig.png"></a>
-							<a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UC29czQyZyoMFNDgXYYWjmkw"><img src="~/assets/img/yt.png"></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="copy text-center pt-2 pb-4">
-			&copy; 2019 PROTARU I KEMENTERIAN AGRARIA DAN TATA RUANG / BADAN PERTANAHAN NASIONAL
-		</div>
-	</footer>
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<!-- <script src="~/assets/js/jquery-3.3.1.slim.min.js"></script> -->
-	<script src="~/assets/js/jquery-3.4.1.min.js"></script>
-	<script src="~/assets/js/popper.min.js"></script>
-	<script src="~/assets/js/bootstrap.min.js"></script>
-	<script src="~/assets/js/slick.min.js"></script>
-
-    <!-- <script src="~/js/site.js" asp-append-version="true"></script> -->
-    @RenderSection("Scripts", required: false)
-</body>
-</html>
+@RenderBody()
