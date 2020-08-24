@@ -1,8 +1,10 @@
 @page
-@model RtrIndexModel
 
 @using Syncfusion.EJ2.Maps;
 @using Newtonsoft.Json;
+@using MonevAtr.Components;
+
+@model RtrIndexModel
 
 @{
 	Layout = "_RtrDaerahLayout";
@@ -10,265 +12,295 @@
 	ViewData["ReturnUrl"] = "/RtrIndexDaerah";
 }
 
-<ejs-maps 
-	id="maps" 
-	border="Model.Border"
-	centerPosition="Model.CenterPosition"
-	format="n" 
-	load="window.onMapLoad"
-	tooltipDisplayMode="DoubleClick"
-	useGroupingSeparator="true" 
-	zoomSettings="Model.ZoomSettings">
+<div class="container pt-4">
+	<ejs-maps
+		id="maps"
+		border="Model.Border"
+		centerPosition="Model.CenterPosition"
+		format="n"
+		load="window.onMapLoad"
+		tooltipDisplayMode="DoubleClick"
+		useGroupingSeparator="true"
+		zoomSettings="Model.ZoomSettings">
 
-	<e-maps-layers>
-		<e-maps-layer 
-			layerType="Bing" 
-			bingMapType="AerialWithLabel" 
-			key="@Model.BingKey"
-			markerClusterSettings="Model.ClusterSettings"
-			markerSettings="Model.MarkerSettings">
-		</e-maps-layer>
-	</e-maps-layers>
-</ejs-maps>
+		<e-maps-layers>
+			<e-maps-layer
+				layerType="Bing"
+				bingMapType="AerialWithLabel"
+				key="@Model.BingKey"
+				markerClusterSettings="Model.ClusterSettings"
+				markerSettings="Model.MarkerSettings">
+			</e-maps-layer>
+		</e-maps-layers>
+	</ejs-maps>
 
-<div id="tooltip-template" style="display: none;">
-	<div class="protaru-tooltip p-2">
-		<h5 class="text-center">${location}</h5>
-		<h6 class="text-center">${rtr}</h6>
-		<p class="mb-0">Progress: ${progress}</p>
-		<p class="mb-0">Surat Rekom Gub: ${rekomGub}</p>
-		<p class="mb-0">Rapat Lintas Sektor: ${linSek}</p>
-		<p class="mb-0">Surat Persetujuan Substansi: ${perSub}</p>
-		<p class="mb-0">No. Perda: ${perda}</p>
-		<a href="${link}" class="btn btn-primary btn-block p-0">Detail</a>
-	</div>
-</div>
-
-<div class="search-box">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-2 text-center"></div>
-			<div class="col-lg-8 text-center">
-				<form method="get" asp-page="/Search/DaerahByProgress" class="form-inline py-4 px-3">
-					<input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
-					<div class="form-group col-lg-9">
-						<ejs-autocomplete 
-							autocomplete="true"
-							autofill="true" 
-							dataSource="@Model.Provinsi" 
-							fields="@Model.FieldSettings"
-							filtering="filtering"
-							id="provinsi-autocomplete" 
-							placeholder="Cari berdasarkan nama provinsi"
-							class="form-control form-control-lg w-100 form-search pl-5 text-sm-center shadow">
-						</ejs-autocomplete>
-					</div>
-					<div class="col-lg-3">
-						<button type="submit" class="btn btn-search btn-lg btn-block shadow border-0">SEARCH</button>
-					</div>
-				</form>
-			</div>
-			<div class="col-lg-2 text-center"></div>
+	<div id="tooltip-template" style="display: none;">
+		<div class="protaru-tooltip p-2">
+			<h5 class="text-center">${location}</h5>
+			<h6 class="text-center">${rtr}</h6>
+			<p class="mb-0">Progress: ${progress}</p>
+			<p class="mb-0">Surat Rekom Gub: ${rekomGub}</p>
+			<p class="mb-0">Rapat Lintas Sektor: ${linSek}</p>
+			<p class="mb-0">Surat Persetujuan Substansi: ${perSub}</p>
+			<p class="mb-0">No. Perda: ${perda}</p>
+			<a href="${link}" class="btn btn-primary btn-block p-0">Detail</a>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-lg-6 offset-lg-3">
+			<form method="get"
+				asp-page="/Search/DaerahByProgress"
+				class="form-inline pt-4 pb-1 text-center">
+				<input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+				<ejs-autocomplete
+					autocomplete="true"
+					autofill="true"
+					dataSource="@Model.Provinsi"
+					fields="@Model.FieldSettings"
+					filtering="filtering"
+					id="provinsi-autocomplete"
+					placeholder="Cari berdasarkan nama provinsi"
+					name="provinsi"
+					class="form-control pl-5">
+				</ejs-autocomplete>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6 text-right box-image-rtr">
+			<a asp-page="/RtrIndexNasional">
+				<img src="assets/img/btn-nasional.png" class="btn-image-rtr" alt="RTR Nasional">
+			</a>
+    </div>
+
+    <div class="col-lg-6 text-left box-image-rtr">
+        <a asp-page="/RtrIndexDaerah">
+          <img src="assets/img/btn-daerah.png" class="btn-image-rtr" alt="RTR daerah">
+        </a>
+    </div>
+  </div>
 </div>
 
-<div class="progress-total">
-	<div class="container">
+<div class="progress-chart mt-2">
+	<div class="container py-3">
 		<div class="row">
-			<div class="col-sm-2"></div>
-			<div class="col-sm-8 py-5">
-				<div class="row rtr-progress-total">
-					<div class="col-3 text-right pt-2 progress-number-box">
-						<div class="text-white display-4 progress-number">529</div>
+			<div class="col-lg-6 py-3 rtr-progress-desc">
+				<h1 class="title-status-progress pt-5">
+					STATUS <br> PROGRES RTR <br> <strong>DAERAH</strong> <br>
+				</h1>
+
+				<div class="border-title"></div>
+
+				<div class="text-left pt-4">
+					<p class="protaru-desc">laporan hasil-hasil pembinaan penyelenggaraan penataan ruang yang telah dilakukan di provinsi, kabupaten, dan kota Ruang Daerah yang dilakukan oleh Pemerintah di provinsi, kabupaten, dan kota</p>
+					<p class="protaru-desc">Disajikan di dalam sebuah tampilan status progress yang dibagi menjadi dua tahapan yaitu lima tahun pertama dan lima tahun kedua.</p>
+				</div>
+
+				<div class="row py-5">
+					<div class="col-md-5 p-2">
+						<a href="#" class="btn btn-outline-success btn-block py-2 font-weight-bold" style="border-radius: 14px; border: 2px solid #6c8e6b;">RTRW</a>
 					</div>
-					<div class="col-3 text-left pt-2">
-						<div class="text-white progress-type">RTR<br>Progress</div>
-					</div>
-					
-					<div class="col-3 text-right pt-2 progress-number-box">
-						<div class="text-white display-4 progress-number">359</div>
-					</div>
-					<div class="col-3 text-left pt-2">
-						<div class="text-white progress-type">RTR<br>Perda</div>
+
+					<div class="col-md-5 p-2">
+						<a href="#" class="btn btn-outline-danger btn-block py-2 font-weight-bold" style="border-radius: 14px; border: 2px solid #ff5722;">RDTR</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2"></div>
-		</div>
+
+			<div class="col-lg-6 py-3">
+				<div class="pt-5">
+					<a id="rtrw-t51-progress"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title=""
+						class="title-progress active-progress"
+						data-original-title="RTRW T5-1 adalah RTRW yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan">
+						RTRW
+					</a>
+
+					<span class="title-progress">|</span>
+
+					<a id="rdtr-t51-progress"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title="" class="title-progress"
+						data-original-title="RDTR T5-1 adalah RDTR yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan">
+						RDTR
+					</a>
+
+					<h6 class="text-progress">Lima Tahun Pertama</h6>
+
+					<div id="progress-t51" class="box-graphic">
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/penyusunan.png")" 
+							param-Text="@("Penyusunan")" 
+							param-ProgressClass="@("progress-init")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")"
+							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")" 
+							param-Text="@("Rekomendasi Gubernur")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/persub.png")" 
+							param-Text="@("Persetujuan Substansi")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/perda.png")" 
+							param-Text="@("Peraturan Daerah")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("yellow-bar")" 
+							param-CircleClass="@("circle-light")"
+							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
+					</div>
+				</div>
+
+				<div class="pt-5">
+					<a id="rtrw-t52-progress"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title=""
+						class="title-progress active-progress"
+						data-original-title="RTRW T5-2 adalah RTRW yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RTRW T5-1">
+						RTRW
+					</a>
+
+					<span class="title-progress">|</span>
+
+					<a id="rdtr-t52-progress"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title=""
+						class="title-progress"
+						data-original-title="RDTR T5-2 adalah RDTR yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RDTR T5-1">
+						RDTR
+					</a>
+
+					<h6 class="text-progress">Lima Tahun Kedua</h6>
+
+					<div id="progress-t52" class="box-graphic">
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/proses-pk.png")" 
+							param-Text="@("Proses Peninjauan Kembali")" 
+							param-ProgressClass="@("progress-init")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")"
+							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/revisi.png")" 
+							param-Text="@("Revisi")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")" 
+							param-Text="@("Rekomendasi Gubernur")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/persub.png")" 
+							param-Text="@("Persetujuan Substansi")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("yellow-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/perda.png")" 
+							param-Text="@("Peraturan Daerah")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("purple-bar")" 
+							param-CircleClass="@("circle-light")" 
+							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
+			    	</div>
+		    	</div>
+		  	</div>
+	  	</div>
 	</div>
 </div>
 
-<div class="progress-chart">
-      <!-- Progress Penyelesaian RTR -->
-	<div class="py-5">
-        <div class="text-center chart-title">
-			<div class="font-weight-normal text-dark">PROGRESS PENYELESAIAN RTR</div>
-			<div class="border-chart-title">&nbsp;</div>
+<div class="description">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1 class="title-proratu-desc">KEMUDAHAN MENGGUNAKAN PROTARU</h1>
+        <p class="pt-3 protaru-desc">PROTARU menyajikan Progress Penyelesaian Rencana Tata Ruang baik Rencana
+        Umum maupun Rencana Rinci yang disusun oleh Pemerintah. Berbagai macam
+        kemudahan pengaksesan serta tata cara mencari data Rencana Tata Ruang
+        dapat anda lihat dalam video tutorial yang sudah kami sediakan.</p>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="text-center">
+              <img src="assets/img/proses-daerah-icon.png">
+            </div>
+            <div class="text-center pt-3">
+              <h2 class="font-weight-bold title-step-desc">1. Proses di Daerah</h2>
+              <p class="text-secondary step-desc">Pelaksanaan RTR di Daerah</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="text-center">
+              <img src="assets/img/pencatatan-icon.png">
+            </div>
+            <div class="text-center pt-3">
+              <h2 class="font-weight-bold title-step-desc">2. Pencatatan</h2>
+              <p class="text-secondary step-desc">Aplikasi Protaru mencatat di dalam database sentral</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="text-center">
+              <img src="assets/img/sajian-data-icon.png">
+            </div>
+            <div class="text-center pt-3">
+              <h2 class="font-weight-bold title-step-desc">3. Sajian Data</h2>
+              <p class="text-secondary step-desc">Khalayak umum dapat melihat sajian data Progress RTR</p>
+            </div>
+          </div>
         </div>
-	</div>
-
-	<div class="container pb-5">
-		<div class="row">
-			<div class="col-md-6 py-3">
-				<a id="rtrw-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTRW T5-1 adalah RTRW yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan" class="title-progress active-progress">RTRW</a> 
-				<span class="title-progress">|</span> 
-				<a id="rdtr-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR T5-1 adalah RDTR yang disusun sesudah Undang-Undang No. 26 Tahun 2007 ditetapkan" class="title-progress">RDTR</a>
-				<h6 class="text-progress">Lima Tahun Pertama</h6>
-
-				<div id="progress-t51" class="box-graphic">
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/penyusunan.png">
-							<span class="text-month">Penyusunan</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-init">
-								<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/rekom-gub.png">
-							<span class="text-month">Rekomendasi Gubernur</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar black-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/persub.png">
-							<span class="text-month">Persetujuan Substansi</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/perda.png">
-							<span class="text-month">Peraturan Daerah</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-light">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-6 py-3">
-				<a id="rtrw-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTRW T5-2 adalah RTRW yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RTRW T5-1" class="title-progress active-progress">RTRW</a> 
-				<span class="title-progress">|</span> 
-				<a id="rdtr-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR T5-2 adalah RDTR yang disusun berdasarkan hasil peninjauan kembali dan revisi dari RDTR T5-1" class="title-progress">RDTR</a>
-				<h6 class="text-progress">Lima Tahun Kedua</h6>
-
-				<div id="progress-t52" class="box-graphic">
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/proses-pk.png">
-							<span class="text-month">Proses Peninjauan Kembali</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-init">
-								<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/revisi.png">
-							<span class="text-month">Revisi</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar black-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium-dark">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/rekom-gub.png">
-							<span class="text-month">Rekomendasi Gubernur</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-medium">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/persub.png">
-							<span class="text-month">Persetujuan Substansi</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-light">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row no-gutters">
-						<div class="col-sm-2">
-							<img class="img-fluid" src="~/assets/img/perda.png">
-							<span class="text-month">Peraturan Daerah</span>
-						</div>
-						<div class="col-sm-9">
-							<div class="progress progress-type progress-general">
-								<div class="progress-bar purple-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-								<div class="progress-circle circle-light">
-									<div class="progress-score"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+      </div>
+      <div class="col-lg-6 py-5 yt-box">
+        <div class="videowrapper">
+          	<iframe style="border-radius: 10px;" 
+				width="560" 
+				height="315" 
+				src="https://www.youtube.com/embed/lIAobmRepFo" 
+				frameborder="0" 
+				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+				allowfullscreen>
+			</iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-@section Scripts 
+@section Scripts
 {
 	<script>
+		$("#menu-home").addClass("active");
+
 		function filtering(e) {
 			var predicate = new ej.data.Predicate('Nama', 'startsWith', e.text, true);
 			var query = new ej.data.Query();
@@ -277,6 +309,5 @@
 		}
 	</script>
 
-	@{await Html.RenderPartialAsync("_HomepageScriptPartial");}
     @{await Html.RenderPartialAsync("_AjaxProgressScriptPartial");}
 }
