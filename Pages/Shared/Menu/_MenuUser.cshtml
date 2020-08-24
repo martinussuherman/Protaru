@@ -1,5 +1,4 @@
 @using Microsoft.AspNetCore.Authorization
-@* @using Microsoft.AspNetCore.Identity *@
 @using Protaru.Identity
 @inject IAuthorizationService AuthorizationService
 
@@ -13,7 +12,7 @@
     @User.Identity.Name
 </a>
 
-<div class="dropdown-menu" aria-labelledby="user">
+<div class="dropdown-menu">
     <a asp-area="Identity" 
         asp-page="/Account/Manage/ChangePassword" 
         class="dropdown-item">

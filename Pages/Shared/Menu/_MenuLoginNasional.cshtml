@@ -7,13 +7,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    await Html.RenderPartialAsync("_CommonLoginPartial");
+    await Html.RenderPartialAsync("_MenuUser");
 }
 else
 {
     <a id="login" 
         asp-area="Identity" 
-        asp-page="/Account/Login" 
+        asp-page="/Account/LoginNasional" 
         asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()" 
         class="nav-link">
         Masuk
@@ -21,3 +21,4 @@ else
 }
 
 </li>
+
