@@ -3,8 +3,10 @@
 
 @{
     Layout = "_RtrDaerahLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RDTR T5-2";
     ViewData["PageTitle"] = "RDTR";
+    int index = Model.Hasil.StartItemIndex;
+    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
+    ViewData["Title"] = Model.IsCanEdit ? "Monitoring & Evaluasi RDTR T5-2" : "Monitoring & Evaluasi RDTR";
 }
 
 <div class="page-title">
@@ -46,24 +48,9 @@
 
                 <div class="card-body table-responsive">
                     <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-                        <thead>
-                            <tr class="text-light font-weight-bold text-center bg-info">
-                                <th>No</th>
-                                <th>Action</th>
-                                <th>Provinsi</th>
-                                <th>Kabupaten/Kota</th>
-                                <th>Status</th>
-                                <th>Nomor Perda</th>
-                                <th>Tahun Perda</th>
-                                <th>Progress</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        @await Html.PartialAsync("_TableHeader", Model.IsCanEdit)
 
-@{
-int index = Model.Hasil.StartItemIndex;
-string pageName = Model.IsCanEdit ? "./Edit" : "./View";
-}
+                        <tbody>
 
 @foreach (var item in Model.Hasil)
 {
@@ -79,7 +66,12 @@ string pageName = Model.IsCanEdit ? "./Edit" : "./View";
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
                                 <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
+
+@if(Model.IsCanEdit)
+{
                                 <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
+}
+
                                 <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
