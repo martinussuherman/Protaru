@@ -1,457 +1,616 @@
-﻿@page
+@page
+
+@using Syncfusion.EJ2.Maps;
+@using Newtonsoft.Json;
+@using MonevAtr.Components;
+
 @model RtrIndexModel
 
 @{
 	Layout = "_RtrNasionalLayout";
 	ViewData["Title"] = "Kementerian Agraria dan Tata Ruang Nasional";
+	ViewData["ReturnUrl"] = "/RtrIndexNasional";
 }
 
-<div class="slide">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:1600px; height:550px; margin: 0 auto;">
-		<canvas id="canvas" width="1600" height="550" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
-		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1600px; height:550px; position: absolute; left: 0px; top: 0px; display: block;">
+<div class="container pt-4">
+	<ejs-maps
+		id="maps"
+		border="Model.Border"
+		centerPosition="Model.CenterPosition"
+		format="n"
+		load="window.onMapLoad"
+		tooltipDisplayMode="DoubleClick"
+		useGroupingSeparator="true"
+		zoomSettings="Model.ZoomSettings">
+
+		<e-maps-layers>
+			<e-maps-layer
+				layerType="Bing"
+				bingMapType="AerialWithLabel"
+				key="@Model.BingKey"
+				markerClusterSettings="Model.ClusterSettings"
+				markerSettings="Model.MarkerSettings">
+			</e-maps-layer>
+		</e-maps-layers>
+	</ejs-maps>
+
+	<div id="tooltip-template" style="display: none;">
+		<div class="protaru-tooltip p-2">
+			<h5 class="text-center">${location}</h5>
+			<h6 class="text-center">${rtr}</h6>
+			<p class="mb-0">Progress: ${progress}</p>
+			<p class="mb-0">Surat Rekom Gub: ${rekomGub}</p>
+			<p class="mb-0">Rapat Lintas Sektor: ${linSek}</p>
+			<p class="mb-0">Surat Persetujuan Substansi: ${perSub}</p>
+			<p class="mb-0">No. Perda: ${perda}</p>
+			<a href="${link}" class="btn btn-primary btn-block p-0">Detail</a>
 		</div>
 	</div>
-</div>
 
-<div class="container">
-	<div class="text-center mt-3">
-		<p class="tagline-web">
-			<img src="~/assets/img/protaru.png">
-				Sistem Informasi Basis Data yang menyajikan Progress Penyelesaian Rencana Tata Ruang <br />baik Rencana Umum maupun Rencana Rinci yang disusun oleh Pemerintah Pusat dan Pemerintah Daerah.
-				<img src="~/assets/img/mark.png" class="img-mark">
-		</p>
-	</div>
-</div>
-
-<!-- Progress Penyelesaian RTR -->
-<div class="mt-5 tag-title-box-2">
-	<div class="tag-title"><span>PROGRESS PENYELESAIAN RTR</span></div>
-</div>
-
-<div class="container">
 	<div class="row">
-		<div class="col-md-6 mb-5">
-			<a id="rtrwn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR WILAYAH NASIONAL T5-1" class="title-progress active-progress">RTRWN T51</a>
-			<span class="title-progress">
-			<h6 class="text-progress">Lima Tahun Pertama</h6>
+		<div class="col-lg-6 offset-lg-3">
+			<form method="get"
+				asp-page="/Search/DaerahByProgress"
+				class="form-inline pt-4 pb-1 text-center">
+				<input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+				<ejs-autocomplete
+					autocomplete="true"
+					autofill="true"
+					dataSource="@Model.Provinsi"
+					fields="@Model.FieldSettings"
+					filtering="filtering"
+					id="provinsi-autocomplete"
+					placeholder="Cari berdasarkan nama provinsi"
+					name="provinsi"
+					class="form-control pl-5">
+				</ejs-autocomplete>
+			</form>
+		</div>
+	</div>
 
-			<div id="progress-rtrwn-t51" class="box-graphic">
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyusunanMateriTeknis.png">
-						<span class="text-month">Penyusunan Materi Teknis</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-init">
-							<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+	<div class="row">
+		<div class="col-lg-6 text-right box-image-rtr">
+			<a asp-page="/RtrIndexNasional">
+				<img src="assets/img/btn-nasional.png" class="btn-image-rtr" alt="RTR Nasional">
+			</a>
+    </div>
+
+    <div class="col-lg-6 text-left box-image-rtr">
+        <a asp-page="/RtrIndexDaerah">
+          <img src="assets/img/btn-daerah.png" class="btn-image-rtr" alt="RTR daerah">
+        </a>
+    </div>
+  </div>
+</div>
+
+<div class="progress-chart-nasional mt-2">
+	<div class="container py-3">
+		<div class="row">
+			<div class="col-lg-6 my-5">
+				<a id="rtrwn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR WILAYAH NASIONAL T5-1" class="title-progress active-progress">RTRWN T51</a>
+				<span class="title-progress">
+				<h6 class="text-progress">Lima Tahun Pertama</h6>
+
+				<div id="progress-rtrwn-t51" class="box-graphic">
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyusunanMateriTeknis.png">
+							<span class="text-month">Penyusunan Materi Teknis</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-init">
+								<div class="progress-bar red-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyepakatanTpak.png">
-						<span class="text-month">Proses Penyepakatan TPAK</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-medium">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyepakatanTpak.png">
+							<span class="text-month">Proses Penyepakatan TPAK</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-medium">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/HarmonisasiKemenkumham.png">
-						<span class="text-month">Harmonisasi di Kemenkumham</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/HarmonisasiKemenkumham.png">
+							<span class="text-month">Harmonisasi di Kemenkumham</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PembahasanSekretariat.png">
-						<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar purple-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PembahasanSekretariat.png">
+							<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar purple-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenetapanPresiden.png">
-						<span class="text-month">Proses Penetapan Oleh Presiden</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenetapanPresiden.png">
+							<span class="text-month">Proses Penetapan Oleh Presiden</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="col-md-6 mb-5">
-			<a id="rtrwn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR WILAYAH NASIONAL T5-2" class="title-progress active-progress">RTRWN T52</a>
-			<span class="title-progress">
-			<h6 class="text-progress">Lima Tahun Kedua</h6>
+			<div class="col-lg-6 my-5">
+				<a id="rtrwn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR WILAYAH NASIONAL T5-2" class="title-progress active-progress">RTRWN T52</a>
+				<span class="title-progress">
+				<h6 class="text-progress">Lima Tahun Kedua</h6>
 
-			<div id="progress-rtrwn-t52" class="box-graphic">
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/KajianPeninjauanKembali.png">
-						<span class="text-month">Kajian Peninjauan Kembali</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-init">
-							<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+				<div id="progress-rtrwn-t52" class="box-graphic">
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/KajianPeninjauanKembali.png">
+							<span class="text-month">Kajian Peninjauan Kembali</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-init">
+								<div class="progress-bar red-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyusunanDokumenPk.png">
-						<span class="text-month">Penyusunan Dokumen PK (Rekomendasi Hasil PK)</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyusunanDokumenPk.png">
+							<span class="text-month">Penyusunan Dokumen PK (Rekomendasi Hasil PK)</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyusunanMateriTeknisHasilPk.png">
-						<span class="text-month">Penyusunan Materi Teknis Hasil Peninjauan Kembali</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyusunanMateriTeknisHasilPk.png">
+							<span class="text-month">Penyusunan Materi Teknis Hasil Peninjauan Kembali</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyepakatanTpak.png">
-						<span class="text-month">Proses Penyepakatan TPAK</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar purple-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-medium">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyepakatanTpak.png">
+							<span class="text-month">Proses Penyepakatan TPAK</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar purple-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-medium">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/HarmonisasiKemenkumham.png">
-						<span class="text-month">Harmonisasi di Kemenkumham</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/HarmonisasiKemenkumham.png">
+							<span class="text-month">Harmonisasi di Kemenkumham</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar red-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PembahasanSekretariat.png">
-						<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PembahasanSekretariat.png">
+							<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenetapanPresiden.png">
-						<span class="text-month">Proses Penetapan Oleh Presiden</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
-							</div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenetapanPresiden.png">
+							<span class="text-month">Proses Penetapan Oleh Presiden</span>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 
-		<div class="col-md-6 mb-5">
-			<a id="rtrpulau-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR PULAU/KEPULAUAN T51" class="title-progress active-progress">RTR PULAU/KEP T51 </a> 
-			<span class="title-progress">|</span> 
-			<a id="rtrksn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR KAWASAN T5-1" class="title-progress">RTR KSN T51</a>
-			<span class="title-progress">|</span> 
-			<a id="rtrkpn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR KAWASAN PERBATASAN NEGARA T51" class="title-progress">RDTR KPN T51 </a>
-			<h6 class="text-progress">Lima Tahun Pertama</h6>
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
 
-			<div id="progress-pulau-t51" class="box-graphic">
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyusunanMateriTeknis.png">
-						<span class="text-month">Penyusunan Materi Teknis</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-init">
-							<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyepakatanDaerah.png">
-						<span class="text-month">Proses Penyepakatan Daerah</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar black-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-medium-dark">
-								<div class="progress-score"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyepakatanTpak.png">
-						<span class="text-month">Proses Penyepakatan TPAK</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-medium">
-								<div class="progress-score"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/HarmonisasiKemenkumham.png">
-						<span class="text-month">Harmonisasi di Kemenkumham</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PembahasanSekretariat.png">
-						<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar purple-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenetapanPresiden.png">
-						<span class="text-month">Proses Penetapan Oleh Presiden</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="col-md-6 mb-5">
-			<a id="rtrpulau-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR PULAU/KEPULAUAN T52" class="title-progress active-progress">RTR PULAU/KEP T52 </a> 
-			<span class="title-progress">|</span> 
-			<a id="rtrksn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR KAWASAN T5-2" class="title-progress">RTR KSN T52</a>
-			<span class="title-progress">|</span> 
-			<a id="rtrkpn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR KAWASAN PERBATASAN NEGARA T52" class="title-progress">RDTR KPN T52 </a> 
-			<h6 class="text-progress">Lima Tahun Kedua</h6>
+			<div class="col-lg-6 my-5">
+				<a id="rtrpulau-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR PULAU/KEPULAUAN T51" class="title-progress active-progress">RTR PULAU/KEP T51 </a>
+				<span class="title-progress">|</span>
+				<a id="rtrksn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR KAWASAN T5-1" class="title-progress">RTR KSN T51</a>
+				<span class="title-progress">|</span>
+				<a id="rtrkpn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR KAWASAN PERBATASAN NEGARA T51" class="title-progress">RDTR KPN T51 </a>
+				<h6 class="text-progress">Lima Tahun Pertama</h6>
 
-			<div id="progress-pulau-t52" class="box-graphic">
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/KajianPeninjauanKembali.png">
-						<span class="text-month">Kajian Peninjauan Kembali</span>
+				<div id="progress-pulau-t51" class="box-graphic">
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyusunanMateriTeknis.png">
+							<span class="text-month">Penyusunan Materi Teknis</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-init">
+								<div class="progress-bar red-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-init">
-							<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyepakatanDaerah.png">
+							<span class="text-month">Proses Penyepakatan Daerah</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar black-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-medium-dark">
+									<div class="progress-score">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyepakatanTpak.png">
+							<span class="text-month">Proses Penyepakatan TPAK</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-medium">
+									<div class="progress-score">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/HarmonisasiKemenkumham.png">
+							<span class="text-month">Harmonisasi di Kemenkumham</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PembahasanSekretariat.png">
+							<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar purple-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenetapanPresiden.png">
+							<span class="text-month">Proses Penetapan Oleh Presiden</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyusunanDokumenPk.png">
-						<span class="text-month">Proses Penyepakatan Daerah</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar black-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-medium-dark">
-								<div class="progress-score"></div>
+			<div class="col-lg-6 my-5">
+				<a id="rtrpulau-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR PULAU/KEPULAUAN T52" class="title-progress active-progress">RTR PULAU/KEP T52 </a>
+				<span class="title-progress">|</span>
+				<a id="rtrksn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR KAWASAN T5-2" class="title-progress">RTR KSN T52</a>
+				<span class="title-progress">|</span>
+				<a id="rtrkpn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR KAWASAN PERBATASAN NEGARA T52" class="title-progress">RDTR KPN T52 </a>
+				<h6 class="text-progress">Lima Tahun Kedua</h6>
+
+				<div id="progress-pulau-t52" class="box-graphic">
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/KajianPeninjauanKembali.png">
+							<span class="text-month">Kajian Peninjauan Kembali</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-init">
+								<div class="progress-bar red-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyusunanMateriTeknisHasilPk.png">
-						<span class="text-month">Penyusunan Dokumen PK (Rekomendasi Hasil PK)</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyusunanDokumenPk.png">
+							<span class="text-month">Proses Penyepakatan Daerah</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar black-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-medium-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyepakatanDaerah.png">
-						<span class="text-month">Penyusunan Materi Teknis Hasil Peninjauan Kembali</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-dark">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyusunanMateriTeknisHasilPk.png">
+							<span class="text-month">Penyusunan Dokumen PK (Rekomendasi Hasil PK)</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenyepakatanTpak.png">
-						<span class="text-month">Proses Penyepakatan TPAK</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar purple-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-medium">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyepakatanDaerah.png">
+							<span class="text-month">Penyusunan Materi Teknis Hasil Peninjauan Kembali</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-dark">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/HarmonisasiKemenkumham.png">
-						<span class="text-month">Harmonisasi di Kemenkumham</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar red-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenyepakatanTpak.png">
+							<span class="text-month">Proses Penyepakatan TPAK</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar purple-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-medium">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PembahasanSekretariat.png">
-						<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
-					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar blue-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/HarmonisasiKemenkumham.png">
+							<span class="text-month">Harmonisasi di Kemenkumham</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar red-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="row no-gutters">
-					<div class="col-sm-2">
-						<img class="img-fluid" src="~/assets/img/PenetapanPresiden.png">
-						<span class="text-month">Proses Penetapan Oleh Presiden</span>
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PembahasanSekretariat.png">
+							<span class="text-month">Pembahasan di Sekretariat Kabinet</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar blue-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-9">
-						<div class="progress progress-type progress-general">
-							<div class="progress-bar yellow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-							<div class="progress-circle circle-light">
-								<div class="progress-score"></div>
+
+					<div class="row no-gutters">
+						<div class="col-sm-2">
+							<img class="img-fluid" src="assets/img/PenetapanPresiden.png">
+							<span class="text-month">Proses Penetapan Oleh Presiden</span>
+						</div>
+
+						<div class="col-sm-9">
+							<div class="progress progress-type progress-general">
+								<div class="progress-bar yellow-bar" role="progressbar" aria-valuemax="100" style="width: 0%;">
+								</div>
+
+								<div class="progress-circle circle-light">
+									<div class="progress-score">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -461,25 +620,82 @@
 	</div>
 </div>
 
-<!-- Status Rapat Lintas Sektor -->
+<div class="description">
+	<div class="container py-4">
+		<div class="row">
+			<div class="col-lg-6">
+				<h1 class="title-proratu-desc">KEMUDAHAN MENGGUNAKAN PROTARU</h1>
+				<p class="pt-3 protaru-desc">
+					PROTARU menyajikan Progress Penyelesaian Rencana Tata Ruang baik Rencana 
+					Umum maupun Rencana Rinci yang disusun oleh Pemerintah. Berbagai macam 
+					kemudahan pengaksesan serta tata cara mencari data Rencana Tata Ruang
+					dapat anda lihat dalam video tutorial yang sudah kami sediakan.
+				</p>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="text-center">
+							<img src="assets/img/proses-daerah-icon.png">
+						</div>
 
-@section Scripts 
+						<div class="text-center pt-3">
+							<h2 class="font-weight-bold title-step-desc">1. Proses di Daerah</h2>
+							<p class="text-secondary step-desc">Pelaksanaan RTR di Daerah</p>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="text-center">
+							<img src="assets/img/pencatatan-icon.png">
+						</div>
+
+						<div class="text-center pt-3">
+							<h2 class="font-weight-bold title-step-desc">2. Pencatatan</h2>
+							<p class="text-secondary step-desc">Aplikasi Protaru mencatat di dalam database sentral</p>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="text-center">
+							<img src="assets/img/sajian-data-icon.png">
+						</div>
+
+						<div class="text-center pt-3">
+							<h2 class="font-weight-bold title-step-desc">3. Sajian Data</h2>
+							<p class="text-secondary step-desc">Khalayak umum dapat melihat sajian data Progress RTR</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-6 py-5 yt-box">
+				<div class="videowrapper">
+					<iframe style="border-radius: 10px;" 
+						width="560" 
+						height="315" 
+						src="https://www.youtube.com/embed/lIAobmRepFo" 
+						frameborder="0" 
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+						allowfullscreen>
+					</iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
 {
-	<script type="text/javascript">
-		var pathBase = '@Url.Content("~")';
+	<script>
+		$("#menu-home").addClass("active");
 
-		$(document).ready(function(){
-			$('.icon-menu').slick({
-				infinite: true,
-				slidesToShow: 4,
-				slidesToScroll: 4
-			});
-
-			$('[data-toggle="tooltip"]').tooltip();
-		});
+		function filtering(e) {
+			var predicate = new ej.data.Predicate('Nama', 'startsWith', e.text, true);
+			var query = new ej.data.Query();
+			query = (e.text !== '' && e.value !== '') ? query.where(predicate) : query;
+			e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.Provinsi)), query);
+		}
 	</script>
 
-	@{await Html.RenderPartialAsync("_HomepageScriptPartial");}
     @{await Html.RenderPartialAsync("_AjaxProgressScriptPartial");}
-    @{await Html.RenderPartialAsync("_AjaxRtrListLinSekSubstansiScriptPartial");}
+    @* @{await Html.RenderPartialAsync("_AjaxRtrListLinSekSubstansiScriptPartial");} *@
 }
