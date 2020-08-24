@@ -1,0 +1,43 @@
+<div class="row no-gutters">
+    <div class="col-sm-2">
+        <a href="#">
+            <img class="img-fluid" src="@ImageUrl" style="@ExtraImageStyle" >
+            <span class="text-month">@Text</span>
+        </a>
+    </div>
+
+    <div class="col-sm-9">
+        <div class="progress progress-type @ProgressClass">
+            <div class="progress-bar @BarClass"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100">
+            </div>
+
+            <div class="progress-circle @CircleClass">
+                <div class="progress-score">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string ImageUrl { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public string ProgressClass { get; set; }
+
+    [Parameter]
+    public string BarClass { get; set; }
+
+    [Parameter]
+    public string CircleClass { get; set; }
+
+    [Parameter]
+    public string ExtraImageStyle { get; set; } = String.Empty;
+}
