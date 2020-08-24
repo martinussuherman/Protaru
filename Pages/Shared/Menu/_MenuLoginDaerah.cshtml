@@ -1,5 +1,5 @@
-@using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http.Extensions
 @using Itm.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 
@@ -7,13 +7,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    await Html.RenderPartialAsync("_CommonLoginPartial");
+    await Html.RenderPartialAsync("_MenuUser");
 }
 else
 {
     <a id="login" 
         asp-area="Identity" 
-        asp-page="/Account/LoginNasional" 
+        asp-page="/Account/LoginDaerah" 
         asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()" 
         class="nav-link">
         Masuk
@@ -21,4 +21,3 @@ else
 }
 
 </li>
-
