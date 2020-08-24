@@ -1,5 +1,10 @@
 @{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+	Layout = "_Layout";
+}
+
+@section Menu
+{
+	@await Html.PartialAsync("_MenuDaerahPrivate")
 }
 
 <div class="page-title">
