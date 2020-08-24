@@ -55,6 +55,7 @@ namespace MonevAtr
                 .AddEntityFrameworkStores<IdentityDbContext>();
 
             services.AddRazorPages();
+            services.AddServerSideBlazor();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.ConfigureApplicationCookie(options =>
