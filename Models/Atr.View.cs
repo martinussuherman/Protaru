@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MonevAtr.Models
@@ -60,6 +58,10 @@ namespace MonevAtr.Models
                 return String.Empty;
             }
         }
+
+        [NotMapped]
+        public string DisplayNamaStatusRevisi =>
+            Models.StatusRevisi.NamaStatusRevisi(StatusRevisi);
 
         [NotMapped]
         public bool TL1StatusYes
