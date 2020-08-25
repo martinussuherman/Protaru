@@ -1,0 +1,83 @@
+@using P.Pager
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Mvc
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavManager
+
+@{
+    int index = Items.StartItemIndex;
+    @* string link = NavManager.ToAbsoluteUri(isCanEdit ? "./Edit" : "./View").AbsolutePath; *@
+}
+
+<table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+    <thead>
+        <tr class="text-light font-weight-bold text-center bg-info">
+            <th>No</th>
+            <th>Action</th>
+            <th>Provinsi</th>
+            <th>Kabupaten/Kota</th>
+
+@if(IsCanEdit)
+{
+            <th>Status</th>
+}
+
+            <th>Nomor Perda</th>
+            <th>Tahun Perda</th>
+            <th>Progress</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+@foreach (var item in Items)
+{
+        <tr>
+            <td>@index</td>
+            <td class="text-center">
+                <a href="@(PageName)/@item.Kode"
+                    class="btn btn-primary btn-sm">
+                    Detail
+                </a>
+
+                <input type="hidden" name="Kode" value="@item.Kode" />
+                <input type="hidden" name="test" value="" />
+            </td>
+
+            <td>@item.DisplayNamaProvinsi</td>
+            <td>@item.DisplayNamaKabupatenKota</td>
+
+@if(IsCanEdit)
+{
+            <td>@item.DisplayNamaStatusRevisi</td>
+}
+
+            <td>@item.Nomor</td>
+            <td>@item.Tahun</td>
+            <td>@item.DisplayNamaProgress</td>
+        </tr>
+
+    index++;
+}
+
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string PageName { get; set; }
+
+    [Parameter]
+    public bool IsCanEdit { get; set; }
+
+    [Parameter]
+    public IPager<Models.Atr> Items { get; set; }
+
+    @* private bool isCanEdit;
+
+    private async Task IsAuthenticated()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        isCanEdit = authState.User.Identity.IsAuthenticated;
+    } *@
+}
