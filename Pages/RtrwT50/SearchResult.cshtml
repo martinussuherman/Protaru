@@ -3,55 +3,18 @@
 
 @{
     Layout = "_RtrDaerahSearchResultLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RTRW T5-0";
     ViewData["PageTitle"] = "RTRW";
+    ViewData["Title"] = Model.IsCanEdit ? 
+        "Monitoring & Evaluasi RTRW T5-0" : 
+        "Monitoring & Evaluasi RTRW";
 }
 
 <div class="card-body table-responsive">
-    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-        <thead>
-            <tr class="text-light font-weight-bold text-center bg-info">
-                <th>No</th>
-                <th>Action</th>
-                <th>Provinsi</th>
-                <th>Kabupaten/Kota</th>
-                <th>Status</th>
-                <th>Nomor Perda</th>
-                <th>Tahun Perda</th>
-                <th>Progress</th>
-            </tr>
-        </thead>
-        <tbody>
-
-@{
-int index = Model.Hasil.StartItemIndex;
-string pageName = Model.IsCanEdit ? "./Edit" : "./View";
-}
-
-@foreach (var item in Model.Hasil)
-{
-            <tr>
-                <td>@index</td>
-                <td class="text-center">
-                    <a asp-page="@pageName" 
-                        asp-route-id="@item.Kode" 
-                        class="btn btn-primary btn-sm">
-                        Detail
-                    </a>
-                    <span>@Html.HiddenFor(modelItem => item.Kode)</span>
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
-                <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
-                <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRegular(item.StatusRevisi)</td>
-                <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
-                <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
-            </tr>
-    index++;
-}
-
-        </tbody>
-    </table>
+    <component type="typeof(SearchResultProvKabKota)" 
+        render-mode="Static" 
+        param-PageName="@Url.Page(Model.IsCanEdit ? "./Edit" : "./View")" 
+        param-IsCanEdit="@Model.IsCanEdit" 
+        param-Items="@Model.Hasil" />
 
     @await Html.PartialAsync("_PagingPartial", Model.Hasil)
 </div>

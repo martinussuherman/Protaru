@@ -4,46 +4,17 @@
 @{
     Layout = "_RtrDaerahSearchResultLayout";
     ViewData["PageTitle"] = "RTRW";
-    int index = Model.Hasil.StartItemIndex;
-    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
-    ViewData["Title"] = Model.IsCanEdit ? "Monitoring & Evaluasi RTRW T5-1" : "Monitoring & Evaluasi RTRW";
+    ViewData["Title"] = Model.IsCanEdit ? 
+        "Monitoring & Evaluasi RTRW T5-1" : 
+        "Monitoring & Evaluasi RTRW";
 }
 
 <div class="card-body table-responsive">
-    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-        @await Html.PartialAsync("_TableHeader", Model.IsCanEdit)
-
-        <tbody>
-
-@foreach (var item in Model.Hasil)
-{
-            <tr>
-                <td>@index</td>
-                <td class="text-center">
-                    <a asp-page="@pageName" 
-                        asp-route-id="@item.Kode" 
-                        class="btn btn-primary btn-sm">
-                        Detail
-                    </a>
-                    <span>@Html.HiddenFor(modelItem => item.Kode)</span>
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.DisplayNamaProvinsi)</td>
-                <td>@Html.DisplayFor(modelItem => item.KabupatenKota.Nama)</td>
-
-@if(Model.IsCanEdit)
-{
-                <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRegular(item.StatusRevisi)</td>
-}
-
-                <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
-                <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
-            </tr>
-    index++;
-}
-
-        </tbody>
-    </table>
+    <component type="typeof(SearchResultProvKabKota)" 
+        render-mode="Static" 
+        param-PageName="@Url.Page(Model.IsCanEdit ? "./Edit" : "./View")" 
+        param-IsCanEdit="@Model.IsCanEdit" 
+        param-Items="@Model.Hasil" />
 
     @await Html.PartialAsync("_PagingPartial", Model.Hasil)
 </div>
