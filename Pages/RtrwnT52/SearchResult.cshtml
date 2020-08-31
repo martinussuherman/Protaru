@@ -3,8 +3,11 @@
 
 @{
     Layout = "_RtrNasionalLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RTRWN T5-2";
     ViewData["PageTitle"] = "RTRWN";
+    ViewData["Title"] = Model.IsCanEdit ? 
+        "Monitoring & Evaluasi RTRWN T5-2" : 
+        "Monitoring & Evaluasi RTRWN";
+    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
 
 <div class="page-title">
@@ -41,50 +44,16 @@
                 </div>
 
                 <div class="card-body table-responsive">
-                    <table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
-                        <thead>
-                            <tr class="text-light font-weight-bold text-center bg-info">
-                                <th>No</th>
-                                <th>Action</th>
-                                <th>Nama</th>
-                                <th>Status</th>
-                                <th>Nomor Perpres</th>
-                                <th>Tahun Perpres</th>
-                                <th>Progress</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-@{
-int index = Model.Hasil.StartItemIndex;
-string pageName = Model.IsCanEdit ? "./Edit" : "./View";
-}
-
-@foreach (var item in Model.Hasil)
-{
-                            <tr>
-                                <td>@index</td>
-                                <td class="text-center">
-                                    <a asp-page="@pageName" 
-                                        asp-route-id="@item.Kode" 
-                                        class="btn btn-primary btn-sm">
-                                        Detail
-                                    </a>
-                                    <span>@Html.HiddenFor(modelItem => item.Kode)</span>
-                                </td>
-                                <td>@Html.DisplayFor(modelItem => item.Nama)</td>
-                                <td>@MonevAtr.Models.StatusRevisi.NamaStatusRevisiRevisi(item.StatusRevisi)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Nomor)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Tahun)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ProgressAtr.Nama)</td>
-                            </tr>
-    index++;
-}
-
-                        </tbody>
-                    </table>
-
-                    @await Html.PartialAsync("_PagingPartial", Model.Hasil)
+                    <component type="typeof(SearchResultProvKabKota)" 
+                        render-mode="Static" 
+                        param-PageName="@pageName" 
+                        param-RegulationName="@("Perpres")"
+                        param-DisplayedLocation="@RtrTableLocationEnum.None"
+                        param-IsCanEdit="@Model.IsCanEdit" 
+                        param-IsDisplayRegulation="true" 
+                        param-Url="@Model.Url" 
+                        param-Items="@Model.Hasil" />
+                    <partial name="_PagingPartial" model="Model.Hasil" />
                 </div>
             </div>
         </div>
