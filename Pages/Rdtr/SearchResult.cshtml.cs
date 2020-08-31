@@ -18,6 +18,8 @@ namespace MonevAtr.Pages.Rdtr
         [ViewData]
         public bool IsCanCreate { get; set; }
 
+        public bool IsPerdaPerpres { get; set; }
+
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
             FilterByJenis(rtr);
@@ -34,7 +36,14 @@ namespace MonevAtr.Pages.Rdtr
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
 
+            IsPerdaPerpres = (rtr.Perda == 1);
             IsCanCreate = false;
+
+            foreach(var item in Hasil)
+            {
+                JenisRtrEnum jenis = (JenisRtrEnum)item.JenisAtr.Kode;
+                string pageName = IsCanCreate ? $"/{jenis}/Edit" : $"/{jenis}/View";
+            }
 
             return Page();
         }
