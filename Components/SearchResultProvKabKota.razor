@@ -1,6 +1,7 @@
 @using P.Pager
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Mvc
+
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavManager
 
@@ -14,16 +15,36 @@
         <tr class="text-light font-weight-bold text-center bg-info">
             <th>No</th>
             <th>Action</th>
+
+@if (DisplayedLocation == RtrTableLocationEnum.Kawasan)
+{
+            <th>Kawasan</th>
+}
+
+@if (DisplayedLocation == RtrTableLocationEnum.ProvinsiKabKota)
+{
             <th>Provinsi</th>
             <th>Kabupaten/Kota</th>
+}
 
-@if(IsCanEdit)
+@if (DisplayedLocation == RtrTableLocationEnum.Pulau)
+{
+            <th>Pulau</th>
+}
+
+@if (IsCanEdit)
 {
             <th>Status</th>
 }
 
-            <th>Nomor Perda</th>
-            <th>Tahun Perda</th>
+            <th>Nama</th>
+
+@if (IsDisplayRegulation)
+{
+            <th>Nomor @RegulationName</th>
+            <th>Tahun @RegulationName</th>
+}
+
             <th>Progress</th>
         </tr>
     </thead>
@@ -32,30 +53,15 @@
 
 @foreach (var item in Items)
 {
-        <tr>
-            <td>@index</td>
-            <td class="text-center">
-                <a href="@(PageName)/@item.Kode"
-                    class="btn btn-primary btn-sm">
-                    Detail
-                </a>
-
-                <input type="hidden" name="Kode" value="@item.Kode" />
-                <input type="hidden" name="test" value="" />
-            </td>
-
-            <td>@item.DisplayNamaProvinsi</td>
-            <td>@item.DisplayNamaKabupatenKota</td>
-
-@if(IsCanEdit)
-{
-            <td>@item.DisplayNamaStatusRevisi</td>
-}
-
-            <td>@item.Nomor</td>
-            <td>@item.Tahun</td>
-            <td>@item.DisplayNamaProgress</td>
-        </tr>
+    <SearchResultRow
+        Index="@index" 
+        PageName="@PageName" 
+        IsAdminView="@IsCanEdit" 
+        IsDisplayRegulation="@IsDisplayRegulation" 
+        DisplayedLocation="@DisplayedLocation" 
+        Url="@Url" 
+        Item="@item">
+    </SearchResultRow>
 
     index++;
 }
@@ -68,7 +74,19 @@
     public string PageName { get; set; }
 
     [Parameter]
+    public string RegulationName { get; set; } = String.Empty;
+
+    [Parameter]
     public bool IsCanEdit { get; set; }
+
+    [Parameter]
+    public bool IsDisplayRegulation { get; set; }
+
+    [Parameter]
+    public RtrTableLocationEnum DisplayedLocation { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
 
     [Parameter]
     public IPager<Models.Atr> Items { get; set; }
