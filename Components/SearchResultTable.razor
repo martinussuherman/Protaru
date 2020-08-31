@@ -1,0 +1,100 @@
+@using P.Pager
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Mvc
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavManager
+
+@{
+    int index = Items.StartItemIndex;
+}
+
+<table class="table card-table table-vcenter table-bordered table-sm table-hover table search-result">
+    <thead>
+        <tr class="text-light font-weight-bold text-center bg-info">
+            <th>No</th>
+            <th>Action</th>
+
+@if (DisplayedLocation == RtrTableLocationEnum.Kawasan)
+{
+            <th>Kawasan</th>
+}
+
+@if (DisplayedLocation == RtrTableLocationEnum.ProvinsiKabKota)
+{
+            <th>Provinsi</th>
+            <th>Kabupaten/Kota</th>
+}
+
+@if (DisplayedLocation == RtrTableLocationEnum.Pulau)
+{
+            <th>Pulau</th>
+}
+
+@if (IsCanEdit)
+{
+            <th>Status</th>
+}
+
+            <th>Nama</th>
+
+@if (IsDisplayRegulation)
+{
+            <th>Nomor @RegulationName</th>
+            <th>Tahun @RegulationName</th>
+}
+
+            <th>Progress</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+@foreach (var item in Items)
+{
+    string vieworEdit = IsCanEdit ? "Edit" : "View";
+    string pageName = $"/{item.DisplayJenisRtr}/{vieworEdit}";
+
+    <SearchResultRow
+        Index="@index" 
+        PageName="@pageName" 
+        IsAdminView="@IsCanEdit" 
+        IsDisplayRegulation="@IsDisplayRegulation" 
+        DisplayedLocation="@DisplayedLocation" 
+        Url="@Url" 
+        Item="@item">
+    </SearchResultRow>
+
+    index++;
+}
+
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string RegulationName { get; set; } = String.Empty;
+
+    [Parameter]
+    public bool IsCanEdit { get; set; }
+
+    [Parameter]
+    public bool IsDisplayRegulation { get; set; }
+
+    [Parameter]
+    public RtrTableLocationEnum DisplayedLocation { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
+
+    [Parameter]
+    public IPager<Models.Atr> Items { get; set; }
+
+    @* private bool isCanEdit;
+
+    private async Task IsAuthenticated()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        isCanEdit = authState.User.Identity.IsAuthenticated;
+    } *@
+}

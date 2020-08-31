@@ -1,0 +1,39 @@
+<div class="ml-auto float-sm-right">
+
+    <form method="get" asp-page="./CreateFilter" class="d-inline">
+
+@if (DisplayedLocation == RtrTableLocationEnum.ProvinsiKabKota)
+{
+        <input type="hidden" name="Rtr.Prov" value="@Rtr.Prov" />
+        <input type="hidden" name="Rtr.KabKota" value="@Rtr.KabKota" />
+}
+
+        <input type="hidden" name="Rtr.Nama" value="@Rtr.Nama" />
+        <input type="hidden" name="Rtr.Nomor" value="@Rtr.Nomor" />
+        <input type="hidden" name="Rtr.Tahun" value="@Rtr.Tahun" />
+
+@foreach (int value in Rtr.ProgressList) 
+{
+        <input type="hidden" name="Rtr.ProgressList" value="@value" />
+}
+
+@if(IsCanCreate)
+{
+        <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a> -->
+        <button type="submit" class="btn btn-success">Tambah</button>
+}
+    </form>
+
+    <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsCanCreate { get; set; }
+
+    [Parameter]
+    public RtrTableLocationEnum DisplayedLocation { get; set; }
+
+    [Parameter]
+    public Models.AtrSearch Rtr { get; set; }
+}
