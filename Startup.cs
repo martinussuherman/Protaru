@@ -88,7 +88,6 @@ namespace MonevAtr
 
             app
                 .UsePathBase(Configuration.GetValue<string>("BasePath"))
-                .UseHttpsRedirection()
                 .UseRouting()
                 .UseForwardedHeaders(new ForwardedHeadersOptions
                 {
