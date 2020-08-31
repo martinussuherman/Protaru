@@ -3,16 +3,10 @@
 <tr>
     <td>@Index</td>
     <td class="text-center">
-@*
-        <a href="@(PageName)/@Item.Kode"
-*@
-        
         <a href="@Url.Page(PageName)/@Item.Kode"
             class="btn btn-primary btn-sm">
             Detail
         </a>
-
-        <input type="hidden" name="Kode" value="@Item.Kode" />
     </td>
 
 @if (DisplayedLocation == RtrTableLocationEnum.Kawasan)
