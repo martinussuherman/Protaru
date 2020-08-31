@@ -2,6 +2,7 @@ namespace MonevAtr.Models
 {
     public enum JenisRtrEnum
     {
+        None = 0,
         RdtrT51 = 1,
         RdtrT52 = 2,
         RtrwT51 = 3,
