@@ -7,6 +7,7 @@
     ViewData["Title"] = Model.IsCanEdit ? 
         "Monitoring & Evaluasi RTRW T5-2" : 
         "Monitoring & Evaluasi RTRW";
+    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
 
 <div class="page-title">
@@ -47,11 +48,14 @@
                 <div class="card-body table-responsive">
                     <component type="typeof(SearchResultProvKabKota)" 
                         render-mode="Static" 
-                        param-PageName="@Url.Page(Model.IsCanEdit ? "./Edit" : "./View")" 
+                        param-PageName="@pageName" 
+                        param-RegulationName="@("Perda")"
+                        param-DisplayedLocation="@RtrTableLocationEnum.ProvinsiKabKota"
                         param-IsCanEdit="@Model.IsCanEdit" 
+                        param-IsDisplayRegulation="true" 
+                        param-Url="@Model.Url" 
                         param-Items="@Model.Hasil" />
-
-                    @await Html.PartialAsync("_PagingPartial", Model.Hasil)
+                    <partial name="_PagingPartial" model="Model.Hasil" />
                 </div>
             </div>
         </div>
