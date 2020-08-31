@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MonevAtr.Models
 {
@@ -53,6 +54,21 @@ namespace MonevAtr.Models
                 .Nama;
         }
 
+        public static string NamaStatusRevisi(byte? kode)
+        {
+            if (kode.HasValue)
+                return listAll.FirstOrDefault(e => e.Kode == kode).Nama;
+
+            return String.Empty;
+
+            // return !kode.HasValue || !listAll.Exists(s => s.Kode == kode.Value) ?
+            //     String.Empty :
+            //     listAll
+            //         .Find(s => s.Kode == kode.Value)
+            //         .Nama;
+        }
+
+
         private static readonly StatusRevisi kosong = new StatusRevisi(0, String.Empty);
 
         private static readonly StatusRevisi regularT51 = new StatusRevisi(1, "T5-1");
@@ -73,6 +89,16 @@ namespace MonevAtr.Models
 
         private static readonly List<StatusRevisi> listRevisi = new List<StatusRevisi>
         {
+            revisiT52,
+            revisiT53,
+            revisiT54
+        };
+
+        private static readonly List<StatusRevisi> listAll = new List<StatusRevisi>
+        {
+            kosong,
+            regularT51,
+            regularT52,
             revisiT52,
             revisiT53,
             revisiT54
