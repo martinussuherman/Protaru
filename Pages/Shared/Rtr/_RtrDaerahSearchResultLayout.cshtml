@@ -39,7 +39,8 @@
                         <a asp-page="./Create" class="btn btn-success">Tambah</a>
 }
 
-                        <a asp-page="@returnUrl" class="btn btn-warning">Kembali</a>
+                        <button class="btn btn-warning" onclick="window.history.back();">Kembali</a>
+                        @* <a asp-page="@returnUrl" class="btn btn-warning">Kembali</a> *@
                     </div>
                 </div>
 

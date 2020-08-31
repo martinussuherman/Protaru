@@ -15,7 +15,8 @@
             @RenderBody()
 
             <div class="ml-auto float-sm-right px-5">
-                <a asp-page="./Index" class="btn btn-warning text-light">Kembali</a>
+                <button class="btn btn-warning text-light" onclick="window.history.back();">Kembali</a>
+                @* <a asp-page="./Index" class="btn btn-warning text-light">Kembali</a> *@
             </div>
         </div>
     </div>
