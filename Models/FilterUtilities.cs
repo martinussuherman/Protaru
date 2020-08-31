@@ -161,7 +161,7 @@ namespace MonevAtr.Models
                 return query;
             }
 
-            string pattern = nama + "%";
+            string pattern = "%" + nama + "%";
             return query.Where(q => EF.Functions.Like(q.Nama, pattern));
         }
 
