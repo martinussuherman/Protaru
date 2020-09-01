@@ -2,19 +2,6 @@
     Layout = "_RtrDaerahLayout";
 }
 
-@{
-    string returnUrl;
-
-    if(ViewData["ReturnUrl"]==null)
-    {
-        returnUrl="./Index";
-    }
-    else
-    {
-        returnUrl=ViewData["ReturnUrl"] as string;
-    }
-}
-
 <div class="page-title">
     <div class="container">
         <h4>@ViewData["PageTitle"]</h4>
@@ -28,8 +15,8 @@
             @RenderBody()
 
             <div class="ml-auto float-sm-right px-5">
-                <button class="btn btn-warning text-light" onclick="window.history.back();">Kembali</a>
-@*                <a asp-page="@returnUrl" class="btn btn-warning text-light">Kembali</a> *@
+                <button class="btn btn-warning text-light" onclick="window.history.back();">Kembali</button>
+                @* <a asp-page="@returnUrl" class="btn btn-warning text-light">Kembali</a> *@
             </div>
         </div>
     </div>
