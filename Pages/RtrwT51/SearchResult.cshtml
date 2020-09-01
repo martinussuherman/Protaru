@@ -7,13 +7,11 @@
     ViewData["Title"] = Model.IsCanEdit ? 
         "Monitoring & Evaluasi RTRW T5-1" : 
         "Monitoring & Evaluasi RTRW";
-    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
 
 <div class="card-body table-responsive">
-    <component type="typeof(SearchResultProvKabKota)" 
+    <component type="typeof(SearchResultTable)" 
         render-mode="Static" 
-        param-PageName="@pageName" 
         param-RegulationName="@("Perda")"
         param-DisplayedLocation="@RtrTableLocationEnum.ProvinsiKabKota"
         param-IsCanEdit="@Model.IsCanEdit" 
