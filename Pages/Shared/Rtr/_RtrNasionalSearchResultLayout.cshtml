@@ -14,26 +14,24 @@
 </div>
 
 <div class="bg-page-detail">
-	<div class="pt-4 pb-5">
-        <div class="container">
-            <div class="row row-cards card">
-                <div class="card-header">
-                    <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
-                    <div class="ml-auto float-sm-right">
+    <div class="container pt-4 pb-5">
+        <div class="row row-cards card">
+            <div class="card-header">
+                <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
+                <div class="ml-auto float-sm-right">
 
 @if((bool) ViewData["IsCanCreate"])
 {
-                        <a asp-page="./Create" class="btn btn-success">Tambah</a>
+                    <a asp-page="./Create" class="btn btn-success">Tambah</a>
 }
 
-                        <button class="btn btn-warning" onclick="window.history.back();">Kembali</a>
-                        @* <a asp-page="./Index" class="btn btn-warning">Kembali</a> *@
-                    </div>
+                    <button class="btn btn-warning" onclick="window.history.back();">Kembali</button>
+                    @* <a asp-page="./Index" class="btn btn-warning">Kembali</a> *@
                 </div>
-
-                @RenderBody()
-
             </div>
+
+            @RenderBody()
+
         </div>
     </div>
 </div>
