@@ -18,6 +18,8 @@ namespace MonevAtr.Pages.Rtrwn
         [ViewData]
         public bool IsCanCreate { get; set; }
 
+        public bool IsPerdaPerpres { get; set; }
+
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
             FilterByJenis(rtr);
@@ -33,6 +35,7 @@ namespace MonevAtr.Pages.Rtrwn
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
 
             IsCanCreate = false;
+            IsPerdaPerpres = (rtr.Perda == 1);
 
             return Page();
         }

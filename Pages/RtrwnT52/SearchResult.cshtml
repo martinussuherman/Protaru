@@ -7,7 +7,6 @@
     ViewData["Title"] = Model.IsCanEdit ? 
         "Monitoring & Evaluasi RTRWN T5-2" : 
         "Monitoring & Evaluasi RTRWN";
-    string pageName = Model.IsCanEdit ? "./Edit" : "./View";
 }
 
 <div class="page-title">
@@ -17,44 +16,28 @@
 </div>
 
 <div class="bg-page-detail">
-	<div class="pt-4 pb-5">
-        <div class="container">
-            <div class="row row-cards card">
-                <div class="card-header">
-                    <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
-                    <div class="ml-auto float-sm-right">
-                        <form method="get" asp-page="./CreateFilter" class="d-inline">
-                            <input type="hidden" asp-for="Rtr.Nama" />
-                            <input type="hidden" asp-for="Rtr.Nomor" />
-                            <input type="hidden" asp-for="Rtr.Tahun" />
+    <div class="container pt-4 pb-5">
+        <div class="row row-cards card">
+            <div class="card-header">
+                <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
+                <component type="typeof(SearchResultForm)" 
+                    render-mode="Static" 
+                    param-DisplayedLocation="@RtrTableLocationEnum.None"
+                    param-IsCanCreate="@Model.IsCanCreate" 
+                    param-Url="@Model.Url" 
+                    param-Rtr="@Model.Rtr" />
+            </div>
 
-@foreach (var item in Model.Rtr.ProgressList) 
-{
-                            <input type="hidden" name="Rtr.ProgressList" value="@item" />
-}
-
-@if(Model.IsCanCreate)
-{
-                    <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a> -->
-                            <button type="submit" class="btn btn-success">Tambah</button>
-}
-                        </form>
-                        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
-                    </div>
-                </div>
-
-                <div class="card-body table-responsive">
-                    <component type="typeof(SearchResultProvKabKota)" 
-                        render-mode="Static" 
-                        param-PageName="@pageName" 
-                        param-RegulationName="@("Perpres")"
-                        param-DisplayedLocation="@RtrTableLocationEnum.None"
-                        param-IsCanEdit="@Model.IsCanEdit" 
-                        param-IsDisplayRegulation="true" 
-                        param-Url="@Model.Url" 
-                        param-Items="@Model.Hasil" />
-                    <partial name="_PagingPartial" model="Model.Hasil" />
-                </div>
+            <div class="card-body table-responsive">
+                <component type="typeof(SearchResultTable)" 
+                    render-mode="Static" 
+                    param-RegulationName="@("Perpres")"
+                    param-DisplayedLocation="@RtrTableLocationEnum.None"
+                    param-IsCanEdit="@Model.IsCanEdit" 
+                    param-IsDisplayRegulation="true" 
+                    param-Url="@Model.Url" 
+                    param-Items="@Model.Hasil" />
+                <partial name="_PagingPartial" model="Model.Hasil" />
             </div>
         </div>
 	</div>
