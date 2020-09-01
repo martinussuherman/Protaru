@@ -39,12 +39,6 @@ namespace MonevAtr.Pages.Rdtr
             IsPerdaPerpres = (rtr.Perda == 1);
             IsCanCreate = false;
 
-            foreach(var item in Hasil)
-            {
-                JenisRtrEnum jenis = (JenisRtrEnum)item.JenisAtr.Kode;
-                string pageName = IsCanCreate ? $"/{jenis}/Edit" : $"/{jenis}/View";
-            }
-
             return Page();
         }
 
