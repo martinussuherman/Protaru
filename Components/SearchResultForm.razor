@@ -10,6 +10,16 @@
         <input type="hidden" name="Rtr.KabKota" value="@Rtr.KabKota" />
 }
 
+@if (DisplayedLocation == RtrTableLocationEnum.Kawasan)
+{
+        <input type="hidden" name="Rtr.Kawasan" value="@Rtr.Kawasan" />
+}
+
+@if (DisplayedLocation == RtrTableLocationEnum.Pulau)
+{
+        <input type="hidden" name="Rtr.Pulau" value="@Rtr.Pulau" />
+}
+
         <input type="hidden" name="Rtr.Nama" value="@Rtr.Nama" />
         <input type="hidden" name="Rtr.Nomor" value="@Rtr.Nomor" />
         <input type="hidden" name="Rtr.Tahun" value="@Rtr.Tahun" />
