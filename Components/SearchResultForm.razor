@@ -1,6 +1,8 @@
+@using Microsoft.AspNetCore.Mvc
+
 <div class="ml-auto float-sm-right">
 
-    <form method="get" asp-page="./CreateFilter" class="d-inline">
+    <form method="get" action="@Url.Page("./CreateFilter")" class="d-inline">
 
 @if (DisplayedLocation == RtrTableLocationEnum.ProvinsiKabKota)
 {
@@ -19,12 +21,12 @@
 
 @if(IsCanCreate)
 {
-        <!-- <a asp-page="./Import" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a> -->
+        @* <a href="@Url.Page("./Import")" class="btn btn-info"><i class="fe fe-upload"></i> Impor Data</a> *@
         <button type="submit" class="btn btn-success">Tambah</button>
 }
     </form>
 
-    <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    <button class="btn btn-warning" onclick="window.history.back();">Kembali</button>
 </div>
 
 @code {
@@ -33,6 +35,9 @@
 
     [Parameter]
     public RtrTableLocationEnum DisplayedLocation { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
 
     [Parameter]
     public Models.AtrSearch Rtr { get; set; }
