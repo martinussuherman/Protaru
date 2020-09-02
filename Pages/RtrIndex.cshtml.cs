@@ -34,8 +34,8 @@ namespace MonevAtr.Pages
 
         public MapsBorder Border => new MapsBorder
         {
-            Color = "#868686",
-            Width = 20
+            Color = "#374557",
+            Width = 14
         };
 
         public MapsCenterPosition CenterPosition => new MapsCenterPosition
