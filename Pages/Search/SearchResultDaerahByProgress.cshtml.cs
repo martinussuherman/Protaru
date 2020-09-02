@@ -18,12 +18,10 @@ namespace MonevAtr.Pages.Search
         [ViewData]
         public bool IsCanCreate { get; set; }
 
-        [ViewData]
-        public string ReturnUrl { get; set; }
+        public bool IsPerdaPerpres { get; set; }
 
-        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] string returnUrl, [FromQuery] int page = 1)
+        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
-            ReturnUrl = string.IsNullOrEmpty(returnUrl) ? "./Index" : returnUrl;
             FilterByJenis(rtr);
 
             Hasil = _context.Atr
@@ -38,6 +36,7 @@ namespace MonevAtr.Pages.Search
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
 
+            IsPerdaPerpres = (rtr.Perda == 1);
             IsCanCreate = false;
 
             return Page();
