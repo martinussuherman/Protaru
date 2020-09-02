@@ -25,7 +25,10 @@ namespace MonevAtr.Pages.Search
             {
                 Prov = provinsi
             };
-            
+
+            var prov = await _context.Provinsi.FindAsync(provinsi);
+            ViewData["Title"] = $"Pencarian RTR Provinsi {prov.Nama}";
+            ViewData["PageTitle"] = $"RTR Provinsi {prov.Nama}";
             ViewData["KabupatenKota"] = await selectListUtilities.KabupatenKota(provinsi);
             return Page();
         }
