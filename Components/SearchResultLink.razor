@@ -1,0 +1,19 @@
+@using Microsoft.AspNetCore.Mvc
+
+<div class="ml-auto float-sm-right">
+
+@if (IsCanCreate)
+{
+    <a href="@Url.Page("./Create")" class="btn btn-success">Tambah</a>
+}
+
+    <button class="btn btn-warning" onclick="window.history.back();">Kembali</button>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsCanCreate { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
+}
