@@ -1,0 +1,84 @@
+@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Mvc
+@using P.Pager
+
+<div class="page-title">
+    <div class="container">
+        <h4>@PageTitle</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+    <div class="container pt-4 pb-5">
+        <div class="row row-cards card">
+            <div class="card-header">
+                <h4 class="card-title float-sm-left">@Title</h4>
+
+@if (IsUseCreateForm)
+{
+                <SearchResultForm 
+                    DisplayedLocation="@DisplayedLocation"
+                    IsCanCreate="@IsCanCreate" 
+                    Url="@Url" 
+                    Rtr="@Rtr" />
+}
+else
+{
+                <SearchResultLink
+                    IsCanCreate="@IsCanCreate" 
+                    Url="@Url" />
+}
+
+            </div>
+
+            <div class="card-body table-responsive">
+                <SearchResultTable 
+                    RegulationName="@RegulationName"
+                    DisplayedLocation="@DisplayedLocation"
+                    IsCanEdit="@IsCanEdit" 
+                    IsDisplayRegulation="@IsDisplayRegulation" 
+                    Url="@Url" 
+                    Items="@Items" />
+                @((MarkupString)PagingHtml.ContentAsString())
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string PageTitle { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string RegulationName { get; set; } = String.Empty;
+
+    [Parameter]
+    public bool IsUseCreateForm { get; set; }
+
+    [Parameter]
+    public bool IsCanEdit { get; set; }
+
+    [Parameter]
+    public bool IsCanCreate { get; set; }
+
+    [Parameter]
+    public bool IsDisplayRegulation { get; set; }
+
+    [Parameter]
+    public RtrTableLocationEnum DisplayedLocation { get; set; }
+
+    [Parameter]
+    public IHtmlContent PagingHtml { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
+
+    [Parameter]
+    public Models.AtrSearch Rtr { get; set; }
+
+    [Parameter]
+    public IPager<Models.Atr> Items { get; set; }
+}
