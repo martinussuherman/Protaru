@@ -1,6 +1,4 @@
 @using Microsoft.AspNetCore.Html
-@using Microsoft.AspNetCore.Mvc
-@using P.Pager
 
 <div class="page-title">
     <div class="container">
@@ -14,31 +12,31 @@
             <div class="card-header">
                 <h4 class="card-title float-sm-left">@Title</h4>
 
-@if (IsUseCreateForm)
+@if (Model.IsUseCreateForm)
 {
                 <SearchResultForm 
                     DisplayedLocation="@DisplayedLocation"
-                    IsCanCreate="@IsCanCreate" 
-                    Url="@Url" 
-                    Rtr="@Rtr" />
+                    IsCanCreate="@Model.IsCanCreate" 
+                    Url="@Model.Url" 
+                    Rtr="@Model.Rtr" />
 }
 else
 {
                 <SearchResultLink
-                    IsCanCreate="@IsCanCreate" 
-                    Url="@Url" />
+                    IsCanCreate="@Model.IsCanCreate" 
+                    Url="@Model.Url" />
 }
 
             </div>
 
             <div class="card-body table-responsive">
                 <SearchResultTable 
-                    RegulationName="@RegulationName"
+                    RegulationName="@Model.RegulationName"
                     DisplayedLocation="@DisplayedLocation"
-                    IsCanEdit="@IsCanEdit" 
-                    IsDisplayRegulation="@IsDisplayRegulation" 
-                    Url="@Url" 
-                    Items="@Items" />
+                    IsCanEdit="@Model.IsCanEdit" 
+                    IsDisplayRegulation="@Model.IsDisplayRegulation" 
+                    Url="@Model.Url" 
+                    Items="@Model.Hasil" />
                 @((MarkupString)PagingHtml.ContentAsString())
             </div>
         </div>
@@ -53,32 +51,11 @@ else
     public string Title { get; set; }
 
     [Parameter]
-    public string RegulationName { get; set; } = String.Empty;
-
-    [Parameter]
-    public bool IsUseCreateForm { get; set; }
-
-    [Parameter]
-    public bool IsCanEdit { get; set; }
-
-    [Parameter]
-    public bool IsCanCreate { get; set; }
-
-    [Parameter]
-    public bool IsDisplayRegulation { get; set; }
+    public SearchResultPageModel Model { get; set; }
 
     [Parameter]
     public RtrTableLocationEnum DisplayedLocation { get; set; }
 
     [Parameter]
     public IHtmlContent PagingHtml { get; set; }
-
-    [Parameter]
-    public IUrlHelper Url { get; set; }
-
-    [Parameter]
-    public Models.AtrSearch Rtr { get; set; }
-
-    [Parameter]
-    public IPager<Models.Atr> Items { get; set; }
 }
