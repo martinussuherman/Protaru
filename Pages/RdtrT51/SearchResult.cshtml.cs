@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
@@ -9,7 +8,7 @@ using Protaru.Identity;
 
 namespace MonevAtr.Pages.RdtrT51
 {
-    public class SearchResultModel : PageModel
+    public class SearchResultModel : SearchResultPageModel
     {
         public SearchResultModel(
             IAuthorizationService authorizationService,
@@ -18,13 +17,6 @@ namespace MonevAtr.Pages.RdtrT51
             _authorizationService = authorizationService;
             _context = context;
         }
-
-        public IPager<Models.Atr> Hasil { get; set; }
-
-        [ViewData]
-        public bool IsCanCreate { get; set; }
-
-        public bool IsCanEdit { get; set; }
 
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
@@ -39,14 +31,8 @@ namespace MonevAtr.Pages.RdtrT51
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
-            IsCanCreate = _authorizationService.AuthorizeAsync(
-                User,
-                Permissions.RdtrT51.Create).Result.Succeeded;
-            IsCanEdit = _authorizationService.AuthorizeAsync(
-                User,
-                Permissions.RdtrT51.Edit).Result.Succeeded;
-
+            SetCommonProperties();
+            Rtr = rtr;
             return Page();
         }
 
@@ -65,7 +51,22 @@ namespace MonevAtr.Pages.RdtrT51
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
+            SetCommonProperties();
+            Rtr = rtr;
             return Page();
+        }
+
+        private void SetCommonProperties()
+        {
+            RegulationName = "Perda";
+            IsDisplayRegulation = true;
+            IsUseCreateForm = false;
+            IsCanCreate = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RdtrT51.Create).Result.Succeeded;
+            IsCanEdit = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RdtrT51.Edit).Result.Succeeded;
         }
 
         private void AddProgressByStage(AtrSearch rtr, int stage)
