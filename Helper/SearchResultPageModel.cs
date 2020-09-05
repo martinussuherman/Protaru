@@ -19,5 +19,7 @@ namespace MonevAtr
         public bool IsCanEdit { get; set; }
 
         public bool IsDisplayRegulation { get; set; }
+
+        public RtrTableRegulationInfoEnum RegulationInfo { get; set; }
     }
 }
