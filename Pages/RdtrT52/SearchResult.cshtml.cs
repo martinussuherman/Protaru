@@ -9,7 +9,7 @@ using Protaru.Identity;
 
 namespace MonevAtr.Pages.RdtrT52
 {
-    public class SearchResultModel : PageModel
+    public class SearchResultModel : SearchResultPageModel
     {
         public SearchResultModel(
             IAuthorizationService authorizationService,
@@ -18,16 +18,6 @@ namespace MonevAtr.Pages.RdtrT52
             _authorizationService = authorizationService;
             _context = context;
         }
-
-        [BindProperty]
-        public AtrSearch Rtr { get; set; }
-
-        public IPager<Models.Atr> Hasil { get; set; }
-
-        [ViewData]
-        public bool IsCanCreate { get; set; }
-
-        public bool IsCanEdit { get; set; }
 
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
@@ -43,14 +33,8 @@ namespace MonevAtr.Pages.RdtrT52
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
-            IsCanCreate = _authorizationService.AuthorizeAsync(
-                User,
-                Permissions.RdtrT52.Create).Result.Succeeded;
-            IsCanEdit = _authorizationService.AuthorizeAsync(
-                User,
-                Permissions.RdtrT52.Edit).Result.Succeeded;
-
+            SetCommonProperties();
+            Rtr = rtr;
             return Page();
         }
 
@@ -62,7 +46,6 @@ namespace MonevAtr.Pages.RdtrT52
         public IActionResult OnGetByProgress([FromQuery] int stage, [FromQuery] int page = 1)
         {
             AtrSearch rtr = new AtrSearch();
-            Rtr = rtr;
             AddProgressByStage(rtr, stage);
             Hasil = _context.Atr
                 .ByJenis(JenisRtrEnum.RdtrT52)
@@ -70,7 +53,22 @@ namespace MonevAtr.Pages.RdtrT52
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
+            SetCommonProperties();
+            Rtr = rtr;
             return Page();
+        }
+
+        private void SetCommonProperties()
+        {
+            RegulationName = "Perda";
+            IsDisplayRegulation = true;
+            IsUseCreateForm = true;
+            IsCanCreate = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RdtrT52.Create).Result.Succeeded;
+            IsCanEdit = _authorizationService.AuthorizeAsync(
+                User,
+                Permissions.RdtrT52.Edit).Result.Succeeded;
         }
 
         private void AddProgressByStage(AtrSearch rtr, int stage)
