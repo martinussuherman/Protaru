@@ -1,9 +1,16 @@
 @page
+@using Newtonsoft.Json
 @model IndexModel
 
 @section Menu 
 {
 	@await Html.PartialAsync("_MenuHome")
+}
+
+@section Styles
+{
+    <!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="~/css/material-dropdown.css" />
 }
 
 <div class="home-header pb-5">
@@ -65,12 +72,29 @@
           </div>
         </div>
 
-        <div class="text-center">
-          <a asp-page="/RtrIndexDaerah"
+        <div class="col-lg-6 offset-lg-3 text-center">
+          <form method="get"
+            asp-page="/Search/SearchResultByNama"
+            class="form-inline pt-4 pb-1 text-center">
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+            <ejs-autocomplete
+              autocomplete="true"
+              autofill="true"
+              dataSource="@Model.NamaRtr"
+              id="home-autocomplete"
+              placeholder="Temukan Rtr kamu disini"
+              name="Rtr.Nama"
+              class="form-control pl-5">
+            </ejs-autocomplete>
+              @* fields="@Model.FieldSettings"
+              filtering="filtering" *@
+          </form>
+
+          @* <a asp-page="/RtrIndexDaerah"
             class="btn btn-success text-white font-italic px-4" 
             style="border-radius: 15px;">
             Temukan Rtr kamu disini
-          </a>
+          </a> *@
         </div>
       </div>
     </div>
@@ -229,7 +253,21 @@
 
 @section Scripts
 {
+  <!-- Syncfusion Essential JS 2 Scripts -->
+  <script src="~/js/ej2.min.js"></script>
+  <!-- Syncfusion Essential JS 2 ScriptManager -->
+  <ejs-scripts></ejs-scripts>
+
 	<script>
 		$("#menu-home").addClass("active");
+
+    // Contains
+    // startsWith
+		@* function filtering(e) {
+			var predicate = new ej.data.Predicate('Nama', 'Contains', e.text, true);
+			var query = new ej.data.Query();
+			query = (e.text !== '' && e.value !== '') ? query.where(predicate) : query;
+			e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.NamaRtr)), query);
+		} *@
 	</script>
 }
