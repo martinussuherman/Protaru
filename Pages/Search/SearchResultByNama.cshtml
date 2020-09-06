@@ -1,0 +1,17 @@
+@page "{handler?}"
+@model SearchResultByNamaModel
+
+@{
+    Layout = "_RtrDaerahLayout";
+    ViewData["PageTitle"] = "Pencarian RTR";
+    ViewData["Title"] = "Pencarian RTR Berdasarkan Nama";
+    var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
+}
+
+<component type="typeof(SearchResultPage)"
+    render-mode="Static"
+    param-PageTitle="@ViewData["PageTitle"]"
+    param-Title="@ViewData["Title"]"
+    param-Model="@Model"
+    param-DisplayedLocation="@RtrTableLocationEnum.ProvinsiKabKota"
+    param-PagingHtml="@pagingHtml" />
