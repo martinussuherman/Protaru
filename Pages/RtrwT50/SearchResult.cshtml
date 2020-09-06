@@ -2,21 +2,18 @@
 @model SearchResultModel
 
 @{
-    Layout = "_RtrDaerahSearchResultLayout";
+    Layout = "_RtrDaerahLayout";
     ViewData["PageTitle"] = "RTRW";
     ViewData["Title"] = Model.IsCanEdit ? 
         "Monitoring & Evaluasi RTRW T5-0" : 
         "Monitoring & Evaluasi RTRW";
+    var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
 }
 
-<div class="card-body table-responsive">
-    <component type="typeof(SearchResultTable)" 
-        render-mode="Static" 
-        param-RegulationName="@("Perda")"
-        param-DisplayedLocation="@RtrTableLocationEnum.ProvinsiKabKota"
-        param-IsCanEdit="@Model.IsCanEdit" 
-        param-IsDisplayRegulation="true" 
-        param-Url="@Model.Url" 
-        param-Items="@Model.Hasil" />
-    <partial name="_PagingPartial" model="Model.Hasil" />
-</div>
+<component type="typeof(SearchResultPage)"
+    render-mode="Static"
+    param-PageTitle="@ViewData["PageTitle"]"
+    param-Title="@ViewData["Title"]"
+    param-Model="@Model"
+    param-DisplayedLocation="@RtrTableLocationEnum.ProvinsiKabKota"
+    param-PagingHtml="@pagingHtml" />
