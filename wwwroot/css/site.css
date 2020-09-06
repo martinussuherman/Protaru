@@ -83,7 +83,7 @@
   stroke-width: 2px;
 }
 
-#provinsi-autocomplete {
+#provinsi-autocomplete, #home-autocomplete {
   background: #dedede url('../assets/img/search-icon.png') no-repeat 1rem;
   border-radius: 16px;
   box-shadow: 0 .2rem .5rem rgba(0,0,0,.15)!important;
@@ -93,7 +93,7 @@
   line-height: 1.5;
 }
 
-#provinsi-autocomplete::placeholder {
+#provinsi-autocomplete::placeholder, #home-autocomplete::placeholder {
   font-size: 18px;
 }
 
