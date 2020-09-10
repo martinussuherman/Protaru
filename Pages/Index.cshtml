@@ -44,8 +44,7 @@
               <div class="col-sm-6 offset-sm-3 py-2">
                 <div class="row rtr-progress-total">
                   <div class="col-3 text-right pt-3 progress-number-box">
-                    <div class="text-white progress-number" style="font-size: 2rem;">
-                      529
+                    <div id="summary-progress" class="text-white progress-number" style="font-size: 2rem;">
                     </div>
                   </div>
 
@@ -56,8 +55,7 @@
                   </div>
                   
                   <div class="col-3 text-right pt-3 progress-number-box">
-                    <div class="text-white progress-number" style="font-size: 2rem;">
-                      359
+                    <div id="summary-done" class="text-white progress-number" style="font-size: 2rem;">
                     </div>
                   </div>
 
@@ -201,7 +199,7 @@
             <img src="~/assets/img/proses-daerah-icon.png">
 
             <h2 class="font-weight-bold title-step-desc pt-3">
-              1. Penyusunan
+              1. Penyusunan RTR
             </h2>
 
             <p class="text-secondary step-desc">
@@ -260,6 +258,15 @@
 
 	<script>
 		$("#menu-home").addClass("active");
+
+    $.getJSON(
+      '@Url.Content("~/api/Progress/HomeSummary")', 
+      null, 
+      function(data)
+      {
+        $('#summary-progress').html(data.progress);
+        $('#summary-done').html(data.done);
+      });
 
     // Contains
     // startsWith
