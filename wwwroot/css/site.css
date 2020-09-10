@@ -234,7 +234,8 @@ body {
 }
 
 .rtr-progress-total {
-  background: url('../assets/img/bg-progress-new-2.png') no-repeat center;
+  background: url('../assets/img/bg-progress-new.png') no-repeat center;
+  background-size: contain;
 }
 
 .progress-type {
