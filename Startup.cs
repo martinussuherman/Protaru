@@ -27,6 +27,12 @@ namespace MonevAtr
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddControllers();
+
             services
                 .AddDbContextPool<Models.PomeloDbContext>(options =>
                     options.UseMySql(
@@ -49,26 +55,19 @@ namespace MonevAtr
                                 TimeSpan.FromSeconds(30),
                                 null);
                         }),
-                    16);
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
-
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = $"/Identity/Account/Login";
-                // options.LogoutPath = $"/Identity/Account/Logout";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-            });
-
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
-            });
+                    16)
+                .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
+                .AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
+                .ConfigureApplicationCookie(options =>
+                {
+                    options.LoginPath = $"/Identity/Account/Login";
+                    // options.LogoutPath = $"/Identity/Account/Logout";
+                    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+                })
+                .Configure<RazorViewEngineOptions>(options =>
+                {
+                    options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,6 +97,7 @@ namespace MonevAtr
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapRazorPages();
+                    endpoints.MapControllers();
                 })
                 .UseStaticFiles()
                 .UseStaticFiles(new StaticFileOptions
