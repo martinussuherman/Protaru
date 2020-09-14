@@ -310,7 +310,7 @@
         });
 
         $('#rdtr-t51-progress').click( function () {
-            $.getJSON('@Url.Content("~/Ajax/ProgressT51")',
+            $.getJSON('@Url.Content("~/api/Progress/ProgressT51")',
                 { jenisRtr: 1 }, function(data){
                     UpdateProgressT51(data);
             });
@@ -325,7 +325,7 @@
         });
 
         $('#rtrw-t51-progress').click( function () {
-            $.getJSON('@Url.Content("~/Ajax/ProgressT51")',
+            $.getJSON('@Url.Content("~/api/Progress/ProgressT51")',
                 { jenisRtr: 3 }, function(data){
                     UpdateProgressT51(data);
             });
@@ -340,7 +340,7 @@
         });
 
         $('#rdtr-t52-progress').click( function () {
-            $.getJSON('@Url.Content("~/Ajax/ProgressT52")',
+            $.getJSON('@Url.Content("~/api/Progress/ProgressT52")',
                 { jenisRtr: 2 }, function(data){
                     UpdateProgressT52(data);
             });
@@ -355,7 +355,7 @@
         });
 
         $('#rtrw-t52-progress').click( function () {
-            $.getJSON('@Url.Content("~/Ajax/ProgressT52")',
+            $.getJSON('@Url.Content("~/api/Progress/ProgressT52")',
                 { jenisRtr: 4 }, function(data){
                     UpdateProgressT52(data);
             });
