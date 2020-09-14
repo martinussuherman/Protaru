@@ -37,6 +37,93 @@ namespace MonevAtr.Controllers
             return Ok(result);
         }
 
+        [HttpGet(nameof(ProgressT51))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ProgressT51([FromQuery] int jenisRtr)
+        {
+            var penyusunan = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 1 || q.ProgressAtr.Nomor == 2)
+                .AsNoTracking()
+                .CountAsync();
+
+            var rekomendasiGubernur = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 3)
+                .AsNoTracking()
+                .CountAsync();
+
+            var persetujuanSubstansi = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 4 || q.ProgressAtr.Nomor == 5)
+                .AsNoTracking()
+                .CountAsync();
+
+            var perda = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 6)
+                .AsNoTracking()
+                .CountAsync();
+
+            var result = new
+            {
+                Penyusunan = penyusunan,
+                RekomendasiGubernur = rekomendasiGubernur,
+                PersetujuanSubstansi = persetujuanSubstansi,
+                Perda = perda,
+                Total = penyusunan + rekomendasiGubernur + persetujuanSubstansi + perda
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet(nameof(ProgressT52))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ProgressT52([FromQuery] int jenisRtr)
+        {
+            var penyusunan = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor >= 1 && q.ProgressAtr.Nomor <= 5)
+                .AsNoTracking()
+                .CountAsync();
+
+            var revisi = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 6 || q.ProgressAtr.Nomor == 7)
+                .AsNoTracking()
+                .CountAsync();
+
+            var rekomendasiGubernur = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 8)
+                .AsNoTracking()
+                .CountAsync();
+
+            var persetujuanSubstansi = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 9 || q.ProgressAtr.Nomor == 10)
+                .AsNoTracking()
+                .CountAsync();
+
+            var perda = await _context.Atr
+                .ByJenis((JenisRtrEnum)jenisRtr)
+                .Where(q => q.ProgressAtr.Nomor == 11)
+                .AsNoTracking()
+                .CountAsync();
+
+            var result = new
+            {
+                ProsesPK = penyusunan,
+                Revisi = revisi,
+                RekomendasiGubernur = rekomendasiGubernur,
+                PersetujuanSubstansi = persetujuanSubstansi,
+                Perda = perda,
+                Total = penyusunan + revisi + rekomendasiGubernur + persetujuanSubstansi + perda
+            };
+
+            return Ok(result);
+        }
+
         private readonly PomeloDbContext _context;
     }
 }
