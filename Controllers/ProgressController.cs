@@ -1,5 +1,7 @@
 
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +37,13 @@ namespace MonevAtr.Controllers
             };
 
             return Ok(result);
+        }
+
+        [HttpGet(nameof(DaerahMap))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DaerahMap()
+        {
+            return Ok(await RetrieveRtrDaerahMapData());
         }
 
         [HttpGet(nameof(ProgressT51))]
@@ -122,6 +131,78 @@ namespace MonevAtr.Controllers
             };
 
             return Ok(result);
+        }
+
+        internal class ProvinsiMapData
+        {
+            [JsonIgnore]
+            public Provinsi Provinsi { get; set; }
+
+            public int Kode => Provinsi.Kode;
+
+            public string Nama => Provinsi.Nama;
+
+            public decimal Latitude => Provinsi.Lat;
+
+            public decimal Longitude => Provinsi.Long;
+
+            public int ProgressCount { get; set; }
+
+            public int DoneCount { get; set; }
+
+            public string ProgressLink { get; set; }
+
+            public string DoneLink { get; set; }
+        }
+
+        private async Task<List<ProvinsiMapData>> RetrieveRtrDaerahMapData()
+        {
+            var progressList = await _context.Atr
+                .Include(c => c.ProgressAtr)
+                .Where(c => c.SudahDirevisi == 0 && c.KodeProvinsi != null)
+                .GroupBy(c => new
+                {
+                    c.KodeProvinsi,
+                    c.ProgressAtr.IsPerdaPerpres
+                })
+                .Select(r => new
+                {
+                    KodeProvinsi = r.Key.KodeProvinsi,
+                    IsDone = (r.Key.IsPerdaPerpres == 1),
+                    Jumlah = r.Count()
+                })
+                .ToListAsync();
+
+            List<Provinsi> provinsiList = await _context.Provinsi
+                .Where(c => c.Kode != 0)
+                .AsNoTracking()
+                .ToListAsync();
+            List<ProvinsiMapData> result = (provinsiList
+                .Select(provinsi => new ProvinsiMapData
+                {
+                    Provinsi = provinsi
+                }))
+                .ToList();
+
+            foreach (var data in progressList)
+            {
+                ProvinsiMapData mapData = result
+                    .Find(c => c.Kode == data.KodeProvinsi);
+
+                if (data.IsDone)
+                {
+                    mapData.DoneCount = data.Jumlah;
+                }
+                else
+                {
+                    mapData.ProgressCount = data.Jumlah;
+                }
+
+                mapData.ProgressLink = Url.Content($"~/Search/SearchResultDaerahByProgress?Rtr.Prov={data.KodeProvinsi}&Rtr.Perda=0");
+                mapData.DoneLink = Url.Content($"~/Search/SearchResultDaerahByProgress?Rtr.Prov={data.KodeProvinsi}&Rtr.Perda=1");
+            }
+
+            return result;
         }
 
         private readonly PomeloDbContext _context;
