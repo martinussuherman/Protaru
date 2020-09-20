@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace MonevAtr
 {
@@ -32,6 +33,7 @@ namespace MonevAtr
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllers();
+            services.AddHttpClient(Options.DefaultName);
 
             services
                 .AddDbContextPool<Models.PomeloDbContext>(options =>

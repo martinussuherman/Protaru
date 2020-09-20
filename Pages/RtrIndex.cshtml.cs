@@ -8,7 +8,7 @@ using Syncfusion.EJ2.DropDowns;
 using Syncfusion.EJ2.Maps;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MonevAtr.Pages
@@ -16,9 +16,11 @@ namespace MonevAtr.Pages
     public class RtrIndexModel : CustomPageModel
     {
         public RtrIndexModel(
+            IHttpClientFactory httpClientFactory,
             PomeloDbContext context,
             IConfiguration configuration)
         {
+            _httpClientFactory = httpClientFactory;
             _context = context;
             _configuration = configuration;
             selectListUtilities = new SelectListUtilities(_context);
@@ -30,7 +32,7 @@ namespace MonevAtr.Pages
 
         public string BingKey => _configuration.GetValue<string>("BingKey");
 
-        public object MapsMarkerData => ReadMarkerFromFile();
+        public object MapsMarkerData;
 
         public MapsBorder Border => new MapsBorder
         {
@@ -93,9 +95,9 @@ namespace MonevAtr.Pages
             Value = "Kode"
         };
 
-
         public async Task<IActionResult> OnGetAsync()
         {
+            MapsMarkerData = await ReadMarkerFromApi();
             StatusYear = DateTime.Today.Year;
             StatusMonth = DateTime.Today.Month;
             Provinsi = await _context.Provinsi.ToListAsync();
@@ -104,10 +106,15 @@ namespace MonevAtr.Pages
             return Page();
         }
 
-        private object ReadMarkerFromFile()
+        private async Task<object> ReadMarkerFromApi()
         {
-            string allText = System.IO.File.ReadAllText("./wwwroot/markercluster.js");
-            return JsonConvert.DeserializeObject(allText);
+            string url = $"{Request.Scheme}://{Request.Host.ToUriComponent()}" +
+                $"{Request.PathBase.ToUriComponent()}/api/Progress/DaerahMap";
+            HttpClient httpClient = _httpClientFactory.CreateClient();
+            HttpResponseMessage response = await httpClient.SendAsync(
+                new HttpRequestMessage(HttpMethod.Get, url));
+            return JsonConvert.DeserializeObject(
+                await response.Content.ReadAsStringAsync());
         }
 
         private readonly string[] _toolbars = new string[]
@@ -122,9 +129,9 @@ namespace MonevAtr.Pages
         {
             Template = "#tooltip-template",
             Visible = true,
-            ValuePath = "location"
+            ValuePath = "nama"
         };
-
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly PomeloDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly SelectListUtilities selectListUtilities;

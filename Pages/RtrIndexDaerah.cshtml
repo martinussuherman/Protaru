@@ -1,4 +1,4 @@
-@page
+﻿@page
 
 @using Syncfusion.EJ2.Maps;
 @using Newtonsoft.Json;
@@ -36,14 +36,9 @@
 
 	<div id="tooltip-template" style="display: none;">
 		<div class="protaru-tooltip p-2">
-			<h5 class="text-center">${location}</h5>
-			<h6 class="text-center">${rtr}</h6>
-			<p class="mb-0">Progress: ${progress}</p>
-			<p class="mb-0">Surat Rekom Gub: ${rekomGub}</p>
-			<p class="mb-0">Rapat Lintas Sektor: ${linSek}</p>
-			<p class="mb-0">Surat Persetujuan Substansi: ${perSub}</p>
-			<p class="mb-0">No. Perda: ${perda}</p>
-			<a href="${link}" class="btn btn-primary btn-block p-0">Detail</a>
+			<h5 class="text-center">${nama}</h5>
+			<a href="${progressLink}" class="btn btn-primary btn-block p-0">Progress: ${progressCount}</a>
+			<a href="${doneLink}" class="btn btn-primary btn-block p-0">Perda: ${doneCount}</a>
 		</div>
 	</div>
 
@@ -133,37 +128,37 @@
 					<h6 class="text-progress">Lima Tahun Pertama</h6>
 
 					<div id="progress-t51" class="box-graphic">
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/penyusunan.png")" 
-							param-Text="@("Penyusunan")" 
-							param-ProgressClass="@("progress-init")" 
-							param-BarClass="@("red-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/penyusunan.png")"
+							param-Text="@("Penyusunan")"
+							param-ProgressClass="@("progress-init")"
+							param-BarClass="@("red-bar")"
 							param-CircleClass="@("circle-dark")"
 							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")" 
-							param-Text="@("Rekomendasi Gubernur")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("black-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")"
+							param-Text="@("Rekomendasi Gubernur")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("black-bar")"
 							param-CircleClass="@("circle-medium-dark")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/persub.png")" 
-							param-Text="@("Persetujuan Substansi")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("blue-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/persub.png")"
+							param-Text="@("Persetujuan Substansi")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("blue-bar")"
 							param-CircleClass="@("circle-medium")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/perda.png")" 
-							param-Text="@("Peraturan Daerah")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("yellow-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/perda.png")"
+							param-Text="@("Peraturan Daerah")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("yellow-bar")"
 							param-CircleClass="@("circle-light")"
 							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
 					</div>
@@ -193,46 +188,46 @@
 					<h6 class="text-progress">Lima Tahun Kedua</h6>
 
 					<div id="progress-t52" class="box-graphic">
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/proses-pk.png")" 
-							param-Text="@("Proses Peninjauan Kembali")" 
-							param-ProgressClass="@("progress-init")" 
-							param-BarClass="@("red-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/proses-pk.png")"
+							param-Text="@("Proses Peninjauan Kembali")"
+							param-ProgressClass="@("progress-init")"
+							param-BarClass="@("red-bar")"
 							param-CircleClass="@("circle-dark")"
 							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/revisi.png")" 
-							param-Text="@("Revisi")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("black-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/revisi.png")"
+							param-Text="@("Revisi")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("black-bar")"
 							param-CircleClass="@("circle-medium-dark")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")" 
-							param-Text="@("Rekomendasi Gubernur")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("blue-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")"
+							param-Text="@("Rekomendasi Gubernur")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("blue-bar")"
 							param-CircleClass="@("circle-medium")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/persub.png")" 
-							param-Text="@("Persetujuan Substansi")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("yellow-bar")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/persub.png")"
+							param-Text="@("Persetujuan Substansi")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("yellow-bar")"
 							param-CircleClass="@("circle-light")" />
 
-						<component type="typeof(ProgressBar)" 
-							render-mode="Static" 
-							param-ImageUrl="@Url.Content("~/assets/img/perda.png")" 
-							param-Text="@("Peraturan Daerah")" 
-							param-ProgressClass="@("progress-general")" 
-							param-BarClass="@("purple-bar")" 
-							param-CircleClass="@("circle-light")" 
+						<component type="typeof(ProgressBar)"
+							render-mode="Static"
+							param-ImageUrl="@Url.Content("~/assets/img/perda.png")"
+							param-Text="@("Peraturan Daerah")"
+							param-ProgressClass="@("progress-general")"
+							param-BarClass="@("purple-bar")"
+							param-CircleClass="@("circle-light")"
 							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
 			    	</div>
 		    	</div>
@@ -282,12 +277,12 @@
       </div>
       <div class="col-lg-6 py-5 yt-box">
         <div class="videowrapper">
-          	<iframe style="border-radius: 10px;" 
-				width="560" 
-				height="315" 
-				src="https://www.youtube.com/embed/lIAobmRepFo" 
-				frameborder="0" 
-				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+          	<iframe style="border-radius: 10px;"
+				width="560"
+				height="315"
+				src="https://www.youtube.com/embed/lIAobmRepFo"
+				frameborder="0"
+				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 				allowfullscreen>
 			</iframe>
         </div>
