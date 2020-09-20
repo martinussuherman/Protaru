@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MonevAtr.Models
 {
-    [Table("kabupaten_kota")]
     public class KabupatenKota
     {
         public KabupatenKota()
@@ -13,7 +12,6 @@ namespace MonevAtr.Models
             Atr = new HashSet<Atr>();
         }
 
-        [Key]
         public int Kode { get; set; }
 
         [Required(ErrorMessage = "Nama Kabupaten/Kota harus diisi."), MaxLength(100)]

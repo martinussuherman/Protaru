@@ -25,6 +25,12 @@
                     Provinsi
                 </th>
                 <th>
+                    Lintang
+                </th>
+                <th>
+                    Bujur
+                </th>
+                <th>
                 </th>
             </tr>
         </thead>
@@ -35,13 +41,19 @@
 {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Kode)
+                    @item.Kode
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nama)
+                    @item.Nama
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Provinsi.Nama)
+                </td>
+                <td>
+                    @item.Lat
+                </td>
+                <td>
+                    @item.Long
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Kode" class="btn btn-warning">Ubah</a>

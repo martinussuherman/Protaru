@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MonevAtr.Models
 {
-    [Table("provinsi")]
     public class Provinsi
     {
         public Provinsi()
@@ -14,11 +13,14 @@ namespace MonevAtr.Models
             KabupatenKota = new HashSet<KabupatenKota>();
         }
 
-        [Key]
         public int Kode { get; set; }
 
         [Required(ErrorMessage = "Nama Provinsi harus diisi."), MaxLength(100)]
         public string Nama { get; set; }
+
+        public decimal Lat { get; set; }
+
+        public decimal Long { get; set; }
 
         public ICollection<Atr> Atr { get; set; }
 
