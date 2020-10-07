@@ -40,27 +40,27 @@
             'style',
             'width: ' + data.penyusunanPk / data.total * 100 + '%;' );
 
-        $('#progress-rtrwn-t52 .row:eq(2) .progress-score').html( data.penyusunanMateriTeknisRtrwnT52 );
+        $('#progress-rtrwn-t52 .row:eq(2) .progress-score').html( data.penyusunanMateriTeknis );
         $('#progress-rtrwn-t52 .row:eq(2) .progress-bar').attr(
             'style',
             'width: ' + data.penyusunanMateriTeknisRtrwnT52 / data.total * 100 + '%;' );
 
-        $('#progress-rtrwn-t52 .row:eq(3) .progress-score').html( data.penyepakatanTpakRtrwnT52 );
+        $('#progress-rtrwn-t52 .row:eq(3) .progress-score').html( data.penyepakatanTpak );
         $('#progress-rtrwn-t52 .row:eq(3) .progress-bar').attr(
             'style',
             'width: ' + data.penyepakatanTpakRtrwnT52 / data.total * 100 + '%;' );
 
-        $('#progress-rtrwn-t52 .row:eq(4) .progress-score').html( data.harmonisasiKemenkumhamRtrwnT52 );
+        $('#progress-rtrwn-t52 .row:eq(4) .progress-score').html( data.harmonisasiKemenkumham );
         $('#progress-rtrwn-t52 .row:eq(4) .progress-bar').attr(
             'style',
             'width: ' + data.harmonisasiKemenkumhamRtrwnT52 / data.total * 100 + '%;' );
 
-        $('#progress-rtrwn-t52 .row:eq(5) .progress-score').html( data.pembahasanSekretariatRtrwnT52 );
+        $('#progress-rtrwn-t52 .row:eq(5) .progress-score').html( data.pembahasanSekretariat );
         $('#progress-rtrwn-t52 .row:eq(5) .progress-bar').attr(
             'style',
             'width: ' + data.pembahasanSekretariatRtrwnT52 / data.total * 100 + '%;' );
 
-        $('#progress-rtrwn-t52 .row:eq(6) .progress-score').html( data.penetapanPresidenRtrwnT52 );
+        $('#progress-rtrwn-t52 .row:eq(6) .progress-score').html( data.penetapanPresiden );
         $('#progress-rtrwn-t52 .row:eq(6) .progress-bar').attr(
             'style',
             'width: ' + data.penetapanPresidenRtrwnT52 / data.total * 100 + '%;' );
@@ -188,8 +188,10 @@
 
     $(document).ready(function () {
         $('#rtrwn-t51-progress').click( function () {
-            $.getJSON('@Url.Content("~/Ajax/ProgressRtrwnT51")',
-                { jenisRtr: 10 }, function(data){
+            $.getJSON(
+                '@Url.Content("~/api/Progress/RtrwnT51")',
+                {}, 
+                function(data){
                     UpdateProgressRtrwnT51(data);
             });
 
@@ -201,8 +203,10 @@
         });
 
         $('#rtrwn-t52-progress').click( function () {
-            $.getJSON('@Url.Content("~/Ajax/ProgressRtrwnT52")',
-                { jenisRtr: 11 }, function(data){
+            $.getJSON(
+                '@Url.Content("~/api/Progress/RtrwnT52")',
+                {}, 
+                function(data){
                     UpdateProgressRtrwnT52(data);
             });
 
@@ -310,8 +314,10 @@
         });
 
         $('#rdtr-t51-progress').click( function () {
-            $.getJSON('@Url.Content("~/api/Progress/ProgressT51")',
-                { jenisRtr: 1 }, function(data){
+            $.getJSON(
+                '@Url.Content("~/api/Progress/T51")',
+                { jenisRtr: 1 }, 
+                function(data){
                     UpdateProgressT51(data);
             });
 
@@ -325,8 +331,10 @@
         });
 
         $('#rtrw-t51-progress').click( function () {
-            $.getJSON('@Url.Content("~/api/Progress/ProgressT51")',
-                { jenisRtr: 3 }, function(data){
+            $.getJSON(
+                '@Url.Content("~/api/Progress/T51")',
+                { jenisRtr: 3 }, 
+                function(data){
                     UpdateProgressT51(data);
             });
 
@@ -340,8 +348,10 @@
         });
 
         $('#rdtr-t52-progress').click( function () {
-            $.getJSON('@Url.Content("~/api/Progress/ProgressT52")',
-                { jenisRtr: 2 }, function(data){
+            $.getJSON(
+                '@Url.Content("~/api/Progress/T52")',
+                { jenisRtr: 2 }, 
+                function(data){
                     UpdateProgressT52(data);
             });
 
@@ -355,8 +365,10 @@
         });
 
         $('#rtrw-t52-progress').click( function () {
-            $.getJSON('@Url.Content("~/api/Progress/ProgressT52")',
-                { jenisRtr: 4 }, function(data){
+            $.getJSON(
+                '@Url.Content("~/api/Progress/T52")',
+                { jenisRtr: 4 }, 
+                function(data){
                     UpdateProgressT52(data);
             });
 
