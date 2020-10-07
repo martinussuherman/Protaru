@@ -19,6 +19,10 @@ namespace MonevAtr.Models
         [Required(ErrorMessage = "{0} harus diisi."), MaxLength(300)]
         public string Nama { get; set; }
 
+        public decimal Lat { get; set; }
+
+        public decimal Long { get; set; }
+
         [InverseProperty("Kawasan")]
         public ICollection<Atr> Atr { get; set; }
 

@@ -154,6 +154,18 @@
         </div> 
 -->
 
+        <div class="form-group">
+            <label class="control-label">Lintang</label>
+            <input type="number" asp-for="Kawasan.Lat" class="form-control" />
+            <span asp-validation-for="Kawasan.Lat" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Bujur</label>
+            <input type="number" asp-for="Kawasan.Long" class="form-control" />
+            <span asp-validation-for="Kawasan.Long" class="text-danger"></span>
+        </div>
+
         <input type="submit" value="Simpan" class="btn btn-primary" />
         <a asp-page="./Index" class="btn btn-warning">Kembali</a>
     </form>
