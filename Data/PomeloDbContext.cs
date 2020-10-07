@@ -416,6 +416,10 @@ namespace MonevAtr.Models
                 entity.Property(e => e.Nama)
                     .IsUnicode(false)
                     .HasDefaultValueSql("''");
+
+                entity.Property(e => e.Lat).HasColumnType("decimal(9,6)");
+
+                entity.Property(e => e.Long).HasColumnType("decimal(9,6)");
             });
 
             modelBuilder.Entity<KawasanKabupatenKota>(entity =>

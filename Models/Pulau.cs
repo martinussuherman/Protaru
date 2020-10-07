@@ -19,6 +19,10 @@ namespace MonevAtr.Models
         [Required(ErrorMessage = "Nama Pulau harus diisi."), MaxLength(100)]
         public string Nama { get; set; }
 
+        public decimal Lat { get; set; }
+
+        public decimal Long { get; set; }
+
         public ICollection<Atr> Atr { get; set; }
     }
 }
