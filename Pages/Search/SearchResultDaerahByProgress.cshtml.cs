@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
@@ -24,6 +25,7 @@ namespace MonevAtr.Pages.Search
                 .ByNama(rtr.Nama)
                 .ByNomor(rtr.Nomor)
                 .ByIsPerdaPerpres(rtr)
+                .Where(c => c.SudahDirevisi == 0)
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
