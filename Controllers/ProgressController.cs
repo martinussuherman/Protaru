@@ -50,30 +50,30 @@ namespace MonevAtr.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ProgressT51([FromQuery] int jenisRtr)
         {
+        [HttpGet(nameof(T51))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> T51([FromQuery] int jenisRtr)
+        {
             var penyusunan = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 1 || q.ProgressAtr.Nomor == 2)
                 .AsNoTracking()
                 .CountAsync();
-
             var rekomendasiGubernur = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 3)
                 .AsNoTracking()
                 .CountAsync();
-
             var persetujuanSubstansi = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 4 || q.ProgressAtr.Nomor == 5)
                 .AsNoTracking()
                 .CountAsync();
-
             var perda = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 6)
                 .AsNoTracking()
                 .CountAsync();
-
             var result = new
             {
                 Penyusunan = penyusunan,
@@ -86,40 +86,35 @@ namespace MonevAtr.Controllers
             return Ok(result);
         }
 
-        [HttpGet(nameof(ProgressT52))]
+        [HttpGet(nameof(T52))]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ProgressT52([FromQuery] int jenisRtr)
+        public async Task<IActionResult> T52([FromQuery] int jenisRtr)
         {
             var penyusunan = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor >= 1 && q.ProgressAtr.Nomor <= 5)
                 .AsNoTracking()
                 .CountAsync();
-
             var revisi = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 6 || q.ProgressAtr.Nomor == 7)
                 .AsNoTracking()
                 .CountAsync();
-
             var rekomendasiGubernur = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 8)
                 .AsNoTracking()
                 .CountAsync();
-
             var persetujuanSubstansi = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 9 || q.ProgressAtr.Nomor == 10)
                 .AsNoTracking()
                 .CountAsync();
-
             var perda = await _context.Atr
                 .ByJenis((JenisRtrEnum)jenisRtr)
                 .Where(q => q.ProgressAtr.Nomor == 11)
                 .AsNoTracking()
                 .CountAsync();
-
             var result = new
             {
                 ProsesPK = penyusunan,
@@ -133,8 +128,101 @@ namespace MonevAtr.Controllers
             return Ok(result);
         }
 
-        internal class ProvinsiMapData
+        [HttpGet(nameof(RtrwnT51))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> RtrwnT51()
         {
+            var penyusunan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT51)
+                .Where(q => q.ProgressAtr.Nomor == 1)
+                .AsNoTracking()
+                .CountAsync();
+            var penyepakatan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT51)
+                .Where(q => q.ProgressAtr.Nomor == 2)
+                .AsNoTracking()
+                .CountAsync();
+            var harmonisasi = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT51)
+                .Where(q => q.ProgressAtr.Nomor == 3)
+                .AsNoTracking()
+                .CountAsync();
+            var pembahasan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT51)
+                .Where(q => q.ProgressAtr.Nomor == 4)
+                .AsNoTracking()
+                .CountAsync();
+            var penetapan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT51)
+                .Where(q => q.ProgressAtr.Nomor == 5)
+                .AsNoTracking()
+                .CountAsync();
+            var result = new
+            {
+                PenyusunanMateriTeknis = penyusunan,
+                PenyepakatanTpak = penyepakatan,
+                HarmonisasiKemenkumham = harmonisasi,
+                PembahasanSekretariat = pembahasan,
+                PenetapanPresiden = penetapan,
+                Total = penyusunan + penyepakatan + harmonisasi + pembahasan + penetapan
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet(nameof(RtrwnT52))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> RtrwnT52()
+        {
+            var kajian = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 1)
+                .AsNoTracking()
+                .CountAsync();
+            var pk = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 2)
+                .AsNoTracking()
+                .CountAsync();
+            var penyusunan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 3)
+                .AsNoTracking()
+                .CountAsync();
+            var penyepakatan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 4)
+                .AsNoTracking()
+                .CountAsync();
+            var harmonisasi = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 5)
+                .AsNoTracking()
+                .CountAsync();
+            var pembahasan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 6)
+                .AsNoTracking()
+                .CountAsync();
+            var penetapan = await _context.Atr
+                .ByJenis(JenisRtrEnum.RtrwnT52)
+                .Where(q => q.ProgressAtr.Nomor == 7)
+                .AsNoTracking()
+                .CountAsync();
+            var result = new
+            {
+                KajianPk = kajian,
+                PenyusunanPk = pk,
+                PenyusunanMateriTeknis = penyusunan,
+                PenyepakatanTpak = penyepakatan,
+                HarmonisasiKemenkumham = harmonisasi,
+                PembahasanSekretariat = pembahasan,
+                PenetapanPresiden = penetapan,
+                Total = kajian + pk + penyusunan + penyepakatan + harmonisasi + pembahasan + penetapan
+            };
+
+            return Ok(result);
+        }
             [JsonIgnore]
             public Provinsi Provinsi { get; set; }
 
