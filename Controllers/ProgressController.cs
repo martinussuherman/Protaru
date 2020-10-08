@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -46,10 +45,13 @@ namespace MonevAtr.Controllers
             return Ok(await RetrieveRtrDaerahMapData());
         }
 
-        [HttpGet(nameof(ProgressT51))]
+        [HttpGet(nameof(NasionalMap))]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ProgressT51([FromQuery] int jenisRtr)
+        public async Task<IActionResult> NasionalMap()
         {
+            return Ok(await RetrieveRtrNasionalMapData());
+        }
+
         [HttpGet(nameof(T51))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> T51([FromQuery] int jenisRtr)
@@ -223,16 +225,109 @@ namespace MonevAtr.Controllers
 
             return Ok(result);
         }
+
+        internal class MapData
+        {
             [JsonIgnore]
             public Provinsi Provinsi { get; set; }
 
-            public int Kode => Provinsi.Kode;
+            [JsonIgnore]
+            public Pulau Pulau { get; set; }
 
-            public string Nama => Provinsi.Nama;
+            [JsonIgnore]
+            public Kawasan Kawasan { get; set; }
 
-            public decimal Latitude => Provinsi.Lat;
+            public int Kode
+            {
+                get
+                {
+                    if (Provinsi != null)
+                    {
+                        return Provinsi.Kode;
+                    }
 
-            public decimal Longitude => Provinsi.Long;
+                    if (Pulau != null)
+                    {
+                        return Pulau.Kode;
+                    }
+
+                    if (Kawasan != null)
+                    {
+                        return Kawasan.Kode;
+                    }
+
+                    return 0;
+                }
+            }
+
+            public string Nama
+            {
+                get
+                {
+                    if (Provinsi != null)
+                    {
+                        return Provinsi.Nama;
+                    }
+
+                    if (Pulau != null)
+                    {
+                        return Pulau.Nama;
+                    }
+
+                    if (Kawasan != null)
+                    {
+                        return Kawasan.Nama;
+                    }
+
+                    return string.Empty;
+                }
+            }
+
+            public decimal Latitude
+            {
+                get
+                {
+                    if (Provinsi != null)
+                    {
+                        return Provinsi.Lat;
+                    }
+
+                    if (Pulau != null)
+                    {
+                        return Pulau.Lat;
+                    }
+
+                    if (Kawasan != null)
+                    {
+                        return Kawasan.Lat;
+                    }
+
+                    return 0;
+                }
+            }
+
+            public decimal Longitude
+            {
+                get
+                {
+                    if (Provinsi != null)
+                    {
+                        return Provinsi.Long;
+                    }
+
+                    if (Pulau != null)
+                    {
+                        return Pulau.Long;
+                    }
+
+                    if (Kawasan != null)
+                    {
+                        return Kawasan.Long;
+                    }
+
+                    return 0;
+                }
+            }
 
             public int ProgressCount { get; set; }
 
@@ -241,41 +336,74 @@ namespace MonevAtr.Controllers
             public string ProgressLink { get; set; }
 
             public string DoneLink { get; set; }
+
+            public string Color { get; set; }
         }
 
-        private async Task<List<ProvinsiMapData>> RetrieveRtrDaerahMapData()
+        internal class ProgressData
+        {
+            public int? Kode { get; set; }
+
+            public bool IsDone { get; set; }
+
+            public int Jumlah { get; set; }
+        }
+        private async Task<List<MapData>> RetrieveRtrDaerahMapData()
         {
             var progressList = await _context.Atr
                 .Include(c => c.ProgressAtr)
-                .Where(c => c.SudahDirevisi == 0 && c.KodeProvinsi != null)
+                .Where(c =>
+                    c.KodeJenisAtr >= 1 &&
+                    c.KodeJenisAtr <= 5 &&
+                    c.SudahDirevisi == 0 &&
+                    c.KodeProvinsi != null)
                 .GroupBy(c => new
                 {
                     c.KodeProvinsi,
                     c.ProgressAtr.IsPerdaPerpres
                 })
-                .Select(r => new
+                .Select(r => new ProgressData
                 {
-                    KodeProvinsi = r.Key.KodeProvinsi,
+                    Kode = r.Key.KodeProvinsi,
                     IsDone = (r.Key.IsPerdaPerpres == 1),
                     Jumlah = r.Count()
                 })
                 .ToListAsync();
-
-            List<Provinsi> provinsiList = await _context.Provinsi
+            List<MapData> result = await _context.Provinsi
                 .Where(c => c.Kode != 0)
                 .AsNoTracking()
-                .ToListAsync();
-            List<ProvinsiMapData> result = (provinsiList
-                .Select(provinsi => new ProvinsiMapData
+                .Select(provinsi => new MapData
                 {
                     Provinsi = provinsi
-                }))
-                .ToList();
+                })
+                .ToListAsync();
 
-            foreach (var data in progressList)
+            MergeData(
+                progressList,
+                result,
+                "~/Search/SearchResultDaerahByProgress?Rtr.Prov={0}&Rtr.Perda=0",
+                "~/Search/SearchResultDaerahByProgress?Rtr.Prov={0}&Rtr.Perda=1",
+                "red");
+            return result;
+        }
+        private void MergeData(
+            List<ProgressData> progress,
+            List<MapData> result,
+            string progressLink,
+            string doneLink,
+            string color)
+        {
+            foreach (var mapData in result)
             {
-                ProvinsiMapData mapData = result
-                    .Find(c => c.Kode == data.KodeProvinsi);
+                mapData.Color = color;
+                mapData.ProgressLink = Url.Content(string.Format(progressLink, mapData.Kode));
+                mapData.DoneLink = Url.Content(string.Format(doneLink, mapData.Kode));
+            }
+
+            foreach (var data in progress)
+            {
+                MapData mapData = result
+                    .Find(c => c.Kode == data.Kode);
 
                 if (data.IsDone)
                 {
@@ -285,11 +413,155 @@ namespace MonevAtr.Controllers
                 {
                     mapData.ProgressCount = data.Jumlah;
                 }
-
-                mapData.ProgressLink = Url.Content($"~/Search/SearchResultDaerahByProgress?Rtr.Prov={data.KodeProvinsi}&Rtr.Perda=0");
-                mapData.DoneLink = Url.Content($"~/Search/SearchResultDaerahByProgress?Rtr.Prov={data.KodeProvinsi}&Rtr.Perda=1");
             }
+        }
+        private async Task<List<MapData>> RetrieveRtrNasionalMapData()
+        {
+            // Rtr Pulau
+            var pulauProgressList = await _context.Atr
+                .Include(c => c.ProgressAtr)
+                .Where(c =>
+                    (c.KodeJenisAtr == 6 ||
+                    c.KodeJenisAtr == 7) &&
+                    c.SudahDirevisi == 0)
+                .GroupBy(c => new
+                {
+                    c.KodePulau,
+                    c.ProgressAtr.IsPerdaPerpres
+                })
+                .Select(r => new ProgressData
+                {
+                    Kode = r.Key.KodePulau,
+                    IsDone = (r.Key.IsPerdaPerpres == 1),
+                    Jumlah = r.Count()
+                })
+                .ToListAsync();
+            List<MapData> pulauResult = await _context.Pulau
+                .AsNoTracking()
+                .Select(pulau => new MapData
+                {
+                    Pulau = pulau
+                })
+                .ToListAsync();
 
+            MergeData(
+                pulauProgressList,
+                pulauResult,
+                "~/RtrPulau/SearchResult?Rtr.Pulau={0}&Rtr.Perda=0",
+                "~/RtrPulau/SearchResult?Rtr.Pulau={0}&Rtr.Perda=1",
+                "orange");
+
+            // Rtr Ksn
+            var ksnProgressList = await _context.Atr
+                .Include(c => c.ProgressAtr)
+                .Where(c =>
+                    (c.KodeJenisAtr == 8 ||
+                    c.KodeJenisAtr == 9) &&
+                    c.SudahDirevisi == 0)
+                .GroupBy(c => new
+                {
+                    c.KodeKawasan,
+                    c.ProgressAtr.IsPerdaPerpres
+                })
+                .Select(r => new ProgressData
+                {
+                    Kode = r.Key.KodeKawasan,
+                    IsDone = (r.Key.IsPerdaPerpres == 1),
+                    Jumlah = r.Count()
+                })
+                .ToListAsync();
+            List<MapData> ksnResult = await _context.Kawasan
+                .AsNoTracking()
+                .Select(kawasan => new MapData
+                {
+                    Kawasan = kawasan
+                })
+                .ToListAsync();
+
+            MergeData(
+                ksnProgressList,
+                ksnResult,
+                "~/RtrKsn/SearchResult?Rtr.Kawasan={0}&Rtr.Perda=0",
+                "~/RtrKsn/SearchResult?Rtr.Kawasan={0}&Rtr.Perda=1",
+                "magenta");
+
+            // Rtrwn
+            var rtrwnProgressList = await _context.Atr
+                .Include(c => c.ProgressAtr)
+                .Where(c =>
+                    (c.KodeJenisAtr == 10 ||
+                    c.KodeJenisAtr == 11) &&
+                    c.SudahDirevisi == 0)
+                .GroupBy(c => new
+                {
+                    c.ProgressAtr.IsPerdaPerpres
+                })
+                .Select(r => new ProgressData
+                {
+                    Kode = 0,
+                    IsDone = (r.Key.IsPerdaPerpres == 1),
+                    Jumlah = r.Count()
+                })
+                .ToListAsync();
+            List<MapData> rtrwnResult = new List<MapData>
+            {
+                new MapData
+                {
+                    Kawasan = new Kawasan
+                    {
+                        Kode = 0,
+                        Nama = "Rtrwn",
+                        Lat = -6.19M,
+                        Long = 106.85M
+                    }
+                }
+            };
+            MergeData(
+                rtrwnProgressList,
+                rtrwnResult,
+                "~/Rtrwn/SearchResult?Rtr.Perda=0",
+                "~/Rtrwn/SearchResult?Rtr.Perda=1",
+                "yellow");
+
+            // Rtr Kpn
+            var kpnProgressList = await _context.Atr
+                .Include(c => c.ProgressAtr)
+                .Where(c =>
+                    (c.KodeJenisAtr == 12 ||
+                    c.KodeJenisAtr == 13) &&
+                    c.SudahDirevisi == 0)
+                .GroupBy(c => new
+                {
+                    c.KodeProvinsi,
+                    c.ProgressAtr.IsPerdaPerpres
+                })
+                .Select(r => new ProgressData
+                {
+                    Kode = r.Key.KodeProvinsi,
+                    IsDone = (r.Key.IsPerdaPerpres == 1),
+                    Jumlah = r.Count()
+                })
+                .ToListAsync();
+            List<MapData> kpnResult = await _context.Provinsi
+                .Where(c => c.Kode != 0)
+                .AsNoTracking()
+                .Select(provinsi => new MapData
+                {
+                    Provinsi = provinsi
+                })
+                .ToListAsync();
+
+            MergeData(
+                kpnProgressList,
+                kpnResult,
+                "~/RtrKpn/SearchResult?Rtr.Provinsi={0}&Rtr.Perda=0",
+                "~/RtrKpn/SearchResult?Rtr.Provinsi={0}&Rtr.Perda=1",
+                "red");
+
+            List<MapData> result = new List<MapData>(pulauResult);
+            result.AddRange(ksnResult);
+            result.AddRange(rtrwnResult);
+            result.AddRange(kpnResult);
             return result;
         }
 
