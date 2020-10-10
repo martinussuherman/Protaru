@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#provinsi').change( function () {
+            var selectedText = $(this).find("option:selected").text();
+            $('#Atr_Nama').val("RTRW Provinsi " + selectedText);
+        });
+        $('#kabupaten-kota').change( function () {
+            var selectedText = $(this).find("option:selected").text();
+            $('#Atr_Nama').val($('#Atr_Nama').val() + " " + selectedText );
+        });
+    });
+</script>
