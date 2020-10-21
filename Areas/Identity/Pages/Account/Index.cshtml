@@ -17,6 +17,9 @@
                     Nama User
                 </th>
                 <th>
+                    Email
+                </th>
+                <th>
                     Role
                 </th>
                 <th>
@@ -26,21 +29,24 @@
 
         <tbody>
 
-@foreach (var item in Model.UserList) 
-{
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoleName)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">Ubah</a>
-                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Hapus</a>
-                </td>
-            </tr>
-}
+            @foreach (var item in Model.UserList)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">Ubah</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Hapus</a>
+                    </td>
+                </tr>
+            }
 
         </tbody>
     </table>

@@ -16,6 +16,12 @@
         <input type="hidden" asp-for="Input.Id" />
 
         <div class="form-group">
+            <label>Email</label>
+            <input asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
             <label class="control-label">Role</label>
             <select asp-for="Input.UserRole" class ="form-control" asp-items="ViewBag.UserRole" required>
                 <option value="">Silahkan pilih ...</option>

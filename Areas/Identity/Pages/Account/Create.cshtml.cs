@@ -42,6 +42,10 @@ namespace MonevAtr.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "User harus diisi.")]
             public string UserName { get; set; }
 
+            [Required(ErrorMessage = "Email harus diisi.")]
+            [EmailAddress]
+            public string Email { get; set; }
+
             [Required(ErrorMessage = "Password harus diisi.")]
             [StringLength(100, ErrorMessage = "{0} minimal {2} dan maksimal {1} karakter.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -68,7 +72,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                 ApplicationUser user = new ApplicationUser
                 {
                     UserName = Input.UserName,
-                    Email = String.Empty
+                    Email = Input.Email
                 };
 
                 IdentityResult result = await _userManager.CreateAsync(user, Input.Password);

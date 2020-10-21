@@ -28,6 +28,8 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
             public string Name { get; set; }
 
+            public string Email { get; set; }
+
             public string RoleName { get; set; }
         }
 
@@ -62,6 +64,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
             {
                 Id = user.Id,
                 Name = user.UserName,
+                Email = user.Email,
                 RoleName = role == null ? String.Empty : roleList.First(r => r.Id == role.RoleId).Name
             };
 
