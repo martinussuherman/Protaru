@@ -2,6 +2,7 @@ using Itm.Misc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MonevAtr.Controllers;
 using MonevAtr.Models;
 using Newtonsoft.Json;
 using Syncfusion.EJ2.DropDowns;
@@ -108,13 +109,8 @@ namespace MonevAtr.Pages
 
         private async Task<object> ReadMarkerFromApi()
         {
-            string url = $"{Request.Scheme}://{Request.Host.ToUriComponent()}" +
-                $"{Request.PathBase.ToUriComponent()}/api/Progress/NasionalMap";
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            HttpResponseMessage response = await httpClient.SendAsync(
-                new HttpRequestMessage(HttpMethod.Get, url));
-            return JsonConvert.DeserializeObject(
-                await response.Content.ReadAsStringAsync());
+            ProgressController controller = new ProgressController(_context);
+            return await controller.NasionalMapList(Url);
         }
 
         private readonly string[] _toolbars = new string[]
@@ -129,7 +125,7 @@ namespace MonevAtr.Pages
         {
             Template = "#tooltip-template",
             Visible = true,
-            ValuePath = "nama"
+            ValuePath = "Nama"
         };
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly PomeloDbContext _context;
