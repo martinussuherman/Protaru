@@ -51,6 +51,9 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
             public string UserName { get; set; }
 
+            [EmailAddress]
+            public string Email { get; set; }
+
             [Required(ErrorMessage = "Role harus diisi.")]
             public string UserRole { get; set; }
         }
@@ -73,6 +76,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
             Input.Id = user.Id;
             Input.UserName = user.UserName;
+            Input.Email = user.Email;
             Input.UserRole = roles[0];
             ViewData["UserRole"] = await selectListUtilities.UserRoles(_identityContext);
 
@@ -99,6 +103,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                 return NotFound();
             }
 
+            await _userManager.SetEmailAsync(user, Input.Email);
             IdentityResult result = await _userManager.RemoveFromRolesAsync(
                 user,
                 await _userManager.GetRolesAsync(user));
