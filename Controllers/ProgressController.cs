@@ -42,14 +42,14 @@ namespace MonevAtr.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DaerahMap()
         {
-            return Ok(await RetrieveRtrDaerahMapData());
+            return Ok(await RetrieveRtrDaerahMapData(Url));
         }
 
         [HttpGet(nameof(NasionalMap))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> NasionalMap()
         {
-            return Ok(await RetrieveRtrNasionalMapData());
+            return Ok(await RetrieveRtrNasionalMapData(Url));
         }
 
         [HttpGet(nameof(T51))]
@@ -226,6 +226,16 @@ namespace MonevAtr.Controllers
             return Ok(result);
         }
 
+        internal async Task<List<MapData>> DaerahMapList(IUrlHelper urlHelper)
+        {
+            return await RetrieveRtrDaerahMapData(urlHelper);
+        }
+
+        internal async Task<List<MapData>> NasionalMapList(IUrlHelper urlHelper)
+        {
+            return await RetrieveRtrNasionalMapData(urlHelper);
+        }
+
         internal class MapData
         {
             [JsonIgnore]
@@ -348,7 +358,7 @@ namespace MonevAtr.Controllers
 
             public int Jumlah { get; set; }
         }
-        private async Task<List<MapData>> RetrieveRtrDaerahMapData()
+        private async Task<List<MapData>> RetrieveRtrDaerahMapData(IUrlHelper urlHelper)
         {
             var progressList = await _context.Atr
                 .Include(c => c.ProgressAtr)
@@ -379,6 +389,7 @@ namespace MonevAtr.Controllers
                 .ToListAsync();
 
             MergeData(
+                urlHelper,
                 progressList,
                 result,
                 "~/Search/SearchResultDaerahByProgress?Rtr.Prov={0}&Rtr.Perda=0",
@@ -386,36 +397,7 @@ namespace MonevAtr.Controllers
                 "red");
             return result;
         }
-        private void MergeData(
-            List<ProgressData> progress,
-            List<MapData> result,
-            string progressLink,
-            string doneLink,
-            string color)
-        {
-            foreach (var mapData in result)
-            {
-                mapData.Color = color;
-                mapData.ProgressLink = Url.Content(string.Format(progressLink, mapData.Kode));
-                mapData.DoneLink = Url.Content(string.Format(doneLink, mapData.Kode));
-            }
-
-            foreach (var data in progress)
-            {
-                MapData mapData = result
-                    .Find(c => c.Kode == data.Kode);
-
-                if (data.IsDone)
-                {
-                    mapData.DoneCount = data.Jumlah;
-                }
-                else
-                {
-                    mapData.ProgressCount = data.Jumlah;
-                }
-            }
-        }
-        private async Task<List<MapData>> RetrieveRtrNasionalMapData()
+        private async Task<List<MapData>> RetrieveRtrNasionalMapData(IUrlHelper urlHelper)
         {
             // Rtr Pulau
             var pulauProgressList = await _context.Atr
@@ -445,6 +427,7 @@ namespace MonevAtr.Controllers
                 .ToListAsync();
 
             MergeData(
+                urlHelper,
                 pulauProgressList,
                 pulauResult,
                 "~/RtrPulau/SearchResult?Rtr.Pulau={0}&Rtr.Perda=0",
@@ -479,6 +462,7 @@ namespace MonevAtr.Controllers
                 .ToListAsync();
 
             MergeData(
+                urlHelper,
                 ksnProgressList,
                 ksnResult,
                 "~/RtrKsn/SearchResult?Rtr.Kawasan={0}&Rtr.Perda=0",
@@ -517,6 +501,7 @@ namespace MonevAtr.Controllers
                 }
             };
             MergeData(
+                urlHelper,
                 rtrwnProgressList,
                 rtrwnResult,
                 "~/Rtrwn/SearchResult?Rtr.Perda=0",
@@ -552,6 +537,7 @@ namespace MonevAtr.Controllers
                 .ToListAsync();
 
             MergeData(
+                urlHelper,
                 kpnProgressList,
                 kpnResult,
                 "~/RtrKpn/SearchResult?Rtr.Provinsi={0}&Rtr.Perda=0",
@@ -562,7 +548,38 @@ namespace MonevAtr.Controllers
             result.AddRange(ksnResult);
             result.AddRange(rtrwnResult);
             result.AddRange(kpnResult);
+            result.RemoveAll(c => c.DoneCount == 0 && c.ProgressCount == 0);
             return result;
+        }
+        private void MergeData(
+            IUrlHelper urlHelper,
+            List<ProgressData> progress,
+            List<MapData> result,
+            string progressLink,
+            string doneLink,
+            string color)
+        {
+            foreach (var mapData in result)
+            {
+                mapData.Color = color;
+                mapData.ProgressLink = urlHelper.Content(string.Format(progressLink, mapData.Kode));
+                mapData.DoneLink = urlHelper.Content(string.Format(doneLink, mapData.Kode));
+            }
+
+            foreach (var data in progress)
+            {
+                MapData mapData = result
+                    .Find(c => c.Kode == data.Kode);
+
+                if (data.IsDone)
+                {
+                    mapData.DoneCount = data.Jumlah;
+                }
+                else
+                {
+                    mapData.ProgressCount = data.Jumlah;
+                }
+            }
         }
 
         private readonly PomeloDbContext _context;
