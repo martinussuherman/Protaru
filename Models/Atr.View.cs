@@ -64,7 +64,7 @@ namespace MonevAtr.Models
             Models.StatusRevisi.NamaStatusRevisi(StatusRevisi);
 
         [NotMapped]
-        public JenisRtrEnum DisplayJenisRtr => (JenisRtrEnum)JenisAtr.Kode;
+        public JenisRtrEnum DisplayJenisRtr => (JenisRtrEnum)KodeJenisAtr;
 
         [NotMapped]
         public bool TL1StatusYes
