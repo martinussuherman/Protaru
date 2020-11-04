@@ -27,8 +27,10 @@ namespace MonevAtr.Models
 
         public virtual DbSet<FilterPencarianRtr> FilterPencarianRtr { get; set; }
         public virtual DbSet<PencarianRtr> PencarianRtr { get; set; }
-        public virtual DbSet<RdtrT5152Progress> RdtrT5152Progress { get; set; }
-        public virtual DbSet<RtrwT5152Progress> RtrwT5152Progress { get; set; }
+        public virtual DbSet<RdtrT5152Kabkota> RdtrT5152Kabkota { get; set; }
+        public virtual DbSet<RdtrT5152Provinsi> RdtrT5152Provinsi { get; set; }
+        public virtual DbSet<RtrwT5152Kabkota> RtrwT5152Kabkota { get; set; }
+        public virtual DbSet<RtrwT5152Provinsi> RtrwT5152Provinsi { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -604,6 +606,10 @@ namespace MonevAtr.Models
 
                 entity.Property(e => e.StatusRevisi).HasColumnType("tinyint(4)");
 
+                entity.Property(e => e.Tahun)
+                    .HasColumnType("year(4)")
+                    .HasDefaultValueSql("'0000'");
+
                 entity.Property(e => e.TahunDokumen).HasColumnType("int(4)");
             });
 
@@ -673,6 +679,10 @@ namespace MonevAtr.Models
 
                 entity.Property(e => e.StatusRevisi).HasColumnType("tinyint(4)");
 
+                entity.Property(e => e.Tahun)
+                    .HasColumnType("year(4)")
+                    .HasDefaultValueSql("'0000'");
+
                 entity.Property(e => e.TahunDokumen).HasColumnType("int(4)");
 
                 entity.Property(e => e.TanggalDokumen)
@@ -680,11 +690,11 @@ namespace MonevAtr.Models
                     .HasDefaultValueSql("'0000-00-00'");
             });
 
-            modelBuilder.Entity<RdtrT5152Progress>(entity =>
+            modelBuilder.Entity<RdtrT5152Kabkota>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("rdtr_t5152_progress");
+                entity.ToView("rdtr_t5152_kabkota");
 
                 entity.Property(e => e.IsPerdaPerpresBaru).HasColumnType("tinyint(4)");
 
@@ -719,11 +729,89 @@ namespace MonevAtr.Models
                 entity.Property(e => e.ProgressAtrLama).HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<RtrwT5152Progress>(entity =>
+            modelBuilder.Entity<RdtrT5152Provinsi>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("rtrw_t5152_progress");
+                entity.ToView("rdtr_t5152_provinsi");
+
+                entity.Property(e => e.IsPerdaPerpresBaru).HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.IsPerdaPerpresLama).HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.JenisAtrBaru).HasColumnType("int(11)");
+
+                entity.Property(e => e.JenisAtrLama).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeBaru)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.KodeKabupatenKota).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeLama).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeProvinsi).HasColumnType("int(11)");
+
+                entity.Property(e => e.NamaBaru)
+                    .HasColumnType("tinytext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.NamaLama)
+                    .HasColumnType("tinytext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.ProgressAtrBaru).HasColumnType("int(11)");
+
+                entity.Property(e => e.ProgressAtrLama).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<RtrwT5152Kabkota>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("rtrw_t5152_kabkota");
+
+                entity.Property(e => e.IsPerdaPerpresBaru).HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.IsPerdaPerpresLama).HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.JenisAtrBaru).HasColumnType("int(11)");
+
+                entity.Property(e => e.JenisAtrLama).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeBaru)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.KodeKabupatenKota).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeLama).HasColumnType("int(11)");
+
+                entity.Property(e => e.KodeProvinsi).HasColumnType("int(11)");
+
+                entity.Property(e => e.NamaBaru)
+                    .HasColumnType("tinytext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.NamaLama)
+                    .HasColumnType("tinytext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.ProgressAtrBaru).HasColumnType("int(11)");
+
+                entity.Property(e => e.ProgressAtrLama).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<RtrwT5152Provinsi>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("rtrw_t5152_provinsi");
 
                 entity.Property(e => e.IsPerdaPerpresBaru).HasColumnType("tinyint(4)");
 

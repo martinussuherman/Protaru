@@ -1,6 +1,6 @@
 namespace Protaru.Models
 {
-    public partial class RdtrT5152Progress
+    public partial class RtrwT5152Provinsi
     {
         public int? KodeProvinsi { get; set; }
         public int? KodeKabupatenKota { get; set; }
