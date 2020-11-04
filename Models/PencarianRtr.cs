@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MonevAtr.Models
 {
-    [Table("pencarian_rtr")]
     public class PencarianRtr : IKode
     {
         public int Kode { get; set; }

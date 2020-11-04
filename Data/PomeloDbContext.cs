@@ -567,11 +567,13 @@ namespace MonevAtr.Models
 
             modelBuilder.Entity<PencarianRtr>(entity =>
             {
+                entity.ToTable("pencarian_rtr");
                 entity.HasNoKey();
             });
 
             modelBuilder.Entity<FilterPencarianRtr>(entity =>
             {
+                entity.ToTable("filter_pencarian_rtr");
                 entity.HasNoKey();
             });
         }
