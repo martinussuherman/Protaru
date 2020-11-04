@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using Protaru.Models;
 
 namespace MonevAtr.Models
 {

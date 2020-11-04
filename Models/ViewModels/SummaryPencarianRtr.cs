@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonevAtr.Models
+namespace Protaru.Models
 {
     public class SummaryPencarianRtr
     {

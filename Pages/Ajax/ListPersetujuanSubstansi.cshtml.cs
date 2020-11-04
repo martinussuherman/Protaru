@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Models;
 
 namespace MonevAtr.Pages.Ajax
 {

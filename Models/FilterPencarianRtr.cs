@@ -1,6 +1,6 @@
-namespace MonevAtr.Models
+namespace Protaru.Models
 {
-    public class FilterPencarianRtr
+    public partial class FilterPencarianRtr
     {
         public int Kode { get; set; }
 

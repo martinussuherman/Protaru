@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
+using Protaru.Models;
 
 namespace MonevAtr.Pages.Search
 {
