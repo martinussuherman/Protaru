@@ -79,10 +79,9 @@
             </div>
         </form>
 
-        <div class="card-body row">
-            Pembaruan terakhir oleh: @Html.DisplayFor(model => model.RtrDetail.Rtr.PembaruanOleh) 
-            pada: @Html.DisplayFor(model => model.RtrDetail.Rtr.PembaruanTerakhir)
-        </div>
+        <component type="typeof(LastUpdate)"
+            render-mode="Static"
+            param-Rtr="@Model.RtrDetail.Rtr" />
     </div>
 </div>
 
