@@ -28,15 +28,9 @@
 
                 <form method="post" enctype="multipart/form-data">
                     <div class="card-body row">
-                        <input type="hidden" asp-for="Atr.Kode" />
-                        <input type="hidden" asp-for="Atr.Nama" />
-                        <input type="hidden" asp-for="Atr.Nomor" />
-                        <input type="hidden" asp-for="Atr.Tanggal" />
-                        <input type="hidden" asp-for="Atr.Tahun" />
-                        <input type="hidden" asp-for="Atr.KodeJenisAtr" />
-                        <input type="hidden" asp-for="Atr.KodeKabupatenKota" />
-                        <input type="hidden" asp-for="Atr.KodeProvinsi" />
-                        <input type="hidden" asp-for="Atr.SudahDirevisi" />
+                        <component type="typeof(EditHidden)"
+                            render-mode="Static"
+                            param-Rtr="@Model.Atr" />
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Area of Interest</label>
