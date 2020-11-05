@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
+using Protaru.Models;
 
 namespace MonevAtr.Controllers
 {
@@ -23,16 +24,24 @@ namespace MonevAtr.Controllers
         public async Task<IActionResult> HomeSummary()
         {
             int progress = await _context.Atr
-                .Where(c => c.SudahDirevisi == 0 && c.ProgressAtr.IsPerdaPerpres == 0)
-                .CountAsync();
+                .CountAsync(c => c.SudahDirevisi == 0 && c.ProgressAtr.IsPerdaPerpres == 0);
             int done = await _context.Atr
-                .Where(c => c.SudahDirevisi == 0 && c.ProgressAtr.IsPerdaPerpres == 1)
-                .CountAsync();
+                .CountAsync(c => c.SudahDirevisi == 0 && c.ProgressAtr.IsPerdaPerpres == 1);
+            int doneRtrwT5152Kabkota = await _context.RtrwT5152Kabkota
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+            int doneRtrwT5152Provinsi = await _context.RtrwT5152Provinsi
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+            int doneRdtrT5152Kabkota = await _context.RdtrT5152Kabkota
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+            int doneRdtrT5152Provinsi = await _context.RdtrT5152Provinsi
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
 
             var result = new
             {
                 Progress = progress,
-                Done = done
+                Done = done +
+                    doneRtrwT5152Kabkota + doneRtrwT5152Provinsi +
+                    doneRdtrT5152Kabkota + doneRdtrT5152Provinsi
             };
 
             return Ok(result);
@@ -360,6 +369,7 @@ namespace MonevAtr.Controllers
         }
         private async Task<List<MapData>> RetrieveRtrDaerahMapData(IUrlHelper urlHelper)
         {
+            // rtr belum direvisi -> t51 belum t52, t52 belum t53, dst
             var progressList = await _context.Atr
                 .Include(c => c.ProgressAtr)
                 .Where(c =>
@@ -387,6 +397,12 @@ namespace MonevAtr.Controllers
                     Provinsi = provinsi
                 })
                 .ToListAsync();
+
+            // add rtr sudah direvisi
+            AddJumlah(await RtrwT5152KabKotaProgress(), progressList);
+            AddJumlah(await RdtrT5152KabKotaProgress(), progressList);
+            AddJumlah(await RtrwT5152ProvinsiProgress(), progressList);
+            AddJumlah(await RdtrT5152ProvinsiProgress(), progressList);
 
             MergeData(
                 urlHelper,
@@ -550,6 +566,96 @@ namespace MonevAtr.Controllers
             result.AddRange(kpnResult);
             result.RemoveAll(c => c.DoneCount == 0 && c.ProgressCount == 0);
             return result;
+        }
+        private async Task<List<ProgressData>> RtrwT5152KabKotaProgress()
+        {
+            return await _context.RtrwT5152Kabkota
+                .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                .GroupBy(c => new
+                {
+                    c.KodeProvinsi
+                })
+                .Select(c => new ProgressData
+                {
+                    Kode = c.Key.KodeProvinsi,
+                    IsDone = true,
+                    Jumlah = c.Count()
+                })
+                .ToListAsync();
+        }
+        private async Task<List<ProgressData>> RtrwT5152ProvinsiProgress()
+        {
+            return await _context.RtrwT5152Provinsi
+                .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                .GroupBy(c => new
+                {
+                    c.KodeProvinsi
+                })
+                .Select(c => new ProgressData
+                {
+                    Kode = c.Key.KodeProvinsi,
+                    IsDone = true,
+                    Jumlah = c.Count()
+                })
+                .ToListAsync();
+        }
+        private async Task<List<ProgressData>> RdtrT5152KabKotaProgress()
+        {
+            return await _context.RdtrT5152Kabkota
+                .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                .GroupBy(c => new
+                {
+                    c.KodeProvinsi
+                })
+                .Select(c => new ProgressData
+                {
+                    Kode = c.Key.KodeProvinsi,
+                    IsDone = true,
+                    Jumlah = c.Count()
+                })
+                .ToListAsync();
+        }
+        private async Task<List<ProgressData>> RdtrT5152ProvinsiProgress()
+        {
+            return await _context.RdtrT5152Provinsi
+                .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                .GroupBy(c => new
+                {
+                    c.KodeProvinsi
+                })
+                .Select(c => new ProgressData
+                {
+                    Kode = c.Key.KodeProvinsi,
+                    IsDone = true,
+                    Jumlah = c.Count()
+                })
+                .ToListAsync();
+        }
+        private void AddJumlah(List<ProgressData> source, List<ProgressData> dest)
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            foreach (ProgressData item in source)
+            {
+                var itemToAdjust = dest.Find(c => c.Kode == item.Kode && c.IsDone == item.IsDone);
+
+                if (itemToAdjust == null)
+                {
+                    dest.Add(new ProgressData
+                    {
+                        Kode = item.Kode,
+                        IsDone = item.IsDone,
+                        Jumlah = item.Jumlah
+                    });
+
+                    continue;
+                }
+
+                itemToAdjust.Jumlah += item.Jumlah;
+            }
         }
         private void MergeData(
             IUrlHelper urlHelper,

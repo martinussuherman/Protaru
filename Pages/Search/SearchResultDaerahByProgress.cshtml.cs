@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
@@ -13,11 +15,11 @@ namespace MonevAtr.Pages.Search
             _context = context;
         }
 
-        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
+        public async Task<IActionResult> OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
             FilterByJenis(rtr);
 
-            Hasil = _context.Atr
+            var result = await _context.Atr
                 .ByJenisList(rtr)
                 .ByProvinsi(rtr.Prov, rtr.KabKota)
                 .ByKabupatenKota(rtr.KabKota)
@@ -28,8 +30,47 @@ namespace MonevAtr.Pages.Search
                 .Where(c => c.SudahDirevisi == 0)
                 .RtrInclude()
                 .AsNoTracking()
-                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
+                .ToListAsync();
 
+            // todo merge with RtrwT5152Kabkota, RtrwT5152Provinsi, RdtrT5152Kabkota, RdtrT5152Provinsi
+            if (rtr.Perda == 1)
+            {
+                List<int> combined = new List<int>();
+
+                combined.AddRange(await _context.RtrwT5152Kabkota
+                    .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                    .Select(c => c.KodeLama)
+                    .ToListAsync());
+                combined.AddRange(await _context.RtrwT5152Provinsi
+                    .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                    .Select(c => c.KodeLama)
+                    .ToListAsync());
+                combined.AddRange(await _context.RdtrT5152Kabkota
+                    .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                    .Select(c => c.KodeLama)
+                    .ToListAsync());
+                combined.AddRange(await _context.RdtrT5152Provinsi
+                    .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
+                    .Select(c => c.KodeLama)
+                    .ToListAsync());
+
+                var addedResult = await _context.Atr
+                    .ByJenisList(rtr)
+                    .ByProvinsi(rtr.Prov, rtr.KabKota)
+                    .ByKabupatenKota(rtr.KabKota)
+                    .ByTahun(rtr.Tahun)
+                    .ByNama(rtr.Nama)
+                    .ByNomor(rtr.Nomor)
+                    .Where(c => combined.Contains(c.Kode))
+                    .RtrInclude()
+                    .AsNoTracking()
+                    .ToListAsync();
+
+                result.AddRange(addedResult);
+            }
+
+
+            Hasil = result.ToPagerList(page, PagerUrlHelper.ItemPerPage);
             Rtr = rtr;
             RegulationName = "Perda";
             IsDisplayRegulation = (rtr.Perda == 1);
