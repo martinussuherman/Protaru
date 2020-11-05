@@ -1,0 +1,11 @@
+@using Models
+
+<div class="card-body">
+    <p>Pembaruan terakhir oleh: @Rtr.PembaruanOleh pada: @Rtr.PembaruanTerakhir</p>
+    <p class="small">*anda bisa upload jenis file apa saja dengan ukuran berapa saja</p>
+</div>
+
+@code {
+    [Parameter]
+    public Atr Rtr { get; set; }
+}

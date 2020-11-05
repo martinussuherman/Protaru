@@ -287,10 +287,9 @@ string linkClass = "";
                     </div>
                 </form>
 
-                <div class="card-body row">
-                    Pembaruan terakhir oleh: @Html.DisplayFor(model => model.Atr.PembaruanOleh)
-                    pada: @Html.DisplayFor(model => model.Atr.PembaruanTerakhir)
-                </div>
+                <component type="typeof(LastUpdate)"
+                    render-mode="Static"
+                    param-Rtr="@Model.Atr" />
             </div>
         </div>
     </div>
