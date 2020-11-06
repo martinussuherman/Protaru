@@ -262,7 +262,9 @@ string linkClass = "";
                     </div>
 }
 
-                    @await Html.PartialAsync("_FasilitasKegiatanPartial", Model.FasilitasList)
+                     <component type="typeof(FasilitasKegiatan)"
+                        render-mode="Static"
+                        param-Rtr="@Model.FasilitasList" />
 
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>
