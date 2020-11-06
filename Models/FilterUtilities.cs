@@ -138,6 +138,22 @@ namespace MonevAtr.Models
                 query :
                 query.Where(q => q.KodeKabupatenKota == search.KabKota);
         }
+        public static IQueryable<Atr> DaerahByProgressNoTracking(
+            this IQueryable<Atr> query,
+            AtrSearch rtr)
+        {
+            return query
+                .ByJenisList(rtr)
+                .ByProvinsi(rtr.Prov, rtr.KabKota)
+                .ByKabupatenKota(rtr.KabKota)
+                .ByTahun(rtr.Tahun)
+                .ByNama(rtr.Nama)
+                .ByNomor(rtr.Nomor)
+                .ByIsPerdaPerpres(rtr)
+                .Where(c => c.SudahDirevisi == 0)
+                .RtrInclude()
+                .AsNoTracking();
+        }
         public static IQueryable<Atr> ByKabupatenKota(
             this IQueryable<Atr> query,
             int kodeKabupatenKota)
