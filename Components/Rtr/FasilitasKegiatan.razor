@@ -1,7 +1,3 @@
-@using MonevAtr.Models
-
-@model List<FasilitasKegiatan>
-
 <hr>
 <h5 class="card-title">&nbsp; Fasilitas Kegiatan</h5>
 <hr>
@@ -9,27 +5,26 @@
 
 @{
 int index = 0;
-string checkedValue = "";
 }
 
-@foreach (var fasilitas in Model) {
+@foreach (var fasilitas in ListFasilitas) {
+
+    var detail = fasilitas.DetailFasilitasKegiatan;
 
     <input type="hidden"
         name="FasKeg[@index].Kode"
-        value="@fasilitas.DetailFasilitasKegiatan.Kode"/>
+        value="@detail.Kode"/>
 
     <input type="hidden"
         name="FasKeg[@index].KodeFasilitasKegiatan"
-        value="@fasilitas.DetailFasilitasKegiatan.KodeFasilitasKegiatan"/>
-
-    checkedValue = fasilitas.DetailFasilitasKegiatan.IsStatusYes ? @"checked=""" : "";
+        value="@detail.KodeFasilitasKegiatan"/>
 
     <div class="col-sm-3 col-md-1 form-group">
         <input type="checkbox" 
             name="FasKeg[@index].Status"
             class="form-check custom-control"
             value="1"
-            @checkedValue />
+            checked="@detail.IsStatusYes" />
     </div>
 
     <div class="col-sm-9 col-md-3 pt-2">
@@ -40,17 +35,22 @@ string checkedValue = "";
         <input type="number" 
             name="FasKeg[@index].Tahun"
             class="form-control"
-            value="@fasilitas.DetailFasilitasKegiatan.Tahun"/>
+            value="@detail.Tahun"/>
     </div>
 
     <div class="col-sm-6 col-md-6 form-group">
         <input type="text" 
             name="FasKeg[@index].Keterangan"
             class="form-control"
-            value="@fasilitas.DetailFasilitasKegiatan.Keterangan"/>
+            value="@detail.Keterangan"/>
     </div>
 
     index++;
 }
 
 </div>
+
+@code {
+    [Parameter]
+    public List<MonevAtr.Models.FasilitasKegiatan> ListFasilitas { get; set; }
+}
