@@ -18,14 +18,9 @@
     <div class="pt-4 pb-5">
         <div class="container">
             <div class="row row-cards card pt-4">
-                <h5 class="text-center text-orange text-title-rtr font-weight-bold text-uppercase">@Model.Atr.DisplayNamaProvinsi</h5>
-                <h4 class="text-center font-weight-bold text-detail-rtr">@Model.Atr.DisplayNamaKabupatenKota</h4>
-                <h5 class="text-center text-detail-rtr">@Model.Atr.Nama</h5>
-                <h5 class="text-center text-detail-rtr">Nomor: @Model.Atr.Nomor</h5>
-
-                <div class="mt-2 tag-title-box-1 mb-0">
-                    <div class="tag-title"><span>KETERANGAN</span></div>
-                </div>
+                <component type="typeof(DetailTitle)"
+                    render-mode="Static"
+                    param-Rtr="@Model.Atr" />
 
                 <form method="post">
                     <div class="card-body row">
