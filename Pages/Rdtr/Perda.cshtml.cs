@@ -9,7 +9,6 @@ namespace MonevAtr.Pages.Rdtr
     {
         public PerdaModel(PomeloDbContext context)
         {
-            _context = context;
             selectListUtilities = new SelectListUtilities(context);
         }
 
@@ -24,7 +23,5 @@ namespace MonevAtr.Pages.Rdtr
         }
 
         private readonly SelectListUtilities selectListUtilities;
-
-        private readonly PomeloDbContext _context;
     }
 }

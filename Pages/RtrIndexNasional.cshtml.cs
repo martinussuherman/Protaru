@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MonevAtr.Controllers;
 using MonevAtr.Models;
-using Newtonsoft.Json;
 using Syncfusion.EJ2.DropDowns;
 using Syncfusion.EJ2.Maps;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MonevAtr.Pages
@@ -17,11 +15,9 @@ namespace MonevAtr.Pages
     public class RtrIndexNasionalModel : CustomPageModel
     {
         public RtrIndexNasionalModel(
-            IHttpClientFactory httpClientFactory,
             PomeloDbContext context,
             IConfiguration configuration)
         {
-            _httpClientFactory = httpClientFactory;
             _context = context;
             _configuration = configuration;
             selectListUtilities = new SelectListUtilities(_context);
@@ -127,7 +123,6 @@ namespace MonevAtr.Pages
             Visible = true,
             ValuePath = "Nama"
         };
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly PomeloDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly SelectListUtilities selectListUtilities;

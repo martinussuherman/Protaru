@@ -9,7 +9,6 @@ namespace MonevAtr.Pages.Search
     {
         public SearchResultDaerahByProgress(PomeloDbContext context)
         {
-            _context = context;
             _helper = new RtrAddResultHelper(context);
         }
 
@@ -20,7 +19,7 @@ namespace MonevAtr.Pages.Search
             Hasil = await _helper.PagerListAsync(rtr, RtrAddResultHelper.AddType.All, page);
             Rtr = rtr;
             RegulationName = "Perda";
-            IsDisplayRegulation = (rtr.Perda == 1);
+            IsDisplayRegulation = rtr.Perda == 1;
             IsUseCreateForm = false;
             IsCanCreate = false;
             IsCanEdit = false;
@@ -28,7 +27,6 @@ namespace MonevAtr.Pages.Search
             return Page();
         }
 
-        private readonly PomeloDbContext _context;
-        private RtrAddResultHelper _helper;
+        private readonly RtrAddResultHelper _helper;
     }
 }
