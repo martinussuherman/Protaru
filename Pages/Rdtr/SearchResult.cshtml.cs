@@ -9,18 +9,17 @@ namespace MonevAtr.Pages.Rdtr
     {
         public SearchResultModel(PomeloDbContext context)
         {
-            _context = context;
             _helper = new RtrAddResultHelper(context);
         }
 
         public async Task<IActionResult> OnGetAsync(
-            [FromQuery] AtrSearch rtr, 
+            [FromQuery] AtrSearch rtr,
             [FromQuery] int page = 1)
         {
             Hasil = await _helper.PagerListAsync(rtr, RtrAddResultHelper.AddType.Rdtr, page);
             Rtr = rtr;
             RegulationName = "Perda";
-            IsDisplayRegulation = (rtr.Perda == 1);
+            IsDisplayRegulation = rtr.Perda == 1;
             IsUseCreateForm = false;
             IsCanCreate = false;
             IsCanEdit = false;
@@ -28,7 +27,6 @@ namespace MonevAtr.Pages.Rdtr
             return Page();
         }
 
-        private readonly PomeloDbContext _context;
-        private RtrAddResultHelper _helper;
+        private readonly RtrAddResultHelper _helper;
     }
 }

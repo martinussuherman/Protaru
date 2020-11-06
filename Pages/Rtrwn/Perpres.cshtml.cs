@@ -9,7 +9,6 @@ namespace MonevAtr.Pages.Rtrwn
     {
         public PerpresModel(PomeloDbContext context)
         {
-            _context = context;
             selectListUtilities = new SelectListUtilities(context);
         }
 
@@ -22,7 +21,5 @@ namespace MonevAtr.Pages.Rtrwn
         }
 
         private readonly SelectListUtilities selectListUtilities;
-
-        private readonly PomeloDbContext _context;
     }
 }
