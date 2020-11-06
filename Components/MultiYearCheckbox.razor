@@ -1,0 +1,30 @@
+<div class="col-md-12 form-group">
+    <label class="form-label">
+        @Caption
+    </label>
+
+    <div class="row">
+
+@foreach (int item in YearList) 
+{
+        <div class="col-sm-6 col-md-3 form-group">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" name="@InputName" value="@item" class="custom-control-input">
+                <span class="custom-control-label">@item</span>
+            </label>
+        </div>
+}
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public string InputName { get; set; }
+
+    [Parameter]
+    public List<int> YearList { get; set; }
+}
