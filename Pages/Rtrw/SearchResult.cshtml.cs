@@ -1,7 +1,7 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
-using P.Pager;
+using Protaru.Helpers;
 
 namespace MonevAtr.Pages.Rtrw
 {
@@ -10,24 +10,14 @@ namespace MonevAtr.Pages.Rtrw
         public SearchResultModel(PomeloDbContext context)
         {
             _context = context;
+            _helper = new RtrAddResultHelper(context);
         }
 
-        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
+        public async Task<IActionResult> OnGetAsync(
+            [FromQuery] AtrSearch rtr, 
+            [FromQuery] int page = 1)
         {
-            FilterByJenis(rtr);
-
-            Hasil = _context.Atr
-                .ByJenisList(rtr)
-                .ByProvinsi(rtr.Prov, rtr.KabKota)
-                .ByKabupatenKota(rtr.KabKota)
-                .ByTahun(rtr.Tahun)
-                .ByNama(rtr.Nama)
-                .ByNomor(rtr.Nomor)
-                .ByIsPerdaPerpres(rtr)
-                .RtrInclude()
-                .AsNoTracking()
-                .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
+            Hasil = await _helper.PagerListAsync(rtr, RtrAddResultHelper.AddType.Rtrw, page);
             Rtr = rtr;
             RegulationName = "Perda";
             IsDisplayRegulation = (rtr.Perda == 1);
@@ -38,13 +28,7 @@ namespace MonevAtr.Pages.Rtrw
             return Page();
         }
 
-        private void FilterByJenis(AtrSearch rtr)
-        {
-            rtr.JenisList.Add((int)JenisRtrEnum.RtrwT50);
-            rtr.JenisList.Add((int)JenisRtrEnum.RtrwT51);
-            rtr.JenisList.Add((int)JenisRtrEnum.RtrwT52);
-        }
-
         private readonly PomeloDbContext _context;
+        private RtrAddResultHelper _helper;
     }
 }
