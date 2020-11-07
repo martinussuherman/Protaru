@@ -1,0 +1,22 @@
+@using Microsoft.AspNetCore.Mvc
+
+@if (RtrDokumen == null)
+{
+    return;
+}
+
+<td>
+    <span class="@GetClass()" >
+        <a target="_blank" class="btn btn-success btn-sm" style="color: #fff;" href="@GetPath()">
+            Download File
+        </a>
+    </span>
+</td>
+
+@code {
+    [Parameter]
+    public MonevAtr.Models.AtrDokumen RtrDokumen { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
+}
