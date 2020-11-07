@@ -1,0 +1,40 @@
+@if( Dokumen.JumlahTindakLanjut > 0 )
+{
+    <TindakLanjutInputGroup
+        Index="1"
+        StatusYes="@Rtr.TL1StatusYes" 
+        Keterangan="@Rtr.TL1Keterangan">
+    </TindakLanjutInputGroup>
+
+    <TindakLanjutInputGroup
+        Index="2"
+        StatusYes="@Rtr.TL2StatusYes" 
+        Keterangan="@Rtr.TL2Keterangan">
+    </TindakLanjutInputGroup>
+
+    <TindakLanjutInputGroup
+        Index="3"
+        StatusYes="@Rtr.TL3StatusYes" 
+        Keterangan="@Rtr.TL3Keterangan">
+    </TindakLanjutInputGroup>
+
+    <TindakLanjutInputGroup
+        Index="4"
+        StatusYes="@Rtr.TL4StatusYes" 
+        Keterangan="@Rtr.TL4Keterangan">
+    </TindakLanjutInputGroup>
+
+    <TindakLanjutInputGroup
+        Index="5"
+        StatusYes="@Rtr.TL5StatusYes" 
+        Keterangan="@Rtr.TL5Keterangan">
+    </TindakLanjutInputGroup>
+}
+
+@code {
+    [Parameter]
+    public MonevAtr.Models.Atr Rtr { get; set; }
+
+    [Parameter]
+    public MonevAtr.Models.Dokumen Dokumen { get; set; }
+}
