@@ -1,5 +1,6 @@
 @page "{id:int?}"
 @model DeleteModel
+@using Protaru.Components.Rtr
 
 @{
     Layout = "_CommonLayout";
@@ -16,7 +17,9 @@
 <div class="bg-page-detail">
     <div class="pt-4 pb-5 container">
         <div class="row row-cards card pt-4">
-            @await Html.PartialAsync("_RtrViewTitlePartial", Model.RtrDetail)
+            <component type="typeof(DetailTitle)"
+                render-mode="Static"
+                param-Rtr="@Model.RtrDetail" />
 
             <div class="justify-content-md-center px-5">
                 <div class="card border-orange mb-3 card-body">
