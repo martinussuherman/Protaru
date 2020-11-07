@@ -1,0 +1,47 @@
+<div class="col-sm-6 col-md-3 pt-2">
+    Tindak Lanjut @Index
+</div>
+
+<div class="col-sm-6 col-md-1 form-group">
+    <input 
+        type="checkbox" 
+        name="@StatusName" 
+        value="@StatusYes" 
+        class="form-check custom-control"/>
+</div>
+
+<div class="col-sm-6 col-md-6 form-group">
+    <input 
+        type="text" 
+        name="@KeteranganName"
+        value="@Keterangan" 
+        class ="form-control"/>
+</div>
+
+<div class="col-md-2 form-group">
+    <div class="custom-file">
+        <input 
+            type="file" 
+            name="@FilePathName" 
+            class="custom-file-input" />
+        <label class="custom-file-label">Choose file</label>
+    </div>
+</div>
+
+@code {
+    private string StatusName => $"Atr.TL{Index}StatusYes";
+    private string KeteranganName => $"Atr.TL{Index}Keterangan";
+    private string FilePathName => $"Atr.TL{Index}FilePath";
+
+    [Parameter]
+    public MonevAtr.Models.Atr Rtr { get; set; }
+
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public bool StatusYes { get; set; }
+
+    [Parameter]
+    public string Keterangan { get; set; }
+}

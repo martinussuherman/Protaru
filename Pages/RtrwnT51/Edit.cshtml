@@ -164,103 +164,10 @@ string linkClass = "";
 						    </div>
                         </div>
 
-        @if( detailItem.JumlahTindakLanjut > 0 )
-        {
-                        <div class="col-sm-6 col-md-3 pt-2">
-                            Tindak Lanjut 1
-                        </div>
-
-                        <div class="col-sm-6 col-md-1 form-group">
-                            <input asp-for="Atr.TL1StatusYes" class="form-check custom-control"/>
-                        </div>
-
-                        <div class="col-sm-6 col-md-6 form-group">
-                            <input asp-for="Atr.TL1Keterangan" class ="form-control"/>
-                        </div>
-
-                        <div class="col-md-2 form-group">
-                            <div class="custom-file">
-                                <input type="file" name="Atr.TL1FilePath" class="custom-file-input" name="example-file-input-custom" />
-                                <label class="custom-file-label">Choose file</label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 pt-2">
-                            Tindak Lanjut 2
-                        </div>
-
-                        <div class="col-sm-6 col-md-1 form-group">
-                            <input asp-for="Atr.TL2StatusYes" class="form-check custom-control"/>
-                        </div>
-
-                        <div class="col-sm-6 col-md-6 form-group">
-                            <input asp-for="Atr.TL2Keterangan" class ="form-control"/>
-                        </div>
-
-                        <div class="col-md-2 form-group">
-                            <div class="custom-file">
-                                <input type="file" name="Atr.TL2FilePath" class="custom-file-input" name="example-file-input-custom" />
-                                <label class="custom-file-label">Choose file</label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 pt-2">
-                            Tindak Lanjut 3
-                        </div>
-
-                        <div class="col-sm-6 col-md-1 form-group">
-                            <input asp-for="Atr.TL3StatusYes" class="form-check custom-control"/>
-                        </div>
-
-                        <div class="col-sm-6 col-md-6 form-group">
-                            <input asp-for="Atr.TL3Keterangan" class ="form-control"/>
-                        </div>
-
-                        <div class="col-md-2 form-group">
-                            <div class="custom-file">
-                                <input type="file" name="Atr.TL3FilePath" class="custom-file-input" name="example-file-input-custom" />
-                                <label class="custom-file-label">Choose file</label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 pt-2">
-                            Tindak Lanjut 4
-                        </div>
-
-                        <div class="col-sm-6 col-md-1 form-group">
-                            <input asp-for="Atr.TL4StatusYes" class="form-check custom-control"/>
-                        </div>
-
-                        <div class="col-sm-6 col-md-6 form-group">
-                            <input asp-for="Atr.TL4Keterangan" class ="form-control"/>
-                        </div>
-
-                        <div class="col-md-2 form-group">
-                            <div class="custom-file">
-                                <input type="file" name="Atr.TL4FilePath" class="custom-file-input" name="example-file-input-custom" />
-                                <label class="custom-file-label">Choose file</label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3 pt-2">
-                            Tindak Lanjut 5
-                        </div>
-
-                        <div class="col-sm-6 col-md-1 form-group">
-                            <input asp-for="Atr.TL5StatusYes" class="form-check custom-control"/>
-                        </div>
-
-                        <div class="col-sm-6 col-md-6 form-group">
-                            <input asp-for="Atr.TL5Keterangan" class ="form-control"/>
-                        </div>
-
-                        <div class="col-md-2 form-group">
-                            <div class="custom-file">
-                                <input type="file" name="Atr.TL5FilePath" class="custom-file-input" name="example-file-input-custom" />
-                                <label class="custom-file-label">Choose file</label>
-                            </div>
-                        </div>
-        }
+                        <component type="typeof(EditTindakLanjut)"
+                            render-mode="Static"
+                            param-Rtr="@Model.Atr"
+                            param-Dokumen="@detailItem" />
 
         index++;
     }
