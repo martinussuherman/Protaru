@@ -101,6 +101,26 @@ namespace MonevAtr.Models
             set => TL5Status = ConvertToStatusString(value);
         }
 
+        [NotMapped]
+        public bool TL1FilePathAda =>
+            !String.IsNullOrEmpty(this.TL1FilePath);
+
+        [NotMapped]
+        public bool TL2FilePathAda =>
+            !String.IsNullOrEmpty(this.TL2FilePath);
+
+        [NotMapped]
+        public bool TL3FilePathAda =>
+            !String.IsNullOrEmpty(this.TL3FilePath);
+
+        [NotMapped]
+        public bool TL4FilePathAda =>
+            !String.IsNullOrEmpty(this.TL4FilePath);
+
+        [NotMapped]
+        public bool TL5FilePathAda =>
+            !String.IsNullOrEmpty(this.TL5FilePath);
+
         private string ConvertToStatusString(bool status)
         {
             return status ? "1" : "0";
