@@ -19,6 +19,26 @@
 </div>
 
 <div class="col-md-2 form-group">
+    <div class="@InputDivClass()">
+        <input type="hidden"
+            class="file-path"
+            name="@FilePathName"
+            value="@FilePath" />
+        <input type="file" class="dokumen-file" />
+        <div class="btn btn-warning btn-sm btn-upload">Upload</div>
+    </div>
+    <div class="@LinkClass()" >
+        <a target="_blank"
+            class="file-link btn btn-success btn-sm"
+            href="@LinkPath()">
+            Download File
+        </a>
+        <span>|</span>
+        <a class="btn btn-danger btn-sm btn-delete">Delete</a>
+    </div>
+</div>
+
+<div class="col-md-2 form-group">
     <div class="custom-file">
         <input 
             type="file" 
@@ -28,13 +48,33 @@
     </div>
 </div>
 
+
 @code {
     private string StatusName => $"Atr.TL{Index}StatusYes";
     private string KeteranganName => $"Atr.TL{Index}Keterangan";
     private string FilePathName => $"Atr.TL{Index}FilePath";
 
-    [Parameter]
-    public MonevAtr.Models.Atr Rtr { get; set; }
+    private string InputDivClass()
+    {
+        return IsFilePathExists ? "custom-file d-none" : "custom-file";
+    }
+    private string LinkClass()
+    {
+        return IsFilePathExists ? "file-info" : "file-info d-none";
+    }
+    private string LinkPath()
+    {
+        @* if( IsFilePathExists )
+        {
+            path = Url.Content("~" + detailItem.DetailDokumen.FilePath);
+        }
+        else
+        {
+            path = "";
+        } *@
+
+        return string.Empty;
+    }
 
     [Parameter]
     public int Index { get; set; }
@@ -44,4 +84,10 @@
 
     [Parameter]
     public string Keterangan { get; set; }
+
+    [Parameter]
+    public string FilePath { get; set; }
+
+    [Parameter]
+    public bool IsFilePathExists { get; set; }
 }
