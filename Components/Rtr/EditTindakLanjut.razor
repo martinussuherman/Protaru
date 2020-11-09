@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Mvc
+
 @if( Dokumen.JumlahTindakLanjut > 0 )
 {
     <TindakLanjutInputGroup
@@ -5,7 +7,7 @@
         StatusYes="@Rtr.TL1StatusYes" 
         Keterangan="@Rtr.TL1Keterangan"
         FilePath="@Rtr.TL1FilePath"
-        IsFilePathExists="@Rtr.TL1FilePathAda">
+        Url="@Url">
     </TindakLanjutInputGroup>
 
     <TindakLanjutInputGroup
@@ -13,7 +15,7 @@
         StatusYes="@Rtr.TL2StatusYes" 
         Keterangan="@Rtr.TL2Keterangan"
         FilePath="@Rtr.TL2FilePath"
-        IsFilePathExists="@Rtr.TL2FilePathAda">
+        Url="@Url">
     </TindakLanjutInputGroup>
 
     <TindakLanjutInputGroup
@@ -21,7 +23,7 @@
         StatusYes="@Rtr.TL3StatusYes" 
         Keterangan="@Rtr.TL3Keterangan"
         FilePath="@Rtr.TL3FilePath"
-        IsFilePathExists="@Rtr.TL3FilePathAda">
+        Url="@Url">
     </TindakLanjutInputGroup>
 
     <TindakLanjutInputGroup
@@ -29,7 +31,7 @@
         StatusYes="@Rtr.TL4StatusYes" 
         Keterangan="@Rtr.TL4Keterangan"
         FilePath="@Rtr.TL4FilePath"
-        IsFilePathExists="@Rtr.TL4FilePathAda">
+        Url="@Url">
     </TindakLanjutInputGroup>
 
     <TindakLanjutInputGroup
@@ -37,7 +39,7 @@
         StatusYes="@Rtr.TL5StatusYes" 
         Keterangan="@Rtr.TL5Keterangan"
         FilePath="@Rtr.TL5FilePath"
-        IsFilePathExists="@Rtr.TL5FilePathAda">
+        Url="@Url">
     </TindakLanjutInputGroup>
 }
 
@@ -47,4 +49,7 @@
 
     [Parameter]
     public MonevAtr.Models.Dokumen Dokumen { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
 }

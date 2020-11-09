@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Mvc
+
 <div class="col-sm-6 col-md-3 pt-2">
     Tindak Lanjut @Index
 </div>
@@ -19,62 +21,17 @@
 </div>
 
 <div class="col-md-2 form-group">
-    <div class="@InputDivClass()">
-        <input type="hidden"
-            class="file-path"
-            name="@FilePathName"
-            value="@FilePath" />
-        <input type="file" class="dokumen-file" />
-        <div class="btn btn-warning btn-sm btn-upload">Upload</div>
-    </div>
-    <div class="@LinkClass()" >
-        <a target="_blank"
-            class="file-link btn btn-success btn-sm"
-            href="@LinkPath()">
-            Download File
-        </a>
-        <span>|</span>
-        <a class="btn btn-danger btn-sm btn-delete">Delete</a>
-    </div>
+    <FileUpload
+        FieldName="@FilePathName"
+        FilePath="@FilePath"
+        Url="@Url">
+    </FileUpload>
 </div>
-
-<div class="col-md-2 form-group">
-    <div class="custom-file">
-        <input 
-            type="file" 
-            name="@FilePathName" 
-            class="custom-file-input" />
-        <label class="custom-file-label">Choose file</label>
-    </div>
-</div>
-
 
 @code {
     private string StatusName => $"Atr.TL{Index}StatusYes";
     private string KeteranganName => $"Atr.TL{Index}Keterangan";
     private string FilePathName => $"Atr.TL{Index}FilePath";
-
-    private string InputDivClass()
-    {
-        return IsFilePathExists ? "custom-file d-none" : "custom-file";
-    }
-    private string LinkClass()
-    {
-        return IsFilePathExists ? "file-info" : "file-info d-none";
-    }
-    private string LinkPath()
-    {
-        @* if( IsFilePathExists )
-        {
-            path = Url.Content("~" + detailItem.DetailDokumen.FilePath);
-        }
-        else
-        {
-            path = "";
-        } *@
-
-        return string.Empty;
-    }
 
     [Parameter]
     public int Index { get; set; }
@@ -89,5 +46,5 @@
     public string FilePath { get; set; }
 
     [Parameter]
-    public bool IsFilePathExists { get; set; }
+    public IUrlHelper Url { get; set; }
 }
