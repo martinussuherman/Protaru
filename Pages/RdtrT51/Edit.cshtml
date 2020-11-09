@@ -82,9 +82,6 @@ else
 
 @{
 int index = 0;
-string path = "";
-string inputDivClass = "";
-string linkClass = "";
 }
 
 @foreach (var item in Model.KelompokDokumenList)
@@ -96,18 +93,7 @@ string linkClass = "";
 
     @foreach( var detailItem in item.Dokumen)
     {
-        if( detailItem.DetailDokumen.FilePathAda )
-        {
-            path = Url.Content("~" + detailItem.DetailDokumen.FilePath);
-            inputDivClass = "custom-file d-none";
-            linkClass = "file-info";
-        }
-        else
-        {
-            path = "";
-            inputDivClass = "custom-file";
-            linkClass = "file-info d-none";
-        }
+        string fieldName = $"AtrDokumenList[{index}].FilePath";
 
                         <div class="col-sm-6 col-md-2 pt-2">
                             @detailItem.Nama
@@ -145,23 +131,11 @@ string linkClass = "";
                         </div>
 
                         <div class="col-md-3 form-group p-5px">
-                            <div class="@inputDivClass">
-                                <input type="hidden"
-                                    class="file-path"
-                                    name="AtrDokumenList[@index].FilePath"
-                                    value="@detailItem.DetailDokumen.FilePath" />
-                                <input type="file" class="dokumen-file" />
-								<div class="btn btn-warning btn-sm btn-upload">Upload</div>
-                            </div>
-						    <div class="@linkClass" >
-						        <a target="_blank"
-                                    class="file-link btn btn-success btn-sm"
-                                    href="@path">
-                                    Download File
-                                </a>
-                                <span>|</span>
-                                <a class="btn btn-danger btn-sm btn-delete">Delete</a>
-						    </div>
+                            <component type="typeof(FileUpload)"
+                                render-mode="Static"
+                                param-FieldName="@fieldName"
+                                param-FilePath="@detailItem.DetailDokumen.FilePath"
+                                param-Url="@Url" />
                         </div>
 
                         <component type="typeof(EditTindakLanjut)"
