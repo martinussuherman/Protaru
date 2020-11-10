@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +23,7 @@ namespace MonevAtr.Pages.RtrKsnT52
         public Models.Atr Atr { get; set; }
 
         [BindProperty]
-        public List<AtrDokumen> AtrDokumenList { get; set; }
+        public List<AtrDokumen> Dokumen { get; set; }
 
         public List<Models.KelompokDokumen> KelompokDokumenList { get; set; }
 
@@ -56,10 +55,10 @@ namespace MonevAtr.Pages.RtrKsnT52
             //     return await OnGetAsync(this.Atr.Kode);
             // }
 
-            dokumenList = await _context.Dokumen
+            List<Models.Dokumen> dokumenList = await _context.Dokumen
                 .ToListAsync();
 
-            foreach (AtrDokumen dokumen in AtrDokumenList)
+            foreach (AtrDokumen dokumen in Dokumen)
             {
                 if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
                 {
@@ -75,12 +74,8 @@ namespace MonevAtr.Pages.RtrKsnT52
             return await OnGetAsync(Atr.Kode);
         }
 
-        private List<Models.Dokumen> dokumenList;
-
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }

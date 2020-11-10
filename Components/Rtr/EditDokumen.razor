@@ -6,11 +6,11 @@
 
 <input 
     type="hidden" 
-    name="AtrDokumenList[@Index].Kode" 
+    name="Dokumen[@Index].Kode" 
     value="@Dokumen.DetailDokumen.Kode"/>
 <input 
     type="hidden" 
-    name="AtrDokumenList[@Index].KodeDokumen" 
+    name="Dokumen[@Index].KodeDokumen" 
     value="@Dokumen.Kode"/>
 
 <DokumenStatusSelect
@@ -21,7 +21,7 @@
 <div class="col-sm-6 col-md-2 form-group p-2px">
     <input 
         type="text" 
-        name="AtrDokumenList[@Index].Nomor" 
+        name="Dokumen[@Index].Nomor" 
         value="@Dokumen.DetailDokumen.Nomor" 
         class="form-control" 
         placeholder="Nomor" />
@@ -30,14 +30,14 @@
 <div class="col-sm-6 col-md-2 form-group p-2px">
     <input 
         type="date" 
-        name="AtrDokumenList[@Index].Tanggal" 
+        name="Dokumen[@Index].Tanggal" 
         value="@Dokumen.DetailDokumen.DisplayTanggal" 
         class="form-control" />
 </div>
 
 <div class="col-sm-6 col-md-2 form-group p-2px">
     <textarea 
-        name="AtrDokumenList[@Index].Keterangan" 
+        name="Dokumen[@Index].Keterangan" 
         class="form-control bnote-rdtr" 
         data-toggle="modal" 
         data-target="#note-modal" 
@@ -73,5 +73,5 @@
     [Parameter]
     public IUrlHelper Url { get; set; }
 
-    private string FilePathFieldName => $"AtrDokumenList[{Index}].FilePath";
+    private string FilePathFieldName => $"Dokumen[{Index}].FilePath";
 }

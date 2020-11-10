@@ -23,7 +23,7 @@ namespace MonevAtr.Pages.RdtrT52
         public Models.Atr Atr { get; set; }
 
         [BindProperty]
-        public List<Models.AtrDokumen> AtrDokumenList { get; set; }
+        public List<AtrDokumen> Dokumen { get; set; }
 
         [BindProperty]
         public List<RtrFasilitasKegiatan> FasKeg { get; set; }
@@ -64,12 +64,12 @@ namespace MonevAtr.Pages.RdtrT52
             //     return await OnGetAsync(this.Atr.Kode);
             // }
 
-            dokumenList = await _context.Dokumen
+            List<Models.Dokumen> dokumenList = await _context.Dokumen
                 .ToListAsync();
 
-            foreach (Models.AtrDokumen dokumen in this.AtrDokumenList)
+            foreach (AtrDokumen dokumen in Dokumen)
             {
-                if (!await rtrUtilities.SaveRtrDokumen(this.Atr, dokumen, dokumenList))
+                if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
                 {
                     return NotFound();
                 }
@@ -91,12 +91,8 @@ namespace MonevAtr.Pages.RdtrT52
             return await OnGetAsync(Atr.Kode);
         }
 
-        private List<Models.Dokumen> dokumenList;
-
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }

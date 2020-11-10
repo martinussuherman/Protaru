@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +12,9 @@ namespace MonevAtr.Pages.RdtrT51
     [Authorize(Permissions.RdtrT51.Edit)]
     public class EditModel : PageModel
     {
-        public EditModel(
-            PomeloDbContext context,
-            IWebHostEnvironment environment)
+        public EditModel(PomeloDbContext context)
         {
             _context = context;
-            _environment = environment;
             selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
@@ -30,26 +23,22 @@ namespace MonevAtr.Pages.RdtrT51
         public Models.Atr Atr { get; set; }
 
         [BindProperty]
-        public List<AtrDokumen> AtrDokumenList { get; set; }
+        public List<AtrDokumen> Dokumen { get; set; }
 
         [BindProperty]
         public List<RtrFasilitasKegiatan> FasKeg { get; set; }
-
-        [BindProperty]
-        public List<AtrDokumenTindakLanjut> DokTin { get; set; }
-
-        // [BindProperty]
-        // public List<IFormFile> UploadFile { get; set; } = new List<IFormFile>();
 
         public List<Models.KelompokDokumen> KelompokDokumenList { get; set; }
 
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
+        // [BindProperty]
+        // public List<AtrDokumenTindakLanjut> DokTin { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KelompokDokumenList =
-                await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                    (int)JenisRtrEnum.RdtrT51);
+            KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
+                (int)JenisRtrEnum.RdtrT51);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
 
             Atr = await _context.Atr
@@ -79,15 +68,12 @@ namespace MonevAtr.Pages.RdtrT51
             //     return await OnGetAsync(this.Atr.Kode);
             // }
 
-            dokumenList = await _context.Dokumen
+            List<Models.Dokumen> dokumenList = await _context.Dokumen
                 .ToListAsync();
 
-            foreach (AtrDokumen dokumen in AtrDokumenList)
+            foreach (AtrDokumen dokumen in Dokumen)
             {
-                if (!await rtrUtilities.SaveRtrDokumen(
-                        Atr,
-                        dokumen,
-                        dokumenList))
+                if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
                 {
                     return NotFound();
                 }
@@ -95,21 +81,11 @@ namespace MonevAtr.Pages.RdtrT51
 
             foreach (RtrFasilitasKegiatan fasilitas in FasKeg)
             {
-                if (!await rtrUtilities.SaveRtrFasilitasKegiatan(
-                        Atr,
-                        fasilitas))
+                if (!await rtrUtilities.SaveRtrFasilitasKegiatan(Atr, fasilitas))
                 {
                     return NotFound();
                 }
             }
-
-            // for (int index = 0; index < this.AtrDokumenList.Count; index++)
-            // {
-            //     if (!await SaveAtrDokumen(index))
-            //     {
-            //         return NotFound();
-            //     }
-            // }
 
             if (!await rtrUtilities.SaveRtr(Atr, User))
             {
@@ -119,75 +95,8 @@ namespace MonevAtr.Pages.RdtrT51
             return await OnGetAsync(Atr.Kode);
         }
 
-        private void FixUploadFiles(HttpContext httpContext)
-        {
-            int count = 0;
-
-            foreach (AtrDokumen dokumen in AtrDokumenList)
-            {
-                string propertyName = $"AtrDokumen[{count++}].UploadFile";
-                // dokumen.UploadFile = httpContext.Request.Form.Files
-                //     .Where(i => propertyName.Equals(i.Name, StringComparison.InvariantCultureIgnoreCase))
-                //     .FirstOrDefault();
-            }
-        }
-
-        // private async Task<bool> SaveAtrDokumen(int index)
-        // {
-        //     CopyUploadedFile(index);
-        //     return await SaveAtrDokumen(this.AtrDokumenList[index]);
-        // }
-
-        private async Task CopyUploadedFile(AtrDokumen dokumen)
-        {
-            // IFormFile file = dokumen.UploadFile;
-            IFormFile file = dokumen.UploadFile.File;
-
-            if (String.IsNullOrEmpty(file.FileName) || file.Length == 0)
-            {
-                return;
-            }
-
-            string filePath = Path.Combine(_environment.WebRootPath, "upload", file.FileName);
-            dokumen.FilePath = file.FileName;
-
-            using (FileStream stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-        }
-
-        // private async Task CopyUploadedFile(int index)
-        // {
-        //     if (index >= this.UploadFile.Count)
-        //     {
-        //         return;
-        //     }
-
-        //     IFormFile file = this.UploadFile[index];
-
-        //     if (String.IsNullOrEmpty(file.FileName) || file.Length == 0)
-        //     {
-        //         return;
-        //     }
-
-        //     string filePath = Path.Combine(hostingEnvironment.WebRootPath, "upload", file.FileName);
-        //     this.AtrDokumenList[index].FilePath = file.FileName;
-
-        //     using(FileStream stream = new FileStream(filePath, FileMode.Create))
-        //     {
-        //         await file.CopyToAsync(stream);
-        //     }
-        // }
-
-        private List<Models.Dokumen> dokumenList;
-
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
         private readonly PomeloDbContext _context;
-
-        private readonly IWebHostEnvironment _environment;
     }
 }
