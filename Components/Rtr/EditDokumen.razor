@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Mvc
 
 <div class="col-sm-6 col-md-2 pt-2">
     @Dokumen.Nama
@@ -12,10 +13,10 @@
     name="AtrDokumenList[@Index].KodeDokumen" 
     value="@Dokumen.Kode"/>
 
-<component type="typeof(DokumenStatusSelect)"
-    render-mode="Static"
-    param-Index="@Index"
-    param-StatusAda="@Dokumen.DetailDokumen.StatusAda" />
+<DokumenStatusSelect
+    Index="@Index"
+    StatusAda="@Dokumen.DetailDokumen.StatusAda">
+</DokumenStatusSelect>
 
 <div class="col-sm-6 col-md-2 form-group p-2px">
     <input 
@@ -46,18 +47,18 @@
 </div>
 
 <div class="col-md-3 form-group p-5px">
-    <component type="typeof(FileUpload)"
-        render-mode="Static"
-        param-FieldName="@FilePathFieldName"
-        param-FilePath="@Dokumen.DetailDokumen.FilePath"
-        param-Url="@Url" />
+    <FileUpload
+        FieldName="@FilePathFieldName"
+        FilePath="@Dokumen.DetailDokumen.FilePath"
+        Url="@Url">
+    </FileUpload>
 </div>
 
-<component type="typeof(EditTindakLanjut)"
-    render-mode="Static"
-    param-Rtr="@Rtr"
-    param-Dokumen="@Dokumen"
-    param-Url="@Url" />
+<EditTindakLanjut
+    Rtr="@Rtr"
+    Dokumen="@Dokumen"
+    Url="@Url">
+</EditTindakLanjut>
 
 @code {
     [Parameter]
@@ -68,6 +69,9 @@
 
     [Parameter]
     public MonevAtr.Models.Dokumen Dokumen { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
 
     private string FilePathFieldName => $"AtrDokumenList[{Index}].FilePath";
 }
