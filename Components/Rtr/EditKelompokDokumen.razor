@@ -1,0 +1,31 @@
+@foreach (var item in KelompokDokumen)
+{
+    <hr>
+    <h5 class="card-title">&nbsp; @item.Nomor . @item.Nama</h5>
+    <hr>
+    <div class="card-body row">
+
+    @foreach (var detailItem in item.Dokumen)
+    {
+        <component type="typeof(EditDokumen)"
+            render-mode="Static"
+            param-Index="@index"
+            param-Rtr="@Rtr"
+            param-Dokumen="@detailItem" />
+
+        index++;
+    }
+
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public MonevAtr.Models.Atr Rtr { get; set; }
+
+    [Parameter]
+    public List<MonevAtr.Models.KelompokDokumen> KelompokDokumen { get; set; }
+
+    private int index = 0;
+}
