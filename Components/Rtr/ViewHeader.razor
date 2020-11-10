@@ -1,0 +1,34 @@
+<div class="justify-content-md-center px-5">
+    <div class="card border-orange mb-3 card-body">
+
+        <div class="col-md-12 form-group">
+            <label class="form-label font-weight-bold">Status Revisi</label>
+            <input type="text" value="@Rtr.DisplayNamaStatusRevisi" class="form-control" disabled />
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label font-weight-bold">Progress</label>
+            <input type="text" value="@Rtr.DisplayNamaProgress" class="form-control" disabled />
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label font-weight-bold">Permasalahan</label>
+            <textarea value="@Rtr.Permasalahan" class ="form-control" disabled></textarea>
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label font-weight-bold">Tindak Lanjut</label>
+            <textarea value="@Rtr.TindakLanjut" class ="form-control" disabled></textarea>
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label font-weight-bold">Keterangan</label>
+            <textarea value="@Rtr.Keterangan" class ="form-control" disabled></textarea>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public MonevAtr.Models.Atr Rtr { get; set; }
+}

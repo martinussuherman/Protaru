@@ -1,36 +1,7 @@
 @using Microsoft.AspNetCore.Mvc
 
 <DetailTitle Rtr="@Rtr.Rtr"></DetailTitle>
-
-<div class="justify-content-md-center px-5">
-    <div class="card border-orange mb-3 card-body">
-
-        <div class="col-md-12 form-group">
-            <label class="form-label font-weight-bold">Status Revisi</label>
-            <input type="text" value="@Rtr.Rtr.DisplayNamaStatusRevisi" class="form-control" disabled />
-        </div>
-
-        <div class="col-md-12 form-group">
-            <label class="form-label font-weight-bold">Progress</label>
-            <input type="text" value="@Rtr.Rtr.DisplayNamaProgress" class="form-control" disabled />
-        </div>
-
-        <div class="col-md-12 form-group">
-            <label class="form-label font-weight-bold">Permasalahan</label>
-            <textarea value="@Rtr.Rtr.Permasalahan" class ="form-control" disabled></textarea>
-        </div>
-
-        <div class="col-md-12 form-group">
-            <label class="form-label font-weight-bold">Tindak Lanjut</label>
-            <textarea value="@Rtr.Rtr.TindakLanjut" class ="form-control" disabled></textarea>
-        </div>
-
-        <div class="col-md-12">
-            <label class="form-label font-weight-bold">Keterangan</label>
-            <textarea value="@Rtr.Rtr.Keterangan" class ="form-control" disabled></textarea>
-        </div>
-    </div>
-</div>
+<ViewHeader Rtr="@Rtr.Rtr"></ViewHeader>
 
 <div class="mt-4 tag-title-box-2">
     <div class="tag-title"><span>DOKUMEN DETIL</span></div>
