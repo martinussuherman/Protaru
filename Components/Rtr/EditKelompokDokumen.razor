@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Mvc
+
 @foreach (var item in KelompokDokumen)
 {
     <hr>
@@ -7,11 +9,12 @@
 
     @foreach (var detailItem in item.Dokumen)
     {
-        <component type="typeof(EditDokumen)"
-            render-mode="Static"
-            param-Index="@index"
-            param-Rtr="@Rtr"
-            param-Dokumen="@detailItem" />
+        <EditDokumen
+            Index="@index"
+            Rtr="@Rtr"
+            Dokumen="@detailItem"
+            Url="@Url">
+        </EditDokumen>
 
         index++;
     }
@@ -26,6 +29,9 @@
 
     [Parameter]
     public List<MonevAtr.Models.KelompokDokumen> KelompokDokumen { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
 
     private int index = 0;
 }
