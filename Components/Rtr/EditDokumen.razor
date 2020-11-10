@@ -1,0 +1,73 @@
+
+<div class="col-sm-6 col-md-2 pt-2">
+    @Dokumen.Nama
+</div>
+
+<input 
+    type="hidden" 
+    name="AtrDokumenList[@Index].Kode" 
+    value="@Dokumen.DetailDokumen.Kode"/>
+<input 
+    type="hidden" 
+    name="AtrDokumenList[@Index].KodeDokumen" 
+    value="@Dokumen.Kode"/>
+
+<component type="typeof(DokumenStatusSelect)"
+    render-mode="Static"
+    param-Index="@Index"
+    param-StatusAda="@Dokumen.DetailDokumen.StatusAda" />
+
+<div class="col-sm-6 col-md-2 form-group p-2px">
+    <input 
+        type="text" 
+        name="AtrDokumenList[@Index].Nomor" 
+        value="@Dokumen.DetailDokumen.Nomor" 
+        class="form-control" 
+        placeholder="Nomor" />
+</div>
+
+<div class="col-sm-6 col-md-2 form-group p-2px">
+    <input 
+        type="date" 
+        name="AtrDokumenList[@Index].Tanggal" 
+        value="@Dokumen.DetailDokumen.DisplayTanggal" 
+        class="form-control" />
+</div>
+
+<div class="col-sm-6 col-md-2 form-group p-2px">
+    <textarea 
+        name="AtrDokumenList[@Index].Keterangan" 
+        class="form-control bnote-rdtr" 
+        data-toggle="modal" 
+        data-target="#note-modal" 
+        rows="1">
+        @Dokumen.DetailDokumen.Keterangan
+    </textarea>
+</div>
+
+<div class="col-md-3 form-group p-5px">
+    <component type="typeof(FileUpload)"
+        render-mode="Static"
+        param-FieldName="@FilePathFieldName"
+        param-FilePath="@Dokumen.DetailDokumen.FilePath"
+        param-Url="@Url" />
+</div>
+
+<component type="typeof(EditTindakLanjut)"
+    render-mode="Static"
+    param-Rtr="@Rtr"
+    param-Dokumen="@Dokumen"
+    param-Url="@Url" />
+
+@code {
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public MonevAtr.Models.Atr Rtr { get; set; }
+
+    [Parameter]
+    public MonevAtr.Models.Dokumen Dokumen { get; set; }
+
+    private string FilePathFieldName => $"AtrDokumenList[{Index}].FilePath";
+}
