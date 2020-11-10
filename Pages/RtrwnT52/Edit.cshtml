@@ -69,76 +69,11 @@
                         </div>
                     </div>
 
-@{
-int index = 0;
-}
-
-@foreach (var item in Model.KelompokDokumenList) 
-{
-
-                    <hr>
-                    <h5 class="card-title">&nbsp; @item.Nomor . @item.Nama</h5>
-                    <hr>
-                    <div class="card-body row">
-
-    @foreach( var detailItem in item.Dokumen)
-    {
-        string fieldName = $"AtrDokumenList[{index}].FilePath";
-
-                        <div class="col-sm-6 col-md-2 pt-2">
-                            @detailItem.Nama
-                        </div>
-
-                        <input type="hidden" name="AtrDokumenList[@index].Kode" value="@detailItem.DetailDokumen.Kode"/>
-                        <input type="hidden" name="AtrDokumenList[@index].KodeDokumen" value="@detailItem.Kode"/>
-
-                        <div class="col-sm-6 col-md-1 form-group p-2px">
-                            <select class="form-control" name="AtrDokumenList[@index].Status">
-                                <option value="0">Tidak</option>
-
-        @if(detailItem.DetailDokumen.StatusAda)
-        {
-                                <option value="1" selected="selected">Ada</option>
-        }
-        else
-        {
-                                <option value="1">Ada</option>
-        }
-
-                            </select>
-                        </div>
-
-                        <div class="col-sm-6 col-md-2 form-group p-2px">
-                            <input type="text" name="AtrDokumenList[@index].Nomor" value="@detailItem.DetailDokumen.Nomor" class="form-control" placeholder="Nomor" />
-                        </div>
-
-                        <div class="col-sm-6 col-md-2 form-group p-2px">
-                            <input type="date" name="AtrDokumenList[@index].Tanggal" value="@detailItem.DetailDokumen.DisplayTanggal" class="form-control" />
-                        </div>
-
-                        <div class="col-sm-6 col-md-2 form-group p-2px">
-                            <textarea name="AtrDokumenList[@index].Keterangan" class="form-control bnote-rdtr" data-toggle="modal" data-target="#note-modal" rows="1">@detailItem.DetailDokumen.Keterangan</textarea>
-                        </div>
-
-                        <div class="col-md-3 form-group p-5px">
-                            <component type="typeof(FileUpload)"
-                                render-mode="Static"
-                                param-FieldName="@fieldName"
-                                param-FilePath="@detailItem.DetailDokumen.FilePath"
-                                param-Url="@Url" />
-                        </div>
-
-                        <component type="typeof(EditTindakLanjut)"
-                            render-mode="Static"
-                            param-Rtr="@Model.Atr"
-                            param-Dokumen="@detailItem"
-                            param-Url="@Url" />
-
-        index++;
-    }
-
-                    </div>
-}
+                    <component type="typeof(EditKelompokDokumen)"
+                        render-mode="Static"
+                        param-Rtr="@Model.Atr"
+                        param-KelompokDokumen="@Model.KelompokDokumenList"
+                        param-Url="@Url" />
 
                     <component type="typeof(FasilitasKegiatan)"
                         render-mode="Static"

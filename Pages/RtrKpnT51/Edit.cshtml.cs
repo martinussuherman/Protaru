@@ -24,18 +24,14 @@ namespace MonevAtr.Pages.RtrKpnT51
         public Models.Atr Atr { get; set; }
 
         [BindProperty]
-        public List<AtrDokumen> AtrDokumenList { get; set; }
-
-        [BindProperty]
-        public List<AtrDokumenTindakLanjut> DokTin { get; set; }
+        public List<AtrDokumen> Dokumen { get; set; }
 
         public List<Models.KelompokDokumen> KelompokDokumenList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KelompokDokumenList =
-                await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                    (int)JenisRtrEnum.RtrKpnT51);
+            KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
+                (int)JenisRtrEnum.RtrKpnT51);
 
             Atr = await _context.Atr
                 .Include(a => a.JenisAtr)
@@ -62,27 +58,16 @@ namespace MonevAtr.Pages.RtrKpnT51
             //     return await OnGetAsync(this.Atr.Kode);
             // }
 
-            dokumenList = await _context.Dokumen
-                .ToListAsync();
+            List<Models.Dokumen> dokumenList = await _context.Dokumen
+                 .ToListAsync();
 
-            foreach (AtrDokumen dokumen in AtrDokumenList)
+            foreach (AtrDokumen dokumen in Dokumen)
             {
-                if (!await rtrUtilities.SaveRtrDokumen(
-                        Atr,
-                        dokumen,
-                        dokumenList))
+                if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
                 {
                     return NotFound();
                 }
             }
-
-            // for (int index = 0; index < this.AtrDokumenList.Count; index++)
-            // {
-            //     if (!await SaveAtrDokumen(index))
-            //     {
-            //         return NotFound();
-            //     }
-            // }
 
             if (!await rtrUtilities.SaveRtr(Atr, User))
             {
@@ -92,12 +77,8 @@ namespace MonevAtr.Pages.RtrKpnT51
             return await OnGetAsync(Atr.Kode);
         }
 
-        private List<Models.Dokumen> dokumenList;
-
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }
