@@ -19,13 +19,11 @@
         <div class="row row-cards card pt-4">
             <component type="typeof(DetailTitle)"
                 render-mode="Static"
-                param-Rtr="@Model.RtrDetail" />
+                param-Rtr="@Model.RtrDetail.Rtr" />
 
-            <div class="justify-content-md-center px-5">
-                <div class="card border-orange mb-3 card-body">
-                    @await Html.PartialAsync("_RtrViewCommonHeaderPartial", Model.RtrDetail)
-                </div>
-            </div>
+            <component type="typeof(ViewHeader)"
+                render-mode="Static"
+                param-Rtr="@Model.RtrDetail.Rtr" />
 
             <form method="post">
                 <input type="hidden" asp-for="RtrDetail.Rtr.Kode" />
