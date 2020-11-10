@@ -1,0 +1,124 @@
+@using Microsoft.AspNetCore.Mvc
+@using System.Collections.Generic
+
+<form method="post">
+    <div class="card-body row">
+        <EditHidden Rtr="@Rtr"></EditHidden>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Area of Interest</label>
+            <input 
+                type="text" 
+                name="Atr.Aoi" 
+                value="@Rtr.Aoi" 
+                class="form-control" />
+        </div>
+
+        <div class="col-sm-6 col-md-6 form-group">
+            <label class="form-label">Luas (Ha)</label>
+            <input 
+                type="number" 
+                name="Atr.Luas" 
+                value="@Rtr.Luas" 
+                class="form-control" 
+                placeholder="0.000" 
+                step="0.001" />
+        </div>
+
+        <div class="col-sm-6 col-md-6 form-group">
+            <label class="form-label">Tahun Penyusunan</label>
+            <input 
+                type="text" 
+                name="Atr.TahunPenyusunan" 
+                value="@Rtr.TahunPenyusunan" 
+                class="form-control">
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Progress</label>
+            <SelectList
+                FieldName="@("Atr.KodeProgressAtr")"
+                Items="@ProgressList">
+            </SelectList>
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Status Revisi</label>
+            <SelectList
+                FieldName="@("Atr.StatusRevisi")"
+                Items="@StatusRevisiList">
+            </SelectList>
+
+            @* <SelectList
+                FieldName="@("Atr.StatusRevisi")"
+                Items="@StatusRevisiList"
+                disabled="@SudahDirevisi">
+            </SelectList> *@
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Permasalahan</label>
+            <textarea 
+                name="Atr.Permasalahan" 
+                class ="form-control">
+                @Rtr.Permasalahan
+            </textarea>
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Tindak Lanjut</label>
+            <textarea 
+                name="Atr.TindakLanjut" 
+                class ="form-control">
+                @Rtr.TindakLanjut
+            </textarea>
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Keterangan</label>
+            <textarea 
+                name="Atr.Keterangan" 
+                class ="form-control">
+                @Rtr.Keterangan
+            </textarea>
+        </div>
+    </div>
+
+    <EditKelompokDokumen
+        Rtr="@Rtr"
+        KelompokDokumen="@KelompokDokumen"
+        Url="@Url" >
+    </EditKelompokDokumen>
+
+    <FasilitasKegiatan ListFasilitas="@Fasilitas"></FasilitasKegiatan>
+
+    <div class="card-footer text-center">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="@DeleteLink" class="btn btn-primary">Hapus</a>
+        <a href="@IndexLink" class="btn btn-primary">Kembali</a>
+    </div>
+</form>
+
+@code {
+    [Parameter]
+    public MonevAtr.Models.Atr Rtr { get; set; }
+
+    [Parameter]
+    public List<MonevAtr.Models.KelompokDokumen> KelompokDokumen { get; set; }
+
+    [Parameter]
+    public List<MonevAtr.Models.FasilitasKegiatan> Fasilitas { get; set; }
+
+    [Parameter]
+    public List<SelectListItem> ProgressList { get; set; }
+
+    [Parameter]
+    public List<SelectListItem> StatusRevisiList { get; set; }
+
+    [Parameter]
+    public IUrlHelper Url { get; set; }
+
+    private string DeleteLink => Url.Page("/Atr/Delete", values: new { Rtr.Kode });
+    private string IndexLink => Url.Page("./Index");
+    private bool SudahDirevisi => (Rtr.SudahDirevisi == 1);
+}

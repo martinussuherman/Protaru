@@ -1,0 +1,17 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Collections.Generic
+
+<select name="@FieldName" class ="form-control" >
+    @foreach(var item in ItemList)
+    {
+        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+    }
+</select>
+
+@code {
+    [Parameter]
+    public string FieldName { get; set; }
+
+    [Parameter]
+    public List<SelectListItem> ItemList { get; set; }
+}
