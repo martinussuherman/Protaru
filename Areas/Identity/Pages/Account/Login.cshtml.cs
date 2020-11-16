@@ -91,7 +91,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                     return RedirectToPage("./Lockout");
                 }
 
-                ModelState.AddModelError(String.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(String.Empty, "Login tidak berhasil.");
                 return Page();
             }
 
