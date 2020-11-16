@@ -26,35 +26,19 @@ namespace MonevAtr.Models
             }
         }
 
-        public SelectList StatusRevisiRtrRegular
-        {
-            get
-            {
-                List<StatusRevisi> list = new List<StatusRevisi>
-                {
-                    new StatusRevisi(0, "Pilih Status RTR T5-0/T5-1"),
-                    StatusRevisi.RegularT51,
-                    StatusRevisi.RegularT52
-                };
+        public SelectList StatusRevisiRtrRegular =>
+            new SelectList(StatusRegularItems(), _valueProperty, _textProperty);
 
-                return new SelectList(list, "Kode", "Nama");
-            }
+        public SelectList StatusRevisiRtrRevisi =>
+            new SelectList(StatusRevisiItems(), _valueProperty, _textProperty);
+
+        public IEnumerable<SelectListItem> StatusRegularItems()
+        {
+            return _regularItems.Prepend(_regularTitle);
         }
-
-        public SelectList StatusRevisiRtrRevisi
+        public IEnumerable<SelectListItem> StatusRevisiItems()
         {
-            get
-            {
-                List<StatusRevisi> list = new List<StatusRevisi>
-                {
-                    new StatusRevisi(0, "Pilih Status RTR T5-2"),
-                    StatusRevisi.RevisiT52,
-                    StatusRevisi.RevisiT53,
-                    StatusRevisi.RevisiT54
-                };
-
-                return new SelectList(list, "Kode", "Nama");
-            }
+            return _revisiItems.Prepend(_revisiTitle);
         }
 
         public async Task<SelectList> UserRoles(IdentityDbContext context)
@@ -414,31 +398,34 @@ namespace MonevAtr.Models
 
         public async Task<SelectList> ProgressRdtrT51()
         {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RdtrT51);
+            return new SelectList(await ProgressRdtrT51ItemsAsync(), _valueProperty, _textProperty);
+        }
+        public async Task<IEnumerable<SelectListItem>> ProgressRdtrT51ItemsAsync()
+        {
+            IEnumerable<SelectListItem> temp = (await ProgressRtr(JenisRtrEnum.RdtrT51))
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                });
 
-            SelectList selectList = new SelectList(list, "Kode", "Nama");
-            List<SelectListItem> listItems = new List<SelectListItem>
-            {
-                new SelectListItem("Pilih Progress RDTR T5-1", String.Empty)
-            };
-
-            foreach (SelectListItem item in selectList)
-            {
-                listItems.Add(item);
-            }
-
-            return new SelectList(listItems, "Value", "Text");
-            // return new SelectList(list, "Kode", "Nama");
+            return temp.Prepend(_rdtrT51ProgressTitle);
         }
 
         public async Task<SelectList> ProgressRdtrT52()
         {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RdtrT52);
+            return new SelectList(await ProgressRdtrT52ItemsAsync(), _valueProperty, _textProperty);
+        }
+        public async Task<IEnumerable<SelectListItem>> ProgressRdtrT52ItemsAsync()
+        {
+            IEnumerable<SelectListItem> temp = (await ProgressRtr(JenisRtrEnum.RdtrT52))
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                });
 
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RDTR T5-2"));
-            return new SelectList(list, "Kode", "Nama");
+            return temp.Prepend(_rdtrT52ProgressTitle);
         }
 
         public async Task<SelectList> ProgressRtrwT50()
@@ -648,6 +635,39 @@ namespace MonevAtr.Models
             }
         }
 
+        private static readonly List<StatusRevisi> _regular = new List<StatusRevisi>
+        {
+            StatusRevisi.RegularT51,
+            StatusRevisi.RegularT52
+        };
+        private static readonly List<StatusRevisi> _revisi = new List<StatusRevisi>
+        {
+            StatusRevisi.RevisiT52,
+            StatusRevisi.RevisiT53,
+            StatusRevisi.RevisiT54
+        };
+        private static readonly IEnumerable<SelectListItem> _regularItems = _regular
+            .Select(c => new SelectListItem
+            {
+                Value = c.Kode.ToString(),
+                Text = c.Nama
+            });
+        private static readonly IEnumerable<SelectListItem> _revisiItems = _revisi
+            .Select(c => new SelectListItem
+            {
+                Value = c.Kode.ToString(),
+                Text = c.Nama
+            });
+        private static readonly SelectListItem _regularTitle =
+            new SelectListItem("Pilih Status RTR T5-0/T5-1", string.Empty);
+        private static readonly SelectListItem _revisiTitle =
+            new SelectListItem("Pilih Status RTR T5-2", string.Empty);
+        private static readonly SelectListItem _rdtrT51ProgressTitle =
+            new SelectListItem("Pilih Progress RDTR T5-1", string.Empty);
+        private static readonly SelectListItem _rdtrT52ProgressTitle =
+            new SelectListItem("Pilih Progress RDTR T5-2", string.Empty);
         private readonly PomeloDbContext _context;
+        private const string _textProperty = "Text";
+        private const string _valueProperty = "Value";
     }
 }
