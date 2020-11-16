@@ -10,7 +10,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/netcoreapp2.2/MonevAtr.dll",
+            "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/MonevAtr.dll",
             "args": [],
             // "cwd": "$D:/Data/Organix/organix-monev-atr/",
             "stopAtEntry": false,
