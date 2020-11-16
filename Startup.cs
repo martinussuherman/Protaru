@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,7 @@ namespace MonevAtr
             services.AddServerSideBlazor();
             services.AddControllers();
             services.AddHttpClient(Options.DefaultName);
+            services.AddMvc();
 
             services
                 .AddDbContextPool<Models.PomeloDbContext>(options =>
