@@ -35,11 +35,11 @@
 @if (IsDisplayRegulation)
 {
     <td>@Item.Nomor</td>
-    <td>@Item.Tahun</td>
+    <td>@DisplayTahun()</td>
 }
 else
 {
-    <td>@Item.TahunPenyusunan</td>
+    <td>@DisplayTahunPenyusunan()</td>
 }
 
     <td>@Item.DisplayNamaProgress</td>
@@ -66,4 +66,24 @@ else
 
     [Parameter]
     public Models.Atr Item { get; set; }
+
+    public string DisplayTahun()
+    {
+        if (Item.Tahun == 0)
+        {
+            return "-";
+        }
+
+        return Item.Tahun.ToString();
+    }
+
+    public string DisplayTahunPenyusunan()
+    {
+        if (Item.TahunPenyusunan == 0)
+        {
+            return "-";
+        }
+
+        return Item.TahunPenyusunan.ToString();
+    }
 }
