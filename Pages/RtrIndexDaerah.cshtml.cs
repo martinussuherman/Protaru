@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace MonevAtr.Pages
 {
-    public class RtrIndexModel : CustomPageModel
+    public class RtrIndexDaerahModel : CustomPageModel
     {
-        public RtrIndexModel(
+        public RtrIndexDaerahModel(
             PomeloDbContext context,
             IConfiguration configuration)
         {
@@ -74,10 +74,10 @@ namespace MonevAtr.Pages
 
         public MapsZoomSettings ZoomSettings => new MapsZoomSettings
         {
-            Enable = true,
+            Enable = false,
             HorizontalAlignment = Alignment.Near,
             MouseWheelZoom = false,
-            PinchZooming = true,
+            PinchZooming = false,
             ShouldZoomInitially = false,
             Toolbars = _toolbars,
             ToolBarOrientation = Orientation.Vertical,
@@ -111,11 +111,6 @@ namespace MonevAtr.Pages
 
         private readonly string[] _toolbars = new string[]
         {
-            "Zoom",
-            "ZoomIn",
-            "ZoomOut",
-            "Pan",
-            "Reset"
         };
         private readonly MapsTooltipSettings _tooltipSettings = new MapsTooltipSettings
         {
