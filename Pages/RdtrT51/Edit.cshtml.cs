@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -32,6 +33,10 @@ namespace MonevAtr.Pages.RdtrT51
 
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
+        public IEnumerable<SelectListItem> ProgressList { get; set; }
+        
+        public IEnumerable<SelectListItem> StatusRevisiList { get; set; }
+
         // [BindProperty]
         // public List<AtrDokumenTindakLanjut> DokTin { get; set; }
 
@@ -55,9 +60,9 @@ namespace MonevAtr.Pages.RdtrT51
                 KelompokDokumenList);
             await rtrUtilities.MergeRtrFasilitasKegiatan(Atr, id, FasilitasList);
 
-            ViewData["ProgressRdtr"] =
-                await selectListUtilities.ProgressRdtrT51();
-            ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRegular;
+            ProgressList = await selectListUtilities.ProgressRdtrT51ItemsAsync();
+            StatusRevisiList = selectListUtilities.StatusRegularItems();
+
             return Page();
         }
 
