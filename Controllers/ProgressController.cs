@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
-using Protaru.Models;
 
-namespace MonevAtr.Controllers
+namespace Protaru.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
