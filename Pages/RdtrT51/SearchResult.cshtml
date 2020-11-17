@@ -4,9 +4,7 @@
 @{
     Layout = "_RtrDaerahLayout";
     ViewData["PageTitle"] = "RDTR";
-    ViewData["Title"] = Model.IsCanEdit ?
-        "Monitoring & Evaluasi RDTR T5-1" :
-        "Monitoring & Evaluasi RDTR";
+    ViewData["Title"] = "Monitoring & Evaluasi RDTR";
     var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
 }
 
