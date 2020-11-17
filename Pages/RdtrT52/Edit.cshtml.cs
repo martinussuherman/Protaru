@@ -83,7 +83,7 @@ namespace MonevAtr.Pages.RdtrT52
                 }
             }
 
-            if (!await rtrUtilities.SaveRtr(Atr, User))
+            if (!await rtrUtilities.SaveRtr(Atr, User, EntityState.Modified))
             {
                 return NotFound();
             }
