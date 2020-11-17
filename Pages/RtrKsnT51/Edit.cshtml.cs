@@ -60,13 +60,13 @@ namespace MonevAtr.Pages.RtrKsnT51
 
             foreach (AtrDokumen dokumen in Dokumen)
             {
-                if (!await rtrUtilities.SaveRtrDokumen(Atr,dokumen,dokumenList))
+                if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
                 {
                     return NotFound();
                 }
             }
 
-            if (!await rtrUtilities.SaveRtr(Atr, User))
+            if (!await rtrUtilities.SaveRtr(Atr, User, EntityState.Modified))
             {
                 return NotFound();
             }

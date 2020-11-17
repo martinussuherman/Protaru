@@ -134,7 +134,7 @@ namespace MonevAtr.Models
             }
         }
 
-        public async Task<bool> SaveRtr(Atr rtr, ClaimsPrincipal user)
+        public async Task<bool> SaveRtr(Atr rtr, ClaimsPrincipal user, EntityState state)
         {
             if (rtr.KodeProgressAtr == 0)
             {
@@ -142,7 +142,7 @@ namespace MonevAtr.Models
             }
 
             rtr.PembaruanOleh = user.Identity.Name;
-            _context.Attach(rtr).State = EntityState.Modified;
+            _context.Attach(rtr).State = state;
 
             try
             {

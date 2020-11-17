@@ -34,7 +34,7 @@ namespace MonevAtr.Pages.RdtrT51
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
         public IEnumerable<SelectListItem> ProgressList { get; set; }
-        
+
         public IEnumerable<SelectListItem> StatusRevisiList { get; set; }
 
         // [BindProperty]
@@ -92,7 +92,7 @@ namespace MonevAtr.Pages.RdtrT51
                 }
             }
 
-            if (!await rtrUtilities.SaveRtr(Atr, User))
+            if (!await rtrUtilities.SaveRtr(Atr, User, EntityState.Modified))
             {
                 return NotFound();
             }
