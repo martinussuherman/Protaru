@@ -14,9 +14,18 @@ namespace MonevAtr
 
         public void CreateUploadFolders()
         {
+            string path = Path.Combine(
+                _environment.WebRootPath,
+                "upload");
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             foreach (string namaRtr in Enum.GetNames(typeof(JenisRtrEnum)))
             {
-                string path = Path.Combine(
+                path = Path.Combine(
                     _environment.WebRootPath,
                     "upload",
                     namaRtr);
