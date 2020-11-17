@@ -130,91 +130,56 @@ namespace MonevAtr.Models
             return new SelectList(list, "Kode", "Nama");
         }
 
-        public async Task<SelectList> TahunRekomendasiGubernur()
-        {
-            return Tahun(
-                await TahunRekomendasiGubernurListAsync(),
-                "Pilih Tahun Surat/BA Rekomendasi Gubernur");
-        }
         public async Task<List<int>> TahunRekomendasiGubernurListAsync()
         {
             return await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 24 || a.KodeDokumen == 58 || a.KodeDokumen == 97)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync();
         }
 
-        public async Task<SelectList> TahunPermohonanPersetujuanSubstansi()
-        {
-            return Tahun(
-                await TahunPermohonanPersetujuanSubstansiListAsync(),
-                "Pilih Tahun Surat/BA Permohonan Persetujuan Substansi Prov/Kab/Kota");
-        }
         public async Task<List<int>> TahunPermohonanPersetujuanSubstansiListAsync()
         {
             return await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 25 || a.KodeDokumen == 59 || a.KodeDokumen == 98)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync();
         }
 
-        public async Task<SelectList> TahunMasukLoket()
-        {
-            return Tahun(
-                await TahunMasukLoketListAsync(),
-                "Pilih Tahun Tanggal Masuk Loket");
-        }
         public async Task<List<int>> TahunMasukLoketListAsync()
         {
             return await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 29 || a.KodeDokumen == 63 || a.KodeDokumen == 99)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync();
         }
 
-        public async Task<SelectList> TahunRapatLintasSektor()
-        {
-            return Tahun(
-                await TahunRapatLintasSektorListAsync(),
-                "Pilih Tahun Rapat Lintas Sektor");
-        }
         public async Task<List<int>> TahunRapatLintasSektorListAsync()
         {
             return await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 30 || a.KodeDokumen == 64 || a.KodeDokumen == 100)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync();
         }
 
-        public async Task<SelectList> TahunPersetujuanSubstansi()
-        {
-            return Tahun(
-                await TahunPersetujuanSubstansiListAsync(),
-                "Pilih Tahun Persetujuan Substansi");
-        }
         public async Task<List<int>> TahunPersetujuanSubstansiListAsync()
         {
             return await _context.AtrDokumen
                 .Where(a => a.KodeDokumen == 31 || a.KodeDokumen == 65 || a.KodeDokumen == 101)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync();
@@ -232,12 +197,10 @@ namespace MonevAtr.Models
                     a.KodeDokumen == 101)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
-                .Where(a => a != 0)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync();
 
-            list.Remove(list.Find(q => q == 1));
             return Tahun(list, "Pilih Tahun");
         }
 
@@ -247,7 +210,6 @@ namespace MonevAtr.Models
                 .ByJenis(jenis)
                 .AsNoTracking()
                 .Select(a => a.Tahun)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync())
@@ -260,7 +222,6 @@ namespace MonevAtr.Models
                 .ByJenis(jenis)
                 .AsNoTracking()
                 .Select(a => a.Tahun)
-                .Where(a => a > 1)
                 .Distinct()
                 .OrderBy(a => a)
                 .ToListAsync())
@@ -550,16 +511,6 @@ namespace MonevAtr.Models
                 "Pilih Tahun Perpres");
         }
 
-        private SelectList Tahun(List<short> listSumber, string pilih)
-        {
-            List<Tahun> list = new List<Tahun>
-            {
-                new Tahun(0, pilih)
-            };
-
-            AddTahunToListHasil(listSumber, list);
-            return new SelectList(list, "Value", "Text");
-        }
         private SelectList Tahun(List<int> listSumber, string pilih)
         {
             List<Tahun> list = new List<Tahun>
@@ -571,13 +522,6 @@ namespace MonevAtr.Models
             return new SelectList(list, "Value", "Text");
         }
 
-        private void AddTahunToListHasil(List<short> listSumber, List<Tahun> listHasil)
-        {
-            foreach (short tahun in listSumber)
-            {
-                listHasil.Add(new Tahun(tahun));
-            }
-        }
         private void AddTahunToListHasil(List<int> listSumber, List<Tahun> listHasil)
         {
             foreach (int tahun in listSumber)
