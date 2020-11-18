@@ -1,0 +1,63 @@
+@page
+@model IndexModel
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Daftar Tugas User";
+    ViewData["PageTitle"] = "Tugas User";
+}
+
+<div class="card-body">
+    <p>
+        <a asp-page="Create" class="btn btn-success">Tambah</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    User
+                </th>
+                <th>
+                    Jumlah
+                </th>
+                <th>
+                    Batas Waktu
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+@foreach (var item in Model.TugasUser) 
+{
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.User
+                </td>
+                <td>
+                    @item.Jumlah
+                </td>
+                <td>
+                    @item.DisplayBatasWaktuForView
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">Ubah</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Hapus</a>
+                </td>
+            </tr>
+}
+
+        </tbody>
+    </table>
+
+    @await Html.PartialAsync("_PagingPartial", Model.TugasUser)
+</div>
