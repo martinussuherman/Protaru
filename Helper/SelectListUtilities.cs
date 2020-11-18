@@ -133,7 +133,12 @@ namespace MonevAtr.Models
         public async Task<List<int>> TahunRekomendasiGubernurListAsync()
         {
             return await _context.AtrDokumen
-                .Where(a => a.KodeDokumen == 24 || a.KodeDokumen == 58 || a.KodeDokumen == 97)
+                .Where(a =>
+                    a.KodeDokumen == 24 ||
+                    a.KodeDokumen == 58 ||
+                    a.KodeDokumen == 97 ||
+                    a.KodeDokumen == 132 ||
+                    a.KodeDokumen == 171)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
@@ -144,7 +149,12 @@ namespace MonevAtr.Models
         public async Task<List<int>> TahunPermohonanPersetujuanSubstansiListAsync()
         {
             return await _context.AtrDokumen
-                .Where(a => a.KodeDokumen == 25 || a.KodeDokumen == 59 || a.KodeDokumen == 98)
+                .Where(a =>
+                    a.KodeDokumen == 25 ||
+                    a.KodeDokumen == 59 ||
+                    a.KodeDokumen == 98 ||
+                    a.KodeDokumen == 133 ||
+                    a.KodeDokumen == 172)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
@@ -155,7 +165,12 @@ namespace MonevAtr.Models
         public async Task<List<int>> TahunMasukLoketListAsync()
         {
             return await _context.AtrDokumen
-                .Where(a => a.KodeDokumen == 29 || a.KodeDokumen == 63 || a.KodeDokumen == 99)
+                .Where(a =>
+                    a.KodeDokumen == 29 ||
+                    a.KodeDokumen == 63 ||
+                    a.KodeDokumen == 99 ||
+                    a.KodeDokumen == 137 ||
+                    a.KodeDokumen == 176)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
@@ -166,7 +181,12 @@ namespace MonevAtr.Models
         public async Task<List<int>> TahunRapatLintasSektorListAsync()
         {
             return await _context.AtrDokumen
-                .Where(a => a.KodeDokumen == 30 || a.KodeDokumen == 64 || a.KodeDokumen == 100)
+                .Where(a =>
+                    a.KodeDokumen == 30 ||
+                    a.KodeDokumen == 64 ||
+                    a.KodeDokumen == 100 ||
+                    a.KodeDokumen == 138 ||
+                    a.KodeDokumen == 177)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
@@ -177,7 +197,12 @@ namespace MonevAtr.Models
         public async Task<List<int>> TahunPersetujuanSubstansiListAsync()
         {
             return await _context.AtrDokumen
-                .Where(a => a.KodeDokumen == 31 || a.KodeDokumen == 65 || a.KodeDokumen == 101)
+                .Where(a =>
+                    a.KodeDokumen == 31 ||
+                    a.KodeDokumen == 65 ||
+                    a.KodeDokumen == 101 ||
+                    a.KodeDokumen == 139 ||
+                    a.KodeDokumen == 178)
                 .AsNoTracking()
                 .Select(a => a.Tanggal.Year)
                 .Distinct()
