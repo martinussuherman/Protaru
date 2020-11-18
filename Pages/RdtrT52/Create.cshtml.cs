@@ -45,24 +45,13 @@ namespace MonevAtr.Pages.RdtrT52
                 JenisRtrEnum.RdtrT52,
                 StatusRevisi.RevisiT52,
                 User);
-
-            // if (!ModelState.IsValid)
-            // {
-            //     return await OnGetAsync(this.KodeReferensiAtr);
-            // }
-
-            _context.Atr.Attach(Atr);
-            _context.Entry(Atr).State = EntityState.Added;
-            await _context.SaveChangesAsync();
+            await rtrUtilities.SaveRtr(Atr, User, EntityState.Added);
             await rtrUtilities.UpdateReferensiRtr(KodeReferensiAtr);
-
             return RedirectToPage("./Index");
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }

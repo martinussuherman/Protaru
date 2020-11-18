@@ -13,7 +13,6 @@ namespace MonevAtr.Pages.RtrwT50
     {
         public CreateModel(PomeloDbContext context)
         {
-            _context = context;
             selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
@@ -33,27 +32,15 @@ namespace MonevAtr.Pages.RtrwT50
         public async Task<IActionResult> OnPostAsync()
         {
             rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                this.Atr,
+                Atr,
                 JenisRtrEnum.RtrwT50,
                 StatusRevisi.RegularT51,
                 User);
-
-            // if (!ModelState.IsValid)
-            // {
-            //     return await OnGetAsync();
-            // }
-
-            _context.Atr.Attach(this.Atr);
-            _context.Entry(this.Atr).State = EntityState.Added;
-            await _context.SaveChangesAsync();
-
+            await rtrUtilities.SaveRtr(Atr, User, EntityState.Added);
             return RedirectToPage("./Index");
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
-        private readonly PomeloDbContext _context;
     }
 }
