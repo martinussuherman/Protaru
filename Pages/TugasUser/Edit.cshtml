@@ -1,0 +1,45 @@
+@page "{id:int?}"
+@model EditModel
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Ubah Tugas User";
+    ViewData["PageTitle"] = "Tugas User";
+}
+
+<div class="card-body">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="TugasUser.Id" />
+
+        <div class="form-group">
+            <label class="control-label">User</label>
+            <select asp-for="TugasUser.User" class ="form-control" asp-items="ViewBag.User"></select>
+            <span asp-validation-for="TugasUser.User" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Jumlah</label>
+            <input type="number" asp-for="TugasUser.Jumlah" class="form-control" />
+            <span asp-validation-for="TugasUser.Jumlah" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Batas Waktu</label>
+            <input 
+                type="date" 
+                name="TugasUser.BatasWaktu" 
+                value="@Model.TugasUser.DisplayBatasWaktu" 
+                class="form-control" />
+            <span asp-validation-for="TugasUser.BatasWaktu" class="text-danger"></span>
+        </div>
+
+        <input type="submit" value="Simpan" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-warning">Kembali</a>
+    </form>
+</div>
+
+@section Scripts 
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
