@@ -24,6 +24,8 @@ namespace MonevAtr.Models
         public virtual DbSet<Provinsi> Provinsi { get; set; }
         public virtual DbSet<Pulau> Pulau { get; set; }
         public virtual DbSet<RtrFasilitasKegiatan> RtrFasilitasKegiatan { get; set; }
+        public virtual DbSet<LogUser> LogUser { get; set; }
+        public virtual DbSet<TugasUser> TugasUser { get; set; }
 
         public virtual DbSet<FilterPencarianRtr> FilterPencarianRtr { get; set; }
         public virtual DbSet<PencarianRtr> PencarianRtr { get; set; }
@@ -492,6 +494,26 @@ namespace MonevAtr.Models
                     .HasConstraintName("FK_kelompok_dokumen_jenis_atr");
             });
 
+            modelBuilder.Entity<LogUser>(entity =>
+            {
+                entity.ToTable("log_user");
+
+                entity.Property(e => e.Id).HasColumnType("int(10) unsigned");
+
+                entity.Property(e => e.JenisKegiatan).HasColumnType("smallint(5) unsigned");
+
+                entity.Property(e => e.User)
+                    .IsRequired()
+                    .HasColumnType("tinytext")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Waktu)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("current_timestamp()");
+            });
+
             modelBuilder.Entity<ProgressAtr>(entity =>
             {
                 entity.HasIndex(e => e.KodeJenisAtr)
@@ -844,6 +866,26 @@ namespace MonevAtr.Models
                 entity.Property(e => e.ProgressAtrBaru).HasColumnType("int(11)");
 
                 entity.Property(e => e.ProgressAtrLama).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<TugasUser>(entity =>
+            {
+                entity.ToTable("tugas_user");
+
+                entity.Property(e => e.Id).HasColumnType("int(10) unsigned");
+
+                entity.Property(e => e.BatasWaktu)
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("'0000-00-00'");
+
+                entity.Property(e => e.Jumlah).HasColumnType("tinyint(3) unsigned");
+
+                entity.Property(e => e.User)
+                    .IsRequired()
+                    .HasColumnType("tinytext")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             OnModelCreatingPartial(modelBuilder);
