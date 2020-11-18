@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Protaru.Models;
 
 namespace MonevAtr.Models
 {
@@ -62,6 +63,8 @@ namespace MonevAtr.Models
                 Kode = kodeReferensiRtr,
                 SudahDirevisi = 1
             };
+
+            // TODO : update forward link
 
             _context.Atr.Attach(referensi);
             _context.Entry(referensi)
@@ -143,6 +146,24 @@ namespace MonevAtr.Models
 
             rtr.PembaruanOleh = user.Identity.Name;
             _context.Attach(rtr).State = state;
+
+            // TODO : backward link
+
+            LogUser log = new LogUser
+            {
+                User = user.Identity.Name,
+            };
+
+            if (state == EntityState.Added)
+            {
+                log.JenisKegiatan = (ushort)rtr.KodeJenisAtr;
+            }
+            else
+            {
+                log.JenisKegiatan = (ushort)(rtr.KodeJenisAtr + 1000);
+            }
+
+            await _context.LogUser.AddAsync(log);
 
             try
             {
