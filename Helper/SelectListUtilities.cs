@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +38,17 @@ namespace MonevAtr.Models
         public IEnumerable<SelectListItem> StatusRevisiItems()
         {
             return _revisiItems.Prepend(_revisiTitle);
+        }
+
+        public async Task<SelectList> Users(IdentityDbContext context)
+        {
+            var list = await context.Users
+                .Select(e => e.UserName)
+                .OrderBy(e => e)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return new SelectList(list);
         }
 
         public async Task<SelectList> UserRoles(IdentityDbContext context)
