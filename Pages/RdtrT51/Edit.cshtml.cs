@@ -62,6 +62,9 @@ namespace MonevAtr.Pages.RdtrT51
 
             ProgressList = await selectListUtilities.ProgressRdtrT51ItemsAsync();
             StatusRevisiList = selectListUtilities.StatusRegularItems();
+            ViewData["ProgressRdtr"] =
+                await selectListUtilities.ProgressRdtrT51();
+            ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRegular;
 
             return Page();
         }
