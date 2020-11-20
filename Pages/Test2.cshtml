@@ -1,0 +1,434 @@
+﻿@page
+
+@using Syncfusion.EJ2.Maps;
+@using Newtonsoft.Json;
+@using MonevAtr.Components;
+
+@model RtrIndexNasionalModel
+
+@{
+	Layout = "_RtrNasionalLayout";
+	ViewData["Title"] = "Kementerian Agraria dan Tata Ruang Nasional";
+	ViewData["ReturnUrl"] = "/RtrIndexNasional";
+}
+
+<div class="container pt-4">
+	@* <ejs-maps
+		id="maps"
+		border="Model.Border"
+		centerPosition="Model.CenterPosition"
+		format="n"
+		load="window.onMapLoad"
+		tooltipDisplayMode="Click"
+		useGroupingSeparator="true"
+		zoomSettings="Model.ZoomSettings">
+
+		<e-maps-layers>
+			<e-maps-layer
+				layerType="Bing"
+				bingMapType="AerialWithLabel"
+				key="@Model.BingKey"
+				markerClusterSettings="Model.ClusterSettings"
+				markerSettings="Model.MarkerSettings">
+			</e-maps-layer>
+		</e-maps-layers>
+	</ejs-maps> *@
+
+	@* <div id="tooltip-template" style="display: none;">
+		<div class="protaru-tooltip p-2">
+			<h5 class="text-center">${Nama}</h5>
+			<a href="${ProgressLink}" class="btn btn-primary btn-block p-0">Progress: ${ProgressCount}</a>
+			<a href="${DoneLink}" class="btn btn-primary btn-block p-0">Perpres: ${DoneCount}</a>
+		</div>
+	</div> *@
+
+    <div class="row">
+      <div class="col-lg-3 pt-5 mt-5 welcome-title">
+        <h1 class="title-status-progress pt-5 mt-4 welcome-title">
+          <strong>RTR <br> NASIONAL</strong>
+        </h1>
+
+        <div class="border-title" style="width: 50%;">
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+		<img src="~/assets/img/bg-header-home-2.jpg" style="max-width: 100%; height: auto;">
+	  </div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6 offset-lg-3">
+			<form method="get"
+				asp-page="/Search/DaerahByProgress"
+				class="form-inline pt-4 pb-1 text-center">
+				<input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+				<ejs-autocomplete
+					autocomplete="true"
+					autofill="true"
+					dataSource="@Model.Provinsi"
+					fields="@Model.FieldSettings"
+					filtering="filtering"
+					id="provinsi-autocomplete"
+					placeholder="Cari berdasarkan nama provinsi"
+					name="provinsi"
+					class="form-control pl-5">
+				</ejs-autocomplete>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6 text-right box-image-rtr">
+			<a asp-page="/RtrIndexNasional">
+				<img src="assets/img/btn-nasional.png" class="btn-image-rtr" alt="RTR Nasional">
+			</a>
+    </div>
+
+    <div class="col-lg-6 text-left box-image-rtr">
+        <a asp-page="/RtrIndexDaerah">
+          <img src="assets/img/btn-daerah.png" class="btn-image-rtr" alt="RTR daerah">
+        </a>
+    </div>
+  </div>
+</div>
+
+<div class="progress-chart-nasional mt-2">
+	<div class="container py-3">
+		<div class="row">
+			@* <div class="col-lg-6 my-5">
+				<a id="rtrwn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR WILAYAH NASIONAL" class="title-progress active-progress">RTRWN</a>
+				<span class="title-progress"></span>
+				<h6 class="text-progress">Lima Tahun Pertama</h6>
+
+				<div id="progress-rtrwn-t51" class="box-graphic">
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyusunanMateriTeknis.png")" 
+							param-Text="@("Penyusunan Materi Teknis")" 
+							param-ProgressClass="@("progress-init")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")"
+							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyepakatanTpak.png")" 
+							param-Text="@("Proses Penyepakatan TPAK")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/HarmonisasiKemenkumham.png")" 
+							param-Text="@("Harmonisasi di Kemenkumham")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PembahasanSekretariat.png")" 
+							param-Text="@("Pembahasan di Sekretariat Kabinet")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("yellow-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenetapanPresiden.png")" 
+							param-Text="@("Proses Penetapan Oleh Presiden")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("purple-bar")" 
+							param-CircleClass="@("circle-light")"
+							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
+				</div>
+			</div>
+
+			<div class="col-lg-6 my-5">
+				<a id="rtrwn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR WILAYAH NASIONAL" class="title-progress active-progress">RTRWN</a>
+				<span class="title-progress"></span>
+				<h6 class="text-progress">Lima Tahun Kedua</h6>
+
+				<div id="progress-rtrwn-t52" class="box-graphic">
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/KajianPeninjauanKembali.png")" 
+							param-Text="@("Kajian Peninjauan Kembali")" 
+							param-ProgressClass="@("progress-init")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")"
+							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyusunanDokumenPk.png")" 
+							param-Text="@("Penyusunan Dokumen PK (Rekomendasi Hasil PK)")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyusunanMateriTeknisHasilPk.png")" 
+							param-Text="@("Penyusunan Materi Teknis Hasil Peninjauan Kembali")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyepakatanTpak.png")" 
+							param-Text="@("Proses Penyepakatan TPAK")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("yellow-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/HarmonisasiKemenkumham.png")" 
+							param-Text="@("Harmonisasi di Kemenkumham")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("purple-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PembahasanSekretariat.png")" 
+							param-Text="@("Pembahasan di Sekretariat Kabinet")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenetapanPresiden.png")" 
+							param-Text="@("Proses Penetapan Oleh Presiden")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" 
+							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
+				</div>
+			</div>
+
+			<div class="col-lg-6 my-5">
+				<a id="rtrpulau-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR PULAU/KEPULAUAN" class="title-progress active-progress">RTR PULAU/KEP</a>
+				<span class="title-progress">|</span>
+				<a id="rtrksn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RTR KAWASAN" class="title-progress">RTR KSN</a>
+				<span class="title-progress">|</span>
+				<a id="rtrkpn-t51-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR KAWASAN PERBATASAN NEGARA" class="title-progress">RDTR KPN</a>
+				<h6 class="text-progress">Lima Tahun Pertama</h6>
+
+				<div id="progress-pulau-t51" class="box-graphic">
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyusunanMateriTeknis.png")" 
+							param-Text="@("Penyusunan Materi Teknis")" 
+							param-ProgressClass="@("progress-init")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")"
+							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyepakatanDaerah.png")" 
+							param-Text="@("Proses Penyepakatan Daerah")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyepakatanTpak.png")" 
+							param-Text="@("Proses Penyepakatan TPAK")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/HarmonisasiKemenkumham.png")" 
+							param-Text="@("Harmonisasi di Kemenkumham")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("yellow-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PembahasanSekretariat.png")" 
+							param-Text="@("Pembahasan di Sekretariat Kabinet")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("purple-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenetapanPresiden.png")" 
+							param-Text="@("Proses Penetapan Oleh Presiden")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")" 
+							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
+				</div>
+			</div>
+
+			<div class="col-lg-6 my-5">
+				<a id="rtrpulau-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR PULAU/KEPULAUAN" class="title-progress active-progress">RTR PULAU/KEP</a>
+				<span class="title-progress">|</span>
+				<a id="rtrksn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RTR KAWASAN" class="title-progress">RTR KSN</a>
+				<span class="title-progress">|</span>
+				<a id="rtrkpn-t52-progress" data-toggle="tooltip" data-placement="bottom" title="RDTR KAWASAN PERBATASAN NEGARA" class="title-progress">RDTR KPN</a>
+				<h6 class="text-progress">Lima Tahun Kedua</h6>
+
+				<div id="progress-pulau-t52" class="box-graphic">
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/KajianPeninjauanKembali.png")" 
+							param-Text="@("Kajian Peninjauan Kembali")" 
+							param-ProgressClass="@("progress-init")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")"
+							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyusunanDokumenPk.png")" 
+							param-Text="@("Proses Penyepakatan Daerah")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyusunanMateriTeknisHasilPk.png")" 
+							param-Text="@("Penyusunan Dokumen PK (Rekomendasi Hasil PK)")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyepakatanDaerah.png")" 
+							param-Text="@("Penyusunan Materi Teknis Hasil Peninjauan Kembali")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("yellow-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenyepakatanTpak.png")" 
+							param-Text="@("Proses Penyepakatan TPAK")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("purple-bar")" 
+							param-CircleClass="@("circle-light")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/HarmonisasiKemenkumham.png")" 
+							param-Text="@("Harmonisasi di Kemenkumham")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("red-bar")" 
+							param-CircleClass="@("circle-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PembahasanSekretariat.png")" 
+							param-Text="@("Pembahasan di Sekretariat Kabinet")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("black-bar")" 
+							param-CircleClass="@("circle-medium-dark")" />
+
+						<component type="typeof(ProgressBar)" 
+							render-mode="Static" 
+							param-ImageUrl="@Url.Content("~/assets/img/PenetapanPresiden.png")" 
+							param-Text="@("Proses Penetapan Oleh Presiden")" 
+							param-ProgressClass="@("progress-general")" 
+							param-BarClass="@("blue-bar")" 
+							param-CircleClass="@("circle-medium")" 
+							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
+				</div>
+			</div> *@
+		</div>
+	</div>
+</div>
+
+<div class="description">
+	<div class="container py-4">
+		<div class="row">
+			<div class="col-lg-6">
+				<h1 class="title-proratu-desc">KEMUDAHAN MENGGUNAKAN PROTARU</h1>
+				<p class="pt-3 protaru-desc">
+					PROTARU menyajikan Progress Penyelesaian Rencana Tata Ruang baik Rencana 
+					Umum maupun Rencana Rinci yang disusun oleh Pemerintah. Berbagai macam 
+					kemudahan pengaksesan serta tata cara mencari data Rencana Tata Ruang
+					dapat anda lihat dalam video tutorial yang sudah kami sediakan.
+				</p>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="text-center">
+							<img src="assets/img/proses-daerah-icon.png">
+						</div>
+
+						<div class="text-center pt-3">
+							<h2 class="font-weight-bold title-step-desc">1. Penyusunan</h2>
+							<p class="text-secondary step-desc">Penyusunan Rencana Tata Ruang</p>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="text-center">
+							<img src="assets/img/pencatatan-icon.png">
+						</div>
+
+						<div class="text-center pt-3">
+							<h2 class="font-weight-bold title-step-desc">2. Pencatatan</h2>
+							<p class="text-secondary step-desc">Aplikasi Protaru mencatat di dalam database sentral</p>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="text-center">
+							<img src="assets/img/sajian-data-icon.png">
+						</div>
+
+						<div class="text-center pt-3">
+							<h2 class="font-weight-bold title-step-desc">3. Sajian Data</h2>
+							<p class="text-secondary step-desc">Khalayak umum dapat melihat sajian data Progress RTR</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			@* <div class="col-lg-6 py-5 yt-box">
+				<div class="videowrapper">
+					<iframe style="border-radius: 10px;" 
+						width="560" 
+						height="315" 
+						src="https://www.youtube.com/embed/lIAobmRepFo" 
+						frameborder="0" 
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+						allowfullscreen>
+					</iframe>
+				</div>
+			</div> *@
+		</div>
+	</div>
+</div>
+
+@section Scripts
+{
+	<script>
+		$("#menu-home").addClass("active");
+
+		function filtering(e) {
+			var predicate = new ej.data.Predicate('Nama', 'startsWith', e.text, true);
+			var query = new ej.data.Query();
+			query = (e.text !== '' && e.value !== '') ? query.where(predicate) : query;
+			e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.Provinsi)), query);
+		}
+	</script>
+
+    @{await Html.RenderPartialAsync("_AjaxProgressScriptPartial");}
+    @* @{await Html.RenderPartialAsync("_AjaxRtrListLinSekSubstansiScriptPartial");} *@
+}
