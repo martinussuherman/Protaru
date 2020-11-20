@@ -1,6 +1,12 @@
 @page
+
+@using Itm.Identity
+@using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
+
 @model IndexModel
+
+@inject SignInManager<ApplicationUser> SignInManager
 
 @section Menu 
 {
@@ -124,49 +130,75 @@
       </div>
     </div>
 
+@{
+  string pageName;
+
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/Perpres";
+}
+
     <div class="row py-5">
       <div class="col-md-2 p-2">
-        <a asp-page="/Rtrwn/Perpres" 
+        <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
           RTRWN
         </a>
       </div>
 
+@{
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrPulauT51/Index" : "/RtrPulau/Perpres";
+}
+
       <div class="col-md-2 p-2">
-        <a asp-page="/RtrPulau/Perpres" 
+        <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
           PULAU/KEP
         </a>
       </div>
 
+@{
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrKsnT51/Index" : "/RtrKsn/Perpres";
+}
+
       <div class="col-md-2 p-2">
-        <a asp-page="/RtrKsn/Perpres" 
+        <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
           KSN
         </a>
       </div>
 
+@{
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrKpnT51/Index" : "/RtrKpn/Perpres";
+}
+
       <div class="col-md-2 p-2">
-        <a asp-page="/RtrKpn/Perpres"  
+        <a asp-page="@pageName"  
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
           KPN
         </a>
       </div>
 
+@{
+  pageName = SignInManager.IsSignedIn(User) ? "/RdtrT51/Index" : "/Rdtr/Perda";
+}
+
       <div class="col-md-2 p-2">
-        <a asp-page="/Rdtr/Perda" 
+        <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
           RDTR
         </a>
       </div>
 
+@{
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrwT51/Index" : "/Rtrw/Perda";
+}
+
       <div class="col-md-2 p-2">
-        <a asp-page="/Rtrw/Perda" 
+        <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
           RTRW
