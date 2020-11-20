@@ -11,16 +11,14 @@
     <input type="hidden" name="Rtr.Perda" value="1" />
 
     <div class="card-body">
-        <div class="col-md-12 form-group">
+        @* <div class="col-md-12 form-group">
             <label class="form-label">Nama RTR</label>
             <input asp-for="Rtr.Nama" class="form-control" />
         </div>
-
         <div class="col-md-12 form-group">
             <label class="form-label">Nomor Perpres</label>
             <input asp-for="Rtr.Nomor" class="form-control" />
-        </div>
-
+        </div> *@
         <div class="col-md-12 form-group">
             <label class="form-label">Tahun Perpres</label>
             <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
