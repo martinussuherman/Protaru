@@ -73,6 +73,11 @@
   opacity: 0.8;
 }
 
+#maps_Markers_Group circle 
+{
+  cursor: pointer;
+}
+
 .e-maps-toolbar > path {
   fill: #fff;
   stroke: #fff;
