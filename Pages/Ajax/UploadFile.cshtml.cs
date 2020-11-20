@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace MonevAtr.Pages.Ajax
 {
     [Authorize]
+    [RequestFormLimits(MultipartBodyLengthLimit = long.MaxValue)]
+    [RequestSizeLimit(long.MaxValue)]
     public class UploadFileModel : PageModel
     {
         public UploadFileModel(IWebHostEnvironment environment)
