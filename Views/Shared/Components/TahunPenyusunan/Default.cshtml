@@ -1,0 +1,15 @@
+@namespace Protaru.ViewComponents.Rtr
+@using System.Collections.Generic;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+
+@model IEnumerable<SelectListItem>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Syncfusion.EJ2
+
+<label class="form-label">Tahun Penyusunan</label>
+<select 
+    name="Rtr.TahunPenyusunan" 
+    class ="form-control" 
+    asp-items="Model">
+</select>
