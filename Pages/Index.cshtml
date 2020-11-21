@@ -130,13 +130,19 @@
       </div>
     </div>
 
+    <div class="text-center w-100">
+      <h1 class="title-proratu-intro pt-4 pb-3">
+        <span>PILIH RTR YANG MAU KAMU CARI</span>
+      </h1>
+    </div>
+
 @{
   string pageName;
 
   pageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/Perpres";
 }
 
-    <div class="row py-5">
+    <div class="row pb-5">
       <div class="col-md-2 p-2">
         <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
@@ -182,6 +188,18 @@
       </div>
 
 @{
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrwT51/Index" : "/Rtrw/Perda";
+}
+
+      <div class="col-md-2 p-2">
+        <a asp-page="@pageName" 
+          class="btn btn-outline-success btn-block py-2 font-weight-bold" 
+          style="border-radius: 14px;">
+          RTRW
+        </a>
+      </div>
+
+@{
   pageName = SignInManager.IsSignedIn(User) ? "/RdtrT51/Index" : "/Rdtr/Perda";
 }
 
@@ -193,17 +211,6 @@
         </a>
       </div>
 
-@{
-  pageName = SignInManager.IsSignedIn(User) ? "/RtrwT51/Index" : "/Rtrw/Perda";
-}
-
-      <div class="col-md-2 p-2">
-        <a asp-page="@pageName" 
-          class="btn btn-outline-success btn-block py-2 font-weight-bold" 
-          style="border-radius: 14px;">
-          RTRW
-        </a>
-      </div>
     </div>
   </div>
 </div>
