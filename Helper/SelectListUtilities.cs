@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,40 @@ namespace MonevAtr.Models
         public IEnumerable<SelectListItem> StatusRevisiItems()
         {
             return _revisiItems.Prepend(_revisiTitle);
+        }
+
+        public IEnumerable<SelectListItem> InputTahunRequired(int value = 0)
+        {
+            return InputTahun(value).Prepend(_yearInputTitleRequired);
+        }
+
+        public IEnumerable<SelectListItem> InputTahunOptional(int value = 0)
+        {
+            return InputTahun(value).Prepend(_yearInputTitleOptional);
+        }
+
+        public async Task<IEnumerable<SelectListItem>> InputProvinsiAsync()
+        {
+            var list = await _context.Provinsi
+                .Where(p => p.Kode > 0)
+                .OrderBy(p => p.Nama)
+                .AsNoTracking()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                })
+                .ToListAsync();
+
+            return list.Prepend(_provinsiTitleRequired);
+        }
+
+        public IEnumerable<SelectListItem> InputKabupatenKota()
+        {
+            return new List<SelectListItem>
+            {
+                _kabupatenKotaTitleRequired
+            };
         }
 
         public async Task<SelectList> Users(IdentityDbContext context)
@@ -394,9 +429,9 @@ namespace MonevAtr.Models
 
         public async Task<SelectList> ProgressRdtrT51()
         {
-            return new SelectList(await ProgressRdtrT51ItemsAsync(), _valueProperty, _textProperty);
+            return new SelectList(await InputProgressRdtrT51Async(), _valueProperty, _textProperty);
         }
-        public async Task<IEnumerable<SelectListItem>> ProgressRdtrT51ItemsAsync()
+        public async Task<IEnumerable<SelectListItem>> InputProgressRdtrT51Async()
         {
             IEnumerable<SelectListItem> temp = (await ProgressRtr(JenisRtrEnum.RdtrT51))
                 .Select(c => new SelectListItem
@@ -410,9 +445,9 @@ namespace MonevAtr.Models
 
         public async Task<SelectList> ProgressRdtrT52()
         {
-            return new SelectList(await ProgressRdtrT52ItemsAsync(), _valueProperty, _textProperty);
+            return new SelectList(await InputProgressRdtrT52Async(), _valueProperty, _textProperty);
         }
-        public async Task<IEnumerable<SelectListItem>> ProgressRdtrT52ItemsAsync()
+        public async Task<IEnumerable<SelectListItem>> InputProgressRdtrT52Async()
         {
             IEnumerable<SelectListItem> temp = (await ProgressRtr(JenisRtrEnum.RdtrT52))
                 .Select(c => new SelectListItem
@@ -614,6 +649,17 @@ namespace MonevAtr.Models
             }
         }
 
+        private IEnumerable<SelectListItem> InputTahun(int value)
+        {
+            return Enumerable
+                .Range(2000, DateTime.Today.Year + 2 - 2000)
+                .Select(c => new SelectListItem
+                {
+                    Value = c.ToString(),
+                    Text = c.ToString(),
+                    Selected = c == value
+                });
+        }
         private static readonly List<StatusRevisi> _regular = new List<StatusRevisi>
         {
             StatusRevisi.RegularT51,
@@ -645,6 +691,19 @@ namespace MonevAtr.Models
             new SelectListItem("Pilih Progress RDTR T5-1", string.Empty);
         private static readonly SelectListItem _rdtrT52ProgressTitle =
             new SelectListItem("Pilih Progress RDTR T5-2", string.Empty);
+        private static readonly SelectListItem _provinsiTitleRequired =
+            new SelectListItem("Pilih Provinsi", string.Empty);
+        private static readonly SelectListItem _provinsiTitleOptional =
+            new SelectListItem("Pilih Provinsi", "0");
+        private static readonly SelectListItem _kabupatenKotaTitleRequired =
+            new SelectListItem("Pilih Kabupaten/Kota", string.Empty);
+        private static readonly SelectListItem _kabupatenKotaTitleOptional =
+            new SelectListItem("Pilih Kabupaten/Kota", "0");
+        private static readonly SelectListItem _yearInputTitleRequired =
+            new SelectListItem("Pilih Tahun", string.Empty);
+        private static readonly SelectListItem _yearInputTitleOptional =
+            new SelectListItem("Pilih Tahun", "0");
+
         private readonly PomeloDbContext _context;
         private const string _textProperty = "Text";
         private const string _valueProperty = "Value";
