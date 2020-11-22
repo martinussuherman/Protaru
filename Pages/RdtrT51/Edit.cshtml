@@ -20,86 +20,85 @@
             <div class="row row-cards card pt-4">
                 <component type="typeof(DetailTitle)"
                     render-mode="Static"
-                    param-Rtr="@Model.Atr" />
+                    param-Rtr="@Model.Rtr" />
 
                 <form method="post">
                     <div class="card-body row">
                         <component type="typeof(EditHidden)"
                             render-mode="Static"
-                            param-Rtr="@Model.Atr" />
+                            param-Rtr="@Model.Rtr" />
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Area of Interest</label>
-                            <input asp-for="Atr.Aoi" class="form-control">
+                            <input asp-for="Rtr.Aoi" class="form-control">
                         </div>
 
                         <div class="col-sm-6 col-md-6 form-group">
                             <label class="form-label">Luas (Ha)</label>
-                            <input asp-for="Atr.Luas" type="number" class="form-control" placeholder="0.000" step="0.001" />
+                            <input asp-for="Rtr.Luas" type="number" class="form-control" placeholder="0.000" step="0.001" />
                         </div>
 
-                        <div class="col-sm-6 col-md-6 form-group">
-                            <label class="form-label">Tahun Penyusunan</label>
-                            <input asp-for="Atr.TahunPenyusunan" class="form-control">
-                        </div>
+                        @await Component.InvokeAsync("TahunPenyusunan", new { tahunPenyusunan = Model.TahunPenyusunan })
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Progress</label>
-                            <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressRdtr"></select>
+                            <select asp-for="Rtr.KodeProgressAtr" class ="form-control" asp-items="Model.ProgressRtr"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Status Revisi</label>
 @*
-@if (Model.Atr.SudahDirevisi == 1)
+@if (Model.Rtr.SudahDirevisi == 1)
 {
-                            <select asp-for="Atr.StatusRevisi" disabled class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
+                            <select asp-for="Rtr.StatusRevisi" disabled class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
 }
 else
 {
-                            <select asp-for="Atr.StatusRevisi" class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
+                            <select asp-for="Rtr.StatusRevisi" class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
 
 }
 *@
-                            <select asp-for="Atr.StatusRevisi" class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
+                            <select asp-for="Rtr.StatusRevisi" class ="form-control" asp-items="Model.StatusRevisi"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Permasalahan</label>
-                            <textarea asp-for="Atr.Permasalahan" class ="form-control"></textarea>
+                            <textarea asp-for="Rtr.Permasalahan" class ="form-control"></textarea>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Tindak Lanjut</label>
-                            <textarea asp-for="Atr.TindakLanjut" class ="form-control"></textarea>
+                            <textarea asp-for="Rtr.TindakLanjut" class ="form-control"></textarea>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Keterangan</label>
-                            <textarea asp-for="Atr.Keterangan" class ="form-control"></textarea>
+                            <textarea asp-for="Rtr.Keterangan" class ="form-control"></textarea>
                         </div>
                     </div>
 
                     <component type="typeof(EditKelompokDokumen)"
                         render-mode="Static"
-                        param-Rtr="@Model.Atr"
+                        param-Rtr="@Model.Rtr"
                         param-KelompokDokumen="@Model.KelompokDokumenList"
                         param-Url="@Url" />
 
                     <component type="typeof(FasilitasKegiatan)"
                         render-mode="Static"
                         param-ListFasilitas="@Model.FasilitasList" />
+                    
+                    @* @await Component.InvokeAsync(nameof(FasilitasKegiatan), new { fasilitasList = Model.FasilitasList }) *@
 
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a asp-page="/Atr/Delete" asp-route-id="@Model.Atr.Kode" class="btn btn-primary">Hapus</a>
+                        <a asp-page="/Atr/Delete" asp-route-id="@Model.Rtr.Kode" class="btn btn-primary">Hapus</a>
                         <a asp-page="./Index" class="btn btn-primary">Kembali</a>
                     </div>
                 </form>
 
                 <component type="typeof(LastUpdate)"
                     render-mode="Static"
-                    param-Rtr="@Model.Atr" />
+                    param-Rtr="@Model.Rtr" />
             </div>
         </div>
     </div>

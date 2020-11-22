@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -13,40 +15,35 @@ namespace MonevAtr.Pages.RtrKsnT51
     {
         public CreateModel(PomeloDbContext context)
         {
-            _context = context;
             selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
         [BindProperty]
-        public Models.Atr Atr { get; set; } = new Models.Atr();
+        public Models.Atr Rtr { get; set; } = new Models.Atr();
+
+        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             ViewData["Kawasan"] = await selectListUtilities.Kawasan();
             ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrKsnT51();
+            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                Atr,
+                Rtr,
                 JenisRtrEnum.RtrKsnT51,
                 StatusRevisi.Kosong,
                 User);
-
-            _context.Atr.Attach(Atr);
-            _context.Entry(Atr).State = EntityState.Added;
-            await _context.SaveChangesAsync();
-
+            await rtrUtilities.SaveRtr(Rtr, User, EntityState.Added);
             return RedirectToPage("./Index");
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
-        private readonly PomeloDbContext _context;
     }
 }

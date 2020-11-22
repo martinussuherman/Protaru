@@ -25,40 +25,42 @@
                     <div class="card-body">
                         <div class="col-md-12 form-group">
                             <label class="form-label">Provinsi</label>
-                            <select id="provinsi" asp-for="Atr.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
+                            <select id="provinsi" asp-for="Rtr.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Kabupaten/Kota</label>
-                            <select id="kabupaten-kota" asp-for="Atr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
+                            <select id="kabupaten-kota" asp-for="Rtr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Progress</label>
-                            <select asp-for="Atr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressAtr"></select>
+                            <select asp-for="Rtr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressRtr"></select>
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Nama RTR</label>
-                            <input asp-for="Atr.Nama" class="form-control">
+                            <input asp-for="Rtr.Nama" class="form-control">
                         </div>
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Area of Interest</label>
-                            <input asp-for="Atr.Aoi" class="form-control">
+                            <input asp-for="Rtr.Aoi" class="form-control">
                         </div>
 
                         <div class="col-md-12">
                             <div class="form-row">
                                 <div class="col-sm-6 col-md-6 form-group">
                                     <label class="form-label">Luas (Ha)</label>
-                                    <input asp-for="Atr.Luas" type="number" class="form-control" placeholder="0.000" step="0.001" />
+                                    <input 
+                                        asp-for="Rtr.Luas" 
+                                        type="number" 
+                                        class="form-control" 
+                                        placeholder="0.000" 
+                                        step="0.001" />
                                 </div>
 
-                                <div class="col-sm-6 col-md-6 form-group">
-                                    <label class="form-label">Tahun Penyusunan</label>
-                                    <input asp-for="Atr.TahunPenyusunan" class="form-control">
-                                </div>
+                                @await Component.InvokeAsync("TahunPenyusunan", new { tahunPenyusunan = Model.TahunPenyusunan })
                             </div>
                         </div>
 					</div>

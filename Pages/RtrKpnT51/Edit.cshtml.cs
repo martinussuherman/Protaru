@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -21,19 +22,21 @@ namespace MonevAtr.Pages.RtrKpnT51
         }
 
         [BindProperty]
-        public Models.Atr Atr { get; set; }
+        public Models.Atr Rtr { get; set; }
 
         [BindProperty]
         public List<AtrDokumen> Dokumen { get; set; }
 
         public List<Models.KelompokDokumen> KelompokDokumenList { get; set; }
 
+        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
                 (int)JenisRtrEnum.RtrKpnT51);
 
-            Atr = await _context.Atr
+            Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
                 .Include(a => a.KabupatenKota)
@@ -42,12 +45,13 @@ namespace MonevAtr.Pages.RtrKpnT51
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
-                Atr,
+                Rtr,
                 id,
                 KelompokDokumenList);
 
             ViewData["Progress"] = await selectListUtilities.ProgressRtrKpnT51();
             ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRegular;
+            TahunPenyusunan = selectListUtilities.InputTahunRequired(Rtr.TahunPenyusunan);
             return Page();
         }
 
@@ -55,7 +59,7 @@ namespace MonevAtr.Pages.RtrKpnT51
         {
             // if (!ModelState.IsValid)
             // {
-            //     return await OnGetAsync(this.Atr.Kode);
+            //     return await OnGetAsync(this.Rtr.Kode);
             // }
 
             List<Models.Dokumen> dokumenList = await _context.Dokumen
@@ -63,18 +67,18 @@ namespace MonevAtr.Pages.RtrKpnT51
 
             foreach (AtrDokumen dokumen in Dokumen)
             {
-                if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
+                if (!await rtrUtilities.SaveRtrDokumen(Rtr, dokumen, dokumenList))
                 {
                     return NotFound();
                 }
             }
 
-            if (!await rtrUtilities.SaveRtr(Atr, User, EntityState.Modified))
+            if (!await rtrUtilities.SaveRtr(Rtr, User, EntityState.Modified))
             {
                 return NotFound();
             }
 
-            return await OnGetAsync(Atr.Kode);
+            return await OnGetAsync(Rtr.Kode);
         }
 
         private readonly RtrUtilities rtrUtilities;

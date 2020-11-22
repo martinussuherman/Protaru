@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -20,7 +21,7 @@ namespace MonevAtr.Pages.RtrwT51
         }
 
         [BindProperty]
-        public Models.Atr Atr { get; set; }
+        public Models.Atr Rtr { get; set; }
 
         [BindProperty]
         public List<AtrDokumen> Dokumen { get; set; }
@@ -32,13 +33,15 @@ namespace MonevAtr.Pages.RtrwT51
 
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
+        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
                 (int)JenisRtrEnum.RtrwT51);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
 
-            Atr = await _context.Atr
+            Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
                 .Include(a => a.KabupatenKota)
@@ -48,13 +51,14 @@ namespace MonevAtr.Pages.RtrwT51
                 .FirstOrDefaultAsync(m => m.Kode == id);
 
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
-                Atr,
+                Rtr,
                 id,
                 KelompokDokumenList);
-            await rtrUtilities.MergeRtrFasilitasKegiatan(Atr, id, FasilitasList);
+            await rtrUtilities.MergeRtrFasilitasKegiatan(Rtr, id, FasilitasList);
 
             ViewData["Progress"] = await selectListUtilities.ProgressRtrwT51();
             ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRegular;
+            TahunPenyusunan = selectListUtilities.InputTahunRequired(Rtr.TahunPenyusunan);
             return Page();
         }
 
@@ -70,7 +74,7 @@ namespace MonevAtr.Pages.RtrwT51
 
             foreach (AtrDokumen dokumen in Dokumen)
             {
-                if (!await rtrUtilities.SaveRtrDokumen(Atr, dokumen, dokumenList))
+                if (!await rtrUtilities.SaveRtrDokumen(Rtr, dokumen, dokumenList))
                 {
                     return NotFound();
                 }
@@ -78,18 +82,18 @@ namespace MonevAtr.Pages.RtrwT51
 
             foreach (RtrFasilitasKegiatan fasilitas in FasKeg)
             {
-                if (!await rtrUtilities.SaveRtrFasilitasKegiatan(Atr, fasilitas))
+                if (!await rtrUtilities.SaveRtrFasilitasKegiatan(Rtr, fasilitas))
                 {
                     return NotFound();
                 }
             }
 
-            if (!await rtrUtilities.SaveRtr(Atr, User, EntityState.Modified))
+            if (!await rtrUtilities.SaveRtr(Rtr, User, EntityState.Modified))
             {
                 return NotFound();
             }
 
-            return await OnGetAsync(Atr.Kode);
+            return await OnGetAsync(Rtr.Kode);
         }
 
         private readonly RtrUtilities rtrUtilities;

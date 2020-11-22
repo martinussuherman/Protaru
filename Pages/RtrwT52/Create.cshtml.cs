@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -19,16 +21,18 @@ namespace MonevAtr.Pages.RtrwT52
         }
 
         [BindProperty]
-        public Models.Atr Atr { get; set; }
+        public Models.Atr Rtr { get; set; }
 
         [BindProperty]
         public int KodeReferensiAtr { get; set; }
+
+public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KodeReferensiAtr = (int)id;
 
-            Atr = await _context.Atr
+            Rtr = await _context.Atr
                 .Include(a => a.Provinsi)
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.KabupatenKota.Provinsi)
@@ -42,11 +46,11 @@ namespace MonevAtr.Pages.RtrwT52
         public async Task<IActionResult> OnPostAsync()
         {
             rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                Atr,
+                Rtr,
                 JenisRtrEnum.RtrwT52,
                 StatusRevisi.RevisiT52,
                 User);
-            await rtrUtilities.SaveRtr(Atr, User, EntityState.Added);
+            await rtrUtilities.SaveRtr(Rtr, User, EntityState.Added);
             await rtrUtilities.UpdateReferensiRtr(KodeReferensiAtr);
             return RedirectToPage("./Index");
         }

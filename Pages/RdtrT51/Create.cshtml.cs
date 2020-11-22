@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -18,24 +20,33 @@ namespace MonevAtr.Pages.RdtrT51
         }
 
         [BindProperty]
-        public Models.Atr Atr { get; set; } = new Models.Atr();
+        public Models.Atr Rtr { get; set; } = new Models.Atr();
+
+        public IEnumerable<SelectListItem> Provinsi { get; set; }
+
+        public IEnumerable<SelectListItem> KabupatenKota { get; set; }
+
+        public IEnumerable<SelectListItem> ProgressRtr { get; set; }
+
+        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["ProgressAtr"] = await selectListUtilities.ProgressRdtrT51();
-            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
-            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
+            Provinsi = await selectListUtilities.InputProvinsiAsync();
+            KabupatenKota = selectListUtilities.InputKabupatenKota();
+            ProgressRtr = await selectListUtilities.InputProgressRdtrT51Async();
+            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                Atr,
+                Rtr,
                 JenisRtrEnum.RdtrT51,
                 StatusRevisi.Kosong,
                 User);
-            await rtrUtilities.SaveRtr(Atr, User, EntityState.Added);
+            await rtrUtilities.SaveRtr(Rtr, User, EntityState.Added);
             return RedirectToPage("./Index");
         }
 
