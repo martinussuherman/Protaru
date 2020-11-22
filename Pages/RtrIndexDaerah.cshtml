@@ -1,10 +1,13 @@
 ﻿@page
 
-@using Syncfusion.EJ2.Maps;
-@using Newtonsoft.Json;
-@using MonevAtr.Components;
+@using Itm.Identity
+@using Microsoft.AspNetCore.Identity
+@using Newtonsoft.Json
+@using Syncfusion.EJ2.Maps
 
 @model RtrIndexDaerahModel
+
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
 	Layout = "_RtrDaerahLayout";
@@ -63,19 +66,25 @@
 		</div>
 	</div>
 
-	@* <div class="row">
-		<div class="col-lg-6 text-right box-image-rtr">
-			<a asp-page="/RtrIndexNasional">
+@{
+  string pageName;
+
+  pageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/Perpres";
+}
+
+	<div class="row">
+		<div class="col-lg-6 offset-lg-3 text-center box-image-rtr">
+			<a asp-page="@pageName">
 				<img src="assets/img/btn-nasional.png" class="btn-image-rtr" alt="RTR Nasional">
 			</a>
-    </div>
+    	</div>
 
-    <div class="col-lg-6 text-left box-image-rtr">
-        <a asp-page="/RtrIndexDaerah">
-          <img src="assets/img/btn-daerah.png" class="btn-image-rtr" alt="RTR daerah">
-        </a>
-    </div> *@
-  </div>
+		@* <div class="col-lg-6 text-left box-image-rtr">
+			<a asp-page="/RtrIndexDaerah">
+			<img src="assets/img/btn-daerah.png" class="btn-image-rtr" alt="RTR daerah">
+			</a>
+		</div> *@
+  	</div>
 </div>
 
 <div class="progress-chart mt-2">
@@ -89,7 +98,9 @@
 				<div class="border-title"></div>
 
 				<div class="text-left pt-4">
-					<p class="protaru-desc">laporan hasil-hasil pembinaan penyelenggaraan penataan ruang yang telah dilakukan di provinsi, kabupaten, dan kota Ruang Daerah yang dilakukan oleh Pemerintah di provinsi, kabupaten, dan kota</p>
+					<p class="protaru-desc">Rencana Detail Tata Ruang (RDTR) adalah rencana secara terperinci tentang tata ruang wilayah kabupaten/kota yang dilengkapi dengan peraturan zonasi kabupaten/kota.</p>
+					<p class="protaru-desc">Rencana Tata Ruang Wilayah (RTRW) Provinsi adalah RTR yang bersifat umum dari wilayah provinsi, mengacu pada penjabaran dari RTRWN, pedoman bidang penataan ruang, serta rencana pembangunan jangka panjang daerah.</p>
+					<p class="protaru-desc">Berikut adalah laporan hasil-hasil pembinaan penyelenggaraan penataan ruang yang telah dilakukan di provinsi, kabupaten, dan kota Ruang Daerah yang dilakukan oleh Pemerintah di provinsi, kabupaten, dan kota</p>
 					<p class="protaru-desc">Disajikan di dalam sebuah tampilan status progress yang dibagi menjadi dua tahapan yaitu lima tahun pertama dan lima tahun kedua.</p>
 				</div>
 
