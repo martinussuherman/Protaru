@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -13,46 +15,36 @@ namespace MonevAtr.Pages.RtrKpnT51
     {
         public CreateModel(PomeloDbContext context)
         {
-            _context = context;
             selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
         [BindProperty]
-        public Models.Atr Atr { get; set; } = new Models.Atr();
+        public Models.Atr Rtr { get; set; } = new Models.Atr();
+
+        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrKpnT51();
             ViewData["Provinsi"] = await selectListUtilities.Provinsi();
             ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
+            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                this.Atr,
+                Rtr,
                 JenisRtrEnum.RtrKpnT51,
                 StatusRevisi.Kosong,
                 User);
-
-            // if (!ModelState.IsValid)
-            // {
-            //     return await OnGetAsync();
-            // }
-
-            _context.Atr.Attach(this.Atr);
-            _context.Entry(this.Atr).State = EntityState.Added;
-            await _context.SaveChangesAsync();
-
+            await rtrUtilities.SaveRtr(Rtr, User, EntityState.Added);
             return RedirectToPage("./Index");
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly SelectListUtilities selectListUtilities;
-
-        private readonly PomeloDbContext _context;
     }
 }
