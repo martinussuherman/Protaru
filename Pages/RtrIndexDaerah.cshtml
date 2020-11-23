@@ -66,25 +66,19 @@
 		</div>
 	</div>
 
-@{
-  string pageName;
-
-  pageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/Perpres";
-}
-
-	<div class="row">
+	@* <div class="row">
 		<div class="col-lg-6 offset-lg-3 text-center box-image-rtr">
 			<a asp-page="@pageName">
 				<img src="assets/img/btn-nasional.png" class="btn-image-rtr" alt="RTR Nasional">
 			</a>
     	</div>
 
-		@* <div class="col-lg-6 text-left box-image-rtr">
+		<div class="col-lg-6 text-left box-image-rtr">
 			<a asp-page="/RtrIndexDaerah">
 			<img src="assets/img/btn-daerah.png" class="btn-image-rtr" alt="RTR daerah">
 			</a>
-		</div> *@
-  	</div>
+		</div>
+  	</div> *@
 </div>
 
 <div class="progress-chart mt-2">
