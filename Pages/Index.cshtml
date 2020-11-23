@@ -143,7 +143,7 @@
 }
 
     <div class="row pb-5">
-      <div class="col-md-2 p-2">
+      <div class="col-md-4 p-2">
         <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
@@ -157,7 +157,7 @@
   pageName = SignInManager.IsSignedIn(User) ? "/RtrPulauT51/Index" : "/RtrPulau/Perpres";
 }
 
-      <div class="col-md-2 p-2">
+      <div class="col-md-4 p-2">
         <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
@@ -171,7 +171,7 @@
   pageName = SignInManager.IsSignedIn(User) ? "/RtrKsnT51/Index" : "/RtrKsn/Perpres";
 }
 
-      <div class="col-md-2 p-2">
+      <div class="col-md-4 p-2">
         <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
@@ -180,12 +180,13 @@
           <p class="font-weight-normal rtr-button-info">adalah wilayah yang penataan ruangnya diprioritaskan karena mempunyai pengaruh sangat penting secara nasional terhadap beragam aspek penting.</p>
         </a>
       </div>
-
+    </div>
 @{
   pageName = SignInManager.IsSignedIn(User) ? "/RtrKpnT51/Index" : "/RtrKpn/Perpres";
 }
 
-      <div class="col-md-2 p-2">
+    <div class="row pb-5">
+      <div class="col-md-4 p-2">
         <a asp-page="@pageName"  
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
@@ -199,7 +200,7 @@
   pageName = SignInManager.IsSignedIn(User) ? "/RtrwT51/Index" : "/Rtrw/Perda";
 }
 
-      <div class="col-md-2 p-2">
+      <div class="col-md-4 p-2">
         <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
@@ -213,7 +214,7 @@
   pageName = SignInManager.IsSignedIn(User) ? "/RdtrT51/Index" : "/Rdtr/Perda";
 }
 
-      <div class="col-md-2 p-2">
+      <div class="col-md-4 p-2">
         <a asp-page="@pageName" 
           class="btn btn-outline-success btn-block py-2 font-weight-bold" 
           style="border-radius: 14px;">
