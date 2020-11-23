@@ -54,16 +54,7 @@
 
                         <div class="col-md-12">
                             <div class="form-row">
-                                <div class="col-sm-6 col-md-6 form-group">
-                                    <label class="form-label">Luas (Ha)</label>
-                                    <input 
-                                        asp-for="Rtr.Luas" 
-                                        type="number" 
-                                        class="form-control" 
-                                        placeholder="0.000" 
-                                        step="0.001" />
-                                </div>
-
+                                @await Component.InvokeAsync("Luas", new { luas = Model.Rtr.Luas })
                                 @await Component.InvokeAsync("TahunPenyusunan", new { tahunPenyusunan = Model.TahunPenyusunan })
                             </div>
                         </div>
