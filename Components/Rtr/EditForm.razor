@@ -10,7 +10,7 @@
             <label class="form-label">Area of Interest</label>
             <input 
                 type="text" 
-                name="Atr.Aoi" 
+                name="Rtr.Aoi" 
                 value="@Rtr.Aoi" 
                 class="form-control" />
         </div>
@@ -19,7 +19,7 @@
             <label class="form-label">Luas (Ha)</label>
             <input 
                 type="number" 
-                name="Atr.Luas" 
+                name="Rtr.Luas" 
                 value="@Rtr.Luas" 
                 class="form-control" 
                 placeholder="0.000" 
@@ -30,7 +30,7 @@
             <label class="form-label">Tahun Penyusunan</label>
             <input 
                 type="text" 
-                name="Atr.TahunPenyusunan" 
+                name="Rtr.TahunPenyusunan" 
                 value="@Rtr.TahunPenyusunan" 
                 class="form-control">
         </div>
@@ -38,7 +38,7 @@
         <div class="col-md-12 form-group">
             <label class="form-label">Progress</label>
             <SelectList
-                FieldName="@("Atr.KodeProgressAtr")"
+                FieldName="@("Rtr.KodeProgressAtr")"
                 ItemList="@ProgressList">
             </SelectList>
         </div>
@@ -46,12 +46,12 @@
         <div class="col-md-12 form-group">
             <label class="form-label">Status Revisi</label>
             <SelectList
-                FieldName="@("Atr.StatusRevisi")"
+                FieldName="@("Rtr.StatusRevisi")"
                 ItemList="@StatusRevisiList">
             </SelectList>
 
             @* <SelectList
-                FieldName="@("Atr.StatusRevisi")"
+                FieldName="@("Rtr.StatusRevisi")"
                 Items="@StatusRevisiList"
                 disabled="@SudahDirevisi">
             </SelectList> *@
@@ -60,7 +60,7 @@
         <div class="col-md-12 form-group">
             <label class="form-label">Permasalahan</label>
             <textarea 
-                name="Atr.Permasalahan" 
+                name="Rtr.Permasalahan" 
                 class ="form-control">
                 @Rtr.Permasalahan
             </textarea>
@@ -69,7 +69,7 @@
         <div class="col-md-12 form-group">
             <label class="form-label">Tindak Lanjut</label>
             <textarea 
-                name="Atr.TindakLanjut" 
+                name="Rtr.TindakLanjut" 
                 class ="form-control">
                 @Rtr.TindakLanjut
             </textarea>
@@ -78,7 +78,7 @@
         <div class="col-md-12 form-group">
             <label class="form-label">Keterangan</label>
             <textarea 
-                name="Atr.Keterangan" 
+                name="Rtr.Keterangan" 
                 class ="form-control">
                 @Rtr.Keterangan
             </textarea>
