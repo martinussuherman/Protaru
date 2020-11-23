@@ -64,11 +64,6 @@ namespace MonevAtr.Pages.RtrwT51
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return await OnGetAsync(this.Atr.Kode);
-            // }
-
             List<Models.Dokumen> dokumenList = await _context.Dokumen
                 .ToListAsync();
 
