@@ -51,30 +51,6 @@ namespace MonevAtr.Models
             return InputTahun(value).Prepend(_yearInputTitleOptional);
         }
 
-        public async Task<IEnumerable<SelectListItem>> InputProvinsiAsync()
-        {
-            var list = await _context.Provinsi
-                .Where(p => p.Kode > 0)
-                .OrderBy(p => p.Nama)
-                .AsNoTracking()
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Kode.ToString(),
-                    Text = c.Nama
-                })
-                .ToListAsync();
-
-            return list.Prepend(_provinsiTitleRequired);
-        }
-
-        public IEnumerable<SelectListItem> InputKabupatenKota()
-        {
-            return new List<SelectListItem>
-            {
-                _kabupatenKotaTitleRequired
-            };
-        }
-
         public async Task<SelectList> Users(IdentityDbContext context)
         {
             var list = await context.Users
@@ -96,63 +72,73 @@ namespace MonevAtr.Models
             return new SelectList(list, "Name", "Name");
         }
 
-        public async Task<SelectList> Provinsi()
+        public async Task<IEnumerable<SelectListItem>> ProvinsiAsync()
         {
-            IList<Provinsi> list = await _context.Provinsi
+            List<SelectListItem> list = await _context.Provinsi
                 .Where(p => p.Kode > 0)
                 .OrderBy(p => p.Nama)
                 .AsNoTracking()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                })
                 .ToListAsync();
 
-            Provinsi pilih = new Provinsi
+            return list.Prepend(_provinsiTitle);
+        }
+        public async Task<SelectList> Provinsi()
+        {
+            return new SelectList(await ProvinsiAsync(), _valueProperty, _textProperty);
+        }
+
+        public async Task<IEnumerable<SelectListItem>> KabupatenKotaAsync(int kodeProvinsi = -1)
+        {
+            if (kodeProvinsi == -1)
             {
-                Kode = 0,
-                Nama = "Pilih Provinsi"
-            };
+                return new List<SelectListItem>
+                {
+                    _kabupatenKotaTitle
+                };
+            }
 
-            list.Insert(0, pilih);
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> KabupatenKota()
-        {
-            IList<KabupatenKota> list = await _context.KabupatenKota
-                .OrderBy(k => k.Nama)
-                .AsNoTracking()
-                .ToListAsync();
-
-            InsertPilihKabupatenKota(list);
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> KabupatenKota(int kodeProvinsi)
-        {
-            IList<KabupatenKota> list = await _context.KabupatenKota
+            List<SelectListItem> list = await _context.KabupatenKota
                 .Where(k => k.KodeProvinsi == kodeProvinsi)
                 .OrderBy(k => k.Nama)
                 .AsNoTracking()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                })
                 .ToListAsync();
 
-            InsertPilihKabupatenKota(list);
-            return new SelectList(list, "Kode", "Nama");
+            return list.Prepend(_kabupatenKotaTitle);
+
+        }
+        public async Task<SelectList> KabupatenKota(int kodeProvinsi)
+        {
+            return new SelectList(await KabupatenKotaAsync(kodeProvinsi), _valueProperty, _textProperty);
         }
 
-        public async Task<SelectList> Pulau()
+        public async Task<IEnumerable<SelectListItem>> PulauAsync()
         {
-            IList<Pulau> list = await _context.Pulau
+            List<SelectListItem> list = await _context.Pulau
                 .Where(p => p.Kode > 0)
                 .OrderBy(p => p.Nama)
                 .AsNoTracking()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                })
                 .ToListAsync();
 
-            Pulau pilih = new Pulau
-            {
-                Kode = 0,
-                Nama = "Pilih Pulau"
-            };
-
-            list.Insert(0, pilih);
-            return new SelectList(list, "Kode", "Nama");
+            return list.Prepend(_pulauTitle);
+        }
+        public async Task<SelectList> Pulau()
+        {
+            return new SelectList(await PulauAsync(), _valueProperty, _textProperty);
         }
 
         public async Task<SelectList> Kawasan()
@@ -691,14 +677,12 @@ namespace MonevAtr.Models
             new SelectListItem("Pilih Progress RDTR T5-1", string.Empty);
         private static readonly SelectListItem _rdtrT52ProgressTitle =
             new SelectListItem("Pilih Progress RDTR T5-2", string.Empty);
-        private static readonly SelectListItem _provinsiTitleRequired =
+        private static readonly SelectListItem _provinsiTitle =
             new SelectListItem("Pilih Provinsi", string.Empty);
-        private static readonly SelectListItem _provinsiTitleOptional =
-            new SelectListItem("Pilih Provinsi", "0");
-        private static readonly SelectListItem _kabupatenKotaTitleRequired =
+        private static readonly SelectListItem _kabupatenKotaTitle =
             new SelectListItem("Pilih Kabupaten/Kota", string.Empty);
-        private static readonly SelectListItem _kabupatenKotaTitleOptional =
-            new SelectListItem("Pilih Kabupaten/Kota", "0");
+        private static readonly SelectListItem _pulauTitle =
+            new SelectListItem("Pilih Pulau", string.Empty);
         private static readonly SelectListItem _yearInputTitleRequired =
             new SelectListItem("Pilih Tahun", string.Empty);
         private static readonly SelectListItem _yearInputTitleOptional =
