@@ -32,8 +32,8 @@ namespace MonevAtr.Pages.RdtrT51
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Provinsi = await selectListUtilities.InputProvinsiAsync();
-            KabupatenKota = selectListUtilities.InputKabupatenKota();
+            Provinsi = await selectListUtilities.ProvinsiAsync();
+            KabupatenKota = await selectListUtilities.KabupatenKotaAsync();
             ProgressRtr = await selectListUtilities.InputProgressRdtrT51Async();
             TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
