@@ -26,19 +26,32 @@ namespace MonevAtr.Models
             }
         }
 
-        public SelectList StatusRevisiRtrRegular =>
-            new SelectList(StatusRegularItems(), _valueProperty, _textProperty);
-
-        public SelectList StatusRevisiRtrRevisi =>
-            new SelectList(StatusRevisiItems(), _valueProperty, _textProperty);
-
-        public IEnumerable<SelectListItem> StatusRegularItems()
+        public IEnumerable<SelectListItem> StatusRegularItems(int? value = 0)
         {
-            return _regularItems.Prepend(_regularTitle);
+            int val = value == null ? 0 : value.Value;
+            IEnumerable<SelectListItem> temp = _regular
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama,
+                    Selected = c.Kode == val
+                });
+
+            return temp.Prepend(_regularTitle);
         }
-        public IEnumerable<SelectListItem> StatusRevisiItems()
+
+        public IEnumerable<SelectListItem> StatusRevisiItems(int? value = 0)
         {
-            return _revisiItems.Prepend(_revisiTitle);
+            int val = value == null ? 0 : value.Value;
+            IEnumerable<SelectListItem> temp = _revisi
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama,
+                    Selected = c.Kode == val
+                });
+
+            return temp.Prepend(_revisiTitle);
         }
 
         public IEnumerable<SelectListItem> InputTahunRequired(int value = 0)
@@ -413,160 +426,41 @@ namespace MonevAtr.Models
             return new SelectList(list, "Kode", "Nama");
         }
 
-        public async Task<SelectList> ProgressRdtrT51()
+        public async Task<IEnumerable<SelectListItem>> ProgressRtrAsync(
+            int jenisRtr,
+            int? value = 0)
         {
-            return new SelectList(await InputProgressRdtrT51Async(), _valueProperty, _textProperty);
-        }
-        public async Task<IEnumerable<SelectListItem>> InputProgressRdtrT51Async()
-        {
-            IEnumerable<SelectListItem> temp = (await ProgressRtr(JenisRtrEnum.RdtrT51))
+            int val = value == null ? 0 : value.Value;
+            IEnumerable<SelectListItem> temp = (await ProgressRtrAsync(jenisRtr))
                 .Select(c => new SelectListItem
                 {
                     Value = c.Kode.ToString(),
-                    Text = c.Nama
+                    Text = c.Nama,
+                    Selected = c.Kode == val
                 });
 
-            return temp.Prepend(_rdtrT51ProgressTitle);
+            return temp.Prepend(_rtrProgressTitle);
         }
-
-        public async Task<SelectList> ProgressRdtrT52()
-        {
-            return new SelectList(await InputProgressRdtrT52Async(), _valueProperty, _textProperty);
-        }
-        public async Task<IEnumerable<SelectListItem>> InputProgressRdtrT52Async()
-        {
-            IEnumerable<SelectListItem> temp = (await ProgressRtr(JenisRtrEnum.RdtrT52))
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Kode.ToString(),
-                    Text = c.Nama
-                });
-
-            return temp.Prepend(_rdtrT52ProgressTitle);
-        }
-
-        public async Task<SelectList> ProgressRtrwT50()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrwT50);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-0"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrwT51()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrwT51);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-1"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrwT52()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrwT52);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRW T5-2"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrPulauT51()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrPulauT51);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR Pulau/Kepulauan T5-1"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrPulauT52()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrPulauT52);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR Pulau/Kepulauan T5-2"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrKsnT51()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrKsnT51);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KSN T5-1"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrKsnT52()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrKsnT52);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KSN T5-2"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrwnT51()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrwnT51);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRWN T5-1"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrwnT52()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrwnT52);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTRWN T5-2"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrKpnT51()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrKpnT51);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KPN T5-1"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        public async Task<SelectList> ProgressRtrKpnT52()
-        {
-            IList<ProgressAtr> list = await ProgressRtr(
-                JenisRtrEnum.RtrKpnT52);
-
-            list.Insert(0, new ProgressAtr(0, "Pilih Progress RTR KPN T5-2"));
-            return new SelectList(list, "Kode", "Nama");
-        }
-
-        private async Task<IList<ProgressAtr>> ProgressRtr(JenisRtrEnum jenisRtr)
+        private async Task<IList<ProgressAtr>> ProgressRtrAsync(int jenisRtr)
         {
             return await _context.ProgressAtr
-                .Where(p => p.KodeJenisAtr == (int)jenisRtr)
+                .Where(p => p.KodeJenisAtr == jenisRtr)
                 .OrderBy(p => p.Nomor)
                 .AsNoTracking()
                 .ToListAsync();
         }
-
         private async Task<SelectList> TahunPerda(JenisRtrEnum jenis)
         {
             return Tahun(
                 await TahunPerdaAsync(jenis),
                 "Pilih Tahun Perda");
         }
-
         private async Task<SelectList> TahunPerpres(JenisRtrEnum jenis)
         {
             return Tahun(
                 await TahunPerpresAsync(jenis),
                 "Pilih Tahun Perpres");
         }
-
         private SelectList Tahun(List<int> listSumber, string pilih)
         {
             List<Tahun> list = new List<Tahun>
@@ -577,7 +471,6 @@ namespace MonevAtr.Models
             AddTahunToListHasil(listSumber, list);
             return new SelectList(list, "Value", "Text");
         }
-
         private void AddTahunToListHasil(List<int> listSumber, List<Tahun> listHasil)
         {
             foreach (int tahun in listSumber)
@@ -585,7 +478,6 @@ namespace MonevAtr.Models
                 listHasil.Add(new Tahun(tahun));
             }
         }
-
         private void InsertPilihKabupatenKota(IList<KabupatenKota> list)
         {
             KabupatenKota pilih = new KabupatenKota
@@ -596,12 +488,10 @@ namespace MonevAtr.Models
 
             list.Insert(0, pilih);
         }
-
         private void UpdateNamaDokumen(Dokumen dokumen)
         {
             dokumen.Nama = dokumen.Nama + " - " + dokumen.KelompokDokumen.JenisAtr.Nama;
         }
-
         private async Task UpdateNamaKawasan(List<Kawasan> list)
         {
             List<KawasanProvinsi> listProvinsi = await _context.KawasanProvinsi
@@ -634,7 +524,6 @@ namespace MonevAtr.Models
                 kawasan.Nama = builder.ToString();
             }
         }
-
         private IEnumerable<SelectListItem> InputTahun(int value)
         {
             return Enumerable
@@ -646,6 +535,7 @@ namespace MonevAtr.Models
                     Selected = c == value
                 });
         }
+
         private static readonly List<StatusRevisi> _regular = new List<StatusRevisi>
         {
             StatusRevisi.RegularT51,
@@ -657,26 +547,12 @@ namespace MonevAtr.Models
             StatusRevisi.RevisiT53,
             StatusRevisi.RevisiT54
         };
-        private static readonly IEnumerable<SelectListItem> _regularItems = _regular
-            .Select(c => new SelectListItem
-            {
-                Value = c.Kode.ToString(),
-                Text = c.Nama
-            });
-        private static readonly IEnumerable<SelectListItem> _revisiItems = _revisi
-            .Select(c => new SelectListItem
-            {
-                Value = c.Kode.ToString(),
-                Text = c.Nama
-            });
         private static readonly SelectListItem _regularTitle =
             new SelectListItem("Pilih Status RTR T5-0/T5-1", string.Empty);
         private static readonly SelectListItem _revisiTitle =
             new SelectListItem("Pilih Status RTR T5-2", string.Empty);
-        private static readonly SelectListItem _rdtrT51ProgressTitle =
-            new SelectListItem("Pilih Progress RDTR T5-1", string.Empty);
-        private static readonly SelectListItem _rdtrT52ProgressTitle =
-            new SelectListItem("Pilih Progress RDTR T5-2", string.Empty);
+        private static readonly SelectListItem _rtrProgressTitle =
+            new SelectListItem("Pilih Progress RTR", string.Empty);
         private static readonly SelectListItem _provinsiTitle =
             new SelectListItem("Pilih Provinsi", string.Empty);
         private static readonly SelectListItem _kabupatenKotaTitle =
