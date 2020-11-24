@@ -36,36 +36,27 @@ namespace MonevAtr.Models
         [ForeignKey("KodeDokumen")]
         public Dokumen Dokumen { get; set; }
 
-        // [BindNever, NotMapped]
-        // public IFormFile UploadFile { get; set; }
-
-        [NotMapped]
-        public FormFileWrapper UploadFile { get; set; }
-
         [NotMapped]
         public string DisplayTanggal =>
-            this.Tanggal == DateTime.MinValue ?
-            String.Empty :
-            this.Tanggal.ToString("yyyy-MM-dd");
+            Tanggal == DateTime.MinValue ?
+            string.Empty :
+            Tanggal.ToString("yyyy-MM-dd");
 
         [NotMapped]
         public string DisplayTanggalForView =>
-            this.Tanggal == DateTime.MinValue ?
-            String.Empty :
-            this.Tanggal.ToString("dd-MM-yyyy");
+            Tanggal == DateTime.MinValue ?
+            string.Empty :
+            Tanggal.ToString("dd-MM-yyyy");
 
         [NotMapped]
-        public bool StatusAda =>
-            !String.IsNullOrEmpty(this.Status) &&
-            this.Status == "1";
+        public bool StatusAda => !string.IsNullOrEmpty(Status) && Status == "1";
 
         [NotMapped]
-        public bool FilePathAda =>
-            !String.IsNullOrEmpty(this.FilePath);
+        public bool FilePathAda => !string.IsNullOrEmpty(FilePath);
 
         [NotMapped]
         public bool PerluSimpan =>
-            !String.IsNullOrEmpty(Nomor) ||
+            !string.IsNullOrEmpty(Nomor) ||
             Tanggal != DateTime.MinValue ||
             FilePathAda ||
             StatusAda;
