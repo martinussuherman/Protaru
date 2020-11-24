@@ -1,14 +1,21 @@
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using MonevAtr.Models;
 
 namespace Protaru.ViewComponents.Rtr
 {
     public class ProgressViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(IEnumerable<SelectListItem> progress)
+        public ProgressViewComponent(PomeloDbContext context)
         {
-            return View(progress);
+            _selectListUtilities = new SelectListUtilities(context);
         }
+
+        public async Task<IViewComponentResult> InvokeAsync(int jenisRtr, int? progress)
+        {
+            return View(await _selectListUtilities.ProgressRtrAsync(jenisRtr, progress));
+        }
+
+        private readonly SelectListUtilities _selectListUtilities;
     }
 }
