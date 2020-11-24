@@ -21,6 +21,7 @@ namespace MonevAtr.Pages.RtrwnT51
 
         public IActionResult OnGet()
         {
+            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrwnT51;
             return Page();
         }
 

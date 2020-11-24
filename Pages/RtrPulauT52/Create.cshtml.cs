@@ -26,7 +26,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KodeReferensiAtr = (int)id;
-
             Rtr = await _context.Atr
                 .Include(a => a.Pulau)
                 .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
