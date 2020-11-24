@@ -33,13 +33,15 @@
                             <input asp-for="Rtr.Aoi" class="form-control">
                         </div>
 
-                        @await Component.InvokeAsync("Luas", new { luas = Model.Rtr.Luas })
-                        @await Component.InvokeAsync("TahunPenyusunan", new { tahunPenyusunan = Model.TahunPenyusunan })
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Progress</label>
-                            <select asp-for="Rtr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.Progress"></select>
-                        </div>
+                        @await Component.InvokeAsync(
+                            "Luas", 
+                            new { luas = Model.Rtr.Luas })
+                        @await Component.InvokeAsync(
+                            "TahunPenyusunan", 
+                            new { tahun = Model.Rtr.TahunPenyusunan })
+                        @await Component.InvokeAsync(
+                            "Progress", 
+                            new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Status Revisi</label>

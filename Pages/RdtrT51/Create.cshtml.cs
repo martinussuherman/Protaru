@@ -26,16 +26,10 @@ namespace MonevAtr.Pages.RdtrT51
 
         public IEnumerable<SelectListItem> KabupatenKota { get; set; }
 
-        public IEnumerable<SelectListItem> ProgressRtr { get; set; }
-
-        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
-
         public async Task<IActionResult> OnGetAsync()
         {
             Provinsi = await selectListUtilities.ProvinsiAsync();
             KabupatenKota = await selectListUtilities.KabupatenKotaAsync();
-            ProgressRtr = await selectListUtilities.InputProgressRdtrT51Async();
-            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 
