@@ -22,6 +22,7 @@ namespace MonevAtr.Pages.RtrKsnT51
 
         public async Task<IActionResult> OnGetAsync()
         {
+            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrKsnT51;
             ViewData["Kawasan"] = await selectListUtilities.Kawasan();
             return Page();
         }

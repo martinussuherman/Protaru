@@ -28,6 +28,7 @@ namespace MonevAtr.Pages.RdtrT51
 
         public async Task<IActionResult> OnGetAsync()
         {
+            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RdtrT51;
             Provinsi = await selectListUtilities.ProvinsiAsync();
             KabupatenKota = await selectListUtilities.KabupatenKotaAsync();
             return Page();

@@ -22,6 +22,7 @@ namespace MonevAtr.Pages.RtrPulauT51
 
         public async Task<IActionResult> OnGetAsync()
         {
+            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrPulauT51;
             ViewData["Pulau"] = await selectListUtilities.Pulau();
             return Page();
         }
