@@ -15,7 +15,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         public EditModel(PomeloDbContext context)
         {
             _context = context;
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
@@ -40,7 +39,6 @@ namespace MonevAtr.Pages.RtrPulauT52
                 Rtr,
                 id,
                 KelompokDokumenList);
-            ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRevisi;
             return Page();
         }
 
@@ -66,7 +64,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
         private readonly PomeloDbContext _context;
     }
 }
