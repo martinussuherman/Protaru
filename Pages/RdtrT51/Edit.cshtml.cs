@@ -33,11 +33,7 @@ namespace MonevAtr.Pages.RdtrT51
 
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
-        public IEnumerable<SelectListItem> ProgressRtr { get; set; }
-
         public IEnumerable<SelectListItem> StatusRevisi { get; set; }
-
-        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
 
         // [BindProperty]
         // public List<AtrDokumenTindakLanjut> DokTin { get; set; }
@@ -61,11 +57,7 @@ namespace MonevAtr.Pages.RdtrT51
                 id,
                 KelompokDokumenList);
             await rtrUtilities.MergeRtrFasilitasKegiatan(Rtr, id, FasilitasList);
-
-            ProgressRtr = await selectListUtilities.InputProgressRdtrT51Async();
-            StatusRevisi = selectListUtilities.StatusRegularItems();
-            TahunPenyusunan = selectListUtilities.InputTahunRequired(Rtr.TahunPenyusunan);
-
+            StatusRevisi = selectListUtilities.StatusRegularItems(Rtr.StatusRevisi);
             return Page();
         }
 

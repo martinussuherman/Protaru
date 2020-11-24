@@ -28,10 +28,9 @@
                             <select asp-for="Rtr.KodeKawasan" class ="form-control" asp-items="ViewBag.Kawasan"></select>
                         </div>
 
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Progress</label>
-                            <select asp-for="Rtr.KodeProgressAtr" class ="form-control" asp-items="ViewBag.ProgressRtr"></select>
-                        </div>
+                        @await Component.InvokeAsync(
+                            "Progress", 
+                            new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
 
                         <div class="col-md-12 form-group">
                             <label class="form-label">Nama RTR</label>
@@ -45,8 +44,12 @@
 
                         <div class="col-md-12">
                             <div class="form-row">
-                                @await Component.InvokeAsync("Luas", new { luas = Model.Rtr.Luas })
-                                @await Component.InvokeAsync("TahunPenyusunan", new { tahunPenyusunan = Model.TahunPenyusunan })
+                                @await Component.InvokeAsync(
+                                    "Luas", 
+                                    new { luas = Model.Rtr.Luas })
+                                @await Component.InvokeAsync(
+                                    "TahunPenyusunan", 
+                                    new { tahun = Model.Rtr.TahunPenyusunan })
                             </div>
                         </div>
 					</div>

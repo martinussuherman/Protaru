@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -22,13 +20,9 @@ namespace MonevAtr.Pages.RtrPulauT51
         [BindProperty]
         public Models.Atr Rtr { get; set; } = new Models.Atr();
 
-        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
-
         public async Task<IActionResult> OnGetAsync()
         {
             ViewData["Pulau"] = await selectListUtilities.Pulau();
-            ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrPulauT51();
-            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 

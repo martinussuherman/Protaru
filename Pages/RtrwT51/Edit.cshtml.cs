@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -33,14 +32,11 @@ namespace MonevAtr.Pages.RtrwT51
 
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
-        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
                 (int)JenisRtrEnum.RtrwT51);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
-
             Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
@@ -49,16 +45,12 @@ namespace MonevAtr.Pages.RtrwT51
                 .Include(a => a.ProgressAtr)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Kode == id);
-
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 Rtr,
                 id,
                 KelompokDokumenList);
             await rtrUtilities.MergeRtrFasilitasKegiatan(Rtr, id, FasilitasList);
-
-            ViewData["Progress"] = await selectListUtilities.ProgressRtrwT51();
             ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRegular;
-            TahunPenyusunan = selectListUtilities.InputTahunRequired(Rtr.TahunPenyusunan);
             return Page();
         }
 

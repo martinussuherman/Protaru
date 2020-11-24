@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -16,7 +14,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         public CreateModel(PomeloDbContext context)
         {
             _context = context;
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
@@ -26,8 +23,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         [BindProperty]
         public int KodeReferensiAtr { get; set; }
 
-        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             KodeReferensiAtr = (int)id;
@@ -35,9 +30,6 @@ namespace MonevAtr.Pages.RtrPulauT52
             Rtr = await _context.Atr
                 .Include(a => a.Pulau)
                 .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
-
-            ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrPulauT52();
-            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 
@@ -54,7 +46,6 @@ namespace MonevAtr.Pages.RtrPulauT52
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
         private readonly PomeloDbContext _context;
     }
 }

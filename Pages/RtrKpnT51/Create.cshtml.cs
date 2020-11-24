@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -22,14 +20,10 @@ namespace MonevAtr.Pages.RtrKpnT51
         [BindProperty]
         public Models.Atr Rtr { get; set; } = new Models.Atr();
 
-        public IEnumerable<SelectListItem> TahunPenyusunan { get; set; }
-
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["ProgressAtr"] = await selectListUtilities.ProgressRtrKpnT51();
             ViewData["Provinsi"] = await selectListUtilities.Provinsi();
             ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
-            TahunPenyusunan = selectListUtilities.InputTahunRequired();
             return Page();
         }
 
