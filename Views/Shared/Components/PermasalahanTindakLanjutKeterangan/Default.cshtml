@@ -1,0 +1,23 @@
+@namespace Protaru.ViewComponents.Rtr
+
+@using MonevAtr.Models
+
+@model Atr
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Syncfusion.EJ2
+
+<div class="col-md-12 form-group">
+    <label class="form-label">Permasalahan</label>
+    <textarea id="rtr-permasalahan" name="Rtr.Permasalahan" class ="form-control">@Model.Permasalahan</textarea>
+</div>
+
+<div class="col-md-12 form-group">
+    <label class="form-label">Tindak Lanjut</label>
+    <textarea id="rtr-tindak-lanjut" name="Rtr.TindakLanjut"  class ="form-control">@Model.TindakLanjut</textarea>
+</div>
+
+<div class="col-md-12 form-group">
+    <label class="form-label">Keterangan</label>
+    <textarea id="rtr-keterangan" name="Rtr.Keterangan" class ="form-control">@Model.Keterangan</textarea>
+</div>
