@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
@@ -16,7 +15,6 @@ namespace MonevAtr.Pages.RdtrT51
         public EditModel(PomeloDbContext context)
         {
             _context = context;
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
@@ -33,8 +31,6 @@ namespace MonevAtr.Pages.RdtrT51
 
         public List<FasilitasKegiatan> FasilitasList { get; set; }
 
-        public IEnumerable<SelectListItem> StatusRevisi { get; set; }
-
         // [BindProperty]
         // public List<AtrDokumenTindakLanjut> DokTin { get; set; }
 
@@ -43,7 +39,6 @@ namespace MonevAtr.Pages.RdtrT51
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
                 (int)JenisRtrEnum.RdtrT51);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
-
             Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
@@ -51,13 +46,11 @@ namespace MonevAtr.Pages.RdtrT51
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 Rtr,
                 id,
                 KelompokDokumenList);
             await rtrUtilities.MergeRtrFasilitasKegiatan(Rtr, id, FasilitasList);
-            StatusRevisi = selectListUtilities.StatusRegularItems(Rtr.StatusRevisi);
             return Page();
         }
 
@@ -96,7 +89,6 @@ namespace MonevAtr.Pages.RdtrT51
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
         private readonly PomeloDbContext _context;
     }
 }

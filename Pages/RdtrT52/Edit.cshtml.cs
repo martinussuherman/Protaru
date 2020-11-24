@@ -15,7 +15,6 @@ namespace MonevAtr.Pages.RdtrT52
         public EditModel(PomeloDbContext context)
         {
             _context = context;
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
@@ -37,7 +36,6 @@ namespace MonevAtr.Pages.RdtrT52
             KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
                 (int)JenisRtrEnum.RdtrT52);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
-
             Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
@@ -45,13 +43,11 @@ namespace MonevAtr.Pages.RdtrT52
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 Rtr,
                 id,
                 KelompokDokumenList);
             await rtrUtilities.MergeRtrFasilitasKegiatan(Rtr, id, FasilitasList);
-            ViewData["StatusRevisi"] = selectListUtilities.StatusRevisiRtrRevisi;
             return Page();
         }
 
@@ -90,7 +86,6 @@ namespace MonevAtr.Pages.RdtrT52
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
         private readonly PomeloDbContext _context;
     }
 }

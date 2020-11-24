@@ -42,26 +42,12 @@
                         @await Component.InvokeAsync(
                             "Progress", 
                             new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Status Revisi</label>
-                            <select asp-for="Rtr.StatusRevisi" class ="form-control" asp-items="ViewBag.StatusRevisi"></select>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Permasalahan</label>
-                            <textarea asp-for="Rtr.Permasalahan" class ="form-control"></textarea>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Tindak Lanjut</label>
-                            <textarea asp-for="Rtr.TindakLanjut" class ="form-control"></textarea>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Keterangan</label>
-                            <textarea asp-for="Rtr.Keterangan" class ="form-control"></textarea>
-                        </div>
+                        @await Component.InvokeAsync(
+                            "StatusRevisi", 
+                            new { isRegular = false, sudahDirevisi = Model.Rtr.SudahDirevisi, status = Model.Rtr.StatusRevisi })
+                        @await Component.InvokeAsync(
+                            "PermasalahanTindakLanjutKeterangan", 
+                            new { rtr = Model.Rtr })
                     </div>
 
                     <component type="typeof(EditKelompokDokumen)"
