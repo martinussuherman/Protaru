@@ -1571,28 +1571,12 @@ textarea.e-input,
   border-width: 1px;
   height: auto;
   line-height: inherit;
-  margin: 0;
-  margin-bottom: 0;
+  /* margin: 0;
+  margin-bottom: 0; */
   outline: none;
-  padding: 0;
+  /* padding: 0; */
   text-indent: 8px;
   width: 100%;
-}
-
-input.e-input,
-textarea.e-input,
-.e-input-group,
-.e-input-group.e-control-wrapper {
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.e-input-group.e-disabled,
-.e-input-group.e-control-wrapper.e-disabled {
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
-  font-size: 14px;
-  font-weight: 400;
 }
 
 .e-input-group input.e-input,
@@ -1656,31 +1640,10 @@ input.e-input,
 
 .e-input:focus {
   border-width: 1px;
-  padding-bottom: 0;
 }
 
 .e-input.e-small:focus {
   border-width: 1px;
-  padding-bottom: 0;
-}
-
-.e-input.e-bigger:focus,
-.e-bigger .e-input:focus {
-  padding-bottom: 0;
-}
-
-.e-input.e-small.e-bigger:focus,
-.e-bigger .e-input.e-small:focus {
-  padding-bottom: 0;
-}
-
-.e-input-group input.e-input:focus,
-.e-input-group.e-control-wrapper input.e-input:focus,
-.e-input-group textarea.e-input:focus,
-.e-input-group.e-control-wrapper textarea.e-input:focus,
-.e-input-group.e-input-focus input.e-input,
-.e-input-group.e-control-wrapper.e-input-focus input.e-input {
-  padding: 0;
 }
 
 input.e-input.e-bigger,
@@ -2468,7 +2431,6 @@ label.e-float-text,
 .e-float-input.e-control-wrapper.e-disabled,
 .e-float-input.e-input-group.e-disabled,
 .e-float-input.e-input-group.e-control-wrapper.e-disabled {
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
   font-size: 14px;
   font-weight: 400;
 }
@@ -3331,13 +3293,11 @@ input.e-input,
 .e-input-group input.e-input,
 .e-input-group.e-control-wrapper input.e-input {
   box-sizing: border-box;
-  height: 29px;
 }
 
 .e-float-input:not(.e-input-group) input,
 .e-float-input.e-control-wrapper:not(.e-input-group) input {
   box-sizing: border-box;
-  height: 29px;
 }
 
 input.e-input.e-bigger,
@@ -3579,7 +3539,6 @@ input.e-input,
 .e-input-group.e-control-wrapper.e-input-focus input.e-input,
 .e-float-input.e-control-wrapper.e-input-focus input,
 .e-float-input.e-input-focus input {
-  padding-left: 8px;
   text-indent: 0;
 }
 
@@ -6894,7 +6853,6 @@ button .e-badge.e-badge-circle.e-badge-ghost {
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
   font-size: 14px;
   font-weight: 400;
   -ms-flex-pack: center;
@@ -10029,7 +9987,6 @@ ejs-calendar {
 .e-css.e-checkbox-wrapper .e-label {
   cursor: pointer;
   display: inline-block;
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
   font-size: 14px;
   font-weight: normal;
   line-height: 14px;
