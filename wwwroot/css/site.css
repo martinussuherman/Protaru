@@ -107,6 +107,21 @@
   font-size: 14px;
 }
 
+.e-form-control
+{
+  height: calc(1.5em + .75rem + 2px);
+}
+
+.e-form-control input
+{
+  padding: .375rem .75rem;
+}
+
+.e-text-right input
+{
+  text-align: right;
+}
+
 /* New style 22-08-2020 */
 
 body {
