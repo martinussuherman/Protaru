@@ -6,35 +6,28 @@
             <h3 class="text-title-rtr font-weight-bold mlm-15">HALAMAN KHUSUS ADMIN PROTARU</h3>
             <h4 class="text-title-rtr font-weight-bold text-grey mlm-15">Gunakan User dan Password Anda</h4>
         </div>
-        <div class="row row-cards card col-md-5 m-auto">
-            <div class="px-0 pb-4 pt-3">
-                <div class="card border-light mb-3">
-                    <div class="card-body">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row row-cards card-body card col-md-5 m-auto">
+            <div asp-validation-summary="All" class="text-danger"></div>
 
-                        <form id="account" method="post">
-                            <h4 class="pb-4 pl-3 text-title-rtr text-grey">Masuk ke Akun Anda</h4>
-                            <div class="col-md-12 form-group">
-                                <label class="form-label font-weight-bold">User</label>
-                                <input asp-for="Input.UserName" class="form-control" placeholder="User"/>
-                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <label class="form-label font-weight-bold">Password</label>
-                                <input asp-for="Input.Password" class="form-control" placeholder="Password"/>
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
-                            </div>
-
-                            <a id="forgot-password" asp-page="./ForgotPassword">Lupa password?</a>
-
-                            <div class="col-md-12 form-group pt-2">
-                                <button type="submit" class="btn btn-primary btn-block"> Masuk</button>
-                            </div>
-                        </form>
-                    </div>
+            <form id="account" method="post">
+                <h4 class="pb-4 pl-3 text-title-rtr text-grey">Masuk ke Akun Anda</h4>
+                <div class="col-md-12 form-group">
+                    <label class="form-label font-weight-bold">User</label>
+                    <input asp-for="Input.UserName" class="form-control" placeholder="User"/>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
                 </div>
-            </div>
+
+                <div class="col-md-12 form-group">
+                    <label class="form-label font-weight-bold">Password</label>
+                    <input asp-for="Input.Password" class="form-control" placeholder="Password"/>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <a id="forgot-password" asp-page="./ForgotPassword">Lupa password?</a>
+                </div>
+
+                <div class="col-md-12 form-group pt-2">
+                    <button type="submit" class="btn btn-primary btn-block"> Masuk</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
