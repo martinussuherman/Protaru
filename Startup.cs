@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Protaru.Helper;
 
 namespace MonevAtr
 {
@@ -30,7 +32,8 @@ namespace MonevAtr
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllers();
@@ -38,6 +41,8 @@ namespace MonevAtr
             services.AddMvc();
 
             services
+                .Configure<SmtpOptions>(
+                    Configuration.GetSection(SmtpOptions.OptionsName))
                 .AddDbContextPool<Models.PomeloDbContext>(options =>
                     options.UseMySql(
                         Configuration.GetConnectionString("MonevAtr"),
@@ -60,6 +65,7 @@ namespace MonevAtr
                                 null);
                         }),
                     16)
+                .AddTransient<IEmailSender, SmtpEmailSender>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
                 .ConfigureApplicationCookie(options =>
