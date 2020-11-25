@@ -26,6 +26,7 @@ namespace MonevAtr.Models
         public virtual DbSet<RtrFasilitasKegiatan> RtrFasilitasKegiatan { get; set; }
         public virtual DbSet<LogUser> LogUser { get; set; }
         public virtual DbSet<TugasUser> TugasUser { get; set; }
+        public virtual DbSet<Saran> Saran { get; set; }
 
         public virtual DbSet<FilterPencarianRtr> FilterPencarianRtr { get; set; }
         public virtual DbSet<PencarianRtr> PencarianRtr { get; set; }
@@ -494,26 +495,6 @@ namespace MonevAtr.Models
                     .HasConstraintName("FK_kelompok_dokumen_jenis_atr");
             });
 
-            modelBuilder.Entity<LogUser>(entity =>
-            {
-                entity.ToTable("log_user");
-
-                entity.Property(e => e.Id).HasColumnType("int(10) unsigned");
-
-                entity.Property(e => e.JenisKegiatan).HasColumnType("smallint(5) unsigned");
-
-                entity.Property(e => e.User)
-                    .IsRequired()
-                    .HasColumnType("tinytext")
-                    .HasDefaultValueSql("''")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.Waktu)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("current_timestamp()");
-            });
-
             modelBuilder.Entity<ProgressAtr>(entity =>
             {
                 entity.HasIndex(e => e.KodeJenisAtr)
@@ -558,6 +539,7 @@ namespace MonevAtr.Models
                 //     .OnDelete(DeleteBehavior.ClientSetNull)
                 //     .HasConstraintName("FK_provinsi_area");
             });
+
 
             modelBuilder.Entity<RtrFasilitasKegiatan>(entity =>
             {
@@ -866,6 +848,55 @@ namespace MonevAtr.Models
                 entity.Property(e => e.ProgressAtrBaru).HasColumnType("int(11)");
 
                 entity.Property(e => e.ProgressAtrLama).HasColumnType("int(11)");
+            });
+
+
+            modelBuilder.Entity<LogUser>(entity =>
+            {
+                entity.ToTable("log_user");
+
+                entity.Property(e => e.Id).HasColumnType("int(10) unsigned");
+
+                entity.Property(e => e.JenisKegiatan).HasColumnType("smallint(5) unsigned");
+
+                entity.Property(e => e.User)
+                    .IsRequired()
+                    .HasColumnType("tinytext")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Waktu)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("current_timestamp()");
+            });
+
+            modelBuilder.Entity<Saran>(entity =>
+            {
+                entity.ToTable("saran");
+
+                entity.Property(e => e.Id).HasColumnType("int(10) unsigned");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnType("tinytext")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Isi)
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Nama)
+                    .IsRequired()
+                    .HasColumnType("tinytext")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<TugasUser>(entity =>
