@@ -4,18 +4,18 @@
 
     <form method="get" action="@Url.Page("./CreateFilter")" class="d-inline">
 
-@if (DisplayedLocation == RtrTableLocationEnum.ProvinsiKabKota)
+@if (DisplayedLocation == RtrLocationEnum.ProvinsiKabKota)
 {
         <input type="hidden" name="Rtr.Prov" value="@Rtr.Prov" />
         <input type="hidden" name="Rtr.KabKota" value="@Rtr.KabKota" />
 }
 
-@if (DisplayedLocation == RtrTableLocationEnum.Kawasan)
+@if (DisplayedLocation == RtrLocationEnum.Kawasan)
 {
         <input type="hidden" name="Rtr.Kawasan" value="@Rtr.Kawasan" />
 }
 
-@if (DisplayedLocation == RtrTableLocationEnum.Pulau)
+@if (DisplayedLocation == RtrLocationEnum.Pulau)
 {
         <input type="hidden" name="Rtr.Pulau" value="@Rtr.Pulau" />
 }
@@ -44,7 +44,7 @@
     public bool IsCanCreate { get; set; }
 
     [Parameter]
-    public RtrTableLocationEnum DisplayedLocation { get; set; }
+    public RtrLocationEnum DisplayedLocation { get; set; }
 
     [Parameter]
     public IUrlHelper Url { get; set; }

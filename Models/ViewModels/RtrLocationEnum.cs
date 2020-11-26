@@ -1,4 +1,4 @@
-public enum RtrTableLocationEnum
+public enum RtrLocationEnum
 {
     None,
     ProvinsiKabKota,
