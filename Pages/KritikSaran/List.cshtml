@@ -1,0 +1,52 @@
+@page
+@model ListModel
+
+@using Protaru.Helper
+
+@{
+    Layout = "_CommonLayout";
+    ViewData["Title"] = "Daftar Kritik & Saran";
+    ViewData["PageTitle"] = "Kritik & Saran";
+}
+
+<div class="card-body">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nama
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Isi
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+@foreach (var item in Model.Saran) 
+{
+            <tr>
+                <td>
+                    @item.Nama
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.Isi.Chop(80)
+                </td>
+                <td>
+                    <a asp-page="./View" asp-route-id="@item.Id" class="btn btn-warning">Detail</a>
+                </td>
+            </tr>
+}
+
+        </tbody>
+    </table>
+</div>
