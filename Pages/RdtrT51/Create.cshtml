@@ -21,16 +21,6 @@
                     <h4 class="card-title mlm-15">@ViewData["Title"]</h4>
                 </div>
 
-                @* @await Component.InvokeAsync(
-                    "CreateRtrForm", 
-                    new 
-                    { 
-                        provinsi = Model.Provinsi, 
-                        kabupatenKota = Model.KabupatenKota,
-                        progressRtr = Model.ProgressRtr,
-                        tahunPenyusunan = Model.TahunPenyusunan 
-                    }) *@
-
                 <form id="rtr" method="post">
                     <div class="card-body">
                         <div class="col-md-12 form-group">
@@ -54,29 +44,8 @@
                         </div>
 
                         @await Component.InvokeAsync(
-                            "Progress", 
-                            new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Nama RTR</label>
-                            <input asp-for="Rtr.Nama" class="form-control">
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Area of Interest</label>
-                            <input asp-for="Rtr.Aoi" class="form-control">
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-row">
-                                @await Component.InvokeAsync(
-                                    "Luas", 
-                                    new { luas = Model.Rtr.Luas })
-                                @await Component.InvokeAsync(
-                                    "TahunPenyusunan", 
-                                    new { tahun = Model.Rtr.TahunPenyusunan })
-                            </div>
-                        </div>
+                            "Create", 
+                            new { rtr = Model.Rtr, displayAoi = true })
 					</div>
 
                     <div class="card-footer text-center">
