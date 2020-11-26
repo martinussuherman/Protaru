@@ -10,6 +10,7 @@ using Itm.Identity;
 using Itm.Misc;
 using Protaru.Identity;
 using MonevAtr.Models;
+using Protaru.Helper;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
@@ -49,12 +50,14 @@ namespace MonevAtr.Areas.Identity.Pages.Account
         {
             public int Id { get; set; }
 
+            [Required(ErrorMessage = ViewMessage.UsernameRequired)]
             public string UserName { get; set; }
 
-            [EmailAddress]
+            [Required(ErrorMessage = ViewMessage.EmailRequired)]
+            [EmailAddress(ErrorMessage = ViewMessage.MalformedEmail)]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "Role harus diisi.")]
+            [Required(ErrorMessage = ViewMessage.RoleRequired)]
             public string UserRole { get; set; }
         }
 
