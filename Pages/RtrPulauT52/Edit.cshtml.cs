@@ -24,21 +24,13 @@ namespace MonevAtr.Pages.RtrPulauT52
         [BindProperty]
         public List<AtrDokumen> Dokumen { get; set; }
 
-        public List<Models.KelompokDokumen> KelompokDokumenList { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int)JenisRtrEnum.RtrPulauT52);
             Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Pulau)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
-                Rtr,
-                id,
-                KelompokDokumenList);
             return Page();
         }
 

@@ -33,8 +33,6 @@ namespace MonevAtr.Pages.RtrwT52
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int)JenisRtrEnum.RtrwT52);
             FasilitasList = await rtrUtilities.LoadFasilitasKegiatan();
             Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
@@ -44,10 +42,6 @@ namespace MonevAtr.Pages.RtrwT52
                 .Include(a => a.ProgressAtr)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Kode == id);
-            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
-                Rtr,
-                id,
-                KelompokDokumenList);
             await rtrUtilities.MergeRtrFasilitasKegiatan(Rtr, id, FasilitasList);
             return Page();
         }
