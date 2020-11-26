@@ -23,11 +23,6 @@
 
                 <form id="rtr" method="post">
                     <div class="card-body">
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Kawasan</label>
-                            <input type="text" class ="form-control" value="@Html.DisplayFor(model => model.Rtr.Kawasan.Nama)" disabled />
-                        </div>
-
                         @await Component.InvokeAsync(
                             "Create", 
                             new { rtr = Model.Rtr, displayAoi = false })

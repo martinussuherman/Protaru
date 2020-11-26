@@ -13,18 +13,15 @@ namespace MonevAtr.Pages.RtrwT50
     {
         public CreateModel(PomeloDbContext context)
         {
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
         [BindProperty]
-        public Models.Atr Rtr { get; set; }
+        public Models.Atr Rtr { get; set; } = new Models.Atr();
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrwT50;
-            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
-            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
             return Page();
         }
 
@@ -40,6 +37,5 @@ namespace MonevAtr.Pages.RtrwT50
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
     }
 }

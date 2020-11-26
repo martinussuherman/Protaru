@@ -23,16 +23,6 @@
 
                 <form id="rtr" method="post">
                     <div class="card-body">
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Provinsi</label>
-                            <select id="provinsi" asp-for="Rtr.KodeProvinsi" class ="form-control" asp-items="ViewBag.Provinsi"></select>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Kabupaten/Kota</label>
-                            <select id="kabupaten-kota" asp-for="Rtr.KodeKabupatenKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
-                        </div>
-
                         @await Component.InvokeAsync(
                             "Create", 
                             new { rtr = Model.Rtr, displayAoi = true })

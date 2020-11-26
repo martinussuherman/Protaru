@@ -31,6 +31,7 @@ namespace MonevAtr.Pages.RtrKpnT52
                 .Include(a => a.KabupatenKota)
                 .Include(a => a.KabupatenKota.Provinsi)
                 .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
+            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrKpnT52;
             return Page();
         }
 

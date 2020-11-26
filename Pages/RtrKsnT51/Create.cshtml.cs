@@ -13,17 +13,15 @@ namespace MonevAtr.Pages.RtrKsnT51
     {
         public CreateModel(PomeloDbContext context)
         {
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
         [BindProperty]
         public Models.Atr Rtr { get; set; } = new Models.Atr();
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrKsnT51;
-            ViewData["Kawasan"] = await selectListUtilities.Kawasan();
             return Page();
         }
 
@@ -39,6 +37,5 @@ namespace MonevAtr.Pages.RtrKsnT51
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
     }
 }

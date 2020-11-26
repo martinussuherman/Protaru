@@ -29,6 +29,7 @@ namespace MonevAtr.Pages.RtrKsnT52
             Rtr = await _context.Atr
                 .Include(a => a.Kawasan)
                 .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
+            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrKsnT52;
             return Page();
         }
 
