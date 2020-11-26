@@ -154,24 +154,24 @@ namespace MonevAtr.Models
             return new SelectList(await PulauAsync(), _valueProperty, _textProperty);
         }
 
-        public async Task<SelectList> Kawasan()
+        public async Task<IEnumerable<SelectListItem>> KawasanAsync()
         {
-            List<Kawasan> list = await _context.Kawasan
-                .Where(q => q.Kode > 0)
-                .OrderBy(q => q.Nama)
+            List<SelectListItem> list = await _context.Kawasan
+                .Where(p => p.Kode > 0)
+                .OrderBy(p => p.Nama)
                 .AsNoTracking()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Kode.ToString(),
+                    Text = c.Nama
+                })
                 .ToListAsync();
 
-            await UpdateNamaKawasan(list);
-
-            Kawasan pilih = new Kawasan
-            {
-                Kode = 0,
-                Nama = "Pilih Kawasan"
-            };
-
-            list.Insert(0, pilih);
-            return new SelectList(list, "Kode", "Nama");
+            return list.Prepend(_kawasanTitle);
+        }
+        public async Task<SelectList> Kawasan()
+        {
+            return new SelectList(await KawasanAsync(), _valueProperty, _textProperty);
         }
 
         public async Task<List<int>> TahunRekomendasiGubernurListAsync()
@@ -557,6 +557,8 @@ namespace MonevAtr.Models
             new SelectListItem("Pilih Provinsi", string.Empty);
         private static readonly SelectListItem _kabupatenKotaTitle =
             new SelectListItem("Pilih Kabupaten/Kota", string.Empty);
+        private static readonly SelectListItem _kawasanTitle =
+            new SelectListItem("Pilih Kawasan", string.Empty);
         private static readonly SelectListItem _pulauTitle =
             new SelectListItem("Pilih Pulau", string.Empty);
         private static readonly SelectListItem _yearInputTitleRequired =
