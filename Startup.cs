@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Protaru.Helper;
 
 namespace MonevAtr
@@ -39,6 +40,11 @@ namespace MonevAtr
             services.AddControllers();
             services.AddHttpClient(Options.DefaultName);
             services.AddMvc();
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = Configuration["Recaptcha:SiteKey"],
+                SecretKey = Configuration["Recaptcha:SecretKey"]
+            });
 
             services
                 .Configure<SmtpOptions>(
