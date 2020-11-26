@@ -92,6 +92,12 @@ namespace MonevAtr.Models
 
         public async Task MergeRtrDokumenDenganKelompokDokumen(
             Atr rtr,
+            List<KelompokDokumen> kelompokDokumenList)
+        {
+            await MergeRtrDokumenDenganKelompokDokumen(rtr, rtr.Kode, kelompokDokumenList);
+        }
+        public async Task MergeRtrDokumenDenganKelompokDokumen(
+            Atr rtr,
             int? id,
             List<KelompokDokumen> kelompokDokumenList)
         {
