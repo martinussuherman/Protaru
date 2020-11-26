@@ -23,18 +23,6 @@
 
                 <form id="rtr" method="post">
                     <div class="card-body">
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Provinsi</label>
-                            <input type="text" class ="form-control" 
-                                value="@Model.Rtr.DisplayNamaProvinsi" disabled />
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">Kabupaten/Kota</label>
-                            <input type="text" class ="form-control" 
-                                value="@Model.Rtr.DisplayNamaKabupatenKota" disabled />
-                        </div>
-
                         @await Component.InvokeAsync(
                             "Create", 
                             new { rtr = Model.Rtr, displayAoi = true })
