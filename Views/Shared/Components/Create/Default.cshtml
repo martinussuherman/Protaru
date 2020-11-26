@@ -5,6 +5,57 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Syncfusion.EJ2
 
+@if (Model.Location == RtrLocationEnum.ProvinsiKabKota)
+{
+    if (Model.ReadOnlyLocation)
+    {
+        <div class="col-md-12 form-group">
+            <label class="form-label">Provinsi</label>
+            <input 
+                type="text" 
+                class ="form-control" 
+                value="@Model.Rtr.DisplayNamaProvinsi" 
+                disabled />
+        </div>
+
+        <div class="col-md-12 form-group">
+            <label class="form-label">Kabupaten/Kota</label>
+            <input 
+                type="text" 
+                class ="form-control" 
+                value="@Model.Rtr.DisplayNamaKabupatenKota" 
+                disabled />
+        </div>
+    }
+    else
+    {
+        @await Component.InvokeAsync(
+            "ProvinsiKabKota",
+            new { isInput = true })
+    }
+}
+
+@if (Model.Location == RtrLocationEnum.Kawasan)
+{
+    if (Model.ReadOnlyLocation)
+    {
+        <div class="col-md-12 form-group">
+            <label class="form-label">Kawasan</label>
+            <input 
+                type="text" 
+                class ="form-control" 
+                value="@Model.Rtr.DisplayNamaKawasan" 
+                disabled />
+        </div>
+    }
+    else
+    {
+        @await Component.InvokeAsync(
+            "Kawasan",
+            new { isInput = true })
+    }
+}
+
 @await Component.InvokeAsync(
     "Progress", 
     new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
