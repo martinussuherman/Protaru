@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Protaru.Helper;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
@@ -25,17 +26,17 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Email harus diisi.")]
-            [EmailAddress(ErrorMessage = "Isian harus berupa alamat email.")]
+            [Required(ErrorMessage = ViewMessage.EmailRequired)]
+            [EmailAddress(ErrorMessage = ViewMessage.MalformedEmail)]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "Password harus diisi.")]
-            [StringLength(100, ErrorMessage = "{0} harus > {2} dan < {1} karakter.", MinimumLength = 6)]
+            [Required(ErrorMessage = ViewMessage.PasswordRequired)]
+            [StringLength(100, ErrorMessage = ViewMessage.PasswordLength, MinimumLength = 6)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Compare("Password", ErrorMessage = "Password dan konfirmasi password tidak sama.")]
+            [Compare("Password", ErrorMessage = ViewMessage.ConfirmPasswordNotMatch)]
             public string ConfirmPassword { get; set; }
 
             public string Code { get; set; }

@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Itm.Identity;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Protaru.Helper;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
@@ -31,23 +31,20 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [Display(Name = "Nama User")]
+            [Required(ErrorMessage = ViewMessage.UsernameRequired)]
             public string UserName { get; set; }
 
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = ViewMessage.EmailRequired)]
+            [EmailAddress(ErrorMessage = ViewMessage.MalformedEmail)]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "{0} harus lebih dari {2} dan kurang dari {1} karakter.", MinimumLength = 6)]
+            [Required(ErrorMessage = ViewMessage.PasswordRequired)]
+            [StringLength(100, ErrorMessage = ViewMessage.PasswordLength, MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Konfirmasi Password")]
-            [Compare("Password", ErrorMessage = "Password dan konfirmasi password tidak sama.")]
+            [Compare("Password", ErrorMessage = ViewMessage.ConfirmPasswordNotMatch)]
             public string ConfirmPassword { get; set; }
         }
 

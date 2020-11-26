@@ -1,18 +1,18 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Itm.Identity;
-using Itm.Misc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Protaru.Helper;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel : CustomPageModel
+    public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
@@ -35,18 +35,16 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage="Mohon isi user.")]
+            [Required(ErrorMessage = ViewMessage.UsernameRequired)]
             public string UserName { get; set; }
 
-            [Required(ErrorMessage="Mohon isi password.")]
+            [Required(ErrorMessage = ViewMessage.PasswordRequired)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            Title = "Login";
-
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -91,7 +89,7 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                     return RedirectToPage("./Lockout");
                 }
 
-                ModelState.AddModelError(String.Empty, "Login tidak berhasil.");
+                ModelState.AddModelError(string.Empty, ViewMessage.LoginFailed);
                 return Page();
             }
 

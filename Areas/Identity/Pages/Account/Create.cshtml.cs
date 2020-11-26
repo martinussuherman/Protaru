@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +8,7 @@ using Itm.Identity;
 using Itm.Misc;
 using Protaru.Identity;
 using MonevAtr.Models;
+using Protaru.Helper;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
@@ -39,23 +39,23 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "User harus diisi.")]
+            [Required(ErrorMessage = ViewMessage.UsernameRequired)]
             public string UserName { get; set; }
 
-            [Required(ErrorMessage = "Email harus diisi.")]
-            [EmailAddress]
+            [Required(ErrorMessage = ViewMessage.EmailRequired)]
+            [EmailAddress(ErrorMessage = ViewMessage.MalformedEmail)]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "Password harus diisi.")]
-            [StringLength(100, ErrorMessage = "{0} minimal {2} dan maksimal {1} karakter.", MinimumLength = 6)]
+            [Required(ErrorMessage = ViewMessage.PasswordRequired)]
+            [StringLength(100, ErrorMessage = ViewMessage.PasswordLength, MinimumLength = 6)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Compare("Password", ErrorMessage = "Password and konfirmasi password tidak sama.")]
+            [Compare("Password", ErrorMessage = ViewMessage.ConfirmPasswordNotMatch)]
             public string ConfirmPassword { get; set; }
 
-            [Required(ErrorMessage = "Role harus diisi.")]
+            [Required(ErrorMessage = ViewMessage.RoleRequired)]
             public string UserRole { get; set; }
         }
 

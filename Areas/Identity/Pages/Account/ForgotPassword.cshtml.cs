@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Itm.Identity;
+using Protaru.Helper;
 
 namespace MonevAtr.Areas.Identity.Pages.Account
 {
@@ -29,8 +30,8 @@ namespace MonevAtr.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = ViewMessage.EmailRequired)]
+            [EmailAddress(ErrorMessage = ViewMessage.MalformedEmail)]
             public string Email { get; set; }
         }
 
@@ -43,8 +44,11 @@ namespace MonevAtr.Areas.Identity.Pages.Account
                 if (user == null)
                 // || !await _userManager.IsEmailConfirmedAsync(user))
                 {
+                    ModelState.AddModelError(string.Empty, ViewMessage.EmailNotFound);
+                    return Page();
+
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                    // return RedirectToPage("./ForgotPasswordConfirmation");
                 }
 
                 // For more information on how to enable account confirmation and password reset please 
