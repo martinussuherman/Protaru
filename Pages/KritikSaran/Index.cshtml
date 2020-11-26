@@ -1,0 +1,46 @@
+@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Kritik & Saran";
+}
+
+@section Menu 
+{
+	@await Html.PartialAsync("_MenuHome")
+}
+
+<div class="page-login pb-5">
+    <div class="row row-cards card bg-transparent border-transparant col-md-5 m-auto pt-5 pb-2">
+        <h3 class="text-title-rtr font-weight-bold mlm-15">KRITIK DAN SARAN</h3>
+        <h4 class="text-title-rtr font-weight-bold text-grey mlm-15">Silahkan Isi Kritik & Saran Anda</h4>
+    </div>
+    <div class="row row-cards card col-md-5 p-3 m-auto">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="form-label font-weight-bold">Email</label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label font-weight-bold">Nama</label>
+                <input asp-for="Input.Nama" class="form-control" />
+                <span asp-validation-for="Input.Nama" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label font-weight-bold">Kritik &amp; Saran</label>
+                <textarea rows="5" asp-for="Input.Isi" class="form-control"></textarea>
+                <span asp-validation-for="Input.Isi" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mb-3">Kirim</button>
+
+            <recaptcha/>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <recaptcha-script/>
+}
