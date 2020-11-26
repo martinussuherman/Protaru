@@ -9,18 +9,18 @@
         </a>
     </td>
 
-@if (DisplayedLocation == RtrTableLocationEnum.Kawasan)
+@if (DisplayedLocation == RtrLocationEnum.Kawasan)
 {
     <td>@Item.DisplayNamaKawasan</td>
 }
 
-@if (DisplayedLocation == RtrTableLocationEnum.ProvinsiKabKota)
+@if (DisplayedLocation == RtrLocationEnum.ProvinsiKabKota)
 {
     <td>@Item.DisplayNamaProvinsi</td>
     <td>@Item.DisplayNamaKabupatenKota</td>
 }
 
-@if (DisplayedLocation == RtrTableLocationEnum.Pulau)
+@if (DisplayedLocation == RtrLocationEnum.Pulau)
 {
     <td>@Item.DisplayNamaPulau</td>
 }
@@ -59,7 +59,7 @@ else
     public bool IsDisplayRegulation { get; set; }
 
     [Parameter]
-    public RtrTableLocationEnum DisplayedLocation { get; set; }
+    public RtrLocationEnum DisplayedLocation { get; set; }
 
     [Parameter]
     public IUrlHelper Url { get; set; }

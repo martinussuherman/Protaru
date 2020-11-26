@@ -20,7 +20,7 @@
                 <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
                 <component type="typeof(SearchResultForm)" 
                     render-mode="Static" 
-                    param-DisplayedLocation="@RtrTableLocationEnum.Pulau"
+                    param-DisplayedLocation="@RtrLocationEnum.Pulau"
                     param-IsCanCreate="@Model.IsCanCreate" 
                     param-Url="@Model.Url" 
                     param-Rtr="@Model.Rtr" />
@@ -30,7 +30,7 @@
                 <component type="typeof(SearchResultTable)" 
                     render-mode="Static" 
                     param-RegulationName="@("Perpres")"
-                    param-DisplayedLocation="@RtrTableLocationEnum.Pulau"
+                    param-DisplayedLocation="@RtrLocationEnum.Pulau"
                     param-IsCanEdit="@Model.IsCanEdit" 
                     param-IsDisplayRegulation="true" 
                     param-Url="@Model.Url" 
