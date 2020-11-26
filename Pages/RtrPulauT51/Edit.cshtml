@@ -50,11 +50,9 @@
                             new { rtr = Model.Rtr })
                     </div>
 
-                    <component type="typeof(EditKelompokDokumen)"
-                        render-mode="Static"
-                        param-Rtr="@Model.Rtr"
-                        param-KelompokDokumen="@Model.KelompokDokumenList"
-                        param-Url="@Url" />
+                    @await Component.InvokeAsync(
+                        "KelompokDokumen", 
+                        new { rtr = Model.Rtr })
 
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>

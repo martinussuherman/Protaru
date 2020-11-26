@@ -24,12 +24,8 @@ namespace MonevAtr.Pages.RtrKpnT52
         [BindProperty]
         public List<AtrDokumen> Dokumen { get; set; }
 
-        public List<Models.KelompokDokumen> KelompokDokumenList { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KelompokDokumenList = await rtrUtilities.LoadKelompokDokumenDanDokumen(
-                (int)JenisRtrEnum.RtrKpnT52);
             Rtr = await _context.Atr
                 .Include(a => a.JenisAtr)
                 .Include(a => a.Provinsi)
@@ -37,10 +33,6 @@ namespace MonevAtr.Pages.RtrKpnT52
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-            await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
-                Rtr,
-                id,
-                KelompokDokumenList);
             return Page();
         }
 
