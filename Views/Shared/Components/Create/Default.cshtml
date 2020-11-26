@@ -1,0 +1,40 @@
+@namespace Protaru.ViewComponents.Rtr
+
+@model CreateViewComponent.ViewModel 
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Syncfusion.EJ2
+
+@await Component.InvokeAsync(
+    "Progress", 
+    new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
+
+<div class="col-md-12 form-group">
+    <label class="form-label">Nama RTR</label>
+    <input 
+        name="Rtr.Nama" 
+        value="@Model.Rtr.Nama"
+        class="form-control">
+</div>
+
+@if (Model.DisplayAoi)
+{
+    <div class="col-md-12 form-group">
+        <label class="form-label">Area of Interest</label>
+        <input 
+            name="Rtr.Aoi" 
+            value="@Model.Rtr.Aoi"
+            class="form-control">
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="form-row">
+        @await Component.InvokeAsync(
+            "Luas", 
+            new { luas = Model.Rtr.Luas })
+        @await Component.InvokeAsync(
+            "TahunPenyusunan", 
+            new { tahun = Model.Rtr.TahunPenyusunan })
+    </div>
+</div>
