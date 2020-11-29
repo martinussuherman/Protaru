@@ -16,7 +16,7 @@ namespace MonevAtr.Pages.Search
             [FromQuery] AtrSearch rtr,
             [FromQuery] int page = 1)
         {
-            Hasil = await _helper.PagerListAsync(rtr, RtrAddResultHelper.AddType.All, page);
+            Hasil = await _helper.PagerListAsync(rtr, RtrAddResultHelper.AddType.AllDaerah, page);
             Rtr = rtr;
             RegulationName = "Perda";
             IsDisplayRegulation = rtr.Perda == 1;

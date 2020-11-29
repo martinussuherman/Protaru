@@ -49,9 +49,11 @@
             <div class="row">
               <div class="col-sm-6 offset-sm-3 py-2">
                 <div class="row rtr-progress-total">
-                  <div class="col-3 text-right pt-3 progress-number-box">
-                    <div id="summary-progress" class="text-white progress-number" style="font-size: 2rem;">
-                    </div>
+                  <div class="col-3 text-right pt-2 progress-number-box">
+                    <a class="btn pt-2" asp-page="Rtr/SearchResult" asp-route-perda="0">
+                      <div id="summary-progress" class="text-white progress-number" style="font-size: 2rem;">
+                      </div>
+                    </a>
                   </div>
 
                   <div class="col-3 text-left pt-4">
@@ -60,9 +62,11 @@
                     </div>
                   </div>
                   
-                  <div class="col-3 text-right pt-3 progress-number-box">
-                    <div id="summary-done" class="text-white progress-number" style="font-size: 2rem;">
-                    </div>
+                  <div class="col-3 text-right pt-2 progress-number-box">
+                    <a class="btn pt-2" asp-page="Rtr/SearchResult" asp-route-perda="1">
+                      <div id="summary-done" class="text-white progress-number" style="font-size: 2rem;">
+                      </div>
+                    </a>
                   </div>
 
                   <div class="col-3 text-left pt-4">
