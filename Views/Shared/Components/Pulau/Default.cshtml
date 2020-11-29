@@ -1,0 +1,23 @@
+@namespace Protaru.ViewComponents.Rtr
+
+@using System.Collections.Generic
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@model PulauViewComponent.ViewModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Syncfusion.EJ2
+
+@{
+    string name = Model.IsInput ? "Rtr.KodePulau" : "Rtr.Pulau";
+}
+
+<div class="col-md-12 form-group">
+    <label class="form-label">Pulau</label>
+    <select 
+        id="rtr-pulau" 
+        name="@name" 
+        class ="form-control" 
+        asp-items="Model.Pulau">
+    </select>
+</div>
