@@ -13,6 +13,7 @@ namespace Protaru.Helpers
         public enum AddType
         {
             All,
+            AllDaerah,
             Rdtr,
             Rtrw
         }
@@ -42,7 +43,7 @@ namespace Protaru.Helpers
         {
             List<int> combined = new List<int>();
 
-            if (type == AddType.All || type == AddType.Rtrw)
+            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rtrw)
             {
                 combined.AddRange(await _context.RtrwT5152Kabkota
                     .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
@@ -54,7 +55,7 @@ namespace Protaru.Helpers
                     .ToListAsync());
             }
 
-            if (type == AddType.All || type == AddType.Rdtr)
+            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rdtr)
             {
                 combined.AddRange(await _context.RdtrT5152Kabkota
                     .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
@@ -82,17 +83,29 @@ namespace Protaru.Helpers
         }
         private void AddJenisFilter(AtrSearch rtr, AddType type)
         {
-            if (type == AddType.All || type == AddType.Rtrw)
+            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rtrw)
             {
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrwT50);
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrwT51);
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrwT52);
             }
 
-            if (type == AddType.All || type == AddType.Rdtr)
+            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rdtr)
             {
                 rtr.JenisList.Add((int)JenisRtrEnum.RdtrT51);
                 rtr.JenisList.Add((int)JenisRtrEnum.RdtrT52);
+            }
+
+            if (type == AddType.All)
+            {
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrKpnT51);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrKpnT52);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrKsnT51);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrKsnT52);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrPulauT51);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrPulauT52);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrwnT51);
+                rtr.JenisList.Add((int)JenisRtrEnum.RtrwnT52);
             }
         }
 
