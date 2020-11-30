@@ -15,6 +15,11 @@
   padding-left: 32px;
 }
 
+.progress-number-box a.row:hover
+{
+  text-decoration: none;
+}
+
 .title-progress, .month-type, #month-status a
 {
   cursor: pointer;
