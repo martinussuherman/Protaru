@@ -43,67 +43,52 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
-        <div class="progress-total">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 offset-sm-3 py-2">
-                <div class="row rtr-progress-total">
-                  <div class="col-3 text-right pt-2 progress-number-box">
-                    <a class="btn pt-2" asp-page="Rtr/SearchResult" asp-route-perda="0">
-                      <div id="summary-progress" class="text-white progress-number" style="font-size: 2rem;">
-                      </div>
-                    </a>
-                  </div>
-
-                  <div class="col-3 text-left pt-4">
-                    <div class="text-white progress-type">
-                      RTR<br>Progress
-                    </div>
-                  </div>
-                  
-                  <div class="col-3 text-right pt-2 progress-number-box">
-                    <a class="btn pt-2" asp-page="Rtr/SearchResult" asp-route-perda="1">
-                      <div id="summary-done" class="text-white progress-number" style="font-size: 2rem;">
-                      </div>
-                    </a>
-                  </div>
-
-                  <div class="col-3 text-left pt-4">
-                    <div class="text-white progress-type">
-                      RTR<br>Perda/Perpres
-                    </div>
-                  </div>
-                </div>
+      <div class="col-sm-6 offset-sm-3 py-2">
+        <div class="row rtr-progress-total">
+          <div class="col-6 pt-1 progress-number-box">
+            <a class="row pt-2" asp-page="Rtr/SearchResult" asp-route-perda="0">
+              <div id="summary-progress" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
               </div>
-            </div>
+              <div class="col-6 pt-2 text-white text-left progress-type">
+                RTR<br>Progress
+              </div>
+            </a>
+          </div>
+          <div class="col-6 pt-1 progress-number-box">
+            <a class="row pt-2" asp-page="Rtr/SearchResult" asp-route-perda="1">
+              <div id="summary-done" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
+              </div>
+              <div class="col-6 pt-2 text-white text-left progress-type">
+                RTR<br>Perda/Perpres
+              </div>
+            </a>
           </div>
         </div>
+      </div>
 
-        <div class="col-lg-6 offset-lg-3 text-center">
-          <form method="get"
-            asp-page="/Search/SearchResultByNama"
-            class="form-inline pt-4 pb-1 text-center">
-            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
-            <ejs-autocomplete
-              autocomplete="true"
-              autofill="true"
-              dataSource="@Model.NamaRtr"
-              id="home-autocomplete"
-              placeholder="Temukan RTR kamu disini"
-              name="Rtr.Nama"
-              class="form-control pl-5">
-            </ejs-autocomplete>
-              @* fields="@Model.FieldSettings"
-              filtering="filtering" *@
-          </form>
+      <div class="col-lg-6 offset-lg-3 text-center">
+        <form method="get"
+          asp-page="/Search/SearchResultByNama"
+          class="form-inline pt-4 pb-1 text-center">
+          <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+          <ejs-autocomplete
+            autocomplete="true"
+            autofill="true"
+            dataSource="@Model.NamaRtr"
+            id="home-autocomplete"
+            placeholder="Temukan RTR kamu disini"
+            name="Rtr.Nama"
+            class="form-control pl-5">
+          </ejs-autocomplete>
+            @* fields="@Model.FieldSettings"
+            filtering="filtering" *@
+        </form>
 
-          @* <a asp-page="/RtrIndexDaerah"
-            class="btn btn-success text-white font-italic px-4" 
-            style="border-radius: 15px;">
-            Temukan Rtr kamu disini
-          </a> *@
-        </div>
+        @* <a asp-page="/RtrIndexDaerah"
+          class="btn btn-success text-white font-italic px-4" 
+          style="border-radius: 15px;">
+          Temukan Rtr kamu disini
+        </a> *@
       </div>
     </div>
   </div>
