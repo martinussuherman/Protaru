@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MonevAtr.Models
@@ -7,15 +6,15 @@ namespace MonevAtr.Models
     {
         [NotMapped]
         public string DisplayNamaPulau =>
-            Pulau != null ? Pulau.Nama : String.Empty;
+            Pulau != null ? Pulau.Nama : string.Empty;
 
         [NotMapped]
         public string DisplayNamaKawasan =>
-            Kawasan != null ? Kawasan.Nama : String.Empty;
+            Kawasan != null ? Kawasan.Nama : string.Empty;
 
         [NotMapped]
         public string DisplayNamaProgress =>
-            ProgressAtr != null ? ProgressAtr.Nama : String.Empty;
+            ProgressAtr != null ? ProgressAtr.Nama : string.Empty;
 
         [NotMapped]
         public string DisplayNamaProvinsi
@@ -32,13 +31,13 @@ namespace MonevAtr.Models
                     return KabupatenKota.Provinsi.Nama;
                 }
 
-                return String.Empty;
+                return string.Empty;
             }
         }
 
         [NotMapped]
         public string DisplayNamaKabupatenKota =>
-            KabupatenKota != null ? KabupatenKota.Nama : String.Empty;
+            KabupatenKota != null ? KabupatenKota.Nama : string.Empty;
 
         [NotMapped]
         public string DisplayNamaProvinsiKabupatenKota
@@ -55,7 +54,7 @@ namespace MonevAtr.Models
                     return Provinsi.Nama;
                 }
 
-                return String.Empty;
+                return string.Empty;
             }
         }
 
@@ -65,6 +64,47 @@ namespace MonevAtr.Models
 
         [NotMapped]
         public JenisRtrEnum DisplayJenisRtr => (JenisRtrEnum)KodeJenisAtr;
+
+        [NotMapped]
+        public string DisplayJenisRtrShort
+        {
+            get
+            {
+                JenisRtrEnum jenis = (JenisRtrEnum)KodeJenisAtr;
+
+                if (jenis == JenisRtrEnum.RdtrT51 || jenis == JenisRtrEnum.RdtrT52)
+                {
+                    return "RDTR";
+                }
+
+                if (jenis == JenisRtrEnum.RtrwT50 || jenis == JenisRtrEnum.RtrwT51 || jenis == JenisRtrEnum.RtrwT52)
+                {
+                    return "RTRW";
+                }
+
+                if (jenis == JenisRtrEnum.RtrwnT51 || jenis == JenisRtrEnum.RtrwnT52)
+                {
+                    return "RTRWN";
+                }
+
+                if (jenis == JenisRtrEnum.RtrKpnT51 || jenis == JenisRtrEnum.RtrKpnT52)
+                {
+                    return "KPN";
+                }
+
+                if (jenis == JenisRtrEnum.RtrKsnT51 || jenis == JenisRtrEnum.RtrKsnT52)
+                {
+                    return "KSN";
+                }
+
+                if (jenis == JenisRtrEnum.RtrPulauT51 || jenis == JenisRtrEnum.RtrPulauT52)
+                {
+                    return "PULAU";
+                }
+
+                return string.Empty;
+            }
+        }
 
         [NotMapped]
         public bool TL1StatusYes
@@ -108,7 +148,7 @@ namespace MonevAtr.Models
 
         private bool IsStatusYes(string status)
         {
-            return !String.IsNullOrEmpty(status) && status == "1";
+            return !string.IsNullOrEmpty(status) && status == "1";
         }
     }
 }
