@@ -36,7 +36,8 @@ else
                     IsCanEdit="@Model.IsCanEdit" 
                     IsDisplayRegulation="@Model.IsDisplayRegulation" 
                     Url="@Model.Url" 
-                    Items="@Model.Hasil" />
+                    Items="@Model.Hasil" 
+                    HomepageResult="@HomepageResult"/>
                 @((MarkupString)PagingHtml.ContentAsString())
             </div>
         </div>
@@ -58,4 +59,7 @@ else
 
     [Parameter]
     public IHtmlContent PagingHtml { get; set; }
+
+    [Parameter]
+    public bool HomepageResult { get; set; } = false;
 }

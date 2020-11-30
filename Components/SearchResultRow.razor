@@ -39,7 +39,14 @@
 }
 else
 {
-    <td>@DisplayTahunPenyusunan()</td>
+    if (HomepageResult)
+    {
+        <td>@Item.DisplayJenisRtrShort</td>
+    }
+    else
+    {
+        <td>@DisplayTahunPenyusunan()</td>
+    }
 }
 
     <td>@Item.DisplayNamaProgress</td>
@@ -66,6 +73,9 @@ else
 
     [Parameter]
     public Models.Atr Item { get; set; }
+
+    [Parameter]
+    public bool HomepageResult { get; set; }
 
     public string DisplayTahun()
     {

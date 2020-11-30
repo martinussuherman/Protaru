@@ -45,7 +45,14 @@
 }
 else
 {
+    if (HomepageResult)
+    {
+            <th>Jenis RTR</th>
+    }
+    else
+    {
             <th>Tahun Penyusunan</th>
+    }
 }
 
             <th>Progress</th>
@@ -66,7 +73,8 @@ else
         IsDisplayRegulation="@IsDisplayRegulation" 
         DisplayedLocation="@DisplayedLocation" 
         Url="@Url" 
-        Item="@item">
+        Item="@item"
+        HomepageResult="@HomepageResult">
     </SearchResultRow>
 
     index++;
@@ -93,6 +101,9 @@ else
 
     [Parameter]
     public IPager<Models.Atr> Items { get; set; }
+
+    [Parameter]
+    public bool HomepageResult { get; set; } = false;
 
     @* private bool isCanEdit;
 
