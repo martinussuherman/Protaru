@@ -37,16 +37,14 @@
     <td>@Item.Nomor</td>
     <td>@DisplayTahun()</td>
 }
-else
+else if (!HomepageResult)
 {
-    if (HomepageResult)
-    {
-        <td>@Item.DisplayJenisRtrShort</td>
-    }
-    else
-    {
-        <td>@DisplayTahunPenyusunan()</td>
-    }
+    <td>@DisplayTahunPenyusunan()</td>
+}
+
+@if (HomepageResult)
+{
+    <td>@Item.DisplayJenisRtrShort</td>
 }
 
     <td>@Item.DisplayNamaProgress</td>
