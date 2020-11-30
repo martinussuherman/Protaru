@@ -43,16 +43,14 @@
             <th>Nomor @RegulationName</th>
             <th>Tahun @RegulationName</th>
 }
-else
+else if (!HomepageResult)
 {
-    if (HomepageResult)
-    {
-            <th>Jenis RTR</th>
-    }
-    else
-    {
             <th>Tahun Penyusunan</th>
-    }
+}
+
+@if (HomepageResult)
+{
+            <th>Jenis RTR</th>
 }
 
             <th>Progress</th>
