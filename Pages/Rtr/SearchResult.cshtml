@@ -4,7 +4,7 @@
 @{
     Layout = "_RtrDaerahLayout";
     ViewData["Title"] = "Monitoring & Evaluasi RTR";
-    ViewData["PageTitle"] = "RTR";
+    ViewData["PageTitle"] = Model.Rtr.Perda == 1 ? "RTR Perda/Perpres" : "RTR Progress";
     var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
 }
 
@@ -13,6 +13,6 @@
     param-PageTitle="@ViewData["PageTitle"]"
     param-Title="@ViewData["Title"]"
     param-Model="@Model"
-    param-DisplayedLocation="@RtrLocationEnum.ProvinsiKabKota"
+    param-DisplayedLocation="@RtrLocationEnum.None"
     param-PagingHtml="@pagingHtml" 
     param-HomepageResult="@true" />
