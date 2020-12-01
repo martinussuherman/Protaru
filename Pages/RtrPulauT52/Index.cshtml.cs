@@ -31,7 +31,6 @@ namespace MonevAtr.Pages.RtrPulauT52
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["Pulau"] = await selectListUtilities.Pulau();
             ViewData["Tahun"] = await selectListUtilities.TahunPerpresRtrPulauT52();
             return Page();
         }
