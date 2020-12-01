@@ -31,8 +31,6 @@ namespace MonevAtr.Pages.RtrwT50
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
-            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
             ViewData["Tahun"] = await selectListUtilities.TahunPerdaRtrwT50();
             return Page();
         }

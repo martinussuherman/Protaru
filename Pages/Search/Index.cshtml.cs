@@ -57,8 +57,6 @@ namespace MonevAtr.Pages.Search
             TahunPerda =
                 await selectListUtilities.TahunPerdaAsync(JenisRtrEnum.All);
 
-            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
-            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
             return Page();
         }
 

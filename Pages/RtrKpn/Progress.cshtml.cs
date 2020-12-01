@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MonevAtr.Models;
@@ -7,20 +6,11 @@ namespace MonevAtr.Pages.RtrKpn
 {
     public class ProgressModel : PageModel
     {
-        public ProgressModel(PomeloDbContext context)
-        {
-            selectListUtilities = new SelectListUtilities(context);
-        }
-
         public AtrSearch Rtr { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
-            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
-            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
             return Page();
         }
-
-        private readonly SelectListUtilities selectListUtilities;
     }
 }

@@ -9,15 +9,9 @@
 
 <form>
     <div class="card-body">
-        <div class="col-md-12 form-group">
-            <label class="form-label">Provinsi</label>
-            <select id="provinsi" asp-for="Rtr.Prov" class ="form-control" asp-items="ViewBag.Provinsi"></select>
-        </div>
-
-        <div class="col-md-12 form-group">
-            <label class="form-label">Kabupaten/Kota</label>
-            <select id="kabupaten-kota" asp-for="Rtr.KabKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
-        </div>
+        @await Component.InvokeAsync(
+            "ProvinsiKabKota",
+            new { isInput = false })
 
         <div class="col-md-12 form-group">
             <label class="form-label">Nama RTR</label>

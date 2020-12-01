@@ -37,15 +37,9 @@ int jenisIndex = 1;
 }
                         </div>
 
-                        <div class="col-md-12 form-group">
-                            <label asp-for="Rtr.Prov" class="form-label"></label>
-                            <select id="provinsi" asp-for="Rtr.Prov" class ="form-control" asp-items="ViewBag.Provinsi"></select>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label asp-for="Rtr.KabKota" class="form-label"></label>
-                            <select id="kabupaten-kota" asp-for="Rtr.KabKota" class ="form-control" asp-items="ViewBag.KabupatenKota"></select>
-                        </div>
+                        @await Component.InvokeAsync(
+                            "ProvinsiKabKota",
+                            new { isInput = false })
 
 @{
     ViewData["Caption"] = "Surat/BA Rekomendasi Gubernur";

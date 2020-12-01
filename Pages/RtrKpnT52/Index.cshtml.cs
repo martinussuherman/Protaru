@@ -31,8 +31,6 @@ namespace MonevAtr.Pages.RtrKpnT52
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["Provinsi"] = await selectListUtilities.Provinsi();
-            ViewData["KabupatenKota"] = selectListUtilities.EmptyKabupatenKota;
             ViewData["Tahun"] = await selectListUtilities.TahunPerpresRtrKpnT52();
             return Page();
         }
