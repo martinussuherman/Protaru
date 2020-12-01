@@ -16,7 +16,6 @@ namespace MonevAtr.Pages.RtrKsn
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["Kawasan"] = await selectListUtilities.Kawasan();
             ViewData["Tahun"] = await selectListUtilities.TahunPerpresRtrKsnT51();
             return Page();
         }
