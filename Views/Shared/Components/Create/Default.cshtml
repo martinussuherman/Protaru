@@ -56,6 +56,27 @@
     }
 }
 
+@if (Model.Location == RtrLocationEnum.Pulau)
+{
+    if (Model.ReadOnlyLocation)
+    {
+        <div class="col-md-12 form-group">
+            <label class="form-label">Pulau</label>
+            <input 
+                type="text" 
+                class ="form-control" 
+                value="@Model.Rtr.DisplayNamaPulau" 
+                disabled />
+        </div>
+    }
+    else
+    {
+        @await Component.InvokeAsync(
+            "Pulau",
+            new { isInput = true })
+    }
+}
+
 @await Component.InvokeAsync(
     "Progress", 
     new { jenisRtr = Model.Rtr.KodeJenisAtr, progress = Model.Rtr.KodeProgressAtr })
