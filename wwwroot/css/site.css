@@ -139,6 +139,11 @@
   text-align: right;
 }
 
+.navbar-brand img
+{
+  max-width: 302px;
+}
+
 /* New style 22-08-2020 */
 
 body {
