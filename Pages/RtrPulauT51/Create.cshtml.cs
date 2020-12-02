@@ -13,17 +13,15 @@ namespace MonevAtr.Pages.RtrPulauT51
     {
         public CreateModel(PomeloDbContext context)
         {
-            selectListUtilities = new SelectListUtilities(context);
             rtrUtilities = new RtrUtilities(context);
         }
 
         [BindProperty]
         public Models.Atr Rtr { get; set; } = new Models.Atr();
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrPulauT51;
-            ViewData["Pulau"] = await selectListUtilities.Pulau();
             return Page();
         }
 
@@ -39,6 +37,5 @@ namespace MonevAtr.Pages.RtrPulauT51
         }
 
         private readonly RtrUtilities rtrUtilities;
-        private readonly SelectListUtilities selectListUtilities;
     }
 }
