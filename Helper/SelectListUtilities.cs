@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Itm.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -97,7 +96,7 @@ namespace MonevAtr.Models
         public async Task<SelectList> Provinsi()
         {
             List<SelectListItem> list = await ProvinsiAsyncInternal();
-            return new SelectList(list.Prepend(_provinsiOptionalTitle), _valueProperty, _textProperty);
+            return new SelectList(list.Prepend(_provinsiTitleOptional), _valueProperty, _textProperty);
         }
 
         public async Task<IEnumerable<SelectListItem>> KabupatenKotaAsync(int kodeProvinsi = -1)
@@ -106,7 +105,7 @@ namespace MonevAtr.Models
             {
                 return new List<SelectListItem>
                 {
-                    _kabupatenKotaTitle
+                    _kabupatenKotaTitleOptional
                 };
             }
 
@@ -121,7 +120,7 @@ namespace MonevAtr.Models
                 })
                 .ToListAsync();
 
-            return list.Prepend(_kabupatenKotaTitle);
+            return list.Prepend(_kabupatenKotaTitleOptional);
 
         }
         public async Task<SelectList> KabupatenKota(int kodeProvinsi)
@@ -504,10 +503,12 @@ namespace MonevAtr.Models
             new SelectListItem("Pilih Progress RTR", string.Empty);
         private static readonly SelectListItem _provinsiTitle =
             new SelectListItem("Pilih Provinsi", string.Empty);
-        private static readonly SelectListItem _provinsiOptionalTitle =
+        private static readonly SelectListItem _provinsiTitleOptional =
             new SelectListItem("Pilih Provinsi", "0");
         private static readonly SelectListItem _kabupatenKotaTitle =
             new SelectListItem("Pilih Kabupaten/Kota", string.Empty);
+        private static readonly SelectListItem _kabupatenKotaTitleOptional =
+            new SelectListItem("Pilih Kabupaten/Kota", "0");
         private static readonly SelectListItem _kawasanTitle =
             new SelectListItem("Pilih Kawasan", string.Empty);
         private static readonly SelectListItem _pulauTitle =
