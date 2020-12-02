@@ -77,7 +77,13 @@ namespace MonevAtr.Models
 
         public async Task<IEnumerable<SelectListItem>> ProvinsiAsync()
         {
-            List<SelectListItem> list = await _context.Provinsi
+            List<SelectListItem> list = await ProvinsiAsyncInternal();
+
+            return list.Prepend(_provinsiTitle);
+        }
+        private async Task<List<SelectListItem>> ProvinsiAsyncInternal()
+        {
+            return await _context.Provinsi
                 .Where(p => p.Kode > 0)
                 .OrderBy(p => p.Nama)
                 .AsNoTracking()
@@ -87,12 +93,11 @@ namespace MonevAtr.Models
                     Text = c.Nama
                 })
                 .ToListAsync();
-
-            return list.Prepend(_provinsiTitle);
         }
         public async Task<SelectList> Provinsi()
         {
-            return new SelectList(await ProvinsiAsync(), _valueProperty, _textProperty);
+            List<SelectListItem> list = await ProvinsiAsyncInternal();
+            return new SelectList(list.Prepend(_provinsiOptionalTitle), _valueProperty, _textProperty);
         }
 
         public async Task<IEnumerable<SelectListItem>> KabupatenKotaAsync(int kodeProvinsi = -1)
@@ -499,6 +504,8 @@ namespace MonevAtr.Models
             new SelectListItem("Pilih Progress RTR", string.Empty);
         private static readonly SelectListItem _provinsiTitle =
             new SelectListItem("Pilih Provinsi", string.Empty);
+        private static readonly SelectListItem _provinsiOptionalTitle =
+            new SelectListItem("Pilih Provinsi", "0");
         private static readonly SelectListItem _kabupatenKotaTitle =
             new SelectListItem("Pilih Kabupaten/Kota", string.Empty);
         private static readonly SelectListItem _kawasanTitle =
