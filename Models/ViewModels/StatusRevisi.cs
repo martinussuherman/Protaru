@@ -71,15 +71,15 @@ namespace MonevAtr.Models
 
         private static readonly StatusRevisi kosong = new StatusRevisi(0, String.Empty);
 
-        private static readonly StatusRevisi regularT51 = new StatusRevisi(1, "T5-1");
+        private static readonly StatusRevisi regularT51 = new StatusRevisi(1, "Lima tahun pertama");
 
-        private static readonly StatusRevisi regularT52 = new StatusRevisi(2, "T5-2");
+        private static readonly StatusRevisi regularT52 = new StatusRevisi(2, "Lima tahun kedua");
 
-        private static readonly StatusRevisi revisiT52 = new StatusRevisi(4, "T5-2");
+        private static readonly StatusRevisi revisiT52 = new StatusRevisi(4, "Lima tahun kedua");
 
-        private static readonly StatusRevisi revisiT53 = new StatusRevisi(5, "T5-3");
+        private static readonly StatusRevisi revisiT53 = new StatusRevisi(5, "Lima tahun ketiga");
 
-        private static readonly StatusRevisi revisiT54 = new StatusRevisi(6, "T5-4");
+        private static readonly StatusRevisi revisiT54 = new StatusRevisi(6, "Lima tahun keempat");
 
         private static readonly List<StatusRevisi> listRegular = new List<StatusRevisi>
         {
