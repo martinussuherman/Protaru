@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System.Linq;
 
 namespace MonevAtr
 {
@@ -35,22 +36,28 @@ namespace MonevAtr
 
             ExcelPackage excel = new ExcelPackage();
             ExcelWorksheet worksheet = excel.Workbook.Worksheets.Add(namaRtr);
+            RtrUtilities utilities = new RtrUtilities(context);
+            List<KelompokDokumen> kelompokDokumen = await utilities
+                .LoadKelompokDokumenDanDokumen((int)jenisRtr);
 
             worksheet.SetCommonWorksheetHeader(namaRtr);
-            worksheet.SetCommonRtrProvKabKotaWorksheetHeader();
+            int startCol = worksheet.SetCommonRtrProvKabKotaWorksheetHeader();
+            worksheet.DocumentColumnHeader(kelompokDokumen, startCol);
 
             //Body of table  
             //  
-            int row = 3;
+            int row = 4;
 
             foreach (Atr item in list)
             {
-                worksheet.Cells[row, 1].Value = (row - 2).ToString();
+                worksheet.Cells[row, 1].Value = row - 3;
                 worksheet.FillCommonRtrProvKabKotaWorksheet(item, row);
+                await utilities.MergeRtrDokumenDenganKelompokDokumen(item, kelompokDokumen);
+                worksheet.DocumentColumnFill(kelompokDokumen, row, startCol);
                 row++;
             }
 
-            worksheet.SetAutoFit(1, 17);
+            worksheet.SetAutoFit(1, 350);
             return model.SaveWorksheetForDownload(excel, "Export-" + namaRtr + ".xlsx");
         }
 
@@ -76,47 +83,53 @@ namespace MonevAtr
 
             ExcelPackage excel = new ExcelPackage();
             ExcelWorksheet worksheet = excel.Workbook.Worksheets.Add(namaRtr);
+            RtrUtilities utilities = new RtrUtilities(context);
+            List<KelompokDokumen> kelompokDokumen = await utilities
+                .LoadKelompokDokumenDanDokumen((int)jenisRtr);
 
             worksheet.SetCommonWorksheetHeader(namaRtr);
-            worksheet.SetCommonRtrOneFieldWorksheetHeader();
+            int startCol = worksheet.SetCommonRtrOneFieldWorksheetHeader();
+            worksheet.DocumentColumnHeader(kelompokDokumen, startCol);
 
-            switch (jenisRtr)
+            if (jenisRtr == JenisRtrEnum.RtrPulauT51 ||
+                jenisRtr == JenisRtrEnum.RtrPulauT52)
             {
-                case JenisRtrEnum.RtrPulauT51:
-                case JenisRtrEnum.RtrPulauT52:
-                    worksheet.Cells[2, 3].Value = "Pulau";
-                    break;
-                case JenisRtrEnum.RtrKsnT51:
-                case JenisRtrEnum.RtrKsnT52:
-                    worksheet.Cells[2, 3].Value = "Kawasan";
-                    break;
+                worksheet.Cells[2, 3].Value = "Pulau";
+            }
+
+            if (jenisRtr == JenisRtrEnum.RtrKsnT51 ||
+                jenisRtr == JenisRtrEnum.RtrKsnT52)
+            {
+                worksheet.Cells[2, 3].Value = "Kawasan";
             }
 
             //Body of table  
             //  
-            int row = 3;
+            int row = 4;
 
             foreach (Atr item in list)
             {
-                worksheet.Cells[row, 1].Value = (row - 2).ToString();
+                worksheet.Cells[row, 1].Value = row - 3;
 
-                switch (jenisRtr)
+                if (jenisRtr == JenisRtrEnum.RtrPulauT51 ||
+                    jenisRtr == JenisRtrEnum.RtrPulauT52)
                 {
-                    case JenisRtrEnum.RtrPulauT51:
-                    case JenisRtrEnum.RtrPulauT52:
-                        worksheet.Cells[row, 3].Value = item.DisplayNamaPulau;
-                        break;
-                    case JenisRtrEnum.RtrKsnT51:
-                    case JenisRtrEnum.RtrKsnT52:
-                        worksheet.Cells[row, 3].Value = item.DisplayNamaKawasan;
-                        break;
+                    worksheet.Cells[row, 3].Value = item.DisplayNamaPulau;
+                }
+
+                if (jenisRtr == JenisRtrEnum.RtrKsnT51 ||
+                    jenisRtr == JenisRtrEnum.RtrKsnT52)
+                {
+                    worksheet.Cells[row, 3].Value = item.DisplayNamaKawasan;
                 }
 
                 worksheet.FillCommonRtrOneFieldWorksheet(item, row);
+                await utilities.MergeRtrDokumenDenganKelompokDokumen(item, kelompokDokumen);
+                worksheet.DocumentColumnFill(kelompokDokumen, row, startCol);
                 row++;
             }
 
-            worksheet.SetAutoFit(1, 17);
+            worksheet.SetAutoFit(1, 350);
             return model.SaveWorksheetForDownload(excel, "Export-" + namaRtr + ".xlsx");
         }
 
@@ -140,25 +153,30 @@ namespace MonevAtr
 
             ExcelPackage excel = new ExcelPackage();
             ExcelWorksheet worksheet = excel.Workbook.Worksheets.Add(namaRtr);
+            RtrUtilities utilities = new RtrUtilities(context);
+            List<KelompokDokumen> kelompokDokumen = await utilities
+                .LoadKelompokDokumenDanDokumen((int)jenisRtr);
 
             worksheet.SetCommonWorksheetHeader(namaRtr);
-            worksheet.SetCommonRtrZeroFieldWorksheetHeader();
+            int startCol = worksheet.SetCommonRtrZeroFieldWorksheetHeader();
+            worksheet.DocumentColumnHeader(kelompokDokumen, startCol);
 
             //Body of table  
             //  
-            int row = 3;
+            int row = 4;
 
             foreach (Atr item in list)
             {
-                worksheet.Cells[row, 1].Value = (row - 2).ToString();
+                worksheet.Cells[row, 1].Value = row - 3;
                 worksheet.FillCommonRtrZeroFieldWorksheet(item, row);
+                await utilities.MergeRtrDokumenDenganKelompokDokumen(item, kelompokDokumen);
+                worksheet.DocumentColumnFill(kelompokDokumen, row, startCol);
                 row++;
             }
 
-            worksheet.SetAutoFit(1, 17);
+            worksheet.SetAutoFit(1, 350);
             return model.SaveWorksheetForDownload(excel, "Export-" + namaRtr + ".xlsx");
         }
-
 
         private static string RtrName(JenisRtrEnum jenisRtr)
         {
@@ -200,8 +218,7 @@ namespace MonevAtr
 
             return String.Empty;
         }
-
-        public static void SetCommonWorksheetHeader(this ExcelWorksheet worksheet, string title)
+        private static void SetCommonWorksheetHeader(this ExcelWorksheet worksheet, string title)
         {
             worksheet.TabColor = System.Drawing.Color.Black;
             worksheet.DefaultRowHeight = 12;
@@ -217,8 +234,7 @@ namespace MonevAtr
             worksheet.Row(2).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             worksheet.Row(2).Style.Font.Bold = true;
         }
-
-        public static void SetCommonRtrProvKabKotaWorksheetHeader(this ExcelWorksheet worksheet)
+        private static int SetCommonRtrProvKabKotaWorksheetHeader(this ExcelWorksheet worksheet)
         {
             worksheet.Cells[2, 1].Value = "No";
             worksheet.Cells[2, 2].Value = "Nama";
@@ -237,9 +253,9 @@ namespace MonevAtr
             worksheet.Cells[2, 15].Value = "Keterangan";
             worksheet.Cells[2, 16].Value = "Pembaruan Terakhir";
             worksheet.Cells[2, 17].Value = "Pembaruan Oleh";
+            return 18;
         }
-
-        public static void FillCommonRtrProvKabKotaWorksheet(
+        private static void FillCommonRtrProvKabKotaWorksheet(
             this ExcelWorksheet worksheet,
             Atr item,
             int row)
@@ -261,8 +277,7 @@ namespace MonevAtr
             worksheet.Cells[row, 16].Value = item.PembaruanTerakhir;
             worksheet.Cells[row, 17].Value = item.PembaruanOleh;
         }
-
-        public static void SetCommonRtrOneFieldWorksheetHeader(this ExcelWorksheet worksheet)
+        private static int SetCommonRtrOneFieldWorksheetHeader(this ExcelWorksheet worksheet)
         {
             worksheet.Cells[2, 1].Value = "No";
             worksheet.Cells[2, 2].Value = "Nama";
@@ -279,9 +294,9 @@ namespace MonevAtr
             worksheet.Cells[2, 14].Value = "Keterangan";
             worksheet.Cells[2, 15].Value = "Pembaruan Terakhir";
             worksheet.Cells[2, 16].Value = "Pembaruan Oleh";
+            return 17;
         }
-
-        public static void FillCommonRtrOneFieldWorksheet(
+        private static void FillCommonRtrOneFieldWorksheet(
             this ExcelWorksheet worksheet,
             Atr item,
             int row)
@@ -301,8 +316,7 @@ namespace MonevAtr
             worksheet.Cells[row, 15].Value = item.PembaruanTerakhir;
             worksheet.Cells[row, 16].Value = item.PembaruanOleh;
         }
-
-        public static void SetCommonRtrZeroFieldWorksheetHeader(this ExcelWorksheet worksheet)
+        private static int SetCommonRtrZeroFieldWorksheetHeader(this ExcelWorksheet worksheet)
         {
             worksheet.Cells[2, 1].Value = "No";
             worksheet.Cells[2, 2].Value = "Nama";
@@ -319,9 +333,9 @@ namespace MonevAtr
             worksheet.Cells[2, 13].Value = "Keterangan";
             worksheet.Cells[2, 14].Value = "Pembaruan Terakhir";
             worksheet.Cells[2, 15].Value = "Pembaruan Oleh";
+            return 16;
         }
-
-        public static void FillCommonRtrZeroFieldWorksheet(
+        private static void FillCommonRtrZeroFieldWorksheet(
             this ExcelWorksheet worksheet,
             Atr item,
             int row)
@@ -341,8 +355,7 @@ namespace MonevAtr
             worksheet.Cells[row, 14].Value = item.PembaruanTerakhir;
             worksheet.Cells[row, 15].Value = item.PembaruanOleh;
         }
-
-        public static IActionResult SaveWorksheetForDownload(
+        private static IActionResult SaveWorksheetForDownload(
             this PageModel model,
             ExcelPackage excel,
             string fileName)
@@ -356,12 +369,40 @@ namespace MonevAtr
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 fileName);
         }
-
-        public static void SetAutoFit(this ExcelWorksheet worksheet, int startCol, int endCol)
+        private static void SetAutoFit(this ExcelWorksheet worksheet, int startCol, int endCol)
         {
             for (int counter = startCol; counter <= endCol; counter++)
             {
                 worksheet.Column(counter).AutoFit();
+            }
+        }
+        private static void DocumentColumnHeader(
+            this ExcelWorksheet worksheet,
+            List<KelompokDokumen> kelompokDokumen,
+            int startCol)
+        {
+            foreach (Dokumen dokumen in kelompokDokumen.SelectMany(kelompok => kelompok.Dokumen))
+            {
+                worksheet.Cells[2, startCol].Value = dokumen.Nama;
+                worksheet.Cells[2, startCol, 2, startCol + 3].Merge = true;
+                worksheet.Cells[3, startCol++].Value = "Nomor";
+                worksheet.Cells[3, startCol++].Value = "Tanggal";
+                worksheet.Cells[3, startCol++].Value = "Keterangan";
+                worksheet.Cells[3, startCol++].Value = "Upload File";
+            }
+        }
+        private static void DocumentColumnFill(
+            this ExcelWorksheet worksheet,
+            List<KelompokDokumen> kelompokDokumen,
+            int row,
+            int startCol)
+        {
+            foreach (Dokumen dokumen in kelompokDokumen.SelectMany(kelompok => kelompok.Dokumen))
+            {
+                worksheet.Cells[row, startCol++].Value = dokumen.DetailDokumen.Nomor;
+                worksheet.Cells[row, startCol++].Value = dokumen.DetailDokumen.DisplayTanggalForView;
+                worksheet.Cells[row, startCol++].Value = dokumen.DetailDokumen.Keterangan;
+                worksheet.Cells[row, startCol++].Value = dokumen.DetailDokumen.FilePathAda ? "Ada" : "Tidak Ada";
             }
         }
     }
