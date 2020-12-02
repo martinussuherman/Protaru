@@ -40,13 +40,10 @@ namespace MonevAtr.Pages.RtrwT52
                 RtrDetail.Rtr,
                 id,
                 RtrDetail.KelompokDokumenList);
-            ViewData["StatusRevisi"] = StatusRevisi.NamaStatusRevisiRevisi(
-                RtrDetail.Rtr.StatusRevisi);
             return Page();
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }

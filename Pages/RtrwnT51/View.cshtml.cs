@@ -30,18 +30,14 @@ namespace MonevAtr.Pages.RtrwnT51
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 RtrDetail.Rtr,
                 id,
                 RtrDetail.KelompokDokumenList);
-            ViewData["StatusRevisi"] = StatusRevisi.NamaStatusRevisiRegular(
-                RtrDetail.Rtr.StatusRevisi);
             return Page();
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }

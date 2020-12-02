@@ -30,7 +30,6 @@ namespace MonevAtr.Pages.RtrKpnT51
                 .Include(a => a.KabupatenKota.Provinsi)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 RtrDetail.Rtr,
                 id,
@@ -39,7 +38,6 @@ namespace MonevAtr.Pages.RtrKpnT51
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }

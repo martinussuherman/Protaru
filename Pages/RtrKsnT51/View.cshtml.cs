@@ -28,7 +28,6 @@ namespace MonevAtr.Pages.RtrKsnT51
                 .Include(a => a.Kawasan)
                 .Include(a => a.ProgressAtr)
                 .FirstOrDefaultAsync(m => m.Kode == id);
-
             await rtrUtilities.MergeRtrDokumenDenganKelompokDokumen(
                 RtrDetail.Rtr,
                 id,
@@ -37,7 +36,6 @@ namespace MonevAtr.Pages.RtrKsnT51
         }
 
         private readonly RtrUtilities rtrUtilities;
-
         private readonly PomeloDbContext _context;
     }
 }
