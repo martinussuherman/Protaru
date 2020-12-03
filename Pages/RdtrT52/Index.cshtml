@@ -1,6 +1,8 @@
 @page
 @model IndexModel
 
+@using MonevAtr.Models
+
 @{
     Layout = "_RtrDaerahIndexLayout";
     ViewData["Title"] = "Pencarian RDTR";
@@ -26,7 +28,9 @@
             <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
         </div>
 
-        @await Html.PartialAsync("_ProgressSearchPartial", Model.ProgressAtr)
+        @await Component.InvokeAsync(
+            "ProgressMultiSelect",
+            new { jenisRtr = JenisRtrEnum.RdtrT52 })
     </div>
 
     <div class="card-footer text-center">

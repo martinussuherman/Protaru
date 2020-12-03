@@ -1,6 +1,8 @@
 @page
 @model IndexModel
 
+@using MonevAtr.Models
+
 @{
     Layout = "_RtrNasionalIndexLayout";
     ViewData["Title"] = "Pencarian RTRWN";
@@ -24,7 +26,9 @@
             <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
         </div>
 
-        @await Html.PartialAsync("_ProgressSearchPartial", Model.ProgressAtr)
+        @await Component.InvokeAsync(
+            "ProgressMultiSelect",
+            new { jenisRtr = JenisRtrEnum.RtrwnT52 })
     </div>
 
     <div class="card-footer text-center">
@@ -32,8 +36,3 @@
         <a asp-page="./Index" class="btn btn-primary">Reset</a>
     </div>
 </form>
-
-@section Scripts 
-{
-    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
-}

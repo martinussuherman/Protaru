@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,23 +9,11 @@ namespace MonevAtr.Pages.RtrPulauT51
     {
         public IndexModel(PomeloDbContext context)
         {
-            _context = context;
             selectListUtilities = new SelectListUtilities(context);
         }
 
         [BindProperty]
         public AtrSearch Rtr { get; set; }
-
-        public IList<Models.ProgressAtr> ProgressAtr
-        {
-            get
-            {
-                return _context.ProgressAtr
-                    .Where(p => p.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT51)
-                    .OrderBy(p => p.Nomor)
-                    .ToList();
-            }
-        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -36,7 +22,5 @@ namespace MonevAtr.Pages.RtrPulauT51
         }
 
         private readonly SelectListUtilities selectListUtilities;
-
-        private readonly PomeloDbContext _context;
     }
 }
