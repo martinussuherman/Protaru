@@ -55,7 +55,7 @@ namespace MonevAtr.Pages.Search
             TahunPersetujuanSubstansi =
                 await selectListUtilities.TahunPersetujuanSubstansiListAsync();
             TahunPerda =
-                await selectListUtilities.TahunPerdaAsync(JenisRtrEnum.All);
+                await selectListUtilities.TahunAsync(JenisRtrEnum.All);
 
             return Page();
         }
