@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Protaru.Helper;
 
@@ -83,6 +84,10 @@ namespace MonevAtr
                 .Configure<RazorViewEngineOptions>(options =>
                 {
                     options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
+                })
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Protaru API", Version = "v1" });
                 });
         }
 
@@ -101,8 +106,10 @@ namespace MonevAtr
                 app.UseHsts();
             }
 
+            string basePath = Configuration.GetValue<string>("BasePath");
+
             app
-                .UsePathBase(Configuration.GetValue<string>("BasePath"))
+                .UsePathBase(basePath)
                 .UseRouting()
                 .UseForwardedHeaders(new ForwardedHeadersOptions
                 {
@@ -121,7 +128,14 @@ namespace MonevAtr
                     FileProvider = new PhysicalFileProvider(
                         Path.Combine(env.WebRootPath, "upload")),
                     RequestPath = new PathString("/upload")
-                });
+                })
+                .UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint(
+                        $"{basePath}/swagger/v1/swagger.json",
+                        "Protaru API V1");
+                }); 
 
             PagerUrlHelper.ItemPerPage = 200;
 

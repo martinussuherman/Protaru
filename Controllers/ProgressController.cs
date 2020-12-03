@@ -560,9 +560,9 @@ namespace Protaru.Controllers
                 "red");
 
             List<MapData> result = new List<MapData>(pulauResult);
-            // result.AddRange(ksnResult);
-            // result.AddRange(rtrwnResult);
-            // result.AddRange(kpnResult);
+            result.AddRange(ksnResult);
+            result.AddRange(rtrwnResult);
+            result.AddRange(kpnResult);
             result.RemoveAll(c => c.DoneCount == 0 && c.ProgressCount == 0);
             return result;
         }
