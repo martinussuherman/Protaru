@@ -1,0 +1,16 @@
+@namespace Protaru.ViewComponents.Rtr
+
+@model TahunSearchViewComponent.ViewModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Syncfusion.EJ2
+
+<div class="col-md-12 form-group">
+    <label class="form-label">@Model.Label</label>
+    <select 
+        id="rtr-tahun" 
+        name="Rtr.Tahun" 
+        class ="form-control" 
+        asp-items="Model.Tahun">
+    </select>
+</div>
