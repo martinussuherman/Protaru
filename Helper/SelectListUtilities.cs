@@ -259,7 +259,18 @@ namespace MonevAtr.Models
             return Tahun(list, "Pilih Tahun");
         }
 
-        public async Task<List<int>> TahunPerdaAsync(JenisRtrEnum jenis)
+        public async Task<IEnumerable<SelectListItem>> TahunAsyncOptional(JenisRtrEnum jenis)
+        {
+            IEnumerable<SelectListItem> temp = (await TahunAsync(jenis))
+                .Select(c => new SelectListItem
+                {
+                    Value = c.ToString(),
+                    Text = c.ToString()
+                });
+
+            return temp.Prepend(_yearInputTitleOptional);
+        }
+        public async Task<List<int>> TahunAsync(JenisRtrEnum jenis)
         {
             return (await _context.Atr
                 .ByJenis(jenis)
@@ -269,89 +280,6 @@ namespace MonevAtr.Models
                 .OrderBy(a => a)
                 .ToListAsync())
                 .ConvertAll(x => (int)x);
-        }
-
-        public async Task<List<int>> TahunPerpresAsync(JenisRtrEnum jenis)
-        {
-            return (await _context.Atr
-                .ByJenis(jenis)
-                .AsNoTracking()
-                .Select(a => a.Tahun)
-                .Distinct()
-                .OrderBy(a => a)
-                .ToListAsync())
-                .ConvertAll(x => (int)x);
-        }
-
-
-        public async Task<SelectList> TahunPerdaRdtrT51()
-        {
-            return await TahunPerda(JenisRtrEnum.RdtrT51);
-        }
-
-        public async Task<SelectList> TahunPerdaRdtrT52()
-        {
-            return await TahunPerda(JenisRtrEnum.RdtrT52);
-        }
-
-        public async Task<SelectList> TahunPerdaRtrwT50()
-        {
-            return await TahunPerda(JenisRtrEnum.RtrwT50);
-        }
-
-        public async Task<SelectList> TahunPerdaRtrwT51()
-        {
-            return await TahunPerda(JenisRtrEnum.RtrwT51);
-        }
-
-        public async Task<SelectList> TahunPerdaRtrwT52()
-        {
-            return await TahunPerda(JenisRtrEnum.RtrwT52);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrPulauT51()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrPulauT51);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrPulauT52()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrPulauT52);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrKsnT51()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrKsnT51);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrKsnT52()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrKsnT52);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrwnT51()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrwnT51);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrwnT52()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrwnT52);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrKpnT51()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrKpnT51);
-        }
-
-        public async Task<SelectList> TahunPerpresRtrKpnT52()
-        {
-            return await TahunPerpres(JenisRtrEnum.RtrKpnT52);
-        }
-
-        public async Task<SelectList> TahunPerdaRtr()
-        {
-            return await TahunPerda(JenisRtrEnum.All);
         }
 
         public async Task<SelectList> KelompokDokumen()
@@ -438,18 +366,6 @@ namespace MonevAtr.Models
             return await query
                 .OrderBy(p => p.Nomor)
                 .ToListAsync();
-        }
-        private async Task<SelectList> TahunPerda(JenisRtrEnum jenis)
-        {
-            return Tahun(
-                await TahunPerdaAsync(jenis),
-                "Pilih Tahun Perda");
-        }
-        private async Task<SelectList> TahunPerpres(JenisRtrEnum jenis)
-        {
-            return Tahun(
-                await TahunPerpresAsync(jenis),
-                "Pilih Tahun Perpres");
         }
         private SelectList Tahun(List<int> listSumber, string pilih)
         {
