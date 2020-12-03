@@ -1,5 +1,5 @@
 @page
-@model IndexModel
+@model Protaru.PageModels.Search
 
 @using MonevAtr.Models
 
@@ -23,11 +23,10 @@
             <label class="form-label">Nomor Perda</label>
             <input asp-for="Rtr.Nomor" class="form-control" />
         </div>
-        <div class="col-md-12 form-group">
-            <label class="form-label">Tahun Perda</label>
-            <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
-        </div>
 
+        @await Component.InvokeAsync(
+            "TahunSearch",
+            new { jenisRtr = JenisRtrEnum.RdtrT52 })
         @await Component.InvokeAsync(
             "ProgressMultiSelect",
             new { jenisRtr = JenisRtrEnum.RdtrT52 })

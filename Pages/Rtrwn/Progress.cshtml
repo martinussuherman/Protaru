@@ -1,5 +1,5 @@
 @page
-@model ProgressModel
+@model Protaru.PageModels.Search
 
 @{
     Layout = "_RtrNasionalIndexLayout";
@@ -22,8 +22,3 @@
         <a asp-page="./Index" class="btn btn-primary">Reset</a>
     </div>
 </form>
-
-@section Scripts
-{
-    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
-}

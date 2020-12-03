@@ -1,5 +1,7 @@
 @page
-@model PerpresModel
+@model Protaru.PageModels.Search
+
+@using MonevAtr.Models
 
 @{
     Layout = "_RtrNasionalIndexLayout";
@@ -19,10 +21,10 @@
             <label class="form-label">Nomor Perpres</label>
             <input asp-for="Rtr.Nomor" class="form-control" />
         </div> *@
-        <div class="col-md-12 form-group">
-            <label class="form-label">Tahun Perpres</label>
-            <select asp-for="Rtr.Tahun" class="form-control" asp-items="ViewBag.Tahun"></select>
-        </div>
+
+        @await Component.InvokeAsync(
+            "TahunSearch",
+            new { jenisRtr = JenisRtrEnum.Rtrwn })
     </div>
 
     <div class="card-footer text-center">
@@ -30,8 +32,3 @@
         <a asp-page="./Index" class="btn btn-primary">Reset</a>
     </div>
 </form>
-
-@section Scripts
-{
-    @{await Html.RenderPartialAsync("_AjaxProvinsiScriptPartial");}
-}
