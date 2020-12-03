@@ -50,7 +50,6 @@ namespace MonevAtr.Areas.Identity.Pages.Account
         {
             public int Id { get; set; }
 
-            [Required(ErrorMessage = ViewMessage.UsernameRequired)]
             public string UserName { get; set; }
 
             [Required(ErrorMessage = ViewMessage.EmailRequired)]
