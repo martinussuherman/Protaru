@@ -213,7 +213,50 @@ namespace MonevAtr.Models
                 return query;
             }
 
-            return query.Where(a => a.KodeJenisAtr == (int)jenis);
+            if (jenis == JenisRtrEnum.Rdtr)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RdtrT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RdtrT52);
+            }
+
+            if (jenis == JenisRtrEnum.Rtrw)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT50 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT52);
+            }
+
+            if (jenis == JenisRtrEnum.RtrKpn)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT52);
+            }
+
+            if (jenis == JenisRtrEnum.RtrKsn)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT52);
+            }
+
+            if (jenis == JenisRtrEnum.RtrPulau)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT52);
+            }
+
+            if (jenis == JenisRtrEnum.Rtrwn)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT52);
+            }
+
+            return query.Where(q => q.KodeJenisAtr == (int)jenis);
         }
 
         public static IQueryable<Atr> ByJenisList(
