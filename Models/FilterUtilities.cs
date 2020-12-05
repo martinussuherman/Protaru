@@ -199,7 +199,7 @@ namespace MonevAtr.Models
             this IQueryable<Atr> query,
             int tahun)
         {
-            return tahun == 0 ?
+            return tahun < 0 ?
                 query :
                 query.Where(q => q.Tahun == tahun);
         }
@@ -303,6 +303,23 @@ namespace MonevAtr.Models
                 .OrderBy(a => a.Provinsi.Nama)
                 .ThenBy(a => a.KabupatenKota.Provinsi.Nama)
                 .ThenBy(a => a.KabupatenKota.Nama);
+        }
+
+        public static IQueryable<Atr> RtrIncludeAll(this IQueryable<Atr> query)
+        {
+            return query
+                .Include(q => q.Provinsi)
+                .Include(q => q.KabupatenKota)
+                .Include(q => q.KabupatenKota.Provinsi)
+                .Include(q => q.Pulau)
+                .Include(q => q.Kawasan)
+                .Include(q => q.ProgressAtr)
+                .Include(q => q.JenisAtr)
+                .OrderBy(q => q.Provinsi.Nama)
+                .ThenBy(q => q.KabupatenKota.Provinsi.Nama)
+                .ThenBy(q => q.KabupatenKota.Nama)
+                .ThenBy(q => q.Pulau.Nama)
+                .ThenBy(q => q.Kawasan.Nama);
         }
 
         public static IQueryable<Atr> RtrPulauInclude(this IQueryable<Atr> query)

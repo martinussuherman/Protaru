@@ -94,24 +94,14 @@ namespace MonevAtr.Models
             Atr rtr,
             List<KelompokDokumen> kelompokDokumenList)
         {
-            await MergeRtrDokumenDenganKelompokDokumen(rtr, rtr.Kode, kelompokDokumenList);
-        }
-        public async Task MergeRtrDokumenDenganKelompokDokumen(
-            Atr rtr,
-            int? id,
-            List<KelompokDokumen> kelompokDokumenList)
-        {
             List<AtrDokumen> rtrDokumenList = await _context.AtrDokumen
-                .Where(d => d.KodeAtr == id)
+                .Where(c => c.KodeAtr == rtr.Kode)
                 .AsNoTracking()
                 .ToListAsync();
 
-            foreach (KelompokDokumen kelompokDokumen in kelompokDokumenList)
+            foreach (Dokumen dokumen in kelompokDokumenList.SelectMany(c => c.Dokumen))
             {
-                foreach (Dokumen dokumen in kelompokDokumen.Dokumen)
-                {
-                    SelaraskanIsiDokumen(rtr, dokumen, rtrDokumenList);
-                }
+                SelaraskanIsiDokumen(rtr, dokumen, rtrDokumenList);
             }
         }
 
@@ -243,10 +233,7 @@ namespace MonevAtr.Models
             RtrFasilitasKegiatan rtrFasilitasKegiatan)
         {
             rtrFasilitasKegiatan.KodeRtr = rtr.Kode;
-            rtrFasilitasKegiatan.Keterangan =
-                rtrFasilitasKegiatan.Keterangan == null ?
-                String.Empty :
-                rtrFasilitasKegiatan.Keterangan;
+            rtrFasilitasKegiatan.Keterangan ??= string.Empty;
 
             if (rtrFasilitasKegiatan.Kode == 0)
             {
@@ -288,19 +275,6 @@ namespace MonevAtr.Models
             return true;
         }
 
-        private void UpdateNullRtrProperties(Atr rtr)
-        {
-            if (rtr.Nama == null)
-            {
-                rtr.Nama = String.Empty;
-            }
-
-            if (rtr.Aoi == null)
-            {
-                rtr.Aoi = String.Empty;
-            }
-        }
-
         private void UpdateRtrDenganNomorDanTahunDokumen(
             Atr rtr,
             AtrDokumen rtrDokumen,
@@ -315,7 +289,7 @@ namespace MonevAtr.Models
 
             if (rtr.Nomor == null)
             {
-                rtr.Nomor = String.Empty;
+                rtr.Nomor = string.Empty;
             }
 
             if (rtrDokumen.Tanggal == DateTime.MinValue)
