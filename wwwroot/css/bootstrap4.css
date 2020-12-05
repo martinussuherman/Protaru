@@ -31523,7 +31523,6 @@ ejs-multiselect {
 
 .e-listbox-wrapper .e-list-item,
 .e-listbox-container .e-list-item {
-  border-bottom: 1px solid;
   outline: none;
 }
 
@@ -32038,18 +32037,6 @@ ejs-listbox {
   height: calc(100% - 44px);
 }
 
-.e-listbox-wrapper,
-.e-listbox-container:not(.e-listboxtool-container):not(.e-sortableclone),
-.e-listboxtool-container.e-listbox-container .e-ul {
-  border: 1px solid #dee2e6;
-}
-
-.e-listbox-wrapper,
-.e-listbox-container {
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
-  font-size: 14px;
-}
-
 .e-listbox-wrapper .e-list-header,
 .e-listbox-container .e-list-header {
   background-color: #fff;
@@ -32071,7 +32058,6 @@ ejs-listbox {
 .e-listbox-wrapper .e-list-item,
 .e-listbox-container .e-list-item {
   background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
   border-left: 0 solid rgba(0, 0, 0, 0.13);
   border-right: 0 solid rgba(0, 0, 0, 0.13);
   border-top: 0 solid transparent;
