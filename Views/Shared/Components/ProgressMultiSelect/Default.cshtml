@@ -5,21 +5,11 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Syncfusion.EJ2
 
-@{
-    int index = 1;
-}
-
 <div class="col-md-12 form-group">
     <label class="form-label">Progress</label>
 
-@foreach (var item in Model.Progress)
-{
-    <label class="custom-control custom-checkbox">
-        <input type="checkbox" name="Rtr.ProgressList" value="@item.Kode" class="custom-control-input">
-        <span class="custom-control-label">@index -&NonBreakingSpace; @item.Nama</span>
-    </label>
-
-    index++;
-}
-
+    <ejs-listbox name="Rtr.ProgressList" id="rtr-progress" dataSource="Model.Progress">
+        <e-listbox-fields text="Nama" value="Kode"></e-listbox-fields>
+        <e-listbox-selectionsettings showCheckbox="true"></e-listbox-selectionsettings>
+    </ejs-listbox>
 </div>
