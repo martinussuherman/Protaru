@@ -24,7 +24,8 @@ else
 {
                 <SearchResultLink
                     IsCanCreate="@Model.IsCanCreate" 
-                    Url="@Model.Url" />
+                    Url="@Model.Url"
+                    ReturnPage="@ReturnPage" />
 }
 
             </div>
@@ -59,6 +60,9 @@ else
 
     [Parameter]
     public IHtmlContent PagingHtml { get; set; }
+
+    [Parameter]
+    public string ReturnPage { get; set; }
 
     [Parameter]
     public bool HomepageResult { get; set; } = false;

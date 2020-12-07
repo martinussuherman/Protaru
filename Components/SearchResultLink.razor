@@ -7,12 +7,25 @@
     <a href="@Url.Page("./Create")" class="btn btn-success mr-1">Tambah</a>
 }
 
-    <button class="btn btn-warning" onclick="window.history.back();">Kembali</button>
+@if (string.IsNullOrEmpty(ReturnPage))
+{
+    <a href="@Url.Page("./Index")" class="btn btn-warning">Kembali</a>
+}
+else
+{
+    string returnPage = Url.Page(ReturnPage);
+    <a href="@returnPage" class="btn btn-warning">Kembali</a>
+}
+
+    @* <button class="btn btn-warning" onclick="window.history.back();">Kembali</button> *@
 </div>
 
 @code {
     [Parameter]
     public bool IsCanCreate { get; set; }
+
+    [Parameter]
+    public string ReturnPage { get; set; }
 
     [Parameter]
     public IUrlHelper Url { get; set; }
