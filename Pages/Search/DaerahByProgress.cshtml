@@ -7,7 +7,7 @@
 
 <form>
     <div class="card-body">
-        <input type="hidden" asp-for="ReturnUrl"/>
+        <input type="hidden" name="ReturnPage" value="/Search/DaerahByProgress?provinsi=@Model.Rtr.Prov" />
         <input type="hidden" asp-for="Rtr.Prov"/>
         <div class="col-md-12 form-group">
             <label class="form-label">Kabupaten/Kota</label>

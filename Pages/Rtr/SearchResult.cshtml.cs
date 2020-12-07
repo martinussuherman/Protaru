@@ -12,8 +12,11 @@ namespace MonevAtr.Pages.Rtr
             _helper = new RtrAddResultHelper(context);
         }
 
+        public string ReturnPage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(
             [FromQuery] int perda,
+            [FromQuery] string returnPage,
             [FromQuery] int page = 1)
         {
             AtrSearch search = new AtrSearch
@@ -28,6 +31,7 @@ namespace MonevAtr.Pages.Rtr
             IsUseCreateForm = false;
             IsCanCreate = false;
             IsCanEdit = false;
+            ReturnPage = returnPage;
 
             return Page();
         }

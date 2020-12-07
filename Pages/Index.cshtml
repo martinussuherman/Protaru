@@ -42,11 +42,14 @@
       </div>
     </div>
 
+@{
+  string searchPage = Url.Page("/Rtr/SearchResult");
+}
     <div class="row">
       <div class="col-sm-6 offset-sm-3 py-2">
         <div class="row rtr-progress-total">
           <div class="col-6 pt-1 progress-number-box">
-            <a class="row pt-2" asp-page="Rtr/SearchResult" asp-route-perda="0">
+            <a class="row pt-2" href="@searchPage?Perda=0&ReturnPage=/Index">
               <div id="summary-progress" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
               </div>
               <div class="col-6 pt-2 text-white text-left progress-type">
@@ -55,7 +58,7 @@
             </a>
           </div>
           <div class="col-6 pt-1 progress-number-box">
-            <a class="row pt-2" asp-page="Rtr/SearchResult" asp-route-perda="1">
+            <a class="row pt-2" href="@searchPage?Perda=1&ReturnPage=/Index">
               <div id="summary-done" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
               </div>
               <div class="col-6 pt-2 text-white text-left progress-type">
@@ -70,7 +73,7 @@
         <form method="get"
           asp-page="/Search/SearchResultByNama"
           class="form-inline pt-4 pb-1 text-center">
-          <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+          <input type="hidden" name="ReturnPage" value="/Index" />
           <ejs-autocomplete
             autocomplete="true"
             autofill="true"

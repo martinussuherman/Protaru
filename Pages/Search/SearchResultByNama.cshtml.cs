@@ -12,20 +12,25 @@ namespace MonevAtr.Pages.Search
             _context = context;
         }
 
-        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
+        public string ReturnPage { get; set; }
+
+        public IActionResult OnGet(
+            [FromQuery] AtrSearch rtr,
+            [FromQuery] string returnPage,
+            [FromQuery] int page = 1)
         {
             Hasil = _context.Atr
                 .ByNama(rtr.Nama)
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
             Rtr = rtr;
             RegulationName = "Perda/Perpres";
             IsDisplayRegulation = true;
             IsUseCreateForm = false;
             IsCanCreate = false;
             IsCanEdit = false;
+            ReturnPage = returnPage;
 
             return Page();
         }
