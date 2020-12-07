@@ -31,7 +31,6 @@ namespace MonevAtr.Pages.RtrwT50
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
             Rtr = rtr;
             RegulationName = "Perda";
             IsDisplayRegulation = true;

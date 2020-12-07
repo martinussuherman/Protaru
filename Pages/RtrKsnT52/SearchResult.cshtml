@@ -5,38 +5,13 @@
     Layout = "_RtrNasionalLayout";
     ViewData["PageTitle"] = "RTR KSN";
     ViewData["Title"] = "Monitoring & Evaluasi RTR KSN";
+    var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
 }
 
-<div class="page-title">
-    <div class="container">
-        <h4>@ViewData["PageTitle"]</h4>
-    </div>
-</div>
-
-<div class="bg-page-detail">
-    <div class="container pt-4 pb-5">
-        <div class="row row-cards card">
-            <div class="card-header">
-                <h4 class="card-title float-sm-left">@ViewData["Title"]</h4>
-                <component type="typeof(SearchResultForm)" 
-                    render-mode="Static" 
-                    param-DisplayedLocation="@RtrLocationEnum.Kawasan"
-                    param-IsCanCreate="@Model.IsCanCreate" 
-                    param-Url="@Model.Url" 
-                    param-Rtr="@Model.Rtr" />
-            </div>
-
-            <div class="card-body table-responsive">
-                <component type="typeof(SearchResultTable)" 
-                    render-mode="Static" 
-                    param-RegulationName="@("Perpres")"
-                    param-DisplayedLocation="@RtrLocationEnum.Kawasan"
-                    param-IsCanEdit="@Model.IsCanEdit" 
-                    param-IsDisplayRegulation="true" 
-                    param-Url="@Model.Url" 
-                    param-Items="@Model.Hasil" />
-                <partial name="_PagingPartial" model="Model.Hasil" />
-            </div>
-        </div>
-	</div>
-</div>
+<component type="typeof(SearchResultPage)"
+    render-mode="Static"
+    param-PageTitle="@ViewData["PageTitle"]"
+    param-Title="@ViewData["Title"]"
+    param-Model="@Model"
+    param-DisplayedLocation="@RtrLocationEnum.Kawasan"
+    param-PagingHtml="@pagingHtml" />

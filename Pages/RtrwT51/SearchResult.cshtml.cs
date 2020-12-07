@@ -31,7 +31,6 @@ namespace MonevAtr.Pages.RtrwT51
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
             Rtr = rtr;
             SetCommonProperties();
             return Page();
@@ -52,7 +51,6 @@ namespace MonevAtr.Pages.RtrwT51
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
             Rtr = rtr;
             SetCommonProperties();
             return Page();

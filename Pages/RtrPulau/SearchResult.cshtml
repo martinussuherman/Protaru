@@ -2,19 +2,17 @@
 @model SearchResultModel
 
 @{
-    Layout = "_RtrNasionalSearchResultLayout";
+    Layout = "_RtrNasionalLayout";
     ViewData["Title"] = "Monitoring & Evaluasi RTR Pulau/Kep";
     ViewData["PageTitle"] = "RTR Pulau/Kepulauan";
+    var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
 }
 
-<div class="card-body table-responsive">
-    <component type="typeof(SearchResultTable)" 
-        render-mode="Static" 
-        param-RegulationName="@("Perpres")"
-        param-DisplayedLocation="@RtrLocationEnum.Pulau"
-        param-IsCanEdit="false" 
-        param-IsDisplayRegulation="@Model.IsPerdaPerpres" 
-        param-Url="@Model.Url" 
-        param-Items="@Model.Hasil" />
-    <partial name="_PagingPartial" model="Model.Hasil" />
-</div>
+<component type="typeof(SearchResultPage)"
+    render-mode="Static"
+    param-PageTitle="@ViewData["PageTitle"]"
+    param-Title="@ViewData["Title"]"
+    param-Model="@Model"
+    param-DisplayedLocation="@RtrLocationEnum.Pulau"
+    param-PagingHtml="@pagingHtml"
+    param-ReturnPage="@Model.ReturnPage" />

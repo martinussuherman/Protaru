@@ -1,26 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using P.Pager;
 
 namespace MonevAtr.Pages.RtrKpn
 {
-    public class SearchResultModel : PageModel
+    public class SearchResultModel : SearchResultPageModel
     {
         public SearchResultModel(PomeloDbContext context)
         {
             _context = context;
         }
 
-        public IPager<Models.Atr> Hasil { get; set; }
+        public string ReturnPage { get; set; }
 
-        [ViewData]
-        public bool IsCanCreate { get; set; }
-
-        public bool IsPerdaPerpres { get; set; }
-
-        public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
+        public IActionResult OnGet(
+            [FromQuery] AtrSearch rtr,
+            [FromQuery] string returnPage,
+            [FromQuery] int page = 1)
         {
             FilterByJenis(rtr);
 
@@ -35,9 +32,13 @@ namespace MonevAtr.Pages.RtrKpn
                 .RtrInclude()
                 .AsNoTracking()
                 .ToPagerList(page, PagerUrlHelper.ItemPerPage);
-
-            IsPerdaPerpres = (rtr.Perda == 1);
+            Rtr = rtr;
+            RegulationName = "Perpres";
+            IsDisplayRegulation = rtr.Perda == 1;
+            IsUseCreateForm = false;
             IsCanCreate = false;
+            IsCanEdit = false;
+            ReturnPage = returnPage;
 
             return Page();
         }
