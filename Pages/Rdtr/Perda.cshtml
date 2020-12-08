@@ -9,7 +9,7 @@
     ViewData["PageTitle"] = "RDTR";
 }
 
-<form>
+<form id="search-form">
     <input type="hidden" name="Rtr.Perda" value="1" />
     <input type="hidden" name="ReturnPage" value="./Perda" />
 
@@ -31,16 +31,7 @@
             new { jenisRtr = JenisRtrEnum.Rdtr })
     </div>
 
-    <div class="card-footer text-center">
-        <input 
-            type="submit" 
-            name="cari" 
-            value="Cari" 
-            class="btn btn-primary" 
-            asp-page="./SearchResult" 
-            formmethod="get" />
-        <a asp-page="./Index" class="btn btn-primary">Reset</a>
-    </div>
+    <partial name="_SearchButton" model="false" />
 </form>
 
 @section Scripts 

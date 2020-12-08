@@ -9,7 +9,7 @@
     ViewData["PageTitle"] = "RTR KSN";
 }
 
-<form method="get" asp-page="./SearchResult">
+<form id="search-form">
     <div class="card-body">
         @await Component.InvokeAsync(
             "Kawasan",
@@ -32,15 +32,5 @@
             new { jenisRtr = JenisRtrEnum.RtrKsnT52 })
     </div>
 
-    <div class="card-footer text-center">
-        <input 
-            type="submit" 
-            name="cari" 
-            value="Cari" 
-            class="btn btn-primary" 
-            asp-page="./SearchResult" 
-            formmethod="get" />
-        @{await Html.RenderPartialAsync("_ExportData");}
-        <a asp-page="./Index" class="btn btn-primary">Reset</a>
-    </div>
+    <partial name="_SearchButton" model="true" />
 </form>

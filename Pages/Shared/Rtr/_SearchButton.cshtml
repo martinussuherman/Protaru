@@ -1,0 +1,18 @@
+@model bool
+
+<div class="card-footer text-center">
+    <input
+        type="submit"
+        name="cari"
+        value="Cari"
+        class="btn btn-primary"
+        asp-page="./SearchResult"
+        formmethod="get" />
+
+@if (Model)
+{
+    <partial name="_ExportData" />
+}
+
+    <a asp-page="./Index" class="btn btn-primary">Reset</a>
+</div>
