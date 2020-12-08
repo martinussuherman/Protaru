@@ -240,7 +240,7 @@ namespace MonevAtr.Models
                 .ToListAsync();
         }
 
-        public async Task<SelectList> TahunRapatLintasSektorDanPersetujuanSubstansi()
+        public async Task<IEnumerable<SelectListItem>> TahunRapatLinsekPersubAsync()
         {
             List<int> list = await _context.AtrDokumen
                 .Where(
@@ -256,7 +256,12 @@ namespace MonevAtr.Models
                 .OrderBy(a => a)
                 .ToListAsync();
 
-            return Tahun(list, "Pilih Tahun");
+            return list
+                .Select(c => new SelectListItem
+                {
+                    Value = c.ToString(),
+                    Text = c.ToString()
+                });
         }
 
         public async Task<IEnumerable<SelectListItem>> TahunAsyncOptional(JenisRtrEnum jenis)

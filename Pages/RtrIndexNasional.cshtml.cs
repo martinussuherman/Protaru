@@ -98,8 +98,6 @@ namespace MonevAtr.Pages
             StatusYear = DateTime.Today.Year;
             StatusMonth = DateTime.Today.Month;
             Provinsi = await _context.Provinsi.ToListAsync();
-            ViewData["TahunLintasSektorDanPersetujuanSubstansi"] =
-                await selectListUtilities.TahunRapatLintasSektorDanPersetujuanSubstansi();
             return Page();
         }
 
