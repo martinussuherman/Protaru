@@ -3,13 +3,6 @@
         $('#provinsi').removeAttr('disabled');
         $('#kabupaten-kota').removeAttr('disabled');
 
-        if(localStorage.getItem('provinsi')) 
-        {
-            $('#provinsi').val(localStorage.getItem('provinsi'));
-            $('#provinsi').trigger('change');
-            $('#kabupaten-kota').val(localStorage.getItem('kabupaten-kota'))
-        }
-
         $('#provinsi').change( function () {
             $.getJSON('@Url.Content("~/Ajax/FilterKabupatenKotaBerdasarkanProvinsi")', 
                 { kodeProvinsi: $('#provinsi').val()}, function(data){
@@ -20,12 +13,6 @@
                 });
                 $('#kabupaten-kota').html(items); 
             });
-
-            localStorage.setItem('provinsi', $('#provinsi').val());
-        });
-
-        $('#kabupaten-kota').change( function () {
-            localStorage.setItem('kabupaten-kota', $('#kabupaten-kota').val());
         });
     });
 </script>
