@@ -1,0 +1,93 @@
+@page
+@model LintasSektorModel
+
+@{
+    Layout = "_RtrDaerahLayout";
+    ViewData["Title"] = "Status Rapat Lintas Sektor";
+    ViewData["PageTitle"] = "Status Rapat Lintas Sektor";
+}
+
+<!-- Status Rapat Lintas Sektor -->
+
+<div class="mt-5 tag-title-box-3">
+    <div class="tag-title-2"><span>STATUS RAPAT LINTAS SEKTOR</span> <br /> <span>& SURAT PERSETUJUAN SUBSTANSI</span></div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="month-link">
+                <ul id="month-status" aria-month="@Model.StatusMonth" aria-isrdtr="0">
+                    <li><span>01</span><a aria-value="1">JANUARI</a></li>
+                    <li><span>02</span><a aria-value="2">FEBRUARI</a></li>
+                    <li><span>03</span><a aria-value="3">MARET</a></li>
+                    <li><span>04</span><a aria-value="4">APRIL</a></li>
+                    <li><span>05</span><a aria-value="5">MEI</a></li>
+                    <li><span>06</span><a aria-value="6">JUNI</a></li>
+                    <li><span>07</span><a aria-value="7">JULI</a></li>
+                    <li><span>08</span><a aria-value="8">AGUSTUS</a></li>
+                    <li><span>09</span><a aria-value="9">SEPTEMBER</a></li>
+                    <li><span>10</span><a aria-value="10">OKTOBER</a></li>
+                    <li><span>11</span><a aria-value="11">NOVEMBER</a></li>
+                    <li><span>12</span><a aria-value="12">DESEMBER</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="month-data">
+                <div class="row">
+                    <select asp-for="StatusYear" class ="form-control col-md-4 mt-4 ml-3" asp-items="Model.Tahun"></select>
+                    <div class="col-md-8"></div>
+
+                    <div class="col-md-6">
+                        <div id="nama-bulan" class="month-title">
+                            JANUARI
+                        </div>
+                        <div id="lintas-sektor" class="month-data-box">
+                            <div class="month-data-title text-center">
+                                Rapat Lintas Sektor
+                            </div>
+                            <div class="month-data-text">
+                                <ul>
+                                </ul>
+                            </div>
+                            <!-- <div class="month-data-pagination text-right">
+                                <a href="#" class="month-pagination-active">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="month-title text-right">
+                            <a id="type-rtrw" class="month-type month-type-active">RTRW</a> | <a id="type-rdtr" class="month-type">RDTR</a> 
+                        </div>
+                        <div id="persetujuan-substansi" class="month-data-box">
+                            <div class="month-data-title text-center">
+                                Surat Persetujuan Substansi
+                            </div>
+                            <div class="month-data-text">
+                                <ul>
+                                </ul>
+                            </div>
+                            <!-- <div class="month-data-pagination text-right">
+                                <a href="#" class="month-pagination-active">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lintas-sektor.js"></script>
+}

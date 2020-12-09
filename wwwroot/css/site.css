@@ -1,7 +1,8 @@
 #StatusYear
 {
-  font: bold 24px Roboto;
   display: inline-block;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .bnote-rdtr
