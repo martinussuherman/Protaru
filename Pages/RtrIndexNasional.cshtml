@@ -413,6 +413,5 @@
 			e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.Provinsi)), query);
 		}
 	</script>
-
-    @{await Html.RenderPartialAsync("_AjaxProgressScriptPartial");}
+	<script src="~/js/progress-rtr.js"></script>
 }
