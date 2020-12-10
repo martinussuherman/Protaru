@@ -19,13 +19,13 @@ function AjaxLinSekPerSub() {
 }
 
 function AjaxLintasSektor(tahunLinSek, bulanLinSek, isRdtrLinSek) {
-    $.getJSON('../Ajax/ListLintasSektor',
+    $.getJSON('../api/LinsekPersub/LinsekAsync',
         { tahun: tahunLinSek, bulan: bulanLinSek, isRdtr: isRdtrLinSek }, function (data) {
             var items = '';
             $('#lintas-sektor .month-data-text ul').empty();
 
             $.each(data, function (i, data) {
-                items += DisplayRtr('#', i + 1, data);
+                items += DisplayRtr(i + 1, data);
             });
 
             $('#lintas-sektor .month-data-text ul').html(items);
@@ -33,24 +33,24 @@ function AjaxLintasSektor(tahunLinSek, bulanLinSek, isRdtrLinSek) {
 }
 
 function AjaxPersetujuanSubstansi(tahunPerSub, bulanPerSub, isRdtrPerSub) {
-    $.getJSON('../Ajax/ListPersetujuanSubstansi',
+    $.getJSON('../api/LinsekPersub/PersubAsync',
         { tahun: tahunPerSub, bulan: bulanPerSub, isRdtr: isRdtrPerSub }, function (data) {
             var items = '';
             $('#persetujuan-substansi .month-data-text ul').empty();
 
             $.each(data, function (i, data) {
-                items += DisplayRtr('#', i + 1, data);
+                items += DisplayRtr(i + 1, data);
             });
 
             $('#persetujuan-substansi .month-data-text ul').html(items);
         });
 }
 
-function DisplayRtr(link, index, rtr) {
-    var linkText = index + '. ' + rtr.displayNamaProvinsiKabupatenKota;
-    var rtrInfo = rtr.displayNama + '<br />' + rtr.displayTanggalDokumen;
+function DisplayRtr(index, rtr) {
+    var linkText = index + '. ' + rtr.lokasi;
+    var rtrInfo = rtr.nama + '<br />' + rtr.tanggal;
 
-    return '<li><a href="' + link + '">' + linkText + '</a><p>' + rtrInfo + '</p></li>';
+    return '<li><a href="' + rtr.url + '">' + linkText + '</a><p>' + rtrInfo + '</p></li>';
 }
 
 $(document).ready(function () {
@@ -70,14 +70,14 @@ $(document).ready(function () {
     $('#type-rtrw').click(function () {
         $('#type-rtrw').addClass('month-type-active');
         $('#type-rdtr').removeClass('month-type-active');
-        $('#month-status').attr('aria-isrdtr', 0);
+        $('#month-status').attr('aria-isrdtr', false);
         AjaxLinSekPerSub();
     });
 
     $('#type-rdtr').click(function () {
         $('#type-rdtr').addClass('month-type-active');
         $('#type-rtrw').removeClass('month-type-active');
-        $('#month-status').attr('aria-isrdtr', 1);
+        $('#month-status').attr('aria-isrdtr', true);
         AjaxLinSekPerSub();
     });
 });
