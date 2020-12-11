@@ -80,8 +80,7 @@
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("_ModalScriptPartial");}
-    @{await Html.RenderPartialAsync("_AjaxUploadFileScriptPartial");}
-
+    <script src="~/js/file-upload.js"></script>
     <script>
         $(document).ready(function () {
             $('.btn-upload').click(function () {
