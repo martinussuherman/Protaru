@@ -1,0 +1,58 @@
+@page
+
+@{
+    ViewData["Title"] = "Dashboard Protaru";
+    ViewData["PageTitle"] = "Dashboard";
+    string searchPage = Url.Page("/Rtr/SearchResult");
+}
+
+@section Menu 
+{
+	@await Html.PartialAsync("_MenuHome")
+}
+
+<div class="text-center w-100">
+  <h1 class="py-4 title-proratu-intro">
+    <span>STATISTIK DATA RTR PROTARU</span>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3 py-2">
+    <div class="row rtr-progress-total">
+      <div class="col-6 pt-1 progress-number-box">
+        <a class="row pt-2" href="@searchPage?Perda=0&ReturnPage=/Index">
+          <div id="summary-progress" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
+          </div>
+          <div class="col-6 pt-2 text-white text-left progress-type">
+            RTR<br>Progress
+          </div>
+        </a>
+      </div>
+      <div class="col-6 pt-1 progress-number-box">
+        <a class="row pt-2" href="@searchPage?Perda=1&ReturnPage=/Index">
+          <div id="summary-done" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
+          </div>
+          <div class="col-6 pt-2 text-white text-left progress-type">
+            RTR<br>Perda/Perpres
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="rtr-by-jenis">
+</canvas>
+
+<canvas id="rtr-updated">
+</canvas>
+
+<canvas id="rtr-created">
+</canvas>
+
+@section Scripts
+{
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+  <script src="~/js/dashboard.js"></script>
+}
