@@ -17,19 +17,6 @@
          @await Component.InvokeAsync(
             "Pulau",
             new { isInput = false })
-
-        @* <div class="col-md-12 form-group">
-            <label class="form-label">Nama RTR</label>
-            <input asp-for="Rtr.Nama" class="form-control" />
-        </div>
-        <div class="col-md-12 form-group">
-            <label class="form-label">Nomor Perpres</label>
-            <input asp-for="Rtr.Nomor" class="form-control" />
-        </div> *@
-
-        @await Component.InvokeAsync(
-            "TahunSearch",
-            new { jenisRtr = JenisRtrEnum.RtrPulau })
     </div>
 
     <partial name="_SearchButton" model="false" />

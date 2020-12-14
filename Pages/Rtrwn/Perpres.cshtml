@@ -12,21 +12,5 @@
 <form id="search-form">
     <input type="hidden" name="Rtr.Perda" value="1" />
     <input type="hidden" name="ReturnPage" value="./Perpres" />
-
-    <div class="card-body">
-        @* <div class="col-md-12 form-group">
-            <label class="form-label">Nama RTR</label>
-            <input asp-for="Rtr.Nama" class="form-control" />
-        </div>
-        <div class="col-md-12 form-group">
-            <label class="form-label">Nomor Perpres</label>
-            <input asp-for="Rtr.Nomor" class="form-control" />
-        </div> *@
-
-        @await Component.InvokeAsync(
-            "TahunSearch",
-            new { jenisRtr = JenisRtrEnum.Rtrwn })
-    </div>
-
     <partial name="_SearchButton" model="false" />
 </form>

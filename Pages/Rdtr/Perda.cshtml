@@ -25,10 +25,10 @@
         <div class="col-md-12 form-group">
             <label class="form-label">Nomor Perda </label>
             <input asp-for="Rtr.Nomor" class="form-control" />
-        </div> *@
+        </div>
         @await Component.InvokeAsync(
             "TahunSearch",
-            new { jenisRtr = JenisRtrEnum.Rdtr })
+            new { jenisRtr = JenisRtrEnum.Rdtr }) *@
     </div>
 
     <partial name="_SearchButton" model="false" />
