@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -22,10 +24,8 @@ namespace Protaru.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> HomeSummary()
         {
-            int progress = await _context.Atr
-                .CountAsync(c => c.SudahDirevisi == 0 && c.ProgressAtr.IsPerdaPerpres == 0);
-            int done = await _context.Atr
-                .CountAsync(c => c.SudahDirevisi == 0 && c.ProgressAtr.IsPerdaPerpres == 1);
+            int progress = await ProgressCountAsync(JenisRtrEnum.All);
+            int done = await DoneCountAsync(JenisRtrEnum.All);
             int doneRtrwT5152Kabkota = await _context.RtrwT5152Kabkota
                 .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
             int doneRtrwT5152Provinsi = await _context.RtrwT5152Provinsi
@@ -41,6 +41,42 @@ namespace Protaru.Controllers
                 Done = done +
                     doneRtrwT5152Kabkota + doneRtrwT5152Provinsi +
                     doneRdtrT5152Kabkota + doneRdtrT5152Provinsi
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet(nameof(HomeSummaryNasionalDaerah))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> HomeSummaryNasionalDaerah()
+        {
+            CultureInfo id = new CultureInfo("id-ID");
+            int progressRdtr = await ProgressCountAsync(JenisRtrEnum.Rdtr);
+            int doneRdtr = await DoneCountAsync(JenisRtrEnum.Rdtr);
+            int doneRdtrT5152Kabkota = await _context.RdtrT5152Kabkota
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+            int doneRdtrT5152Provinsi = await _context.RdtrT5152Provinsi
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+
+            int progressRtrw = await ProgressCountAsync(JenisRtrEnum.Rtrw);
+            int doneRtrw = await DoneCountAsync(JenisRtrEnum.Rtrw);
+            int doneRtrwT5152Kabkota = await _context.RtrwT5152Kabkota
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+            int doneRtrwT5152Provinsi = await _context.RtrwT5152Provinsi
+                .CountAsync(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0);
+
+            int progressNasional = await ProgressCountAsync(JenisRtrEnum.Nasional);
+            int doneNasional = await DoneCountAsync(JenisRtrEnum.Nasional);
+
+            var result = new
+            {
+                Info = DateTime.Now.ToString("dd MMMM yyyy \\/ HH':'mm':'ss WIB", id),
+                ProgressRdtr = progressRdtr,
+                DoneRdtr = doneRdtr + doneRdtrT5152Kabkota + doneRdtrT5152Provinsi,
+                ProgressRtrw = progressRtrw,
+                DoneRtrw = doneRtrw + doneRtrwT5152Kabkota + doneRtrwT5152Provinsi,
+                ProgressNasional = progressNasional,
+                DoneNasional = doneNasional
             };
 
             return Ok(result);
@@ -366,14 +402,100 @@ namespace Protaru.Controllers
 
             public int Jumlah { get; set; }
         }
+
+        private async Task<int> ProgressCountAsync(JenisRtrEnum jenis)
+        {
+            switch (jenis)
+            {
+                case JenisRtrEnum.All:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 0);
+                case JenisRtrEnum.Rdtr:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            (c.KodeJenisAtr == (int)JenisRtrEnum.RdtrT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RdtrT52) &&
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 0);
+                case JenisRtrEnum.Rtrw:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            (c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT50 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT52) &&
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 0);
+                case JenisRtrEnum.Nasional:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            (c.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT52 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT52 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT52 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT52) &&
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 0);
+            }
+
+            return 0;
+        }
+        private async Task<int> DoneCountAsync(JenisRtrEnum jenis)
+        {
+            switch (jenis)
+            {
+                case JenisRtrEnum.All:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 1);
+                case JenisRtrEnum.Rdtr:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            (c.KodeJenisAtr == (int)JenisRtrEnum.RdtrT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RdtrT52) &&
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 1);
+                case JenisRtrEnum.Rtrw:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            (c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT50 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT52) &&
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 1);
+                case JenisRtrEnum.Nasional:
+                    return await _context.Atr
+                        .CountAsync(c =>
+                            (c.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT52 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT52 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT52 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT51 ||
+                            c.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT52) &&
+                            c.SudahDirevisi == 0 &&
+                            c.ProgressAtr.IsPerdaPerpres == 1);
+            }
+
+            return 0;
+        }
         private async Task<List<MapData>> RetrieveRtrDaerahMapData(IUrlHelper urlHelper)
         {
             // rtr belum direvisi -> t51 belum t52, t52 belum t53, dst
             var progressList = await _context.Atr
                 .Include(c => c.ProgressAtr)
                 .Where(c =>
-                    c.KodeJenisAtr >= 1 &&
-                    c.KodeJenisAtr <= 5 &&
+                    (c.KodeJenisAtr == (int)JenisRtrEnum.RdtrT51 ||
+                    c.KodeJenisAtr == (int)JenisRtrEnum.RdtrT52 ||
+                    c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT50 ||
+                    c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT51 ||
+                    c.KodeJenisAtr == (int)JenisRtrEnum.RtrwT52) &&
                     c.SudahDirevisi == 0 &&
                     c.KodeProvinsi != null)
                 .GroupBy(c => new

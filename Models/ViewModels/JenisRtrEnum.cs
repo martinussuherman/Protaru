@@ -22,6 +22,8 @@ namespace MonevAtr.Models
         RtrKsn = 10004,
         Rtrwn = 10005,
         RtrKpn = 10006,
-        All = 20000
+        Daerah = 101000,
+        Nasional = 102000,
+        All = 110000
     }
 }
