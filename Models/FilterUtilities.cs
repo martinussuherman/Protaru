@@ -283,21 +283,6 @@ namespace MonevAtr.Models
             return query.Where(q => q.KodeJenisAtr == (int)jenis);
         }
 
-        public static IQueryable<Atr> ByJenisList(
-            this IQueryable<Atr> query,
-            AtrSearch search)
-        {
-            ExpressionStarter<Atr> predicate =
-                PredicateBuilder.New<Atr>(true);
-
-            foreach (int kode in search.JenisList)
-            {
-                predicate = predicate.Or(p => p.KodeJenisAtr == kode);
-            }
-
-            return query.Where(predicate);
-        }
-
         public static IQueryable<Atr> ByPulau(
             this IQueryable<Atr> query,
             int kodePulau)

@@ -19,9 +19,8 @@ namespace MonevAtr.Pages.RtrKsn
             [FromQuery] string returnPage,
             [FromQuery] int page = 1)
         {
-            FilterByJenis(rtr);
             Hasil = _context.Atr
-                .ByJenisList(rtr)
+                .ByJenis(JenisRtrEnum.RtrKsn)
                 .ByKawasan(rtr.Kawasan)
                 .ByTahun(rtr.Tahun)
                 .ByNama(rtr.Nama)
@@ -39,12 +38,6 @@ namespace MonevAtr.Pages.RtrKsn
             ReturnPage = returnPage;
 
             return Page();
-        }
-
-        private void FilterByJenis(AtrSearch rtr)
-        {
-            rtr.JenisList.Add((int)JenisRtrEnum.RtrKsnT51);
-            rtr.JenisList.Add((int)JenisRtrEnum.RtrKsnT52);
         }
 
         private readonly PomeloDbContext _context;
