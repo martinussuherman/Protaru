@@ -379,3 +379,27 @@ body {
     margin-bottom: 0;
   }
 }
+
+/* Update 2020-12-17 */
+.tbl_head {
+  background: url(bg_tbl_head.png);
+}
+
+.tbl_rounded {
+
+  border-collapse:separate;
+  border:solid black 0px;
+  border-radius:12px;
+  -moz-border-radius:12px;
+}
+
+.colom_1 {
+  background: #f5f8ef;
+  color: #4e6b7b;
+  width: 100px;
+}
+.colom_2 {
+  background: #fffeff;
+  color: #4e6b7b;
+  width: 100px;
+}

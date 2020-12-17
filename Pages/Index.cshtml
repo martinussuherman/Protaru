@@ -2,7 +2,7 @@
 
 @using Itm.Identity
 @using Microsoft.AspNetCore.Identity
-@using Newtonsoft.Json
+@using MonevAtr.Models
 
 @model IndexModel
 
@@ -43,33 +43,52 @@
     </div>
 
 @{
-  string searchPage = Url.Page("/Rtr/SearchResult");
+  string searchPage = Url.Page("/Rtr/SearchResult", new { ReturnPage="/Index" });
+  int nasional = (int)JenisRtrEnum.Nasional;
+  int rtrw = (int)JenisRtrEnum.Rtrw;
+  int rdtr = (int)JenisRtrEnum.Rdtr;
 }
+
     <div class="row">
-      <div class="col-sm-6 offset-sm-3 py-2">
-        <div class="row rtr-progress-total">
-          <div class="col-6 pt-1 progress-number-box">
-            <a class="row pt-2" href="@searchPage?Perda=0&ReturnPage=/Index">
-              <div id="summary-progress" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
-              </div>
-              <div class="col-6 pt-2 text-white text-left progress-type">
-                RTR<br>Progress
-              </div>
-            </a>
-          </div>
-          <div class="col-6 pt-1 progress-number-box">
-            <a class="row pt-2" href="@searchPage?Perda=1&ReturnPage=/Index">
-              <div id="summary-done" class="col-6 text-white text-right progress-number" style="font-size: 2rem;">
-              </div>
-              <div class="col-6 pt-2 text-white text-left progress-type">
-                RTR<br>Perda/Perpres
-              </div>
-            </a>
-          </div>
+      <div class="col-sm-7 offset-sm-3 py-2">
+
+        <div id="summary-info" class="row ">
+            <div class="text-info">
+                Status:
+            </div>
+            <div class="table-responsive tbl_rounded">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th colspan="2" class="text-center tbl_head">RTR NASIONAL</th>
+                      <th colspan="2" class="text-center tbl_head">RTRW</th>
+                      <th colspan="2" class="text-center tbl_head">RDTR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="colom_1">PROGRESS</td>
+                      <td class="colom_2"><a href="@searchPage&Perda=0&JenisRtr=@nasional" progress="nasional"></a></td>
+                      <td class="colom_1">PROGRESS</td>
+                      <td class="colom_2"><a href="@searchPage&Perda=0&JenisRtr=@rtrw" progress="rtrw"></a></td>
+                      <td class="colom_1">PROGRESS</td>
+                      <td class="colom_2"><a href="@searchPage&Perda=0&JenisRtr=@rdtr" progress="rdtr"></a></td>
+                    </tr>
+                    <tr>
+                      <td class="colom_1">PERPRES</td>
+                      <td class="colom_2"><a href="@searchPage&Perda=1&JenisRtr=@nasional" done="nasional"></a></td>
+                      <td class="colom_1">PERDA</td>
+                      <td class="colom_2"><a href="@searchPage&Perda=1&JenisRtr=@rtrw" done="rtrw"></a></td>
+                      <td class="colom_1">PERDA</td>
+                      <td class="colom_2"><a href="@searchPage&Perda=1&JenisRtr=@rdtr" done="rdtr"></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
         </div>
       </div>
 
-      <div class="col-lg-6 offset-lg-3 text-center">
+      <div class="col-lg-7 offset-lg-3 text-center">
         <form method="get"
           asp-page="/Search/SearchResultByNama"
           class="form-inline pt-4 pb-1 text-center">
@@ -86,12 +105,6 @@
             @* fields="@Model.FieldSettings"
             filtering="filtering" *@
         </form>
-
-        @* <a asp-page="/RtrIndexDaerah"
-          class="btn btn-success text-white font-italic px-4" 
-          style="border-radius: 15px;">
-          Temukan Rtr kamu disini
-        </a> *@
       </div>
     </div>
   </div>
@@ -305,18 +318,9 @@
   <!-- Syncfusion Essential JS 2 ScriptManager -->
   <ejs-scripts></ejs-scripts>
 
+  <script src="~/js/home.js"></script>
+
 	<script>
-		$("#menu-home").addClass("active");
-
-    $.getJSON(
-      '@Url.Content("~/api/Progress/HomeSummary")', 
-      null, 
-      function(data)
-      {
-        $('#summary-progress').html(data.progress);
-        $('#summary-done').html(data.done);
-      });
-
     // Contains
     // startsWith
 		@* function filtering(e) {
