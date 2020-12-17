@@ -140,10 +140,11 @@ namespace MonevAtr.Models
         }
         public static IQueryable<Atr> DaerahByProgressNoTracking(
             this IQueryable<Atr> query,
-            AtrSearch rtr)
+            AtrSearch rtr,
+            JenisRtrEnum jenis)
         {
             return query
-                .ByJenisList(rtr)
+                .ByJenis(jenis)
                 .ByProvinsi(rtr.Prov, rtr.KabKota)
                 .ByKabupatenKota(rtr.KabKota)
                 .ByTahun(rtr.Tahun)
@@ -213,6 +214,16 @@ namespace MonevAtr.Models
                 return query;
             }
 
+            if (jenis == JenisRtrEnum.Daerah)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RdtrT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RdtrT52 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT50 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT52);
+            }
+
             if (jenis == JenisRtrEnum.Rdtr)
             {
                 return query.Where(q =>
@@ -226,6 +237,19 @@ namespace MonevAtr.Models
                     q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT50 ||
                     q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT51 ||
                     q.KodeJenisAtr == (int)JenisRtrEnum.RtrwT52);
+            }
+
+            if (jenis == JenisRtrEnum.Nasional)
+            {
+                return query.Where(q =>
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKpnT52 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT52 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrPulauT52 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT51 ||
+                    q.KodeJenisAtr == (int)JenisRtrEnum.RtrwnT52);
             }
 
             if (jenis == JenisRtrEnum.RtrKpn)

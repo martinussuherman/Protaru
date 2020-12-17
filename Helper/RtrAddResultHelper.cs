@@ -10,40 +10,35 @@ namespace Protaru.Helpers
 {
     public class RtrAddResultHelper
     {
-        public enum AddType
-        {
-            All,
-            AllDaerah,
-            Rdtr,
-            Rtrw
-        }
-
         public RtrAddResultHelper(PomeloDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IPager<Atr>> PagerListAsync(AtrSearch rtr, AddType type, int page)
+        public async Task<IPager<Atr>> PagerListAsync(
+            AtrSearch rtr,
+            JenisRtrEnum jenis,
+            int page)
         {
-            AddJenisFilter(rtr, type);
+            AddJenisFilter(rtr, jenis);
 
             List<Atr> result = await _context.Atr
-                .DaerahByProgressNoTracking(rtr)
+                .DaerahByProgressNoTracking(rtr, jenis)
                 .ToListAsync();
 
             if (rtr.Perda == 1)
             {
-                await AddResultAsync(result, rtr, type);
+                await AddResultAsync(result, rtr, jenis);
             }
 
             return result.ToPagerList(page, PagerUrlHelper.ItemPerPage);
         }
 
-        private async Task AddResultAsync(List<Atr> result, AtrSearch rtr, AddType type)
+        private async Task AddResultAsync(List<Atr> result, AtrSearch rtr, JenisRtrEnum jenis)
         {
             List<int> combined = new List<int>();
 
-            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rtrw)
+            if (jenis == JenisRtrEnum.All || jenis == JenisRtrEnum.Daerah || jenis == JenisRtrEnum.Rtrw)
             {
                 combined.AddRange(await _context.RtrwT5152Kabkota
                     .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
@@ -55,7 +50,7 @@ namespace Protaru.Helpers
                     .ToListAsync());
             }
 
-            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rdtr)
+            if (jenis == JenisRtrEnum.All || jenis == JenisRtrEnum.Daerah || jenis == JenisRtrEnum.Rdtr)
             {
                 combined.AddRange(await _context.RdtrT5152Kabkota
                     .Where(c => c.IsPerdaPerpresLama == 1 && c.IsPerdaPerpresBaru == 0)
@@ -67,8 +62,9 @@ namespace Protaru.Helpers
                     .ToListAsync());
             }
 
+            // TODO: add ksn, kpn, rtrwn, pulau to combined
+
             var addedResult = await _context.Atr
-                .ByJenisList(rtr)
                 .ByProvinsi(rtr.Prov, rtr.KabKota)
                 .ByKabupatenKota(rtr.KabKota)
                 .ByTahun(rtr.Tahun)
@@ -81,22 +77,22 @@ namespace Protaru.Helpers
 
             result.AddRange(addedResult);
         }
-        private void AddJenisFilter(AtrSearch rtr, AddType type)
+        private void AddJenisFilter(AtrSearch rtr, JenisRtrEnum jenis)
         {
-            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rtrw)
+            if (jenis == JenisRtrEnum.All || jenis == JenisRtrEnum.Daerah || jenis == JenisRtrEnum.Rtrw)
             {
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrwT50);
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrwT51);
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrwT52);
             }
 
-            if (type == AddType.All || type == AddType.AllDaerah || type == AddType.Rdtr)
+            if (jenis == JenisRtrEnum.All || jenis == JenisRtrEnum.Daerah || jenis == JenisRtrEnum.Rdtr)
             {
                 rtr.JenisList.Add((int)JenisRtrEnum.RdtrT51);
                 rtr.JenisList.Add((int)JenisRtrEnum.RdtrT52);
             }
 
-            if (type == AddType.All)
+            if (jenis == JenisRtrEnum.All || jenis == JenisRtrEnum.Nasional)
             {
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrKpnT51);
                 rtr.JenisList.Add((int)JenisRtrEnum.RtrKpnT52);

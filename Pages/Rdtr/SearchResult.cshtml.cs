@@ -19,7 +19,7 @@ namespace MonevAtr.Pages.Rdtr
             [FromQuery] string returnPage,
             [FromQuery] int page = 1)
         {
-            Hasil = await _helper.PagerListAsync(rtr, RtrAddResultHelper.AddType.Rdtr, page);
+            Hasil = await _helper.PagerListAsync(rtr, JenisRtrEnum.Rdtr, page);
             Rtr = rtr;
             RegulationName = "Perda";
             IsDisplayRegulation = rtr.Perda == 1;
