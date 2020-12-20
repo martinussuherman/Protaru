@@ -210,8 +210,10 @@ $(document).ready(function () {
     });
 
     $('#rtrpulau-t51-progress').click(function () {
-        $.getJSON('Ajax/ProgressPulauKsnKpnT51',
-            { jenisRtr: 6 }, function (data) {
+        $.getJSON(
+            'Ajax/ProgressPulauKsnKpnT51',
+            { jenisRtr: 6 }, 
+            function (data) {
                 UpdateProgressPulauKsnKpnT51(data);
             });
 
@@ -226,8 +228,10 @@ $(document).ready(function () {
     });
 
     $('#rtrksn-t51-progress').click(function () {
-        $.getJSON('Ajax/ProgressPulauKsnKpnT51',
-            { jenisRtr: 8 }, function (data) {
+        $.getJSON(
+            'Ajax/ProgressPulauKsnKpnT51',
+            { jenisRtr: 8 }, 
+            function (data) {
                 UpdateProgressPulauKsnKpnT51(data);
             });
 
@@ -242,8 +246,10 @@ $(document).ready(function () {
     });
 
     $('#rtrkpn-t51-progress').click(function () {
-        $.getJSON('Ajax/ProgressPulauKsnKpnT51',
-            { jenisRtr: 12 }, function (data) {
+        $.getJSON(
+            'Ajax/ProgressPulauKsnKpnT51',
+            { jenisRtr: 12 }, 
+            function (data) {
                 UpdateProgressPulauKsnKpnT51(data);
             });
 
@@ -258,8 +264,10 @@ $(document).ready(function () {
     });
 
     $('#rtrpulau-t52-progress').click(function () {
-        $.getJSON('Ajax/ProgressPulauKsnKpnT52',
-            { jenisRtr: 7 }, function (data) {
+        $.getJSON(
+            'Ajax/ProgressPulauKsnKpnT52',
+            { jenisRtr: 7 }, 
+            function (data) {
                 UpdateProgressPulauKsnKpnT52(data);
             });
 
@@ -274,8 +282,10 @@ $(document).ready(function () {
     });
 
     $('#rtrksn-t52-progress').click(function () {
-        $.getJSON('Ajax/ProgressPulauKsnKpnT52',
-            { jenisRtr: 9 }, function (data) {
+        $.getJSON(
+            'Ajax/ProgressPulauKsnKpnT52',
+            { jenisRtr: 9 }, 
+            function (data) {
                 UpdateProgressPulauKsnKpnT52(data);
             });
 
@@ -290,8 +300,10 @@ $(document).ready(function () {
     });
 
     $('#rtrkpn-t52-progress').click(function () {
-        $.getJSON('Ajax/ProgressPulauKsnKpnT52',
-            { jenisRtr: 13 }, function (data) {
+        $.getJSON(
+            'Ajax/ProgressPulauKsnKpnT52',
+            { jenisRtr: 13 }, 
+            function (data) {
                 UpdateProgressPulauKsnKpnT52(data);
             });
 
