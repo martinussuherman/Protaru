@@ -408,3 +408,10 @@ body {
   background-color: rgb(32, 94, 79);
   color: whitesmoke;
 }
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+	#menu-daerah .dropdown-menu { display: none; }
+	#menu-daerah:hover .dropdown-menu { display: block; }
+	#menu-daerah .dropdown-menu { margin-top:0; }
+}	
