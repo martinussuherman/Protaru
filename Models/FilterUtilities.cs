@@ -167,7 +167,9 @@ namespace MonevAtr.Models
         public static IQueryable<Atr> ByIsPerdaPerpres(
             this IQueryable<Atr> query, AtrSearch search)
         {
-            return query.Where(q => q.ProgressAtr.IsPerdaPerpres == search.Perda);
+            return search.Perda == 1000
+                ? query
+                : query.Where(q => q.ProgressAtr.IsPerdaPerpres == search.Perda);
         }
 
         public static IQueryable<Atr> ByNama(

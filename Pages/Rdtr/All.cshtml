@@ -1,0 +1,28 @@
+@page
+@model Protaru.PageModels.Search
+
+@using MonevAtr.Models
+
+@{
+    Layout = "_RtrDaerahIndexLayout";
+    ViewData["Title"] = "Pencarian RDTR";
+    ViewData["PageTitle"] = "RDTR";
+}
+
+<form id="search-form">
+    <input type="hidden" name="Rtr.Perda" value="1000" />
+    <input type="hidden" name="ReturnPage" value="./Perda" />
+
+    <div class="card-body">
+        @await Component.InvokeAsync(
+            "ProvinsiKabKota",
+            new { isInput = false })
+    </div>
+
+    <partial name="_SearchButton" model="false" />
+</form>
+
+@section Scripts 
+{
+    <script src="~/js/prov-kab-kota.js"></script>
+}

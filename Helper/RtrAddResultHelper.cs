@@ -26,7 +26,7 @@ namespace Protaru.Helpers
                 .DaerahByProgressNoTracking(rtr, jenis)
                 .ToListAsync();
 
-            if (rtr.Perda == 1)
+            if (rtr.Perda == 1 || rtr.Perda == 1000)
             {
                 await AddResultAsync(result, rtr, jenis);
             }
