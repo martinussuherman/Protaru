@@ -76,6 +76,10 @@ namespace Protaru.Helpers
                 .ToListAsync();
 
             result.AddRange(addedResult);
+            result
+                .OrderBy(a => a.Provinsi.Nama)
+                .ThenBy(a => a.KabupatenKota.Provinsi.Nama)
+                .ThenBy(a => a.KabupatenKota.Nama);
         }
         private void AddJenisFilter(AtrSearch rtr, JenisRtrEnum jenis)
         {
