@@ -19,6 +19,7 @@ namespace MonevAtr.Pages.Search
             [FromQuery] string returnPage,
             [FromQuery] int page = 1)
         {
+            rtr.Tahun = short.MinValue;
             Hasil = await _helper.PagerListAsync(rtr, JenisRtrEnum.Daerah, page);
             Rtr = rtr;
             RegulationName = "Perda";
