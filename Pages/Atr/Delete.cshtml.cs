@@ -56,7 +56,7 @@ namespace MonevAtr.Pages.Atr
 
             RtrDetail.Rtr = await _context.Atr.FindAsync(id);
 
-            int kodeJenisRtr = 0;
+            int? kodeJenisRtr = 0;
 
             if (RtrDetail.Rtr == null)
             {
@@ -81,7 +81,7 @@ namespace MonevAtr.Pages.Atr
             return RedirectToPage(RetrieveIndexPage(kodeJenisRtr));
         }
 
-        private string RetrieveIndexPage(int kodeJenisRtr)
+        private string RetrieveIndexPage(int? kodeJenisRtr)
         {
             switch (kodeJenisRtr)
             {

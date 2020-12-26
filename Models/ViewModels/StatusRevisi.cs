@@ -8,8 +8,8 @@ namespace MonevAtr.Models
     {
         public StatusRevisi(int kode, string nama)
         {
-            this.Kode = kode;
-            this.Nama = nama;
+            Kode = kode;
+            Nama = nama;
         }
 
         public int Kode { get; set; }
@@ -35,7 +35,7 @@ namespace MonevAtr.Models
         public static string NamaStatusRevisiRegular(byte? kode)
         {
             return !kode.HasValue || !listRegular.Exists(s => s.Kode == kode.Value) ?
-                String.Empty :
+                string.Empty :
                 listRegular
                 .Find(s => s.Kode == kode.Value)
                 .Nama;
@@ -48,28 +48,22 @@ namespace MonevAtr.Models
         public static string NamaStatusRevisiRevisi(byte? kode)
         {
             return !kode.HasValue || !listRevisi.Exists(s => s.Kode == kode.Value) ?
-                String.Empty :
+                string.Empty :
                 listRevisi
                 .Find(s => s.Kode == kode.Value)
                 .Nama;
         }
 
-        public static string NamaStatusRevisi(byte? kode)
+        public static string NamaStatusRevisi(sbyte? kode)
         {
             if (kode.HasValue)
                 return listAll.FirstOrDefault(e => e.Kode == kode).Nama;
 
-            return String.Empty;
-
-            // return !kode.HasValue || !listAll.Exists(s => s.Kode == kode.Value) ?
-            //     String.Empty :
-            //     listAll
-            //         .Find(s => s.Kode == kode.Value)
-            //         .Nama;
+            return string.Empty;
         }
 
 
-        private static readonly StatusRevisi kosong = new StatusRevisi(0, String.Empty);
+        private static readonly StatusRevisi kosong = new StatusRevisi(0, string.Empty);
 
         private static readonly StatusRevisi regularT51 = new StatusRevisi(1, "Lima tahun pertama");
 

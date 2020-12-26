@@ -148,7 +148,7 @@ namespace MonevAtr.Pages.RtrwT51
 
         private async Task UpdateAtrDenganDataPerda(Models.Atr atr, Models.AtrDokumen perda)
         {
-            if (String.IsNullOrEmpty(perda.Nomor))
+            if (string.IsNullOrEmpty(perda.Nomor))
             {
                 return;
             }
@@ -169,9 +169,9 @@ namespace MonevAtr.Pages.RtrwT51
             {
                 KodeJenisAtr = (int)JenisRtrEnum.RtrwT51,
                 KodeProvinsi = null,
-                StatusRevisi = (byte)StatusRevisi.RegularT51.Kode,
+                StatusRevisi = (sbyte?)StatusRevisi.RegularT51.Kode,
                 KodeKabupatenKota = utilities.ParseExcelNumber(cells[row, 2]),
-                Nama = String.Empty,
+                Nama = string.Empty,
                 Aoi = utilities.ParseExcelString(cells[row, 3]),
                 Luas = utilities.ParseExcelNumber(cells[row, 4]),
                 TahunPenyusunan = (short)utilities.ParseExcelNumber(cells[row, 5]),

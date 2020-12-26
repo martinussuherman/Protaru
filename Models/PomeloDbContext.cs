@@ -69,21 +69,27 @@ namespace MonevAtr.Models
                 entity.HasIndex(e => e.KodePulau)
                     .HasName("FK_atr_pulau");
 
-                entity.Property(e => e.Kode)
-                    .HasColumnType("int(11)");
+                entity.HasIndex(e => e.NextRtr)
+                    .HasName("FK_atr_atr_2");
+
+                entity.HasIndex(e => e.PreviousRtr)
+                    .HasName("FK_atr_atr");
+
+                entity.Property(e => e.Kode).HasColumnType("int(11)");
 
                 entity.Property(e => e.Aoi)
-                    .HasColumnType("varchar(2000)")
-                    .HasDefaultValueSql("''");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Keterangan)
-                    .HasColumnType("varchar(2000)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.KodeJenisAtr)
-                    .HasColumnType("int(11)");
+                entity.Property(e => e.KodeJenisAtr).HasColumnType("int(11)");
 
-                entity.Property(e => e.KodeKabupatenKota)
-                    .HasColumnType("int(11)");
+                entity.Property(e => e.KodeKabupatenKota).HasColumnType("int(11)");
 
                 entity.Property(e => e.KodeKawasan).HasColumnType("int(11)");
 
@@ -93,137 +99,195 @@ namespace MonevAtr.Models
 
                 entity.Property(e => e.KodePulau).HasColumnType("int(11)");
 
-                entity.Property(e => e.Luas)
-                    .HasColumnType("decimal(18,3)")
-                    .HasDefaultValueSql("'0.000'");
+                entity.Property(e => e.Luas).HasColumnType("decimal(18,3)");
 
                 entity.Property(e => e.Nama)
-                    .HasColumnType("varchar(255)")
-                    .HasDefaultValueSql("''");
+                    .HasColumnType("tinytext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.NextRtr).HasColumnType("int(11)");
 
                 entity.Property(e => e.Nomor)
-                    .HasColumnType("varchar(50)")
-                    .HasDefaultValueSql("''");
+                    .HasColumnType("tinytext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PembaruanOleh)
                     .IsRequired()
-                    .HasColumnType("varchar(50)")
-                    .HasDefaultValueSql("''");
+                    .HasColumnType("tinytext")
+                    .HasDefaultValueSql("''")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PembaruanTerakhir)
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'current_timestamp()'")
+                    .HasDefaultValueSql("current_timestamp()")
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.Property(e => e.Permasalahan).HasColumnType("varchar(2000)");
+                entity.Property(e => e.Permasalahan)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.PreviousRtr).HasColumnType("int(11)");
 
                 entity.Property(e => e.StatusRevisi).HasColumnType("tinyint(4)");
 
-                entity.Property(e => e.SudahDirevisi)
-                    .HasColumnType("tinyint(4)")
-                    .HasDefaultValueSql("'0'");
+                entity.Property(e => e.SudahDirevisi).HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.Tahun)
                     .HasColumnType("year(4)")
-                    .HasDefaultValueSql("0000");
+                    .HasDefaultValueSql("'0000'");
 
                 entity.Property(e => e.TahunPenyusunan)
                     .HasColumnType("year(4)")
-                    .HasDefaultValueSql("0000");
+                    .HasDefaultValueSql("'0000'");
 
                 entity.Property(e => e.Tanggal).HasColumnType("date");
 
-                entity.Property(e => e.TindakLanjut).HasColumnType("varchar(2000)");
+                entity.Property(e => e.TindakLanjut)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL1FilePath)
                     .HasColumnName("TL1FilePath")
-                    .HasColumnType("varchar(255)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL1Keterangan)
                     .HasColumnName("TL1Keterangan")
-                    .HasColumnType("varchar(1000)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL1Status)
                     .HasColumnName("TL1Status")
-                    .HasColumnType("char(1)");
+                    .HasColumnType("char(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL2FilePath)
                     .HasColumnName("TL2FilePath")
-                    .HasColumnType("varchar(255)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL2Keterangan)
                     .HasColumnName("TL2Keterangan")
-                    .HasColumnType("varchar(1000)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL2Status)
                     .HasColumnName("TL2Status")
-                    .HasColumnType("char(1)");
+                    .HasColumnType("char(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL3FilePath)
                     .HasColumnName("TL3FilePath")
-                    .HasColumnType("varchar(255)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL3Keterangan)
                     .HasColumnName("TL3Keterangan")
-                    .HasColumnType("varchar(1000)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL3Status)
                     .HasColumnName("TL3Status")
-                    .HasColumnType("char(1)");
+                    .HasColumnType("char(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL4FilePath)
                     .HasColumnName("TL4FilePath")
-                    .HasColumnType("varchar(255)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL4Keterangan)
                     .HasColumnName("TL4Keterangan")
-                    .HasColumnType("varchar(1000)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL4Status)
                     .HasColumnName("TL4Status")
-                    .HasColumnType("char(1)");
+                    .HasColumnType("char(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL5FilePath)
                     .HasColumnName("TL5FilePath")
-                    .HasColumnType("varchar(255)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL5Keterangan)
                     .HasColumnName("TL5Keterangan")
-                    .HasColumnType("varchar(1000)");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.TL5Status)
                     .HasColumnName("TL5Status")
-                    .HasColumnType("char(1)");
+                    .HasColumnType("char(1)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.JenisAtr)
                     .WithMany(p => p.Atr)
                     .HasForeignKey(d => d.KodeJenisAtr)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_atr_jenis_atr");
 
                 entity.HasOne(d => d.KabupatenKota)
                     .WithMany(p => p.Atr)
                     .HasForeignKey(d => d.KodeKabupatenKota)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_atr_kabupaten_kota");
 
                 entity.HasOne(d => d.Kawasan)
                     .WithMany(p => p.Atr)
                     .HasForeignKey(d => d.KodeKawasan)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_atr_kawasan");
 
                 entity.HasOne(d => d.ProgressAtr)
                     .WithMany(p => p.Atr)
                     .HasForeignKey(d => d.KodeProgressAtr)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_atr_progress_atr");
 
                 entity.HasOne(d => d.Provinsi)
                     .WithMany(p => p.Atr)
                     .HasForeignKey(d => d.KodeProvinsi)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_atr_provinsi");
 
                 entity.HasOne(d => d.Pulau)
                     .WithMany(p => p.Atr)
                     .HasForeignKey(d => d.KodePulau)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_atr_pulau");
+
+                entity.HasOne(d => d.NextRtrNavigation)
+                    .WithMany(p => p.InverseNextRtrNavigation)
+                    .HasForeignKey(d => d.NextRtr)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_atr_atr_2");
+
+                entity.HasOne(d => d.PreviousRtrNavigation)
+                    .WithMany(p => p.InversePreviousRtrNavigation)
+                    .HasForeignKey(d => d.PreviousRtr)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_atr_atr");
             });
 
             modelBuilder.Entity<AtrDokumen>(entity =>

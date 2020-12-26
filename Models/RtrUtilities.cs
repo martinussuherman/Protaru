@@ -51,7 +51,7 @@ namespace MonevAtr.Models
             }
 
             rtr.KodeJenisAtr = (int)jenisRtr;
-            rtr.StatusRevisi = (byte)statusRevisi.Kode;
+            rtr.StatusRevisi = (sbyte)statusRevisi.Kode;
             rtr.Tahun = 0;
             rtr.PembaruanOleh = user.Identity.Name;
         }
@@ -74,7 +74,7 @@ namespace MonevAtr.Models
         }
 
         public async Task<List<KelompokDokumen>> LoadKelompokDokumenDanDokumen(
-            int kodeJenisRtr)
+            int? kodeJenisRtr)
         {
             List<KelompokDokumen> result = await _context.KelompokDokumen
                 .Include(k => k.Dokumen)
