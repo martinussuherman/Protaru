@@ -12,7 +12,7 @@ namespace Protaru.ViewComponents.Rtr
             _selectListUtilities = new SelectListUtilities(context);
         }
 
-        public IViewComponentResult Invoke(bool isRegular, byte sudahDirevisi, byte? status)
+        public IViewComponentResult Invoke(bool isRegular, sbyte sudahDirevisi, sbyte? status)
         {
             return View(new ViewModel
             {
