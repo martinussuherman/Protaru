@@ -5,14 +5,16 @@ namespace Protaru.ViewComponents.Rtr
 {
     public class CreateViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(Atr rtr, bool displayAoi)
+        public IViewComponentResult Invoke(Atr rtr)
         {
+            JenisRtrEnum jenis = (JenisRtrEnum)rtr.KodeJenisAtr;
+
             return View(new ViewModel
             {
                 Rtr = rtr,
-                DisplayAoi = displayAoi,
-                Location = LocationByRtr((JenisRtrEnum)rtr.KodeJenisAtr),
-                ReadOnlyLocation = ReadOnlyByRtr((JenisRtrEnum)rtr.KodeJenisAtr)
+                DisplayAoi = DisplayAoiByRtr(jenis),
+                Location = LocationByRtr(jenis),
+                ReadOnlyLocation = ReadOnlyByRtr(jenis)
             });
         }
 
@@ -27,6 +29,20 @@ namespace Protaru.ViewComponents.Rtr
             public bool ReadOnlyLocation { get; set; }
         }
 
+        private bool DisplayAoiByRtr(JenisRtrEnum jenisRtr)
+        {
+            if (jenisRtr == JenisRtrEnum.RtrKpnT51
+                || jenisRtr == JenisRtrEnum.RtrKpnT52
+                || jenisRtr == JenisRtrEnum.RtrKsnT51
+                || jenisRtr == JenisRtrEnum.RtrKsnT52
+                || jenisRtr == JenisRtrEnum.RtrPulauT51
+                || jenisRtr == JenisRtrEnum.RtrPulauT52)
+            {
+                return false;
+            }
+
+            return true;
+        }
         private bool ReadOnlyByRtr(JenisRtrEnum jenisRtr)
         {
             if (jenisRtr == JenisRtrEnum.RdtrT51 ||
