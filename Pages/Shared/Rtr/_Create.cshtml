@@ -1,0 +1,36 @@
+@model MonevAtr.Models.Atr
+@using Protaru.Components.Rtr
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+	<div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row row-cards card">
+                <div class="card-header pl-5">
+                    <h4 class="card-title mlm-15">@ViewData["Title"]</h4>
+                </div>
+
+                <form id="rtr" method="post">
+                    <div class="card-body">
+                        @await Component.InvokeAsync(
+                            "Create", 
+                            new { rtr = Model, displayAoi = true })
+                        <component type="typeof(CreateEditHidden)"
+                            render-mode="Static"
+                            param-Rtr="@Model" />
+					</div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a asp-page="./Index" class="btn btn-primary">Kembali</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
