@@ -303,6 +303,18 @@ namespace MonevAtr.Models
                 query.Where(q => q.KodeKawasan == kodeKawasan);
         }
 
+        public static IQueryable<Atr> ByT52CreateFilter(
+            this IQueryable<Atr> query,
+            JenisRtrEnum jenisT51,
+            JenisRtrEnum jenisT52)
+        {
+            return query
+                .Where(a =>
+                    ((a.KodeJenisAtr == (int)jenisT51 && a.StatusRevisi >= StatusRevisi.RegularT52.Kode)
+                        || a.KodeJenisAtr == (int)jenisT52)
+                    && a.SudahDirevisi == 0);
+        }
+
         public static IQueryable<Atr> RtrInclude(this IQueryable<Atr> query)
         {
             return query
