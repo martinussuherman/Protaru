@@ -1,49 +1,27 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
+using Protaru.PageModels;
 
 namespace MonevAtr.Pages.RtrwnT52
 {
     [Authorize(Permissions.RtrwnT52.Create)]
-    public class CreateModel : PageModel
+    public class CreateModel : Create
     {
-        public CreateModel(PomeloDbContext context)
+        public CreateModel(PomeloDbContext context) : base(context)
         {
-            _context = context;
-            rtrUtilities = new RtrUtilities(context);
         }
-
-        [BindProperty]
-        public Models.Atr Rtr { get; set; }
-
-        [BindProperty]
-        public int KodeReferensiAtr { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            KodeReferensiAtr = (int)id;
-            Rtr = await _context.Atr
-                .FirstOrDefaultAsync(m => m.Kode == KodeReferensiAtr);
-            return Page();
+            return await DisplayPageAsync(id, JenisRtrEnum.RtrwnT52);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                Rtr,
-                JenisRtrEnum.RtrwnT52,
-                StatusRevisi.RevisiT52,
-                User);
-            await rtrUtilities.SaveRtr(Rtr, User, EntityState.Added);
-            await rtrUtilities.UpdateReferensiRtr(KodeReferensiAtr);
-            return RedirectToPage("./Index");
+            return await SaveDataAsync(StatusRevisi.RevisiT52);
         }
-
-        private readonly RtrUtilities rtrUtilities;
-        private readonly PomeloDbContext _context;
     }
 }

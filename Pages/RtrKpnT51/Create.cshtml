@@ -1,5 +1,6 @@
 @page
 @model CreateModel
+@using Protaru.Components.Rtr
 
 @{
     Layout = "_RtrNasionalLayout";
@@ -26,6 +27,9 @@
                         @await Component.InvokeAsync(
                             "Create", 
                             new { rtr = Model.Rtr, displayAoi = false })
+                        <component type="typeof(CreateEditHidden)"
+                            render-mode="Static"
+                            param-Rtr="@Model.Rtr" />
 					</div>
 
                     <div class="card-footer text-center">

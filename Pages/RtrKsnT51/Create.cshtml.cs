@@ -1,41 +1,27 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
+using Protaru.PageModels;
 
 namespace MonevAtr.Pages.RtrKsnT51
 {
     [Authorize(Permissions.RtrKsnT51.Create)]
-    public class CreateModel : PageModel
+    public class CreateModel : Create
     {
-        public CreateModel(PomeloDbContext context)
+        public CreateModel(PomeloDbContext context) : base(context)
         {
-            rtrUtilities = new RtrUtilities(context);
         }
 
-        [BindProperty]
-        public Models.Atr Rtr { get; set; } = new Models.Atr();
-
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Rtr.KodeJenisAtr = (int)JenisRtrEnum.RtrKsnT51;
-            return Page();
+            return await DisplayPageAsync(id, JenisRtrEnum.RtrKsnT51);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            rtrUtilities.SetCommonRtrPropertiesOnCreate(
-                Rtr,
-                JenisRtrEnum.RtrKsnT51,
-                StatusRevisi.Kosong,
-                User);
-            await rtrUtilities.SaveRtr(Rtr, User, EntityState.Added);
-            return RedirectToPage("./Index");
+            return await SaveDataAsync(StatusRevisi.RegularT51);
         }
-
-        private readonly RtrUtilities rtrUtilities;
     }
 }
