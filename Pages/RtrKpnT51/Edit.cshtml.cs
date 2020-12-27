@@ -1,68 +1,15 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using MonevAtr.Models;
 using Protaru.Identity;
+using Protaru.PageModels;
 
 namespace MonevAtr.Pages.RtrKpnT51
 {
     [Authorize(Permissions.RdtrKpnT51.Edit)]
-    public class EditModel : PageModel
+    public class EditModel : Edit
     {
-        public EditModel(PomeloDbContext context)
+        public EditModel(PomeloDbContext context) : base(context)
         {
-            _context = context;
-            rtrUtilities = new RtrUtilities(context);
         }
-
-        [BindProperty]
-        public Models.Atr Rtr { get; set; }
-
-        [BindProperty]
-        public List<AtrDokumen> Dokumen { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            Rtr = await _context.Atr
-                .Include(a => a.JenisAtr)
-                .Include(a => a.Provinsi)
-                .Include(a => a.KabupatenKota)
-                .Include(a => a.KabupatenKota.Provinsi)
-                .Include(a => a.ProgressAtr)
-                .FirstOrDefaultAsync(m => m.Kode == id);
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            // if (!ModelState.IsValid)
-            // {
-            //     return await OnGetAsync(this.Rtr.Kode);
-            // }
-
-            List<Models.Dokumen> dokumenList = await _context.Dokumen
-                 .ToListAsync();
-
-            foreach (AtrDokumen dokumen in Dokumen)
-            {
-                if (!await rtrUtilities.SaveRtrDokumen(Rtr, dokumen, dokumenList))
-                {
-                    return NotFound();
-                }
-            }
-
-            if (!await rtrUtilities.SaveRtr(Rtr, User, EntityState.Modified))
-            {
-                return NotFound();
-            }
-
-            return await OnGetAsync(Rtr.Kode);
-        }
-
-        private readonly RtrUtilities rtrUtilities;
-        private readonly PomeloDbContext _context;
     }
 }
