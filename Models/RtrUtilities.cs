@@ -15,64 +15,6 @@ namespace MonevAtr.Models
             _context = context;
         }
 
-        public void SetCommonRtrPropertiesOnCreate(
-            Atr rtr,
-            JenisRtrEnum jenisRtr,
-            StatusRevisi statusRevisi,
-            ClaimsPrincipal user)
-        {
-            if (rtr.KodeProvinsi == 0)
-            {
-                rtr.KodeProvinsi = null;
-            }
-
-            if (rtr.KodeKabupatenKota == 0)
-            {
-                rtr.KodeKabupatenKota = null;
-            }
-            else if (rtr.KodeKabupatenKota != null)
-            {
-                rtr.KodeProvinsi = null;
-            }
-
-            if (rtr.KodeProgressAtr == 0)
-            {
-                rtr.KodeProgressAtr = null;
-            }
-
-            if (rtr.KodePulau == 0)
-            {
-                rtr.KodePulau = null;
-            }
-
-            if (rtr.KodeKawasan == 0)
-            {
-                rtr.KodeKawasan = null;
-            }
-
-            rtr.KodeJenisAtr = (int)jenisRtr;
-            rtr.StatusRevisi = (sbyte)statusRevisi.Kode;
-            rtr.Tahun = 0;
-            rtr.PembaruanOleh = user.Identity.Name;
-        }
-
-        public async Task UpdateReferensiRtr(int kodeReferensiRtr)
-        {
-            Atr referensi = new Atr()
-            {
-                Kode = kodeReferensiRtr,
-                SudahDirevisi = 1
-            };
-
-            // TODO : update forward link
-
-            _context.Atr.Attach(referensi);
-            _context.Entry(referensi)
-                .Property(r => r.SudahDirevisi)
-                .IsModified = true;
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<List<KelompokDokumen>> LoadKelompokDokumenDanDokumen(
             int? kodeJenisRtr)
         {
@@ -142,8 +84,6 @@ namespace MonevAtr.Models
 
             rtr.PembaruanOleh = user.Identity.Name;
             _context.Attach(rtr).State = state;
-
-            // TODO : backward link
 
             LogUser log = new LogUser
             {
