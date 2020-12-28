@@ -85,16 +85,20 @@
                 </div>
             </div>
 
-            <div class="ml-auto float-sm-right px-5">
-                <button class="btn btn-warning text-light" onclick="window.history.back();">Kembali</button>
-                @* <a asp-page="@returnUrl" class="btn btn-warning text-light">Kembali</a> *@
-            </div>
+            <div class="px-5">
+                @if (Model.Rtr.Rtr.PreviousRtr != null)
+                {
+                    <a asp-page="./View" asp-route-id="@Model.Rtr.Rtr.PreviousRtr" class="btn btn-success text-light">RTR Sebelumnya</a>
+                }
 
-            @* <div class="px-5">
-                <button onclick="window.history.back();" class="btn btn-success text-light">RTR Sebelumnya</button>
-                <button onclick="window.history.back();" class="btn btn-success text-light">RTR Berikutnya</button>
+                @if (Model.Rtr.Rtr.NextRtr != null)
+                {
+                    <a asp-page="./View" asp-route-id="@Model.Rtr.Rtr.NextRtr" class="btn btn-success text-light">RTR Berikutnya</a>
+                }
+
                 <button onclick="window.history.back();" class="btn btn-warning text-light float-sm-right">Kembali</button>
-                </div> *@
+                @* <a asp-page="@returnUrl" class="btn btn-warning text-light float-sm-right">Kembali</a> *@
+            </div>
         </div>
     </div>
 </div>
