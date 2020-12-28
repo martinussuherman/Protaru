@@ -1,0 +1,100 @@
+@namespace Protaru.ViewComponents.Rtr
+
+@using Protaru.Components.Rtr
+
+@model ViewViewComponent.ViewModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Syncfusion.EJ2
+
+<div class="page-title">
+    <div class="container">
+        <h4>@ViewData["PageTitle"]</h4>
+    </div>
+</div>
+
+<div class="bg-page-detail">
+    <div class="pt-4 pb-5 container">
+        <div class="row row-cards card py-4">
+            <component type="typeof(DetailTitle)"
+                render-mode="Static"
+                param-Rtr="@Model.Rtr.Rtr" />
+            <component type="typeof(ViewHeader)"
+                render-mode="Static"
+                param-Rtr="@Model.Rtr.Rtr"
+                param-DisplayStatusRevisi="@false" />
+
+            <div class="mt-4 tag-title-box-2">
+                <div class="tag-title"><span>DOKUMEN DETIL</span></div>
+            </div>
+
+            <div class="card border-none mb-3 col-md-12" style="border-color: transparent;">
+                <div class="card-body table-responsive">
+                    <div class="">
+                        <table class="table card-table table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Nomor</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Keterangan</th>
+                                    <th scope="col">File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+@{
+    int index = 1;
+
+    foreach (var item in Model.Rtr.KelompokDokumenList) 
+    {
+        foreach( var detailItem in item.Dokumen)
+        {
+            if( detailItem.UntukPublik == 0)
+            {
+                continue;
+            }
+
+            var detailDokumen = detailItem.DetailDokumen;
+            var nomor = detailDokumen == null ? string.Empty : detailDokumen.Nomor;
+            var tanggal = detailDokumen == null ? string.Empty : detailDokumen.DisplayTanggalForView;
+            var keterangan = detailDokumen == null ? string.Empty : detailDokumen.Keterangan;
+
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@detailItem.Nama</td>
+                                    <td>@nomor</td>
+                                    <td>@tanggal</td>
+                                    <td>@keterangan</td>
+
+                                    <component type="typeof(ViewFile)"
+                                        render-mode="Static"
+                                        param-RtrDokumen="@detailItem.DetailDokumen"
+                                        param-Url="@Url" />
+                                </tr>
+
+            index++;
+        }
+    }
+}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ml-auto float-sm-right px-5">
+                <button class="btn btn-warning text-light" onclick="window.history.back();">Kembali</button>
+                @* <a asp-page="@returnUrl" class="btn btn-warning text-light">Kembali</a> *@
+            </div>
+
+            @* <div class="px-5">
+                <button onclick="window.history.back();" class="btn btn-success text-light">RTR Sebelumnya</button>
+                <button onclick="window.history.back();" class="btn btn-success text-light">RTR Berikutnya</button>
+                <button onclick="window.history.back();" class="btn btn-warning text-light float-sm-right">Kembali</button>
+                </div> *@
+        </div>
+    </div>
+</div>
