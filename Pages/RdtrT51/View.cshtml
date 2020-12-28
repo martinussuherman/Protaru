@@ -1,14 +1,12 @@
 @page "{id:int?}"
 @model Protaru.PageModels.View
-@using Protaru.Components.Rtr
 
 @{
-    Layout = "_RtrDaerahViewLayout";
+    Layout = "_RtrDaerahLayout";
     ViewData["Title"] = "Detail RDTR";
     ViewData["PageTitle"] = "RDTR";
 }
 
-<component type="typeof(View)"
-    render-mode="Static"
-    param-Rtr="@Model.RtrDetail"
-    param-Url="@Model.Url" />
+@await Component.InvokeAsync(
+    "View", 
+    new { detail = Model.RtrDetail })
