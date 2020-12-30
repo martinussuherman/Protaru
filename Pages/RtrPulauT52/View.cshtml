@@ -10,3 +10,8 @@
 @await Component.InvokeAsync(
     "View", 
     new { detail = Model.RtrDetail })
+
+@section Scripts 
+{
+    <script src="~/js/detail-view-toggle.js"></script>
+}
