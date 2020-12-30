@@ -1,4 +1,3 @@
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,9 +20,7 @@ namespace MonevAtr.Pages.RtrKsnT52
         public IActionResult OnGet([FromQuery] AtrSearch rtr, [FromQuery] int page = 1)
         {
             Hasil = _context.Atr
-                .Where(a => (a.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT51 ||
-                        a.KodeJenisAtr == (int)JenisRtrEnum.RtrKsnT52) &&
-                    a.SudahDirevisi == 0)
+                .ByT52CreateFilter(JenisRtrEnum.RtrKsnT51, JenisRtrEnum.RtrKsnT52)
                 .ByKawasan(rtr.Kawasan)
                 .ByTahun(rtr.Tahun)
                 .ByNama(rtr.Nama)
