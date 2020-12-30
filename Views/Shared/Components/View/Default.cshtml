@@ -25,24 +25,25 @@
                 param-DisplayStatusRevisi="@false" />
 
             <div class="mt-4 tag-title-box-2">
-                <div class="tag-title"><span>DOKUMEN DETIL</span></div>
+                <div id="detail-title" class="tag-title">
+                    <span>RISALAH DOKUMEN DETIL <i class="fa fa-plus-circle"> </i></span>
+                </div>
             </div>
 
-            <div class="card border-none mb-3 col-md-12" style="border-color: transparent;">
+            <div id="detail-item" class="card border-none mb-3 col-md-12" style="border-color: transparent;">
                 <div class="card-body table-responsive">
-                    <div class="">
-                        <table class="table card-table table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Nomor</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Keterangan</th>
-                                    <th scope="col">File</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <table class="table card-table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Nomor</th>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Keterangan</th>
+                                <th scope="col">File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
 @{
     int index = 1;
@@ -61,39 +62,38 @@
             var tanggal = detailDokumen == null ? string.Empty : detailDokumen.DisplayTanggalForView;
             var keterangan = detailDokumen == null ? string.Empty : detailDokumen.Keterangan;
 
-                                <tr>
-                                    <td>@index</td>
-                                    <td>@detailItem.Nama</td>
-                                    <td>@nomor</td>
-                                    <td>@tanggal</td>
-                                    <td>@keterangan</td>
+                            <tr>
+                                <td>@index</td>
+                                <td>@detailItem.Nama</td>
+                                <td>@nomor</td>
+                                <td>@tanggal</td>
+                                <td>@keterangan</td>
 
-                                    <component type="typeof(ViewFile)"
-                                        render-mode="Static"
-                                        param-RtrDokumen="@detailItem.DetailDokumen"
-                                        param-Url="@Url" />
-                                </tr>
+                                <component type="typeof(ViewFile)"
+                                    render-mode="Static"
+                                    param-RtrDokumen="@detailItem.DetailDokumen"
+                                    param-Url="@Url" />
+                            </tr>
 
             index++;
         }
     }
 }
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <div class="px-5">
                 @if (Model.Rtr.Rtr.PreviousRtr != null)
                 {
-                    <a asp-page="./View" asp-route-id="@Model.Rtr.Rtr.PreviousRtr" class="btn btn-success text-light">RTR Sebelumnya</a>
+                    <a asp-page="/@Model.PreviousPage/View" asp-route-id="@Model.Rtr.Rtr.PreviousRtr" class="btn btn-success text-light">RTR Sebelumnya</a>
                 }
 
                 @if (Model.Rtr.Rtr.NextRtr != null)
                 {
-                    <a asp-page="./View" asp-route-id="@Model.Rtr.Rtr.NextRtr" class="btn btn-success text-light">RTR Berikutnya</a>
+                    <a asp-page="/@Model.NextPage/View" asp-route-id="@Model.Rtr.Rtr.NextRtr" class="btn btn-success text-light">RTR Berikutnya</a>
                 }
 
                 <button onclick="window.history.back();" class="btn btn-warning text-light float-sm-right">Kembali</button>
