@@ -23,11 +23,14 @@ $.getJSON(
         datasets: [{
           label: 'RTR Berdasarkan Jenis',
           backgroundColor: [
-            'red',
-            'blue',
-            'green'
+            'aqua',
+            'brown',
+            'chocolate',
+            'deeppink',
+            'forestgreen',
+            'goldenrod'
           ],
-          // borderColor: 'rgb(255, 99, 132)',
+          borderColor: 'lightgray',
           data: data.data
         }]
       },
@@ -53,12 +56,8 @@ $.getJSON(
         labels: data.label,
         datasets: [{
           label: 'Summary RTR Yang Sudah Diupdate',
-          backgroundColor: [
-            'red',
-            'blue',
-            'green'
-          ],
-          // borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'hotpink',
+          borderColor: 'lightgray',
           data: data.data
         }]
       },
@@ -84,12 +83,8 @@ $.getJSON(
         labels: data.label,
         datasets: [{
           label: 'Summary RTR Yang Baru Dibuat',
-          backgroundColor: [
-            'red',
-            'blue',
-            'green'
-          ],
-          // borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'khaki',
+          borderColor: 'lightgray',
           data: data.data
         }]
       },
