@@ -84,7 +84,7 @@
 <div class="progress-chart mt-2">
 	<div class="container py-3">
 		<div class="row">
-			<div class="col-lg-6 py-3 rtr-progress-desc">
+			<div class="col-lg-12 py-3">
 				<h1 class="title-status-progress pt-5">
 					STATUS <br> PROGRES RTR <br> <strong>DAERAH</strong> <br>
 				</h1>
@@ -92,10 +92,9 @@
 				<div class="border-title"></div>
 
 				<div class="text-left pt-4">
-					<p class="protaru-desc">Rencana Detail Tata Ruang (RDTR) adalah rencana secara terperinci tentang tata ruang wilayah kabupaten/kota yang dilengkapi dengan peraturan zonasi kabupaten/kota.</p>
-					<p class="protaru-desc">Rencana Tata Ruang Wilayah (RTRW) Provinsi adalah RTR yang bersifat umum dari wilayah provinsi, mengacu pada penjabaran dari RTRWN, pedoman bidang penataan ruang, serta rencana pembangunan jangka panjang daerah.</p>
-					<p class="protaru-desc">Berikut adalah laporan hasil-hasil pembinaan penyelenggaraan penataan ruang yang telah dilakukan di provinsi, kabupaten, dan kota Ruang Daerah yang dilakukan oleh Pemerintah di provinsi, kabupaten, dan kota</p>
-					<p class="protaru-desc">Disajikan di dalam sebuah tampilan status progress yang dibagi menjadi dua tahapan yaitu lima tahun pertama dan lima tahun kedua.</p>
+					<p class="protaru-desc text-justify">RTR daerah yang di tampilkan di dalam halaman ini merupakan status progres hasil dari pembinaan penyelenggaraan penataan ruang yang telah dilakukan di provinsi, kabupaten, dan kota Ruang Daerah yang dilakukan oleh Pemerintah di provinsi, kabupaten, dan kota</p>
+					<p class="protaru-desc text-justify">Rencana Detail Tata Ruang (RDTR) adalah rencana secara terperinci tentang tata ruang wilayah kabupaten/kota yang dilengkapi dengan peraturan zonasi kabupaten/kota.</p>
+					<p class="protaru-desc text-justify">Rencana Tata Ruang Wilayah (RTRW) Provinsi adalah RTR yang bersifat umum dari wilayah provinsi, mengacu pada penjabaran dari RTRWN, pedoman bidang penataan ruang, serta rencana pembangunan jangka panjang daerah.</p>
 				</div>
 
 				@* <div class="row py-5">
@@ -108,132 +107,6 @@
 					</div>
 				</div> *@
 			</div>
-
-			<div class="col-lg-6 py-3">
-				<div class="pt-5">
-					<a id="rtrw-t51-progress"
-						data-toggle="tooltip"
-						data-placement="bottom"
-						title=""
-						class="title-progress btn btn-success text-white">
-						RTRW
-					</a>
-
-					@* <span class="title-progress">|</span> *@
-
-					<a id="rdtr-t51-progress"
-						data-toggle="tooltip"
-						data-placement="bottom"
-						title="" 
-						class="title-progress btn btn-outline-danger">
-						RDTR
-					</a>
-
-					<h6 class="text-progress">Lima Tahun Pertama</h6>
-
-					<div id="progress-t51" class="box-graphic">
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/penyusunan.png")"
-							param-Text="@("Penyusunan")"
-							param-ProgressClass="@("progress-init")"
-							param-BarClass="@("red-bar")"
-							param-CircleClass="@("circle-dark")"
-							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")"
-							param-Text="@("Rekomendasi Gubernur")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("black-bar")"
-							param-CircleClass="@("circle-medium-dark")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/persub.png")"
-							param-Text="@("Persetujuan Substansi")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("blue-bar")"
-							param-CircleClass="@("circle-medium")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/perda.png")"
-							param-Text="@("Peraturan Daerah")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("yellow-bar")"
-							param-CircleClass="@("circle-light")"
-							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
-					</div>
-				</div>
-
-				<div class="pt-5">
-					<a id="rtrw-t52-progress"
-						data-toggle="tooltip"
-						data-placement="bottom"
-						title=""
-						class="title-progress btn btn-success text-white">
-						RTRW
-					</a>
-
-					@* <span class="title-progress">|</span> *@
-
-					<a id="rdtr-t52-progress"
-						data-toggle="tooltip"
-						data-placement="bottom"
-						title=""
-						class="title-progress btn btn-outline-danger">
-						RDTR
-					</a>
-
-					<h6 class="text-progress">Lima Tahun Kedua</h6>
-
-					<div id="progress-t52" class="box-graphic">
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/proses-pk.png")"
-							param-Text="@("Proses Peninjauan Kembali")"
-							param-ProgressClass="@("progress-init")"
-							param-BarClass="@("red-bar")"
-							param-CircleClass="@("circle-dark")"
-							param-ExtraImageStyle="@("border-top-left-radius: 12px;")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/revisi.png")"
-							param-Text="@("Revisi")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("black-bar")"
-							param-CircleClass="@("circle-medium-dark")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/rekom-gub.png")"
-							param-Text="@("Rekomendasi Gubernur")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("blue-bar")"
-							param-CircleClass="@("circle-medium")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/persub.png")"
-							param-Text="@("Persetujuan Substansi")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("yellow-bar")"
-							param-CircleClass="@("circle-light")" />
-
-						<component type="typeof(ProgressBar)"
-							render-mode="Static"
-							param-ImageUrl="@Url.Content("~/assets/img/perda.png")"
-							param-Text="@("Peraturan Daerah")"
-							param-ProgressClass="@("progress-general")"
-							param-BarClass="@("purple-bar")"
-							param-CircleClass="@("circle-light")"
-							param-ExtraImageStyle="@("border-bottom-left-radius: 18px;")" />
-			    	</div>
-		    	</div>
-		  	</div>
 	  	</div>
 	</div>
 </div>
