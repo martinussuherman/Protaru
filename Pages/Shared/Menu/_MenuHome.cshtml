@@ -3,9 +3,9 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
-  string pageName;
-
-  pageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/Perpres";
+    string nasionalPageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/All";
+    string rtrwPageName = SignInManager.IsSignedIn(User) ? "/RtrwT51/Index" : "/Rtrw/All";
+    string rdtrPageName = SignInManager.IsSignedIn(User) ? "/RdtrT51/Index" : "/Rdtr/All";
 }
 
 <ul class="navbar-nav">
@@ -14,25 +14,23 @@
     </li>
 
     <li id="menu-nasional" class="nav-item">
-        <a class="nav-link nav-list" asp-page="@pageName">RTR Nasional</a>
+        <a class="nav-link nav-list" asp-page="@nasionalPageName">RTR Nasional</a>
     </li>
 
     <li id="menu-daerah" class="nav-item dropdown">
-        <a class="nav-link nav-list dropdown-toggle" 
-            asp-page="/RtrIndexDaerah"
-            role="button" 
-            data-toggle="dropdown" 
-            aria-haspopup="true" 
-            aria-expanded="false">
+        <a class="nav-link nav-list dropdown-toggle" asp-page="/RtrIndexDaerah" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             RTR Daerah
         </a>
 
         <div class="dropdown-menu">
             <a asp-page="/RtrIndexDaerah" class="dropdown-item">Summary</a>
-            <a asp-page="/Rtrw/All" class="dropdown-item">RTRW</a>
-            <a asp-page="/Rdtr/All" class="dropdown-item">RDTR</a>
+            <a asp-page="@rtrwPageName" class="dropdown-item">RTRW</a>
+            <a asp-page="@rdtrPageName" class="dropdown-item">RDTR</a>
         </div>
     </li>
 
-    @{await Html.RenderPartialAsync("_MenuLogin");}
+    @{
+        await Html.RenderPartialAsync("_MenuLogin");
+    }
 </ul>
