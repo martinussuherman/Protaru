@@ -1,0 +1,16 @@
+@page
+@model Protaru.PageModels.Search
+
+@using MonevAtr.Models
+
+@{
+    Layout = "_RtrNasionalIndexLayout";
+    ViewData["Title"] = "Pencarian RTRWN";
+    ViewData["PageTitle"] = "RTRWN";
+}
+
+<form id="search-form">
+    <input type="hidden" name="Rtr.Perda" value="1000" />
+    <input type="hidden" name="ReturnPage" value="./Perpres" />
+    <partial name="_SearchButton" model="false" />
+</form>

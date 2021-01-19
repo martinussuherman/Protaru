@@ -1,0 +1,23 @@
+@page
+@model Protaru.PageModels.Search
+
+@using MonevAtr.Models
+
+@{
+    Layout = "_RtrNasionalIndexLayout";
+    ViewData["Title"] = "Pencarian RTR KSN";
+    ViewData["PageTitle"] = "RTR KSN";
+}
+
+<form id="search-form">
+    <input type="hidden" name="Rtr.Perda" value="1000" />
+    <input type="hidden" name="ReturnPage" value="./Perpres" />
+
+    <div class="card-body">
+        @await Component.InvokeAsync(
+            "Kawasan",
+            new { isInput = false })
+    </div>
+
+    <partial name="_SearchButton" model="false" />
+</form>
