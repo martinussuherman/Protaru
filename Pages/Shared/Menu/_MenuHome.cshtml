@@ -3,7 +3,8 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
-    string nasionalPageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/All";
+    string nasionalPageName = SignInManager.IsSignedIn(User) ? "/RtrwnT51/Index" : "/Rtrwn/SearchResult";
+    string perdaQuery = SignInManager.IsSignedIn(User) ? "" : "1000";
     string rtrwPageName = SignInManager.IsSignedIn(User) ? "/RtrwT51/Index" : "/Rtrw/All";
     string rdtrPageName = SignInManager.IsSignedIn(User) ? "/RdtrT51/Index" : "/Rdtr/All";
 }
@@ -14,7 +15,7 @@
     </li>
 
     <li id="menu-nasional" class="nav-item">
-        <a class="nav-link nav-list" asp-page="@nasionalPageName">RTR Nasional</a>
+        <a class="nav-link nav-list" asp-page="@nasionalPageName" asp-route-Rtr.Perda="@perdaQuery">RTR Nasional</a>
     </li>
 
     <li id="menu-daerah" class="nav-item dropdown">
