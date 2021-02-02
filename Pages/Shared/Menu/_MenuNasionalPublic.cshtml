@@ -4,7 +4,15 @@
     </li>
 
     <li id="menu-rtrwn" class="nav-item">
-        <a class="nav-link nav-list" asp-page="/Rtrwn/SearchResult" asp-route-Rtr.Perda="1000">RTRWN</a>
+        <a 
+            class="nav-link nav-list" 
+            asp-page="/Rtrwn/SearchResult" 
+            asp-route-Rtr.Perda="1000"
+            asp-route-Rtr.Tahun="-1"
+            asp-route-ReturnPage="/Index"
+        >
+            RTRWN
+        </a>
     </li>
 
     <li id="menu-pulau" class="nav-item">

@@ -15,12 +15,26 @@
     </li>
 
     <li id="menu-nasional" class="nav-item">
-        <a class="nav-link nav-list" asp-page="@nasionalPageName" asp-route-Rtr.Perda="@perdaQuery">RTR Nasional</a>
+        <a 
+            class="nav-link nav-list" 
+            asp-page="@nasionalPageName" 
+            asp-route-Rtr.Perda="@perdaQuery" 
+            asp-route-Rtr.Tahun="-1"
+            asp-route-ReturnPage="/Index"
+        >
+            RTR Nasional
+        </a>
     </li>
 
     <li id="menu-daerah" class="nav-item dropdown">
-        <a class="nav-link nav-list dropdown-toggle" asp-page="/RtrIndexDaerah" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+        <a 
+            class="nav-link nav-list dropdown-toggle" 
+            asp-page="/RtrIndexDaerah" 
+            role="button" 
+            data-toggle="dropdown"
+            aria-haspopup="true" 
+            aria-expanded="false"
+        >
             RTR Daerah
         </a>
 
