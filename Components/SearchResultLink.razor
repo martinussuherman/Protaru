@@ -7,8 +7,15 @@
     <a href="@Url.Page("./Create")" class="btn btn-success mr-1">Tambah</a>
 }
 
+@if( string.IsNullOrEmpty(ReturnUrl()) )
+{
+    <button class="btn btn-warning" onclick="window.history.back();">Kembali</button>
+}
+else
+{
     <a href="@ReturnUrl()" class="btn btn-warning">Kembali</a>
-    @* <button class="btn btn-warning" onclick="window.history.back();">Kembali</button> *@
+}
+
 </div>
 
 @code {
@@ -25,7 +32,7 @@
     {
         if (string.IsNullOrEmpty(ReturnPage))
         {
-            return "./Index";
+            return string.Empty;
         }
 
         if (!ReturnPage.Contains('?'))
