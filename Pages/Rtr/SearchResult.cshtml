@@ -1,14 +1,28 @@
-@page 
+@page
 @model SearchResultModel
 
 @{
+    string rtrName = Model.JenisRtr.ToString().ToUpperInvariant();
+    string regulationName = "Perpres";
+
+    if (Model.JenisRtr == Models.JenisRtrEnum.Nasional )
+    {
+        rtrName = "RTR NASIONAL";
+    }
+
+    if (Model.JenisRtr == Models.JenisRtrEnum.Rdtr || Model.JenisRtr == Models.JenisRtrEnum.Rtrw)
+    {
+        regulationName = "Perda";
+    }
+
     Layout = "_RtrDaerahLayout";
-    ViewData["Title"] = "Monitoring & Evaluasi RTR";
-    ViewData["PageTitle"] = Model.Rtr.Perda == 1 ? "RTR Perda/Perpres" : "RTR Progress";
+    ViewData["Title"] = $"Monitoring & Evaluasi {rtrName}";
+    ViewData["PageTitle"] = Model.Rtr.Perda == 1 ? $"{rtrName} {regulationName}" : $"{rtrName} Progress";
     var pagingHtml = await Html.PartialAsync("_PagingPartial", Model.Hasil);
 }
 
-<component type="typeof(SearchResultPage)"
+<component 
+    type="typeof(SearchResultPage)"
     render-mode="Static"
     param-PageTitle="@ViewData["PageTitle"]"
     param-Title="@ViewData["Title"]"
@@ -16,4 +30,5 @@
     param-DisplayedLocation="@RtrLocationEnum.None"
     param-PagingHtml="@pagingHtml" 
     param-ReturnPage="@Model.ReturnPage"
-    param-HomepageResult="@true" />
+    param-HomepageResult="@true" 
+/>

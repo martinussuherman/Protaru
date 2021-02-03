@@ -14,12 +14,16 @@ namespace MonevAtr.Pages.Rtr
 
         public string ReturnPage { get; set; }
 
+        public JenisRtrEnum JenisRtr { get; set; }
+
         public async Task<IActionResult> OnGetAsync(
             [FromQuery] int perda,
             [FromQuery] int jenisRtr,
             [FromQuery] string returnPage,
             [FromQuery] int page = 1)
         {
+            JenisRtr = (JenisRtrEnum)jenisRtr;
+
             AtrSearch search = new AtrSearch
             {
                 Prov = 0,
@@ -28,7 +32,7 @@ namespace MonevAtr.Pages.Rtr
                 Perda = perda
             };
 
-            Hasil = await _helper.PagerListAsync(search, (JenisRtrEnum)jenisRtr, page);
+            Hasil = await _helper.PagerListAsync(search, JenisRtr, page);
             Rtr = search;
             RegulationName = "Perda/Perpres";
             IsDisplayRegulation = search.Perda == 1;
