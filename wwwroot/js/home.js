@@ -1,7 +1,14 @@
 $("#menu-home").addClass("active");
 
 function UpdateHomeSummaryDaerahNasional(data) {
-    $('#summary-info .text-info').html('Status : ' + data.info);
+    const now = new Date();
+    const dateOptions = { dateStyle: 'full' };
+    const timeOptions = { timeZoneName: 'short' };
+
+    $('#summary-info .text-info').html(
+        'Status : ' + now.toLocaleDateString('id-ID', dateOptions) + '/' +
+        now.toLocaleTimeString('id-ID', timeOptions));
+    // $('#summary-info .text-info').html('Status : ' + data.info);
     $('#summary-info a[progress="nasional"]').html(data.progressNasional);
     $('#summary-info a[done="nasional"]').html(data.doneNasional);
     $('#summary-info a[progress="rtrw"]').html(data.progressRtrw);
@@ -14,6 +21,7 @@ function UpdateHomeSummary(data) {
     $('#summary-progress').html(data.progress);
     $('#summary-done').html(data.done);
 }
+
 
 // $(function(){
 //   $('#menu-daerah').hover(function() {
