@@ -318,7 +318,7 @@ body {
 
 .bg-footer {
   background: #e3ecf1 url('../assets/img/bg-footer.jpg') no-repeat center bottom;
-  height: 344px;
+  /* height: 344px; */
   background-size: contain;
 }
 
@@ -372,9 +372,25 @@ body {
   .yt-box {
     padding-left: 1rem;
   }
+
+  footer{
+    padding-top: 60px;
+  }
+
+  .kritik-saran a {
+    bottom: 160px;
+  }
 }
 
 @media (max-width: 575px){
+  footer{
+    padding-top: 120px;
+  }
+
+  .kritik-saran a {
+    bottom: 260px;
+  }
+
   .copy {
     margin-bottom: 0;
   }
@@ -407,6 +423,10 @@ body {
 #summary-info thead {
   background-color: rgb(32, 94, 79);
   color: whitesmoke;
+}
+
+#detail-title {
+  cursor: pointer;
 }
 
 /* ============ desktop view ============ */
