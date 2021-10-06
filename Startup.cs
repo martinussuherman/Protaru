@@ -39,7 +39,6 @@ namespace MonevAtr
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllers();
-            services.AddHttpClient(Options.DefaultName);
             services.AddMvc();
             services.AddRecaptcha(new RecaptchaOptions
             {
@@ -51,10 +50,9 @@ namespace MonevAtr
             ConfigureSwagger(services);
             ConfigureSmtp(services);
             ConfigureCookie(services);
+            ConfigureMisc(services);
             
             services
-                .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
-                .AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
                 .Configure<RazorViewEngineOptions>(options =>
                 {
                     options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
@@ -156,6 +154,12 @@ namespace MonevAtr
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+        }
+        private void ConfigureMisc(IServiceCollection services)
+        {
+            services.AddHttpClient(Options.DefaultName);
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         }
     }
 }
