@@ -47,31 +47,11 @@ namespace MonevAtr
                 SecretKey = Configuration["Recaptcha:SecretKey"]
             });
 
+            ConfigureDatabase(services);
+            
             services
                 .Configure<SmtpOptions>(
                     Configuration.GetSection(SmtpOptions.OptionsName))
-                .AddDbContextPool<Models.PomeloDbContext>(options =>
-                    options.UseMySql(
-                        Configuration.GetConnectionString("MonevAtr"),
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(
-                                10,
-                                TimeSpan.FromSeconds(30),
-                                null);
-                        }),
-                    16)
-                .AddDbContextPool<IdentityDbContext>(options =>
-                    options.UseMySql(
-                        Configuration.GetConnectionString("IdentityConnection"),
-                        sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(
-                                10,
-                                TimeSpan.FromSeconds(30),
-                                null);
-                        }),
-                    16)
                 .AddTransient<IEmailSender, SmtpEmailSender>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
@@ -143,6 +123,27 @@ namespace MonevAtr
             folderCreator.CreateUploadFolders();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
                 Configuration.GetValue<string>("SfKey"));
+        }
+
+        private void ConfigureDatabase(IServiceCollection services)
+        {
+            services
+                .AddDbContextPool<Models.PomeloDbContext>(
+                    options => options.UseMySql(
+                        Configuration.GetConnectionString("MonevAtr"),
+                        sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+                        }),
+                    16)
+                .AddDbContextPool<IdentityDbContext>(
+                    options => options.UseMySql(
+                        Configuration.GetConnectionString("IdentityConnection"),
+                        sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+                        }),
+                    16);
         }
     }
 }
