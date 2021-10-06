@@ -80,6 +80,12 @@ namespace MonevAtr.Models
 
             return list.Prepend(_provinsiTitle);
         }
+        public async Task<IEnumerable<SelectListItem>> ProvinsiOptionalAsync()
+        {
+            List<SelectListItem> list = await ProvinsiAsyncInternal();
+
+            return list.Prepend(_provinsiTitleOptional);
+        }
         private async Task<List<SelectListItem>> ProvinsiAsyncInternal()
         {
             return await _context.Provinsi
