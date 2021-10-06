@@ -50,16 +50,11 @@ namespace MonevAtr
             ConfigureDatabase(services);
             ConfigureSwagger(services);
             ConfigureSmtp(services);
+            ConfigureCookie(services);
             
             services
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
-                .ConfigureApplicationCookie(options =>
-                {
-                    options.LoginPath = $"/Identity/Account/Login";
-                    // options.LogoutPath = $"/Identity/Account/Logout";
-                    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-                })
                 .Configure<RazorViewEngineOptions>(options =>
                 {
                     options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
@@ -152,6 +147,15 @@ namespace MonevAtr
             services
                 .Configure<SmtpOptions>(Configuration.GetSection(SmtpOptions.OptionsName))
                 .AddTransient<IEmailSender, SmtpEmailSender>();
+        }
+        private void ConfigureCookie(IServiceCollection services)
+        {
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
         }
     }
 }
