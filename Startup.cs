@@ -49,11 +49,9 @@ namespace MonevAtr
 
             ConfigureDatabase(services);
             ConfigureSwagger(services);
+            ConfigureSmtp(services);
             
             services
-                .Configure<SmtpOptions>(
-                    Configuration.GetSection(SmtpOptions.OptionsName))
-                .AddTransient<IEmailSender, SmtpEmailSender>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>()
                 .ConfigureApplicationCookie(options =>
@@ -148,6 +146,12 @@ namespace MonevAtr
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Protaru API", Version = "v1" });
             });
+        }
+        private void ConfigureSmtp(IServiceCollection services)
+        {
+            services
+                .Configure<SmtpOptions>(Configuration.GetSection(SmtpOptions.OptionsName))
+                .AddTransient<IEmailSender, SmtpEmailSender>();
         }
     }
 }
