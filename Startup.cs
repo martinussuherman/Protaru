@@ -48,6 +48,7 @@ namespace MonevAtr
             });
 
             ConfigureDatabase(services);
+            ConfigureSwagger(services);
             
             services
                 .Configure<SmtpOptions>(
@@ -64,10 +65,6 @@ namespace MonevAtr
                 .Configure<RazorViewEngineOptions>(options =>
                 {
                     options.ViewLocationExpanders.Add(new ProtaruViewLocationExpander());
-                })
-                .AddSwaggerGen(c =>
-                {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Protaru API", Version = "v1" });
                 });
         }
 
@@ -144,6 +141,13 @@ namespace MonevAtr
                             sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
                         }),
                     16);
+        }
+        private void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Protaru API", Version = "v1" });
+            });
         }
     }
 }
