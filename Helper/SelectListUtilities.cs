@@ -443,7 +443,7 @@ namespace MonevAtr.Models
         private static readonly SelectListItem _yearInputTitleRequired =
             new SelectListItem("Pilih Tahun", string.Empty);
         private static readonly SelectListItem _yearInputTitleOptional =
-            new SelectListItem("Pilih Tahun", "0");
+            new SelectListItem("Pilih Tahun", "-1");
 
         private readonly PomeloDbContext _context;
         private const string _textProperty = "Text";
