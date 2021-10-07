@@ -84,17 +84,12 @@ namespace MonevAtr
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 })
                 .UseAuthentication()
-                .UseAuthorization()
-                .UseSwagger()
-                .UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint(
-                        $"{basePath}/swagger/v1/swagger.json",
-                        "Protaru API V1");
-                }); 
+                .UseAuthorization(); 
 
             ConfigureEndpoints(app);
             ConfigureStaticFiles(app, env);
+            ConfigureSwaggerUI(app, basePath);
+
             PagerUrlHelper.ItemPerPage = 200;
 
             UploadFolderCreator folderCreator = new UploadFolderCreator(env);
@@ -167,6 +162,16 @@ namespace MonevAtr
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.WebRootPath, "upload")),
                 RequestPath = new PathString("/upload")
+            });
+        }
+        private void ConfigureSwaggerUI(IApplicationBuilder app, string basePath)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(
+                    $"{basePath}/swagger/v1/swagger.json",
+                    "Protaru API V1");
             });
         }
     }
