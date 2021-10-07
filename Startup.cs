@@ -85,13 +85,6 @@ namespace MonevAtr
                 })
                 .UseAuthentication()
                 .UseAuthorization()
-                .UseStaticFiles()
-                .UseStaticFiles(new StaticFileOptions
-                {
-                    FileProvider = new PhysicalFileProvider(
-                        Path.Combine(env.WebRootPath, "upload")),
-                    RequestPath = new PathString("/upload")
-                })
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
@@ -101,6 +94,7 @@ namespace MonevAtr
                 }); 
 
             ConfigureEndpoints(app);
+            ConfigureStaticFiles(app, env);
             PagerUrlHelper.ItemPerPage = 200;
 
             UploadFolderCreator folderCreator = new UploadFolderCreator(env);
@@ -163,6 +157,16 @@ namespace MonevAtr
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+            });
+        }
+        private void ConfigureStaticFiles(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.WebRootPath, "upload")),
+                RequestPath = new PathString("/upload")
             });
         }
     }
