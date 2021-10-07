@@ -85,11 +85,6 @@ namespace MonevAtr
                 })
                 .UseAuthentication()
                 .UseAuthorization()
-                .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapRazorPages();
-                    endpoints.MapControllers();
-                })
                 .UseStaticFiles()
                 .UseStaticFiles(new StaticFileOptions
                 {
@@ -105,6 +100,7 @@ namespace MonevAtr
                         "Protaru API V1");
                 }); 
 
+            ConfigureEndpoints(app);
             PagerUrlHelper.ItemPerPage = 200;
 
             UploadFolderCreator folderCreator = new UploadFolderCreator(env);
@@ -160,6 +156,14 @@ namespace MonevAtr
             services.AddHttpClient(Options.DefaultName);
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        }
+        private void ConfigureEndpoints(IApplicationBuilder app)
+        {
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+                endpoints.MapControllers();
+            });
         }
     }
 }
