@@ -27,16 +27,17 @@ namespace Protaru.ViewComponents.Rtr
             public string StatusNomor { get; set; }
         }
 
-        private string StatusNomor(Atr rtr)
+        public static string StatusNomor(Atr rtr)
         {
-            if(string.IsNullOrEmpty(rtr.Nomor) )
+            if (string.IsNullOrEmpty(rtr.Nomor))
             {
                 return rtr.DisplayNamaProgress;
             }
 
             return $"{rtr.DisplayNamaProgress} Nomor: {rtr.Nomor}";
         }
-        private string TitleByJenis(Atr rtr, JenisRtrEnum jenis)
+
+        public static string TitleByJenis(Atr rtr, JenisRtrEnum jenis)
         {
             switch (jenis)
             {
